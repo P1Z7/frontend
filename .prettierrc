@@ -1,0 +1,12 @@
+{
+  "arrowParens": "always",
+  "bracketSpacing": true,
+  "printWidth": 180,
+  "semi": true,
+  "singleQuote": false,
+  "trailingComma": "all",
+  "tabWidth": 2,
+  "importOrder": ["^@/components/(.*)$", "^@/hooks/(.*)$", "^@/service/(.*)$", "^@/store/(.*)$", "^@/utils/(.*)$", "^@/types/(.*)$", "^@/public/(.*)$", "^[./]"],
+  "importOrderSortSpecifiers": true,
+  "plugins": ["@trivago/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"]
+}

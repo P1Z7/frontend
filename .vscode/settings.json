@@ -1,0 +1,11 @@
+{
+  "material-icon-theme.folders.associations": {
+    "_components": "Components",
+    "_hooks": "Hook",
+    "_service": "Api",
+    "_store": "Container",
+    "_utils": "Utils",
+    "_types": "Typescript",
+    "(route)": "Routes"
+  }
+}
