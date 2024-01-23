@@ -1,0 +1,49 @@
+"use client";
+
+import Image from "next/image";
+import { useFunnel } from "../../_hooks/useFunnel";
+import GenericForm from "./components/GenericForm";
+import ProfileSetup from "./components/ProfileSetup";
+
+export interface SignUpFormValues {
+  email: string;
+  password: string;
+  passwordCh: string;
+  profileImg: string;
+  nickName: string;
+  myArtist: string[] | [];
+}
+
+const steps = ["계정 정보", "프로필 정보", "아티스트 선택"];
+
+const SignUp = () => {
+  const submitSignUp = () => {
+    console.log("보냄");
+  };
+  const { Funnel, Step, setStep } = useFunnel(steps[0]);
+
+  const HandleNextClick = (step: string) => {
+    setStep(step);
+  };
+  const HandlePrevClick = () => {
+    setStep(steps[0]);
+  };
+
+  const DEFAULT_VALUES = { email: "", password: "", passwordCh: "", profileImg: "", nickName: "", myArtist: [] };
+
+  return (
+    <>
+      <div className="flex gap-8 p-12">
+        <button onClick={HandlePrevClick}>
+          <Image src="/svgs/icon_arrow_back_black.svg" alt="뒤로가기 버튼" width={24} height={24} />
+        </button>
+        <p className="text-16 font-700">회원가입</p>
+      </div>
+      <GenericForm formOptions={{ mode: "onChange", defaultValues: DEFAULT_VALUES }} onSubmit={submitSignUp}>
+        <ProfileSetup steps={steps} nextClickHandler={HandleNextClick} Funnel={Funnel} Step={Step} />
+      </GenericForm>
+    </>
+  );
+};
+
+export default SignUp;
