@@ -1,5 +1,5 @@
 const ReviewTab = () => {
-  return <div></div>;
+  return <div className="h-400 w-full"></div>;
 };
 
 export default ReviewTab;
