@@ -3,15 +3,15 @@
 import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import ArtistProfile from "./ArtistProfile";
-import { MockData } from "./ProfileMockData";
+import { ProfileMockData } from "./ProfileMockData";
 
 const Artists = () => {
-  const [artists, setArtists] = useState(MockData);
+  const [artists, setArtists] = useState(ProfileMockData);
   const [hasMore, setHasMore] = useState(true);
 
   // 이부분 바꿔야함 일단 무한스크롤 잘 되는지 테스트용..
   const loadMore = () => {
-    const newArtists = [...artists, ...MockData];
+    const newArtists = [...artists, ...ProfileMockData];
 
     // 데이터가 9개 이상이면 무한스크롤 계속 진행
     if (newArtists.length >= 9) {

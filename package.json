@@ -27,6 +27,7 @@
     "tailwind-scrollbar-hide": "^1.1.7",
     "react-infinite-scroller": "^1.2.6",
     "react-slick": "^0.29.0",
+    "slick-carousel": "^1.8.1",
     "zustand": "^4.5.0"
   },
   "devDependencies": {
