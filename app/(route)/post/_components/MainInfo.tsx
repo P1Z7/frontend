@@ -8,9 +8,6 @@ import AddressModal from "@/components/Modal/AddressModal/AddressModal";
 import CalendarModal from "@/components/Modal/CalendarModal/CalendarModal";
 import { useStore } from "@/store/index";
 
-/**
- * TODO: 에러메세지 상수처리, 버튼 비활성화 기능
- */
 const MainInfo = () => {
   const { modal, openModal, setStep, setInfo, info } = useStore((state) => ({
     modal: state.modal,
