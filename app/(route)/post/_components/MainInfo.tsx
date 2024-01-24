@@ -49,6 +49,14 @@ const MainInfo = () => {
     setValue("address", address);
   }, [address]);
 
+  useEffect(() => {
+    setValue("title", info?.title);
+    setValue("address", info?.address);
+    setValue("detail_address", info?.detail_address);
+    setValue("start_date", info?.start_date);
+    setValue("end_date", info?.end_date);
+  }, []);
+
   return (
     <>
       <div>행사 정보를 입력해주세요🎈</div>

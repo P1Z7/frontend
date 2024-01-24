@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import Image from "next/image";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useStore } from "@/store/index";
 
@@ -26,6 +26,14 @@ const DetailInfo = () => {
     setInfo({ ...info, detail_text: getValues("detail_text"), images: imgList });
     //여기서 api 콜
   };
+
+  useEffect(() => {
+    setImgList(info?.images || []);
+  }, []);
+
+  useEffect(() => {
+    setInfo({ ...info, images: imgList });
+  }, [imgList]);
 
   return (
     <>

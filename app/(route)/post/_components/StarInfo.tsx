@@ -12,7 +12,7 @@ const StarInfo = () => {
     setInfo: state.setPostInfo,
     info: state.postInfo,
   }));
-  const [eventType, setEventType] = useState(EVENT_TYPE_LIST[0]);
+  const [eventType, setEventType] = useState(info?.eventType ? info.eventType : EVENT_TYPE_LIST[0]);
 
   const saveStarInfo = () => {
     setInfo({ ...info, eventType });

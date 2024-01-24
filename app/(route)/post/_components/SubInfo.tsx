@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import GiftTag from "@/components/Tag/GiftTag/GiftTag";
 import { useStore } from "@/store/index";
@@ -12,7 +12,7 @@ const SubInfo = () => {
   const { info, setInfo, setStep } = useStore((state) => ({ info: state.postInfo, setInfo: state.setPostInfo, setStep: state.setStep }));
   const [snsType, setSnsType] = useState("");
   const [giftList, setGiftList] = useState<string[]>([]);
-  const { register, getValues } = useForm({ mode: "onBlur" });
+  const { register, getValues, setValue } = useForm({ mode: "onBlur" });
 
   const handleRadioChange = (event: any) => {
     setSnsType(event.target.value);
@@ -28,6 +28,13 @@ const SubInfo = () => {
     setStep(4);
   };
 
+  useEffect(() => {
+    setValue("sns_id", info?.sns_id);
+    setSnsType(info?.sns_type || "");
+    setValue("event_url", info?.event_url);
+    setGiftList(info?.gift || []);
+  }, []);
+
   return (
     <>
       <div>주최자와 특전 정보를 추가해주세요🎁</div>
@@ -37,7 +44,7 @@ const SubInfo = () => {
         <input placeholder="SNS 아이디 입력" {...register("sns_id")} />
         {SNS_TYPE_LIST.map((type) => (
           <label key={type}>
-            <input name="sns" value={type} type="radio" onChange={handleRadioChange} />
+            <input name="sns" value={type} type="radio" onChange={handleRadioChange} checked={snsType === type} />
             {type}
           </label>
         ))}
@@ -51,7 +58,7 @@ const SubInfo = () => {
       <label>
         특전
         {GIFT_LIST.map((gift) => (
-          <GiftTag key={gift} handleClick={handleGiftClick}>
+          <GiftTag key={gift} handleClick={handleGiftClick} initialChecked={info?.gift ? info?.gift.includes(gift) : false}>
             {gift}
           </GiftTag>
         ))}
