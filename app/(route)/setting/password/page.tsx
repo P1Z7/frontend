@@ -19,7 +19,7 @@ const SIGNIN_INPUTS = [
   },
 ] as const;
 
-const SettingPage = () => {
+const PasswordPage = () => {
   const [value, setValue] = useState({ current: null, new: null });
   const [errMsg, setErrMsg] = useState({ current: null, new: null });
 
@@ -78,6 +78,4 @@ const SettingPage = () => {
     </form>
   );
 };
-
-SettingPage.title = "비밀번호 변경";
-export default SettingPage;
+export default PasswordPage;

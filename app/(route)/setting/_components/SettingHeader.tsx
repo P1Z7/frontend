@@ -7,6 +7,7 @@ import leftArrow from "@/public/icons/icon-leftarrow.svg";
 const TITLE: { [a: string]: string } = {
   "/setting/password": "비밀번호 변경",
   "/setting/profile": "프로필 수정",
+  "/setting/favorite": "좋아하는 아티스트 수정",
 };
 
 const SettingHeader = () => {
