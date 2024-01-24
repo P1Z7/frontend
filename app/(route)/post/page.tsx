@@ -2,17 +2,27 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useStore } from "@/store/index";
 import MainInfo from "./_components/MainInfo";
+import SubInfo from "./_components/SubInfo";
 
-interface Post {
-  title: string;
-  address: string;
-  detail_address: string;
+export interface Post {
+  //나중에 파일 옮길거임
+  title?: string;
+  address?: string;
+  detail_address?: string;
+  start_date?: string;
+  end_date?: string;
+  sns_id?: string;
+  sns_type?: string;
+  event_url?: string;
+  gift?: string[];
 }
 
 const Post = () => {
-  const [info, setInfo] = useState<Post>();
-  const [step, setStep] = useState(0);
+  const { step, setStep, info, setInfo } = useStore((state) => ({ step: state.step, setStep: state.setStep, info: state.postInfo, setInfo: state.setPostInfo }));
+  //const [info, setInfo] = useState<Post>();
+  // const [step, setStep] = useState(0);
   const {
     register,
     getValues,
@@ -27,9 +37,7 @@ const Post = () => {
     const detail_address = getValues("detail_address");
     const start_date = getValues("start_date");
     const end_date = getValues("end_date");
-    setInfo((prev: any) => {
-      return { ...prev, title, address, detail_address, start_date, end_date };
-    });
+    setInfo({ ...info, title, address, detail_address, start_date, end_date });
   };
 
   console.log(info);
@@ -40,17 +48,11 @@ const Post = () => {
       <div>등록하기</div>
       <div>진행바</div>
       <main>
-        {step === 0 && <div>누구를 위한 행사인가요🎉?</div>}
-        {step === 1 && <MainInfo register={register} errors={errors} setValue={setValue} />}
+        {step === 1 && <div>누구를 위한 행사인가요🎉?</div>}
+        {step === 2 && <MainInfo />}
+        {step === 3 && <SubInfo />}
       </main>
-      <button
-        onClick={() => {
-          saveMainInfo();
-          setStep((prev) => ++prev);
-        }}
-      >
-        넘어가기
-      </button>
+      <button onClick={() => setStep(2)}>2페이지로 가기</button>
     </div>
   );
 };

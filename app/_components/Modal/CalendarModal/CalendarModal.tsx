@@ -4,10 +4,11 @@ import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import { useEffect, useState } from "react";
 import { DateRange, DayPicker } from "react-day-picker";
+import { FieldValues, UseFormSetValue } from "react-hook-form";
 import ModalFrame from "../ModalFrame";
 
 interface Props {
-  setValue: any;
+  setValue: UseFormSetValue<FieldValues>;
 }
 
 const CalendarModal = ({ setValue }: Props) => {
