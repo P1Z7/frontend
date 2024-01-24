@@ -1,7 +1,7 @@
 "use client";
 
-import { ReactNode, useState } from "react";
-import TabButton from "@/components/TabButton";
+import classNames from "classnames";
+import { ButtonHTMLAttributes, ReactNode, useState } from "react";
 
 interface Tab {
   name: string;
@@ -33,3 +33,15 @@ const Tabs = ({ children, names }: Props) => {
 };
 
 export default Tabs;
+
+interface TabButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  selected: boolean;
+}
+
+const TabButton = ({ children, onClick, selected }: TabButtonProps) => {
+  return (
+    <button onClick={onClick} className={classNames("border border-solid border-black", { "bg-black text-white": selected })}>
+      {children}
+    </button>
+  );
+};
