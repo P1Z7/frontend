@@ -44,15 +44,13 @@ const SignInPage = () => {
   const formSection = useRef<HTMLFormElement>(null);
 
   const handleNextStep = (currentIdx: number) => (e: KeyboardEvent) => {
-    const children = formSection.current?.querySelectorAll("input, div");
-    if (!children) {
+    const formChildren = formSection.current?.querySelectorAll("input, button");
+    if (!formChildren) {
       return;
     }
-    const currentStep = children[currentIdx] as HTMLElement;
-    const nextStep = children[currentIdx + 1] as HTMLElement;
+    const nextStep = formChildren[currentIdx + 1] as HTMLElement;
     if (e.key === "Enter" && nextStep) {
       e.preventDefault();
-      // currentStep.blur();
       nextStep.focus();
     }
   };
@@ -76,10 +74,16 @@ const SignInPage = () => {
       </div>
       <form ref={formSection} onSubmit={handleSubmit} className="flex flex-col gap-24 py-60">
         {SIGNIN_INPUTS.map((config, idx) => (
-          <label className={classNames("flex flex-col gap-8 text-16", { "text-red-500": errMsg[config.name] })} key={config.name}>
+          <label className={"flex flex-col gap-8 text-16"} key={config.name}>
             {config.title}
-            <input onBlur={handleBlur} onKeyDown={handleNextStep(idx)} type={config.name} placeholder={config.placeholder} className="h-48 rounded-sm bg-gray-200 px-12 py-16" />
-            <p className="h-16 text-14">{errMsg[config.name]}</p>
+            <input
+              onBlur={handleBlur}
+              onKeyDown={handleNextStep(idx)}
+              type={config.name}
+              placeholder={config.placeholder}
+              className={classNames("h-48 rounded-sm bg-gray-200 px-12 py-16", { "border-[1px] border-solid border-red-500": errMsg[config.name] })}
+            />
+            <p className="h-16 text-14 text-red-500">{errMsg[config.name]}</p>
           </label>
         ))}
         <button className={classNames("flex-grow rounded-sm bg-black px-16 py-12 text-16 text-white", { ["bg-gray-300 text-black"]: isError })}>로그인</button>
