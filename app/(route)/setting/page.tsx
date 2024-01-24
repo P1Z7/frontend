@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { FocusEvent, FormEvent, KeyboardEvent, ReactNode, useRef, useState } from "react";
+import { isCurrentPw } from "@/utils/setting";
 import leftArrow from "@/public/icons/icon-leftarrow.svg";
 
 const SIGNIN_INPUTS = [
@@ -21,11 +22,6 @@ const SIGNIN_INPUTS = [
 ] as const;
 
 const SettingPage = () => {
-  const { status } = useSession();
-  if (status === "unauthenticated") {
-    redirect("/signin");
-  }
-
   const [value, setValue] = useState({ current: null, new: null });
   const [errMsg, setErrMsg] = useState({ current: null, new: null });
 
@@ -35,6 +31,9 @@ const SettingPage = () => {
     const type = e.target.type as "current" | "new";
     const value = e.target.value;
     setValue((prev) => ({ ...prev, [type]: value }));
+
+    if (isCurrentPw(value)) {
+    }
   };
 
   const formSection = useRef<HTMLFormElement>(null);
@@ -68,21 +67,23 @@ const SettingPage = () => {
         </button>
         <h1 className="text-18 font-900">비밀번호 변경</h1>
       </div>
-      <form ref={formSection} onSubmit={handleSubmit} className="flex flex-col gap-24 py-60">
-        {SIGNIN_INPUTS.map((config, idx) => (
-          <label className={"flex flex-col gap-8 text-16"} key={config.name}>
-            {config.title}
-            <input
-              onBlur={handleBlur}
-              onKeyDown={handleNextStep(idx)}
-              type={config.name}
-              placeholder={config.placeholder}
-              className={classNames("h-48 rounded-sm bg-gray-200 px-12 py-16", { "border-[1px] border-solid border-red-500": errMsg[config.name] })}
-            />
-            <p className="h-16 text-14 text-red-500">{errMsg[config.name]}</p>
-          </label>
-        ))}
-        <button className={classNames("flex-grow rounded-sm bg-black px-16 py-12 text-16 text-white", { ["bg-gray-300 text-black"]: isError })}>로그인</button>
+      <form ref={formSection} onSubmit={handleSubmit} className="flex flex-grow flex-col justify-between gap-24 py-60">
+        <div>
+          {SIGNIN_INPUTS.map((config, idx) => (
+            <label className={"flex flex-col gap-8 text-16"} key={config.name}>
+              {config.title}
+              <input
+                onBlur={handleBlur}
+                onKeyDown={handleNextStep(idx)}
+                type={config.name}
+                placeholder={config.placeholder}
+                className={classNames("h-48 rounded-sm bg-gray-200 px-12 py-16", { "border-[1px] border-solid border-red-500": errMsg[config.name] })}
+              />
+              <p className="h-16 text-14 text-red-500">{errMsg[config.name]}</p>
+            </label>
+          ))}
+        </div>
+        <button className={classNames("rounded-sm px-16 py-12 text-16", { "bg-black text-white": !isError }, { "bg-gray-300 text-black": isError })}>변경하기</button>
       </form>
     </div>
   );
