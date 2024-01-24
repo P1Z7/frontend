@@ -1,9 +1,11 @@
 "use client";
 
+import classNames from "classnames";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { FormEvent, KeyboardEvent, ReactNode, useRef } from "react";
+import { FocusEvent, FormEvent, KeyboardEvent, ReactNode, useRef, useState } from "react";
+import { validate_signin } from "@/utils/signValidate";
 import leftArrow from "@/public/icons/icon-leftarrow.svg";
 
 const SIGNIN_INPUTS = [
@@ -25,22 +27,43 @@ const SignInPage = () => {
     redirect("/");
   }
 
-  const errMsg = useRef({ email: "", password: "" });
+  const [value, setValue] = useState({ email: null, password: null });
+  const [errMsg, setErrMsg] = useState({ email: null, password: null });
+
+  const isError = errMsg.email !== "" || errMsg.password !== "";
+
+  const handleBlur = async (e: FocusEvent<HTMLInputElement>) => {
+    const type = e.target.type as "email" | "password";
+    const value = e.target.value;
+    setValue((prev) => ({ ...prev, [type]: value }));
+
+    const newErrMsg = await validate_signin({ type, value });
+    setErrMsg((prev) => ({ ...prev, [type]: newErrMsg }));
+  };
 
   const formSection = useRef<HTMLFormElement>(null);
 
   const handleNextStep = (currentIdx: number) => (e: KeyboardEvent) => {
-    const form = formSection.current;
-    const nextStep = form?.querySelectorAll("input, button")[currentIdx + 1] as HTMLElement;
+    const children = formSection.current?.querySelectorAll("input, div");
+    if (!children) {
+      return;
+    }
+    const currentStep = children[currentIdx] as HTMLElement;
+    const nextStep = children[currentIdx + 1] as HTMLElement;
     if (e.key === "Enter" && nextStep) {
       e.preventDefault();
+      // currentStep.blur();
       nextStep.focus();
     }
   };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log("submit");
+    if (isError) {
+      return;
+    }
+
+    console.log(value);
   };
 
   return (
@@ -53,23 +76,15 @@ const SignInPage = () => {
       </div>
       <form ref={formSection} onSubmit={handleSubmit} className="flex flex-col gap-24 py-60">
         {SIGNIN_INPUTS.map((config, idx) => (
-          <LabelWithErrMsg errMsg={errMsg.current[config.name]}>
+          <label className={classNames("flex flex-col gap-8 text-16", { "text-red-500": errMsg[config.name] })} key={config.name}>
             {config.title}
-            <input onKeyDown={handleNextStep(idx)} type={config.name} placeholder={config.placeholder} className="h-48 rounded-sm bg-gray-200 px-12 py-16" />
-          </LabelWithErrMsg>
+            <input onBlur={handleBlur} onKeyDown={handleNextStep(idx)} type={config.name} placeholder={config.placeholder} className="h-48 rounded-sm bg-gray-200 px-12 py-16" />
+            <p className="h-16 text-14">{errMsg[config.name]}</p>
+          </label>
         ))}
-        <button className="rounded-sm bg-black px-16 py-12 text-16 text-white disabled:bg-gray-300 disabled:text-black">로그인</button>
+        <button className={classNames("flex-grow rounded-sm bg-black px-16 py-12 text-16 text-white", { ["bg-gray-300 text-black"]: isError })}>로그인</button>
       </form>
     </div>
   );
 };
 export default SignInPage;
-
-const LabelWithErrMsg = ({ errMsg, children }: { errMsg: string; children: ReactNode }) => {
-  return (
-    <label className="flex flex-col gap-8 text-16">
-      {children}
-      <p>{errMsg}</p>
-    </label>
-  );
-};
