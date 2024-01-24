@@ -1,4 +1,4 @@
-export const MockData = [
+export const ProfileMockData = [
   {
     name: "최승철",
     profileImage: "/icons/icon_no-profile.svg",

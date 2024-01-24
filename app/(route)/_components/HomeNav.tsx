@@ -18,13 +18,13 @@ interface NavButtonProps {
   src: string;
 }
 
-function NavButton({ href, button_type, src }: NavButtonProps) {
+const NavButton = ({ href, button_type, src }: NavButtonProps) => {
   return (
     <Link href={href} className="flex flex-col items-center gap-8">
       <Image src={src} alt={button_type} width={24} height={24} />
       <div>{button_type}</div>
     </Link>
   );
-}
+};
 
 export default HomeNav;
