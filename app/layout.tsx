@@ -23,7 +23,10 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <Provider>{children}</Provider>
+        <Provider>
+          {children}
+          <div id="bottom-sheet" />
+        </Provider>
       </body>
       <Script src="https://developers.kakao.com/sdk/js/kakao.js" async />
       <Script type="text/javascript" src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_API_KEY}&autoload=false&libraries=services`} />
