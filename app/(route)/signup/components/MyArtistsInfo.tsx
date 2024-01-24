@@ -4,11 +4,8 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { SignUpFormValues } from "../page";
 
 const MyArtistsInfo = () => {
-  const { setValue, getValues } = useFormContext<SignUpFormValues>();
-  //
-  // const allFormValues = getValues();
-  // console.log(allFormValues);
-  // //
+  const { setValue } = useFormContext<SignUpFormValues>();
+
   const myArtists = useWatch({ name: "myArtists" });
   const isButtonDisabled = !myArtists.length;
 
@@ -34,10 +31,10 @@ const MyArtistsInfo = () => {
         checkbox.checked = true;
       }
     });
-  }, [myArtists]);
+  }, []);
 
   return (
-    <div className="flex w-screen flex-col gap-8">
+    <div className="flex w-screen flex-col gap-8 p-12">
       <p className=" text-16 font-700 text-black">좋아하는 아티스트를 선택해주세요</p>
       <button className="w-fit text-gray-400 underline" onClick={handleOpenModal} type="button">
         찾으시는 아티스트가 없으신가요?
@@ -66,7 +63,7 @@ const ArtistCard = ({ id, onClick }: { id: string; onClick: (id: string, isCheck
     <>
       <input name="myArtists" type="checkbox" id={id} className={`peer/${id}`} onChange={handleChange} />
       <label htmlFor={id} className={`flex w-100 flex-col items-center justify-center gap-8 rounded-sm p-12 hover:bg-sky-50 peer-checked/${id}:bg-sky-100`}>
-        <Image src={"/svgs/icon_add_image_gray.svg"} alt="이미지 추가 버튼" width={80} height={80} className="rounded-full" />
+        <Image src={"/icon/icon_add_image_gray.svg"} alt="이미지 추가 버튼" width={80} height={80} className="rounded-full" />
         <p className="text-14">이름</p>
       </label>
     </>

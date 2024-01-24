@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { ChangeEvent } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
+import { ERROR_MESSAGES, REG_EXP } from "../../../_utils/signupValidation";
 import { SignUpFormValues } from "../page";
 import InputContainer from "./InputContainer";
-import { ERROR_MESSAGES, REG_EXP } from "./validation";
 
 const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
   const { formState, control, setValue } = useFormContext<SignUpFormValues>();
@@ -19,16 +19,17 @@ const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
   };
 
   return (
-    <div className="flex flex-col gap-12 p-12">
+    <div className="flex flex-col gap-24 p-12">
       <p className=" text-16 font-700 text-black">프로필을 입력해주세요</p>
       <p className="text-14">프로필 사진</p>
       <label className="relative h-100 w-100 rounded-full">
         <input name="profileImg" type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
-        <Image src={file || "/svgs/icon_add_image_gray.svg"} alt="이미지 추가 버튼" fill className="rounded-full object-cover" />
+        <Image src={file || "/icon/icon_add_image_gray.svg"} alt="이미지 추가 버튼" fill className="rounded-full object-cover" />
       </label>
       <InputContainer
         control={control}
         name="nickName"
+        hint="n/10"
         placeholder="닉네임을 입력해 주세요"
         rules={{ required: ERROR_MESSAGES.nickname.nicknameField, pattern: { value: REG_EXP.CHECK_NICKNAME, message: ERROR_MESSAGES.nickname.nicknamePattern } }}
       >

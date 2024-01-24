@@ -1,5 +1,6 @@
+import { useRouter } from "next/navigation";
 import React from "react";
-import { FieldValues, FormProvider, SubmitHandler, UseFormProps, useForm } from "react-hook-form";
+import { FieldValues, FormProvider, UseFormProps, useForm } from "react-hook-form";
 
 interface GenericFormInterface<TFormData extends FieldValues> {
   children: React.ReactNode;
@@ -8,9 +9,10 @@ interface GenericFormInterface<TFormData extends FieldValues> {
 
 const GenericForm = <TFormData extends FieldValues>({ children, formOptions }: GenericFormInterface<TFormData>) => {
   const methods = useForm<TFormData>(formOptions);
+  const router = useRouter();
 
   const onSubmit = () => {
-    console.log(methods.getValues());
+    console.log(methods.getValues()); // 회원가입 POST할 정보
   };
 
   return (

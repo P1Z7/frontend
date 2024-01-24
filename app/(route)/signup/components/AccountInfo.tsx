@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
+import { ERROR_MESSAGES, REG_EXP } from "../../../_utils/signupValidation";
 import { SignUpFormValues } from "../page";
 import InputContainer from "./InputContainer";
-import { ERROR_MESSAGES, REG_EXP } from "./validation";
 
 export const AccountInfo = ({ onNext }: { onNext: () => void }) => {
   const { formState, control, getValues } = useFormContext<SignUpFormValues>();
@@ -9,11 +9,12 @@ export const AccountInfo = ({ onNext }: { onNext: () => void }) => {
   const isButtonDisabled = !!formState.errors.email || !!formState.errors.password || !!formState.errors.passwordCh || !formState.isValid;
 
   return (
-    <div className="flex flex-col gap-12 p-12">
+    <div className="flex flex-col gap-24 p-12">
       <p className=" text-16 font-700 text-black">로그인 정보를 입력해주세요</p>
       <InputContainer
         control={control}
         name="email"
+        autoComplete="username"
         placeholder="이메일을 입력해 주세요"
         rules={{ required: ERROR_MESSAGES.email.emailField, pattern: { value: REG_EXP.CHECK_EMAIL, message: ERROR_MESSAGES.email.emailPattern } }}
       >
@@ -23,8 +24,9 @@ export const AccountInfo = ({ onNext }: { onNext: () => void }) => {
         control={control}
         name="password"
         type="password"
-        placeholder="영어,숫자를 포함한 비밀번호를 입력해주세요"
-        autocomplete="new-password"
+        placeholder="비밀번호를 입력해주세요"
+        hint="영어, 숫자, 특수문자 포함 필수 & 8자리 이상"
+        autoComplete="new-password"
         rules={{ required: ERROR_MESSAGES.password.passwordField, pattern: { value: REG_EXP.CHECK_PASSWORD, message: ERROR_MESSAGES.password.passwordPattern } }}
       >
         비밀번호
@@ -33,7 +35,7 @@ export const AccountInfo = ({ onNext }: { onNext: () => void }) => {
         control={control}
         name="passwordCh"
         type="password"
-        autocomplete="new-password"
+        autoComplete="new-password"
         placeholder="비밀번호를 입력해주세요"
         rules={{
           required: ERROR_MESSAGES.password.passwordField,
