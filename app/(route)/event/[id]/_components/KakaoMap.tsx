@@ -2,12 +2,12 @@
 
 import { useEffect } from "react";
 
-interface Props {
+export interface MapProps {
   name: string;
   address: string;
 }
 
-const KakaoMap = ({ name, address }: Props) => {
+const KakaoMap = ({ name, address }: MapProps) => {
   useEffect(() => {
     if (window.kakao) {
       window.kakao.maps.load(() => {
