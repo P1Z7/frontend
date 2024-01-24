@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { ButtonHTMLAttributes } from "react";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -6,7 +7,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const TabButton = ({ children, onClick, selected }: Props) => {
   return (
-    <button onClick={onClick} className={`border border-solid border-black ${selected ? "bg-black text-white" : ""}`}>
+    <button onClick={onClick} className={classNames("border border-solid border-black", { "bg-black text-white": selected })}>
       {children}
     </button>
   );
