@@ -10,7 +10,7 @@ const ProfilePage = () => {
   const isLengthLimit = value.nickname.length > 10;
   const isError = !value.profileImage && !value.nickname;
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue((prev) => ({ ...prev, nickname: e.target.value }));
   };
 
@@ -65,7 +65,7 @@ const ProfilePage = () => {
         <input
           value={value.nickname}
           onKeyDown={handleKeyBlock}
-          onChange={handleChange}
+          onChange={handleNameChange}
           placeholder="닉네임을 입력해주세요"
           className={classNames("h-48 rounded-sm bg-gray-200 px-12 py-16 text-16", { "outline outline-2 outline-red-500": isLengthLimit })}
         />
