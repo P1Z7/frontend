@@ -3,12 +3,15 @@ import { FieldValues, FormProvider, SubmitHandler, UseFormProps, useForm } from 
 
 interface GenericFormInterface<TFormData extends FieldValues> {
   children: React.ReactNode;
-  onSubmit: SubmitHandler<TFormData>;
   formOptions?: UseFormProps<TFormData>;
 }
 
-const GenericForm = <TFormData extends FieldValues>({ children, onSubmit, formOptions }: GenericFormInterface<TFormData>) => {
+const GenericForm = <TFormData extends FieldValues>({ children, formOptions }: GenericFormInterface<TFormData>) => {
   const methods = useForm<TFormData>(formOptions);
+
+  const onSubmit = () => {
+    console.log(methods.getValues());
+  };
 
   return (
     <FormProvider {...methods}>

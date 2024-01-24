@@ -47,7 +47,7 @@ export const AccountInfo = ({ onNext }: { onNext: () => void }) => {
       >
         비밀번호 확인
       </InputContainer>
-      <button onClick={onNext} disabled={isButtonDisabled} className="h-40 bg-slate-200 text-12">
+      <button type="button" onClick={onNext} disabled={isButtonDisabled} className="h-40 bg-slate-200 text-12">
         다음
       </button>
     </div>

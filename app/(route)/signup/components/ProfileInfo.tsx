@@ -32,9 +32,9 @@ const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
         placeholder="닉네임을 입력해 주세요"
         rules={{ required: ERROR_MESSAGES.nickname.nicknameField, pattern: { value: REG_EXP.CHECK_NICKNAME, message: ERROR_MESSAGES.nickname.nicknamePattern } }}
       >
-        이메일
+        닉네임
       </InputContainer>
-      <button onClick={onNext} disabled={isButtonDisabled} className="h-40 bg-slate-200 text-12">
+      <button type="button" onClick={onNext} className="h-40 bg-slate-200 text-12" disabled={isButtonDisabled}>
         다음
       </button>
     </div>
