@@ -22,6 +22,7 @@ const StarInfo = () => {
   return (
     <>
       <div>누구를 위한 행사인가요🎉?</div>
+      <div>*필수 입력 사항입니다.</div>
       <label>
         연예인
         <input placeholder="그룹선택" readOnly />

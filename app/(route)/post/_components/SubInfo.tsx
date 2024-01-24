@@ -31,6 +31,7 @@ const SubInfo = () => {
   return (
     <>
       <div>주최자와 특전 정보를 추가해주세요🎁</div>
+      <div>*선택 입력 사항입니다.</div>
       <label>
         주최자
         <input placeholder="SNS 아이디 입력" {...register("sns_id")} />

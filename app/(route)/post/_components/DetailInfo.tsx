@@ -36,15 +36,15 @@ const DetailInfo = () => {
         <div className="flex h-120 w-120 shrink-0 items-center justify-center bg-zinc-400">
           <label>
             추가
-            <input name="profileImg" type="file" multiple className="hidden" accept="image/*" onChange={handleFileChange} onClick={() => console.log("눌리냐")} />
+            <input name="profileImg" type="file" multiple className="hidden" accept="image/*" onChange={handleFileChange} />
           </label>
         </div>
-        {imgList.map((file) => (
-          <div className="relative flex h-120 w-120 shrink-0">
+        {imgList.map((file, idx) => (
+          <div key={idx} className="relative flex h-120 w-120 shrink-0">
             <div className="absolute right-0 top-0 z-popup" onClick={() => setImgList((prev) => prev.filter((item: File) => item !== file))}>
               삭제
             </div>
-            <Image src={URL.createObjectURL(file)} alt="선택한 사진 미리보기" fill objectFit="cover" />
+            <Image src={URL.createObjectURL(file)} alt="선택한 사진 미리보기" fill className="object-cover" />
           </div>
         ))}
       </div>

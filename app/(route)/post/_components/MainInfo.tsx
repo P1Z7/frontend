@@ -1,5 +1,6 @@
 "use client";
 
+import classNames from "classnames";
 import { useEffect, useState } from "react";
 import "react-day-picker/dist/style.css";
 import { useForm } from "react-hook-form";
@@ -23,18 +24,26 @@ const MainInfo = () => {
     register,
     getValues,
     setValue,
+    watch,
     formState: { errors },
   } = useForm({ mode: "onBlur" });
 
   const saveMainInfo = () => {
-    const title = getValues("title");
-    const address = getValues("address");
-    const detail_address = getValues("detail_address");
-    const start_date = getValues("start_date");
-    const end_date = getValues("end_date");
-    setInfo({ ...info, title, address, detail_address, start_date, end_date });
+    setInfo({
+      ...info,
+      title: getValues("title"),
+      address: getValues("address"),
+      detail_address: getValues("detail_address"),
+      start_date: getValues("start_date"),
+      end_date: getValues("end_date"),
+    });
     setStep(3);
   };
+
+  const date = watch("start_date");
+  const post = watch("address");
+  const title = watch("title");
+  const isEmpty = !date || !post || !title;
 
   useEffect(() => {
     setValue("address", address);
@@ -58,13 +67,16 @@ const MainInfo = () => {
       <br />
       <label>
         기간
-        <input placeholder="날짜 선택" readOnly className="bg-red-100" {...register("start_date", { required: "기간을 입력해주세요." })} onClick={() => openModal("date")} />
+        <input placeholder="날짜 선택" readOnly className="bg-red-100" {...register("start_date")} onClick={() => openModal("date")} />
         ~
         <input placeholder="날짜 선택" readOnly className="bg-red-100" {...register("end_date")} onClick={() => openModal("date")} />
       </label>
       {modal === "address" && <AddressModal setAddress={setAddress} />}
       {modal === "date" && <CalendarModal setValue={setValue} />}
-      <button onClick={saveMainInfo}>넘어가기</button>
+      <br />
+      <button onClick={saveMainInfo} disabled={isEmpty} className={classNames("bg-slate-400", { "bg-red-200": !isEmpty })}>
+        다음으로
+      </button>
     </>
   );
 };
