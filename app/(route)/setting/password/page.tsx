@@ -20,7 +20,6 @@ const SIGNIN_INPUTS = [
 ] as const;
 
 const SettingPage = () => {
-  const router = useRouter();
   const [value, setValue] = useState({ current: null, new: null });
   const [errMsg, setErrMsg] = useState({ current: null, new: null });
 
