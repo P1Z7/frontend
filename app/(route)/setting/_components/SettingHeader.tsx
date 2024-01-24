@@ -6,9 +6,10 @@ import leftArrow from "@/public/icons/icon-leftarrow.svg";
 
 const TITLE: { [a: string]: string } = {
   "/setting/password": "비밀번호 변경",
+  "/setting/profile": "프로필 수정",
 };
 
-const BackButton = () => {
+const SettingHeader = () => {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -21,4 +22,4 @@ const BackButton = () => {
     </>
   );
 };
-export default BackButton;
+export default SettingHeader;
