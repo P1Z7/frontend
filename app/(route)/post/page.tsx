@@ -3,11 +3,14 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useStore } from "@/store/index";
+import DetailInfo from "./_components/DetailInfo";
 import MainInfo from "./_components/MainInfo";
+import StarInfo from "./_components/StarInfo";
 import SubInfo from "./_components/SubInfo";
 
 export interface Post {
-  //나중에 파일 옮길거임
+  //임시 지정 & 백엔드 스키마 받으면 수정 예정
+  eventType?: string;
   title?: string;
   address?: string;
   detail_address?: string;
@@ -17,42 +20,26 @@ export interface Post {
   sns_type?: string;
   event_url?: string;
   gift?: string[];
+  images?: File[];
+  detail_text?: string;
 }
 
 const Post = () => {
-  const { step, setStep, info, setInfo } = useStore((state) => ({ step: state.step, setStep: state.setStep, info: state.postInfo, setInfo: state.setPostInfo }));
-  //const [info, setInfo] = useState<Post>();
-  // const [step, setStep] = useState(0);
-  const {
-    register,
-    getValues,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm({ mode: "onChange" });
-
-  const saveMainInfo = () => {
-    const title = getValues("title");
-    const address = getValues("address");
-    const detail_address = getValues("detail_address");
-    const start_date = getValues("start_date");
-    const end_date = getValues("end_date");
-    setInfo({ ...info, title, address, detail_address, start_date, end_date });
-  };
+  const { step, setStep, info } = useStore((state) => ({ step: state.step, setStep: state.setStep, info: state.postInfo }));
 
   console.log(info);
 
   return (
     <div className="text-[18px]">
-      <div>뒤로가기버튼</div>
+      <div onClick={() => setStep(step - 1)}>뒤로가기버튼</div>
       <div>등록하기</div>
-      <div>진행바</div>
+      <div>진행바 {step}</div>
       <main>
-        {step === 1 && <div>누구를 위한 행사인가요🎉?</div>}
+        {step === 1 && <StarInfo />}
         {step === 2 && <MainInfo />}
         {step === 3 && <SubInfo />}
+        {step === 4 && <DetailInfo />}
       </main>
-      <button onClick={() => setStep(2)}>2페이지로 가기</button>
     </div>
   );
 };
