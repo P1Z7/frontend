@@ -6,7 +6,19 @@
   "singleQuote": false,
   "trailingComma": "all",
   "tabWidth": 2,
-  "importOrder": ["^@/components/(.*)$", "^@/hooks/(.*)$", "^@/service/(.*)$", "^@/store/(.*)$", "^@/utils/(.*)$", "^@/types/(.*)$", "^@/public/(.*)$", "^[./]"],
+  "importOrder": [
+    "^@/components/(.*)$",
+    "^@/(route)/(.*)$",
+    "^@/providers/(.*)$",
+    "^@/api/(.*)$",
+    "^@/hooks/(.*)$",
+    "^@/service/(.*)$",
+    "^@/store/(.*)$",
+    "^@/utils/(.*)$",
+    "^@/types/(.*)$",
+    "^@/public/(.*)$",
+    "^[./]"
+  ],
   "importOrderSortSpecifiers": true,
   "plugins": ["@trivago/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"]
 }
