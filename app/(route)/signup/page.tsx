@@ -3,8 +3,8 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useFunnel } from "../../_hooks/useFunnel";
-import GenericForm from "./components/GenericForm";
-import ProfileSetup from "./components/ProfileSetup";
+import GenericForm from "./_components/GenericForm";
+import ProfileSetup from "./_components/ProfileSetup";
 
 export interface SignUpFormValues {
   email: string;
@@ -21,10 +21,10 @@ const SignUp = () => {
   const router = useRouter();
   const { Funnel, Step, setStep, currentStep } = useFunnel(steps[0]);
 
-  const HandleNextClick = (step: string) => {
+  const handleNextClick = (step: string) => {
     setStep(step);
   };
-  const HandlePrevClick = () => {
+  const handlePrevClick = () => {
     const stepIndex = steps.indexOf(currentStep);
     if (stepIndex === 0) router.push("/signin");
     setStep(steps[stepIndex - 1]);
@@ -35,13 +35,13 @@ const SignUp = () => {
   return (
     <>
       <div className="flex gap-8 p-12">
-        <button onClick={HandlePrevClick}>
-          <Image src="/icons/arrow_back_black.svg" alt="뒤로가기 버튼" width={24} height={24} />
+        <button onClick={handlePrevClick}>
+          <Image src="/icon/back-arrow_black.svg" alt="뒤로가기 버튼" width={24} height={24} />
         </button>
         <p className="text-16 font-700">회원가입</p>
       </div>
       <GenericForm formOptions={{ mode: "onBlur", defaultValues: DEFAULT_VALUES }}>
-        <ProfileSetup steps={steps} nextClickHandler={HandleNextClick} Funnel={Funnel} Step={Step} />
+        <ProfileSetup steps={steps} nextClickHandler={handleNextClick} Funnel={Funnel} Step={Step} />
       </GenericForm>
     </>
   );

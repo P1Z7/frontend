@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Dropdown from "@/components/Dropdown/Dropdown";
+import Dropdown from "@/components/Dropdown";
 import { useStore } from "@/store/index";
 
 const EVENT_TYPE_LIST = ["생일카페", "상영회", "팬싸", "또뭐하ㅏ지", "모르겠다", "배고프다", "붕어빵", "피자붕어빵"];

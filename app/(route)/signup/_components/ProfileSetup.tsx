@@ -3,14 +3,14 @@ import { AccountInfo } from "./AccountInfo";
 import MyArtistsInfo from "./MyArtistsInfo";
 import ProfileInfo from "./ProfileInfo";
 
-export interface ProfileSetupInterface {
+export interface ProfileSetupProps {
   steps: string[];
   nextClickHandler: (nextStep: string) => void;
   Funnel: React.ComponentType<FunnelProps>;
   Step: React.ComponentType<StepProps>;
 }
 
-const ProfileSetup = ({ steps, nextClickHandler, Funnel, Step }: ProfileSetupInterface) => {
+const ProfileSetup = ({ steps, nextClickHandler, Funnel, Step }: ProfileSetupProps) => {
   return (
     <Funnel>
       <Step name="계정 정보">

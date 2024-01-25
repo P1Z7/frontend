@@ -2,12 +2,12 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { FieldValues, FormProvider, UseFormProps, useForm } from "react-hook-form";
 
-interface GenericFormInterface<TFormData extends FieldValues> {
+interface GenericFormProps<TFormData extends FieldValues> {
   children: React.ReactNode;
   formOptions?: UseFormProps<TFormData>;
 }
 
-const GenericForm = <TFormData extends FieldValues>({ children, formOptions }: GenericFormInterface<TFormData>) => {
+const GenericForm = <TFormData extends FieldValues>({ children, formOptions }: GenericFormProps<TFormData>) => {
   const methods = useForm<TFormData>(formOptions);
   const router = useRouter();
 

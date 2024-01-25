@@ -24,7 +24,7 @@ const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
       <p className="text-14">프로필 사진</p>
       <label className="relative h-100 w-100 rounded-full">
         <input name="profileImg" type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
-        <Image src={file || "/icons/add_image_gray.svg"} alt="이미지 추가 버튼" fill className="rounded-full object-cover" />
+        <Image src={file || "/icon/add-image_gray.svg"} alt="이미지 추가 버튼" fill className="rounded-full object-cover" />
       </label>
       <InputContainer
         control={control}

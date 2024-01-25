@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import GiftTag from "@/components/Tag/GiftTag/GiftTag";
+import GiftTag from "@/components/GiftTag";
 import { useStore } from "@/store/index";
 
 const SNS_TYPE_LIST = ["트위터", "인스타그램", "유튜브", "기타"];

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import leftArrow from "@/public/icons/icon-leftarrow.svg";
+import leftArrow from "@/public/icon/left-arrow.svg";
 
 const TITLE: { [a: string]: string } = {
   "/setting/password": "비밀번호 변경",
