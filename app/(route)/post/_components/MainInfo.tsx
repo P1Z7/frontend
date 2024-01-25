@@ -6,6 +6,7 @@ import "react-day-picker/dist/style.css";
 import { useForm } from "react-hook-form";
 import AddressModal from "@/components/modal/AddressModal";
 import CalendarModal from "@/components/modal/CalendarModal";
+import { useModal } from "@/hooks/useModal";
 import { useStore } from "@/store/index";
 
 interface Props {
@@ -13,12 +14,11 @@ interface Props {
 }
 
 const MainInfo = ({ onNextStep }: Props) => {
-  const { modal, openModal, setInfo, info } = useStore((state) => ({
-    modal: state.modal,
-    openModal: state.openModal,
+  const { setInfo, info } = useStore((state) => ({
     setInfo: state.setPostInfo,
     info: state.postInfo,
   }));
+  const { modal, openModal, closeModal } = useModal();
   const [address, setAddress] = useState("");
   const {
     register,
@@ -79,8 +79,8 @@ const MainInfo = ({ onNextStep }: Props) => {
         ~
         <input placeholder="날짜 선택" readOnly className="bg-red-100" {...register("end_date")} onClick={() => openModal("date")} />
       </label>
-      {modal === "address" && <AddressModal setAddress={setAddress} />}
-      {modal === "date" && <CalendarModal setValue={setValue} />}
+      {modal === "address" && <AddressModal setAddress={setAddress} closeModal={closeModal} />}
+      {modal === "date" && <CalendarModal setValue={setValue} closeModal={closeModal} />}
       <br />
       <button onClick={saveMainInfo} className={classNames("bg-slate-400", { "bg-red-200": !isEmpty })}>
         다음으로
