@@ -55,8 +55,19 @@ const config: Config = {
       full: "9999px",
     },
     spacing: PX_ENTRIES,
+    extend: {
+      keyframes: {
+        slideUp: {
+          "0%": { opacity: "0", transform: "translateY(50%)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+      },
+      animation: {
+        slideUp: "slideUp 0.1s ease-in-out",
+      },
+    },
   },
 
-  plugins: [],
+  plugins: [require("tailwind-scrollbar-hide")],
 };
 export default config;
