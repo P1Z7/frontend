@@ -8,11 +8,14 @@ import AddressModal from "@/components/modal/AddressModal";
 import CalendarModal from "@/components/modal/CalendarModal";
 import { useStore } from "@/store/index";
 
-const MainInfo = () => {
-  const { modal, openModal, setStep, setInfo, info } = useStore((state) => ({
+interface Props {
+  onNextStep: () => void;
+}
+
+const MainInfo = ({ onNextStep }: Props) => {
+  const { modal, openModal, setInfo, info } = useStore((state) => ({
     modal: state.modal,
     openModal: state.openModal,
-    setStep: state.setStep,
     setInfo: state.setPostInfo,
     info: state.postInfo,
   }));
@@ -34,7 +37,7 @@ const MainInfo = () => {
       start_date: getValues("start_date"),
       end_date: getValues("end_date"),
     });
-    setStep(3);
+    onNextStep();
   };
 
   const date = watch("start_date");
@@ -79,7 +82,7 @@ const MainInfo = () => {
       {modal === "address" && <AddressModal setAddress={setAddress} />}
       {modal === "date" && <CalendarModal setValue={setValue} />}
       <br />
-      <button onClick={saveMainInfo} disabled={isEmpty} className={classNames("bg-slate-400", { "bg-red-200": !isEmpty })}>
+      <button onClick={saveMainInfo} className={classNames("bg-slate-400", { "bg-red-200": !isEmpty })}>
         다음으로
       </button>
     </>

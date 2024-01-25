@@ -4,11 +4,12 @@ import { useStore } from "@/store/index";
 
 const EVENT_TYPE_LIST = ["생일카페", "상영회", "팬싸", "또뭐하ㅏ지", "모르겠다", "배고프다", "붕어빵", "피자붕어빵"];
 
-const StarInfo = () => {
-  const { modal, openModal, setStep, setInfo, info } = useStore((state) => ({
-    modal: state.modal,
-    openModal: state.openModal,
-    setStep: state.setStep,
+interface Props {
+  onNextStep: () => void;
+}
+
+const StarInfo = ({ onNextStep }: Props) => {
+  const { setInfo, info } = useStore((state) => ({
     setInfo: state.setPostInfo,
     info: state.postInfo,
   }));
@@ -16,7 +17,7 @@ const StarInfo = () => {
 
   const saveStarInfo = () => {
     setInfo({ ...info, eventType });
-    setStep(2);
+    onNextStep();
   };
 
   return (

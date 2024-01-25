@@ -27,13 +27,13 @@ const DetailInfo = () => {
     //여기서 api 콜
   };
 
-  useEffect(() => {
-    setImgList(info?.images || []);
-  }, []);
+  // useEffect(() => {
+  //   setImgList(info?.images || []);
+  // }, []);
 
-  useEffect(() => {
-    setInfo({ ...info, images: imgList });
-  }, [imgList]);
+  // useEffect(() => {
+  //   setInfo({ ...info, images: imgList });
+  // }, [imgList]);
 
   return (
     <>

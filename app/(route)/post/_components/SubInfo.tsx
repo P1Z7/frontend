@@ -8,8 +8,12 @@ import { useStore } from "@/store/index";
 const SNS_TYPE_LIST = ["트위터", "인스타그램", "유튜브", "기타"];
 const GIFT_LIST = ["컵홀더", "포토카드", "엽서", "티켓", "포스터", "스티커", "굿즈", "기타"];
 
-const SubInfo = () => {
-  const { info, setInfo, setStep } = useStore((state) => ({ info: state.postInfo, setInfo: state.setPostInfo, setStep: state.setStep }));
+interface Props {
+  onNextStep: () => void;
+}
+
+const SubInfo = ({ onNextStep }: Props) => {
+  const { info, setInfo } = useStore((state) => ({ info: state.postInfo, setInfo: state.setPostInfo }));
   const [snsType, setSnsType] = useState("");
   const [giftList, setGiftList] = useState<string[]>([]);
   const { register, getValues, setValue } = useForm({ mode: "onBlur" });
@@ -25,7 +29,7 @@ const SubInfo = () => {
 
   const saveSubInfo = () => {
     setInfo({ ...info, sns_id: getValues("sns_id"), sns_type: snsType, event_url: getValues("event_url"), gift: giftList });
-    setStep(4);
+    onNextStep();
   };
 
   useEffect(() => {
