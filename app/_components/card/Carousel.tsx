@@ -13,6 +13,7 @@ interface CarouselProps {
 
 const Carousel = ({ customSettings, title, children }: CarouselProps) => {
   const settings = {
+    dots: true,
     slidesToShow: 3,
     slidesToScroll: 1,
     speed: 500,

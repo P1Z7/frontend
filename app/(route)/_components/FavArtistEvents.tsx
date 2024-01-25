@@ -13,8 +13,8 @@ const FavArtistEvents = () => {
 
   // 목업의 길이를 기반으로 좋아요한 이벤트의 수 확인
   // 추후 수정 예정
-  const hasFavoriteEvents = EventMockData.length > 0;
-  // const hasFavoriteEvents = false;
+  // const hasFavoriteEvents = EventMockData.length > 0;
+  const hasFavoriteEvents = false;
 
   return (
     <>
