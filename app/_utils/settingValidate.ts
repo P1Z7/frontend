@@ -51,5 +51,5 @@ const pipe =
     })(init);
   };
 
-export const validate_currentPw = pipe(isValue, isCurrentPw);
-export const validate_newPw = pipe(isValue, isReg);
+export const validateCurrentPw = pipe(isValue, isCurrentPw);
+export const validateNewPw = pipe(isValue, isReg);

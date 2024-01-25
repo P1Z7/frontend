@@ -4,7 +4,7 @@ import classNames from "classnames";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FocusEvent, FormEvent, KeyboardEvent, useRef, useState } from "react";
-import { validate_currentPw, validate_newPw } from "@/utils/settingValidate";
+import { validateCurrentPw, validateNewPw } from "@/utils/settingValidate";
 
 const SIGNIN_INPUTS = [
   {
@@ -30,7 +30,7 @@ const PasswordPage = () => {
     const value = e.target.value;
     setValue((prev) => ({ ...prev, [name]: value }));
 
-    const newErrMsg = await (name === "current" ? validate_currentPw : validate_newPw)({ name, value });
+    const newErrMsg = await (name === "current" ? validateCurrentPw : validateNewPw)({ name, value });
     setErrMsg((prev) => ({ ...prev, [name]: newErrMsg }));
   };
 
