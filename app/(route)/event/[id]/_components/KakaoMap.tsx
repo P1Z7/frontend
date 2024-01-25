@@ -1,13 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
+import { MapType } from "@/types/index";
 
-export interface MapProps {
-  name: string;
-  address: string;
-}
-
-const KakaoMap = ({ name, address }: MapProps) => {
+const KakaoMap = ({ name, address }: MapType) => {
   useEffect(() => {
     if (window.kakao) {
       window.kakao.maps.load(() => {

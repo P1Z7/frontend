@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import "@/public/fonts/pretendard/font.css";
-import Provider from "./Provider";
+import ReactQueryProvider from "@/providers/ReactQueryProvider";
+import "@/public/font/pretendard/font.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -24,10 +24,10 @@ export default function RootLayout({
     <html lang="ko">
       <body>
         <div id="modal"></div>
-        <Provider>
+        <ReactQueryProvider>
           {children}
           <div id="bottom-sheet" />
-        </Provider>
+        </ReactQueryProvider>
       </body>
       <Script src="https://developers.kakao.com/sdk/js/kakao.js" async />
       <Script type="text/javascript" src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_API_KEY}&autoload=false&libraries=services`} />

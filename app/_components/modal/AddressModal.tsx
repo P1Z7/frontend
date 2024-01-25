@@ -3,7 +3,7 @@
 import React from "react";
 import DaumPostcodeEmbed from "react-daum-postcode";
 import { useStore } from "@/store/index";
-import ModalFrame from "../ModalFrame";
+import ModalFrame from "./ModalFrame";
 
 interface Props {
   setAddress: any;

@@ -6,7 +6,7 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 import { FocusEvent, FormEvent, KeyboardEvent, ReactNode, useRef, useState } from "react";
 import { validateSignin } from "@/utils/signValidate";
-import leftArrow from "@/public/icons/icon-leftarrow.svg";
+import leftArrow from "@/public/icon/left-arrow.svg";
 
 const SIGNIN_INPUTS = [
   {

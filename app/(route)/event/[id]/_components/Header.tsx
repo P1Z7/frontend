@@ -1,6 +1,6 @@
 "use client";
 
-import BottomSheetFrame from "@/components/bottomSheet/BottomSheetFrame";
+import BottomSheetFrame from "@/components/bottom-sheet/BottomSheetFrame";
 import { useStore } from "@/store/index";
 
 const Header = () => {

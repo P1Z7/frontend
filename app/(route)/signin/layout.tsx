@@ -1,5 +1,5 @@
-import AuthProvider from "app/_providers/AuthProvider";
 import { ReactNode } from "react";
+import AuthProvider from "@/providers/AuthProvider";
 
 const SigninLayout = ({ children }: { children: ReactNode }) => {
   return <AuthProvider>{children}</AuthProvider>;

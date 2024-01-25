@@ -63,7 +63,7 @@ const ArtistCard = ({ id, onClick }: { id: string; onClick: (id: string, isCheck
     <>
       <input name="myArtists" type="checkbox" id={id} className={`peer/${id}`} onChange={handleChange} />
       <label htmlFor={id} className={`flex w-100 flex-col items-center justify-center gap-8 rounded-sm p-12 hover:bg-sky-50 peer-checked/${id}:bg-sky-100`}>
-        <Image src={"/icons/add_image_gray.svg"} alt="이미지 추가 버튼" width={80} height={80} className="rounded-full" />
+        <Image src={"/icon/add-image_gray.svg"} alt="이미지 추가 버튼" width={80} height={80} className="rounded-full" />
         <p className="text-14">이름</p>
       </label>
     </>

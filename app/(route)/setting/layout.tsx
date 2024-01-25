@@ -1,5 +1,5 @@
-import SettingHeader from "app/(route)/setting/_components/SettingHeader";
 import { ReactElement } from "react";
+import SettingHeader from "./_components/SettingHeader";
 
 const SettingLayout = ({ children }: { children: ReactElement }) => {
   return (

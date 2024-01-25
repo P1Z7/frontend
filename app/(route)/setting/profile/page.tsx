@@ -3,7 +3,7 @@
 import classNames from "classnames";
 import Image from "next/image";
 import { ChangeEvent, KeyboardEvent, MouseEvent, useRef, useState } from "react";
-import defaultImg from "@/public/icons/icon_add_image_gray.svg";
+import defaultImg from "@/public/icon/icon_add-image_gray.svg";
 
 const ProfilePage = () => {
   const [value, setValue] = useState({ profileImage: "", nickname: "" });

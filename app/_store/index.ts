@@ -1,10 +1,9 @@
 import { create } from "zustand";
-import { modalSlice } from "./slice/modalSlice";
-import { createModalSlice } from "./slice/modalSlice";
-import { createPostSlice, postSlice } from "./slice/postSlice";
 import { BottomSheetSlice, createBottomSheetSlice } from "./slice/bottomSheetSlice";
+import { ModalSlice, createModalSlice } from "./slice/modalSlice";
+import { PostSlice, createPostSlice } from "./slice/postSlice";
 
-type SliceType = modalSlice & postSlice & BottomSheetSlice;
+type SliceType = ModalSlice & PostSlice & BottomSheetSlice;
 
 export const useStore = create<SliceType>()((...a) => ({
   ...createModalSlice(...a),

@@ -4,8 +4,8 @@ import classNames from "classnames";
 import { useEffect, useState } from "react";
 import "react-day-picker/dist/style.css";
 import { useForm } from "react-hook-form";
-import AddressModal from "@/components/Modal/AddressModal/AddressModal";
-import CalendarModal from "@/components/Modal/CalendarModal/CalendarModal";
+import AddressModal from "@/components/modal/AddressModal";
+import CalendarModal from "@/components/modal/CalendarModal";
 import { useStore } from "@/store/index";
 
 const MainInfo = () => {
