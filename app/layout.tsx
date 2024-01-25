@@ -23,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
+        <div id="modal"></div>
         <Provider>
           {children}
           <div id="bottom-sheet" />
