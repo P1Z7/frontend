@@ -36,7 +36,7 @@ const SignUp = () => {
     <>
       <div className="flex gap-8 p-12">
         <button onClick={HandlePrevClick}>
-          <Image src="/icon/icon_arrow_back_black.svg" alt="뒤로가기 버튼" width={24} height={24} />
+          <Image src="/icons/arrow_back_black.svg" alt="뒤로가기 버튼" width={24} height={24} />
         </button>
         <p className="text-16 font-700">회원가입</p>
       </div>

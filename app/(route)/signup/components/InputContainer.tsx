@@ -38,12 +38,12 @@ function InputContainer<T extends FieldValues>({ children, placeholder, autoComp
       />
       {initialType === "password" && (
         <button onClick={handlePasswordShow} type="button" className="absolute right-0 top-44 h-24 w-24 -translate-x-1/2 -translate-y-1/2">
-          {<Image src={type === "password" ? "/icon/icon_closed_eyes_black.svg" : "/icon/icon_opened_eyes_black.svg"} alt="비밀번호 아이콘" width={16} height={16} />}
+          {<Image src={type === "password" ? "/icons/closed_eyes_black.svg" : "/icons/opened_eyes_black.svg"} alt="비밀번호 아이콘" width={16} height={16} />}
         </button>
       )}
       {initialType !== "password" && (
         <button type="button" className="absolute right-0 top-44 h-24 w-24 -translate-x-1/2 -translate-y-1/2" onClick={handleXIconClick}>
-          <Image src="/icon/icon_x_gray.svg" alt="초기화 버튼" width={16} height={16} />
+          <Image src="/icons/x_gray.svg" alt="초기화 버튼" width={16} height={16} />
         </button>
       )}
       <div className={`font-normal mt-4 h-8 text-12 ${fieldState?.error ? "text-red-500" : "text-gray-400"}`}>{fieldState?.error?.message || hint}</div>
