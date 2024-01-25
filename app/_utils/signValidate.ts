@@ -75,5 +75,5 @@ const pipe =
     })(init);
   };
 
-export const validate_signin = pipe(isValue, isReg);
-export const validate_signup = pipe(isValue, isReg, isSamePassword);
+export const validateSignin = pipe(isValue, isReg);
+export const validateSignup = pipe(isValue, isReg, isSamePassword);
