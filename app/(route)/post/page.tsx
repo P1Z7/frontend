@@ -11,6 +11,8 @@ import SubInfo from "./_components/SubInfo";
 export const POST_STEPS = ["행사 대상", "행사 정보", "특전 정보", "상세 설명"];
 
 const DEFAULT_INPUT_VALUES = {
+  group: "",
+  member: [],
   eventType: "생일카페",
   title: "",
   address: "",
@@ -25,7 +27,7 @@ const DEFAULT_INPUT_VALUES = {
   detailText: "",
 };
 
-export type PostType = Omit<typeof DEFAULT_INPUT_VALUES, "gift" | "images"> & { gift: string[]; images: File[] };
+export type PostType = Omit<typeof DEFAULT_INPUT_VALUES, "gift" | "images" | "member"> & { gift: string[]; images: File[]; member: string[] };
 
 const Post = () => {
   const { Funnel, Step, setStep, currentStep } = useFunnel(POST_STEPS[0]);

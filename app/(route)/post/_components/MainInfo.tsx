@@ -47,7 +47,6 @@ const MainInfo = ({ onNextStep }: Props) => {
         <InputText name="endDate" placeholder="날짜 선택" readOnly onClick={() => openModal("date")} />
       </main>
       <PostFooter onNextStep={onNextStep} isDisabled={isDisabled} />
-
       {modal === "address" && <AddressModal setValue={setValue} closeModal={closeModal} />}
       {modal === "date" && <CalendarModal setValue={setValue} closeModal={closeModal} />}
     </div>
