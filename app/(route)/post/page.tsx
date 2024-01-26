@@ -36,7 +36,6 @@ const Post = () => {
     <div className="text-[18px]">
       <div onClick={() => (currentStep === "행사 대상" ? window.history.back() : setStep(STEPS[STEPS.indexOf(currentStep) - 1]))}>뒤로가기버튼</div>
       <div>등록하기</div>
-      <div>진행바</div>
       <main>
         <Funnel>
           <Step name="행사 대상">

@@ -59,6 +59,9 @@ const MainInfo = ({ onNextStep }: Props) => {
 
   return (
     <>
+      <div className="h-4 w-320 rounded-full bg-gray-200 dark:bg-gray-700">
+        <div className="h-4 w-1/2 rounded-full bg-blue-600"></div>
+      </div>
       <div>행사 정보를 입력해주세요🎈</div>
       <label>
         제목

@@ -22,6 +22,9 @@ const StarInfo = ({ onNextStep }: Props) => {
 
   return (
     <>
+      <div className="h-4 w-320 rounded-full bg-gray-200 dark:bg-gray-700">
+        <div className="h-4 w-1/4 rounded-full bg-blue-600"></div>
+      </div>
       <div>누구를 위한 행사인가요🎉?</div>
       <div>*필수 입력 사항입니다.</div>
       <label>
