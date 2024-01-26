@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useFunnel } from "@/hooks/useFunnel";
 import GenericForm from "../signup/_components/GenericForm";
 import DetailInfo from "./_components/DetailInfo";
@@ -7,7 +8,7 @@ import MainInfo from "./_components/MainInfo";
 import StarInfo from "./_components/StarInfo";
 import SubInfo from "./_components/SubInfo";
 
-const STEPS = ["행사 대상", "행사 정보", "특전 정보", "행사 설명"];
+export const POST_STEPS = ["행사 대상", "행사 정보", "특전 정보", "상세 설명"];
 
 const DEFAULT_INPUT_VALUES = {
   eventType: "생일카페",
@@ -27,30 +28,37 @@ const DEFAULT_INPUT_VALUES = {
 export type PostType = Omit<typeof DEFAULT_INPUT_VALUES, "gift" | "images"> & { gift: string[]; images: File[] };
 
 const Post = () => {
-  const { Funnel, Step, setStep, currentStep } = useFunnel(STEPS[0]);
+  const { Funnel, Step, setStep, currentStep } = useFunnel(POST_STEPS[0]);
 
   return (
-    <div className="text-[18px]">
-      <div onClick={() => (currentStep === "행사 대상" ? window.history.back() : setStep(STEPS[STEPS.indexOf(currentStep) - 1]))}>뒤로가기버튼</div>
-      <div>등록하기</div>
-      <main>
-        <GenericForm formOptions={{ mode: "onBlur", defaultValues: DEFAULT_INPUT_VALUES }}>
-          <Funnel>
-            <Step name="행사 대상">
-              <StarInfo onNextStep={() => setStep("행사 정보")} />
-            </Step>
-            <Step name="행사 정보">
-              <MainInfo onNextStep={() => setStep("특전 정보")} />
-            </Step>
-            <Step name="특전 정보">
-              <SubInfo onNextStep={() => setStep("행사 설명")} />
-            </Step>
-            <Step name="행사 설명">
-              <DetailInfo />
-            </Step>
-          </Funnel>
-        </GenericForm>
-      </main>
+    <div className="flex h-svh flex-col gap-24 p-20 text-16">
+      <div className="flex gap-8 pb-20 pt-12">
+        <Image
+          src="/icon/left-arrow.svg"
+          alt="뒤로가기 버튼"
+          width={24}
+          height={24}
+          onClick={() => (currentStep === POST_STEPS[0] ? window.history.back() : setStep(POST_STEPS[POST_STEPS.indexOf(currentStep) - 1]))}
+          className="cursor-pointer"
+        />
+        <div className="text-20 font-900">등록하기</div>
+      </div>
+      <GenericForm formOptions={{ mode: "onBlur", defaultValues: DEFAULT_INPUT_VALUES }}>
+        <Funnel>
+          <Step name={POST_STEPS[0]}>
+            <StarInfo onNextStep={() => setStep(POST_STEPS[1])} />
+          </Step>
+          <Step name={POST_STEPS[1]}>
+            <MainInfo onNextStep={() => setStep(POST_STEPS[2])} />
+          </Step>
+          <Step name={POST_STEPS[2]}>
+            <SubInfo onNextStep={() => setStep(POST_STEPS[3])} />
+          </Step>
+          <Step name={POST_STEPS[3]}>
+            <DetailInfo />
+          </Step>
+        </Funnel>
+      </GenericForm>
     </div>
   );
 };

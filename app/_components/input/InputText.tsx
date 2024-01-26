@@ -56,7 +56,7 @@ const InputText: Function = ({ type: initialType, children, placeholder, autoCom
           {<Image src={type === "password" ? "/icon/closed-eyes_black.svg" : "/icon/opened-eyes_black.svg"} alt="비밀번호 아이콘" width={16} height={16} />}
         </button>
       )}
-      {initialType !== "password" && (
+      {initialType !== "password" && !hidden && (
         <button onClick={handleDelete} type="button" className="absolute right-0 top-44 h-24 w-24 -translate-x-1/2 -translate-y-1/2">
           <Image src="/icon/x_gray.svg" alt="초기화 버튼" width={16} height={16} />
         </button>
