@@ -1,4 +1,5 @@
 import { useFormContext } from "react-hook-form";
+import InputText from "@/components/input/InputText";
 import { ERROR_MESSAGES, REG_EXP } from "../../../_utils/signupValidation";
 import { SignUpFormValues } from "../page";
 import InputContainer from "./InputContainer";
@@ -11,7 +12,7 @@ export const AccountInfo = ({ onNext }: { onNext: () => void }) => {
   return (
     <div className="flex flex-col gap-24 p-12">
       <p className=" text-16 font-700 text-black">로그인 정보를 입력해주세요</p>
-      <InputContainer
+      <InputText
         control={control}
         name="email"
         autoComplete="username"
@@ -19,7 +20,7 @@ export const AccountInfo = ({ onNext }: { onNext: () => void }) => {
         rules={{ required: ERROR_MESSAGES.email.emailField, pattern: { value: REG_EXP.CHECK_EMAIL, message: ERROR_MESSAGES.email.emailPattern } }}
       >
         이메일
-      </InputContainer>
+      </InputText>
       <InputContainer
         control={control}
         name="password"

@@ -16,7 +16,7 @@ const InputFile: Function = (props) => {
 
   return (
     <label className="relative h-100 w-100 cursor-pointer rounded-full" tabIndex={0}>
-      <input type="file" name={field.name} ref={field.ref} multiple onChange={handleChange} className="hidden" accept="image/*" />
+      <input id={field.name} type="file" name={field.name} ref={field.ref} multiple onChange={handleChange} className="hidden" accept="image/*" />
       <Image src={defaultImg} fill alt="이미지 추가 버튼" className="rounded-full object-cover" />
     </label>
   );
