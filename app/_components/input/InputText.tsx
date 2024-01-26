@@ -10,13 +10,16 @@ interface Prop {
   autoComplete?: string;
   hint?: string;
   maxLength?: number;
+  hidden?: boolean;
+  readOnly?: boolean;
+  disabled?: boolean;
 }
 
 type Function = <TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>>(
   prop: UseControllerProps<TFieldValues, TName> & Prop,
 ) => ReactNode;
 
-const InputText: Function = ({ type: initialType, children, placeholder, autoComplete, hint, maxLength, ...control }) => {
+const InputText: Function = ({ type: initialType, children, placeholder, autoComplete, hint, maxLength, hidden, readOnly, disabled, ...control }) => {
   const { field, fieldState } = useController(control);
   const [type, setType] = useState(initialType ?? "text");
 
@@ -38,8 +41,13 @@ const InputText: Function = ({ type: initialType, children, placeholder, autoCom
         type={type}
         placeholder={placeholder ?? "입력해주세요."}
         autoComplete={autoComplete ?? "off"}
+        readOnly={readOnly ?? false}
+        disabled={disabled ?? false}
         {...field}
-        className={`border-solid-gray body1-normal placeholder:text-gray-4 focus:border-purple mt-10 h-48 w-full rounded-md bg-blue-50 p-16 text-14 text-black outline-none `}
+        className={classNames(
+          "border-solid-gray body1-normal placeholder:text-gray-4 focus:border-purple mt-10 h-48 w-full rounded-md bg-blue-50 p-16 text-14 text-black outline-none",
+          { hidden: hidden ?? false },
+        )}
       />
       {initialType === "password" && (
         <button onClick={handlePasswordShow} type="button" className="absolute right-0 top-44 h-24 w-24 -translate-x-1/2 -translate-y-1/2">
