@@ -10,13 +10,16 @@ interface Props<T extends FieldValues> extends UseControllerProps<T> {
   type?: string;
 }
 
-function InputContainer<T extends FieldValues>({ children, placeholder, autoComplete, hint, type: initialType = "text", ...controls }: Props<T>) {
+const InputContainer = <T extends FieldValues>({ children, placeholder, autoComplete, hint, type: initialType = "text", ...controls }: Props<T>) => {
   const { field, fieldState } = useController(controls);
   const [type, setType] = useState(initialType);
 
   const handlePasswordShow = () => {
-    if (type === "password") setType("text");
-    else if (type === "text") setType("password");
+    if (type === "password") {
+      setType("text");
+    } else if (type === "text") {
+      setType("password");
+    }
   };
 
   const handleXIconClick = () => {
@@ -34,7 +37,7 @@ function InputContainer<T extends FieldValues>({ children, placeholder, autoComp
         autoComplete={autoComplete}
         type={type}
         {...field}
-        className={`border-solid-gray body1-normal placeholder:text-gray-4 focus:border-purple mt-10 h-48 w-full rounded-md bg-blue-50 p-16 text-14 text-black outline-none `}
+        className={`placeholder:text-gray-4 focus:border-purple mt-10 h-48 w-full rounded-md bg-blue-50 p-16 text-14 text-black outline-none`}
       />
       {initialType === "password" && (
         <button onClick={handlePasswordShow} type="button" className="absolute right-0 top-44 h-24 w-24 -translate-x-1/2 -translate-y-1/2">
@@ -46,9 +49,9 @@ function InputContainer<T extends FieldValues>({ children, placeholder, autoComp
           <Image src="/icon/x_gray.svg" alt="초기화 버튼" width={16} height={16} />
         </button>
       )}
-      <div className={`font-normal mt-4 h-8 text-12 ${fieldState?.error ? "text-red-500" : "text-gray-400"}`}>{fieldState?.error?.message || hint}</div>
+      <div className={`mt-4 h-8 text-12 ${fieldState?.error ? "text-red-500" : "text-gray-400"}`}>{fieldState?.error?.message || hint}</div>
     </div>
   );
-}
+};
 
 export default InputContainer;

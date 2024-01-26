@@ -1,17 +1,17 @@
 import { useFormContext } from "react-hook-form";
-import { ERROR_MESSAGES, REG_EXP } from "../../../_utils/signupValidation";
-import { SignUpFormValues } from "../page";
-import InputContainer from "./InputContainer";
+import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
+import { SignUpFormType } from "@/types/index";
+import InputContainer from "../InputContainer";
 
 export const AccountInfo = ({ onNext }: { onNext: () => void }) => {
-  const { formState, control, getValues } = useFormContext<SignUpFormValues>();
+  const { formState, control, getValues } = useFormContext<SignUpFormType>();
 
   const isButtonDisabled = !!formState.errors.email || !!formState.errors.password || !!formState.errors.passwordCh || !formState.isValid;
 
   return (
     <div className="flex flex-col gap-24 p-12">
       <p className=" text-16 font-700 text-black">로그인 정보를 입력해주세요</p>
-      <InputContainer
+      <InputContainer<SignUpFormType>
         control={control}
         name="email"
         autoComplete="username"
@@ -20,7 +20,7 @@ export const AccountInfo = ({ onNext }: { onNext: () => void }) => {
       >
         이메일
       </InputContainer>
-      <InputContainer
+      <InputContainer<SignUpFormType>
         control={control}
         name="password"
         type="password"
@@ -31,7 +31,7 @@ export const AccountInfo = ({ onNext }: { onNext: () => void }) => {
       >
         비밀번호
       </InputContainer>
-      <InputContainer
+      <InputContainer<SignUpFormType>
         control={control}
         name="passwordCh"
         type="password"
