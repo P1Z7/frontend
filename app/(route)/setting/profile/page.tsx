@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ChangeEvent, KeyboardEvent, MouseEvent, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import InputFile from "@/components/input/InputFile";
+import InputText from "@/components/input/InputText";
 import defaultImg from "@/public/icon/icon_add-image_gray.svg";
 
 const ProfilePage = () => {
@@ -49,6 +50,7 @@ const ProfilePage = () => {
   const { getValues, control } = useForm({
     defaultValues: {
       profileImage: "",
+      nickname: "",
     },
   });
 
@@ -71,18 +73,9 @@ const ProfilePage = () => {
         </div>
       </div>
       <div className="flex flex-col gap-8">
-        <p className="text-16">닉네임</p>
-        <input
-          value={value.nickname}
-          onKeyDown={handleKeyBlock}
-          onChange={handleNameChange}
-          placeholder="닉네임을 입력해주세요"
-          className={classNames("h-48 rounded-sm bg-gray-200 px-12 py-16 text-16", { "outline outline-2 outline-red-500": isLengthLimit })}
-        />
-        <div className={classNames("flex gap-8", { "text-red-500": isLengthLimit })}>
-          <span>{`${value.nickname.length}/10`}</span>
-          <p className="h-16 text-14">{isLengthLimit ? "닉네임은 10자 이하로 입력해주세요" : null}</p>
-        </div>
+        <InputText name="nickname" control={control}>
+          닉네임
+        </InputText>
       </div>
       <button
         className={classNames("rounded-sm px-16 py-12 text-16", { "bg-black text-white": !isError && !isLengthLimit }, { "bg-gray-300 text-black": isError || isLengthLimit })}
