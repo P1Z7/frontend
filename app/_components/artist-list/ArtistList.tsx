@@ -26,7 +26,8 @@ const ArtistList = () => {
   };
 
   return (
-    <div className="h-200 overflow-y-auto">
+    <div>
+      <h2>아티스트로 찾아보기</h2>
       <InfiniteScroll
         pageStart={0}
         loadMore={loadMore}
@@ -36,7 +37,6 @@ const ArtistList = () => {
             Loading ...
           </div>
         }
-        useWindow={false}
       >
         <ul className="grid w-320 grid-cols-3 gap-24 px-16">
           {artists.map((artist, index) => (

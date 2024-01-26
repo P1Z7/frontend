@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const HomeNav = () => {
   return (
-    <nav className="flex flex-row gap-20">
+    <nav className="fixed bottom-0 left-0 flex flex-row gap-20 bg-white">
       <NavButton href="/" button_type="홈" src="/icon/home-3_black.svg" />
       <NavButton href="/search" button_type="둘러보기" src="/icon/search_black.svg" />
       <NavButton href="/post" button_type="등록하기" src="/icon/add-outline_black.svg" />

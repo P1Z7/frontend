@@ -11,10 +11,7 @@ const Home = () => {
         <FavArtistEventsCarousel />
         <PopularEventsCarousel />
         <NewestEventsCarousel />
-        <div>
-          <h2>아티스트로 찾아보기</h2>
-          <ArtistList />
-        </div>
+        <ArtistList />
       </div>
       <HomeNav />
     </main>

@@ -49,14 +49,14 @@ export const EventMockData = [
     date: "01.19 ~ 01.20",
   },
   {
-    placeName: "이지훈 카페",
-    artistName: "이지훈",
+    placeName: "서명호 카페",
+    artistName: "서명호",
     eventType: "생일카페",
     address: "마포구",
     date: "01.19 ~ 01.20",
   },
   {
-    placeName: "최승철 카페",
+    placeName: "김민규 카페",
     artistName: "김민규",
     eventType: "생일카페",
     address: "마포구",
