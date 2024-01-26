@@ -2,12 +2,10 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import Carousel from "@/components/card/Carousel";
+import Carousel from "@/components/Carousel";
 import EventCard from "@/components/card/EventCard";
-import { EventMockData } from "./EventMockData";
-import PopularEvents from "./PopularEvents";
 
-const FavArtistEvents = () => {
+const FavArtistEventsCarousel = () => {
   // 추후 next auth로 변경 예정
   const [status, setStatus] = useState(true);
 
@@ -22,7 +20,6 @@ const FavArtistEvents = () => {
       {status ? (
         hasFavoriteEvents ? (
           <Carousel customSettings={{ infinite: false }}>
-            {/* <PopularEvents /> */}
             <EventCard placeName="카페" artistName="아티스트" eventType="생일 카페" address="주소" date="날짜" />
             <EventCard placeName="카페" artistName="아티스트" eventType="생일 카페" address="주소" date="날짜" />
             <EventCard placeName="카페" artistName="아티스트" eventType="생일 카페" address="주소" date="날짜" />
@@ -53,4 +50,4 @@ const NoFavCard = ({ href, buttonName }: NoFavCardProps) => {
   );
 };
 
-export default FavArtistEvents;
+export default FavArtistEventsCarousel;
