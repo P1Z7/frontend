@@ -51,14 +51,14 @@ const ProfilePage = () => {
       profileImage: "",
     },
   });
-  console.log(getValues("profileImage"));
 
   return (
     <div className="flex flex-col gap-24">
       <div className="flex flex-col gap-8">
-        <p className="text-16">프로필 사진</p>
-        <div className="flex justify-center">
-          <InputFile control={control} name="profileImage" />
+        <div className="">
+          <InputFile control={control} name="profileImage">
+            프로필 사진
+          </InputFile>
           {/* <label onKeyDown={handleKeyDown} className="relative h-100 w-100 cursor-pointer rounded-full" tabIndex={0}>
             <input ref={input} onClick={handleFileDelete} onChange={handleFileChange} type="file" className="hidden" accept="image/*" />
             <Image
@@ -69,7 +69,6 @@ const ProfilePage = () => {
             />
           </label> */}
         </div>
-        <button onClick={() => console.log(getValues("profileImage"))}>확인</button>
       </div>
       <div className="flex flex-col gap-8">
         <p className="text-16">닉네임</p>
