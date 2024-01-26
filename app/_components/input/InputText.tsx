@@ -13,13 +13,14 @@ interface Prop {
   hidden?: boolean;
   readOnly?: boolean;
   disabled?: boolean;
+  onClick?: () => void;
 }
 
 type Function = <TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>>(
   prop: UseControllerProps<TFieldValues, TName> & Prop,
 ) => ReactNode;
 
-const InputText: Function = ({ type: initialType, children, placeholder, autoComplete, hint, maxLength, hidden, readOnly, disabled, ...control }) => {
+const InputText: Function = ({ type: initialType, children, placeholder, autoComplete, hint, maxLength, hidden, readOnly, disabled, onClick, ...control }) => {
   const { field, fieldState } = useController(control);
   const [type, setType] = useState(initialType ?? "text");
 
@@ -43,6 +44,7 @@ const InputText: Function = ({ type: initialType, children, placeholder, autoCom
         autoComplete={autoComplete ?? "off"}
         readOnly={readOnly ?? false}
         disabled={disabled ?? false}
+        onClick={onClick}
         {...field}
         className={classNames(
           "border-solid-gray body1-normal placeholder:text-gray-4 focus:border-purple mt-10 h-48 w-full rounded-md bg-blue-50 p-16 text-14 text-black outline-none",

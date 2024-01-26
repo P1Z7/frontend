@@ -11,6 +11,7 @@ const GenericForm = <T extends FieldValues>({ children, formOptions }: GenericFo
 
   const onSubmit = () => {
     console.log(methods.getValues()); // 회원가입 POST할 정보
+    //여기서 행사도 POST ....... 나중에 path추가해서 로직 분리하면 될 듯 ?!
   };
 
   return (

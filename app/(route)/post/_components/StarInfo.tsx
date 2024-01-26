@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useFormContext } from "react-hook-form";
 import Dropdown from "@/components/Dropdown";
-import { useStore } from "@/store/index";
+import InputText from "@/components/input/InputText";
+import { PostType } from "../page";
 
 const EVENT_TYPE_LIST = ["생일카페", "상영회", "팬싸", "또뭐하ㅏ지", "모르겠다", "배고프다", "붕어빵", "피자붕어빵"];
 
@@ -9,16 +11,12 @@ interface Props {
 }
 
 const StarInfo = ({ onNextStep }: Props) => {
-  const { setInfo, info } = useStore((state) => ({
-    setInfo: state.setPostInfo,
-    info: state.postInfo,
-  }));
-  const [eventType, setEventType] = useState(info?.eventType ? info.eventType : EVENT_TYPE_LIST[0]);
+  const { setValue, getValues } = useFormContext<PostType>();
+  const [eventType, setEventType] = useState(getValues("eventType"));
 
-  const saveStarInfo = () => {
-    setInfo({ ...info, eventType });
-    onNextStep();
-  };
+  useEffect(() => {
+    setValue("eventType", eventType);
+  }, [eventType]);
 
   return (
     <>
@@ -33,9 +31,10 @@ const StarInfo = ({ onNextStep }: Props) => {
         <input placeholder="멤버선택" readOnly />
       </label>
       <br />
-      <label>행사 유형</label>
+      <div>행사 유형</div>
+      <InputText name="eventType" hidden />
       <Dropdown itemList={EVENT_TYPE_LIST} selected={eventType} setSelected={setEventType} />
-      <button onClick={saveStarInfo}>다음으로</button>
+      <button onClick={onNextStep}>다음으로</button>
     </>
   );
 };

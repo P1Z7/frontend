@@ -23,17 +23,9 @@ const DetailInfo = () => {
   };
 
   const saveDetailInfo = () => {
-    setInfo({ ...info, detail_text: getValues("detail_text"), images: imgList });
+    // setInfo({ ...info, detail_text: getValues("detail_text"), images: imgList });
     //여기서 api 콜
   };
-
-  // useEffect(() => {
-  //   setImgList(info?.images || []);
-  // }, []);
-
-  // useEffect(() => {
-  //   setInfo({ ...info, images: imgList });
-  // }, [imgList]);
 
   return (
     <>
