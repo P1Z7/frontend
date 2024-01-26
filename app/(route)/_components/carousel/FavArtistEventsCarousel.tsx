@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import Carousel from "@/components/Carousel";
 import EventCard from "@/components/card/EventCard";
+import { EventMockData } from "../EventMockData";
 
 const FavArtistEventsCarousel = () => {
   // 추후 next auth로 변경 예정
@@ -11,15 +12,15 @@ const FavArtistEventsCarousel = () => {
 
   // 목업의 길이를 기반으로 좋아요한 이벤트의 수 확인
   // 추후 수정 예정
-  // const hasFavoriteEvents = EventMockData.length > 0;
-  const hasFavoriteEvents = false;
+  const hasFavoriteEvents = EventMockData.length > 0;
+  // const hasFavoriteEvents = false;
 
   return (
     <>
       <h2>좋아요한 아티스트의 새 행사</h2>
       {status ? (
         hasFavoriteEvents ? (
-          <Carousel customSettings={{ infinite: false }}>
+          <Carousel customSettings={{ dots: true, infinite: false }}>
             <EventCard placeName="카페" artistName="아티스트" eventType="생일 카페" address="주소" date="날짜" />
             <EventCard placeName="카페" artistName="아티스트" eventType="생일 카페" address="주소" date="날짜" />
             <EventCard placeName="카페" artistName="아티스트" eventType="생일 카페" address="주소" date="날짜" />
