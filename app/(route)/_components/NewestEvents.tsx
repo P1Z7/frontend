@@ -1,5 +1,14 @@
+import Carousel from "@/components/card/Carousel";
 import EventCard from "@/components/card/EventCard";
 import { EventMockData } from "./EventMockData";
+
+const NewestEventsCarousel = () => {
+  return (
+    <Carousel title="최신 등록 행사" customSettings={{ autoplay: true }}>
+      <NewestEvents />
+    </Carousel>
+  );
+};
 
 const NewestEvents = () => {
   // 추후 최신순으로 10개 잘라낼 예정
@@ -16,4 +25,4 @@ const NewestEvents = () => {
   );
 };
 
-export default NewestEvents;
+export default NewestEventsCarousel;

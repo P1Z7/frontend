@@ -1,5 +1,14 @@
+import Carousel from "@/components/card/Carousel";
 import EventCard from "@/components/card/EventCard";
 import { EventMockData } from "./EventMockData";
+
+const PopularEventsCarousel = () => {
+  return (
+    <Carousel title="실시간 인기 행사" customSettings={{ autoplay: true }}>
+      <PopularEvents />
+    </Carousel>
+  );
+};
 
 const PopularEvents = () => {
   // 추후 인기순으로 10개 잘라낼 예정
@@ -16,4 +25,4 @@ const PopularEvents = () => {
   );
 };
 
-export default PopularEvents;
+export default PopularEventsCarousel;
