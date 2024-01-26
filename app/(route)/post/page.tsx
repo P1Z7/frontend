@@ -43,7 +43,7 @@ const Post = () => {
         />
         <div className="text-20 font-900">등록하기</div>
       </div>
-      <GenericForm formOptions={{ mode: "onBlur", defaultValues: DEFAULT_INPUT_VALUES }}>
+      <GenericForm formOptions={{ mode: "onBlur", defaultValues: DEFAULT_INPUT_VALUES, shouldFocusError: true }}>
         <Funnel>
           <Step name={POST_STEPS[0]}>
             <StarInfo onNextStep={() => setStep(POST_STEPS[1])} />

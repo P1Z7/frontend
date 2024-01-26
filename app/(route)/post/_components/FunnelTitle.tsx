@@ -14,7 +14,7 @@ const FunnelTitle = ({ step }: Props) => {
   return (
     <div className="flex-col gap-8">
       <div className="text-20 font-900">{POST_FUNNEL_TITLE[step]}</div>
-      {isRequired ? <div className="text-12 font-500 text-[#2461FF]">*필수 입력 사항입니다.</div> : <div>*선택 입력 사항입니다.</div>}
+      {isRequired ? <div className="text-12 font-500 text-[#2461FF]">*필수 입력 사항입니다.</div> : <div className="text-12 font-500 text-[#787878]">*선택 입력 사항입니다.</div>}
     </div>
   );
 };

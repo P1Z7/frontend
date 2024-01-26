@@ -19,15 +19,22 @@ interface Props {
 }
 
 const MainInfo = ({ onNextStep }: Props) => {
-  const { setValue } = useFormContext<PostType>();
+  const {
+    setValue,
+    watch,
+    formState: { isValid },
+  } = useFormContext<PostType>();
   const { modal, openModal, closeModal } = useModal();
+
+  const { title, address, startDate, endDate } = watch();
+  const isDisabled = !title || !address || !startDate || !endDate || !isValid;
 
   return (
     <div className="flex flex-col gap-24">
       <ProgressBar ratio="1/2" />
       <FunnelTitle step="행사 정보" />
       <main>
-        <InputText name="title" placeholder="카페 이름">
+        <InputText name="title" placeholder="카페 이름" rules={{ required: "제목을 입력해주세요." }}>
           제목
         </InputText>
         <InputText name="address" placeholder="도로명주소 검색" readOnly onClick={() => openModal("address")}>
@@ -38,8 +45,9 @@ const MainInfo = ({ onNextStep }: Props) => {
           기간
         </InputText>
         <InputText name="endDate" placeholder="날짜 선택" readOnly onClick={() => openModal("date")} />
-        <PostFooter onNextStep={onNextStep} />
       </main>
+      <PostFooter onNextStep={onNextStep} isDisabled={isDisabled} />
+
       {modal === "address" && <AddressModal setValue={setValue} closeModal={closeModal} />}
       {modal === "date" && <CalendarModal setValue={setValue} closeModal={closeModal} />}
     </div>

@@ -44,15 +44,24 @@ const DetailInfo = () => {
           <Controller
             control={control}
             name="detailText"
+            rules={{ maxLength: 100 }}
             render={({ field: { onChange, onBlur, value } }) => (
-              <textarea id="detail_text" className="h-120 border-2" placeholder="이벤트를 설명하세요." onChange={onChange} onBlur={onBlur} value={value} />
+              <textarea
+                id="detail_text"
+                className="h-120 rounded-sm bg-gray-100 px-16 py-12"
+                placeholder="이벤트를 설명하세요."
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+              />
             )}
           />
+          <div className={classNames("text-12 text-[#A2A5AA]", { "text-red-600": getValues("detailText").length > 100 })}>{getValues("detailText").length} / 100</div>
         </label>
         <div className=" bg-slate-400">이용약관 어쩌구 저쩌구..</div>
         {isCheck ? <div onClick={() => setIsCheck(false)}>체크됨</div> : <div onClick={() => setIsCheck(true)}>체크안함</div>}
       </main>
-      <PostFooter />
+      <PostFooter isDisabled={!isCheck || getValues("detailText").length > 100} />
     </div>
   );
 };
