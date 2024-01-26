@@ -3,6 +3,8 @@
 import classNames from "classnames";
 import Image from "next/image";
 import { ChangeEvent, KeyboardEvent, MouseEvent, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import InputFile from "@/components/input/InputFile";
 import defaultImg from "@/public/icon/icon_add-image_gray.svg";
 
 const ProfilePage = () => {
@@ -44,12 +46,20 @@ const ProfilePage = () => {
     }
   };
 
+  const { getValues, control } = useForm({
+    defaultValues: {
+      profileImage: "",
+    },
+  });
+  console.log(getValues("profileImage"));
+
   return (
     <div className="flex flex-col gap-24">
       <div className="flex flex-col gap-8">
         <p className="text-16">프로필 사진</p>
         <div className="flex justify-center">
-          <label onKeyDown={handleKeyDown} className="relative h-100 w-100 cursor-pointer rounded-full" tabIndex={0}>
+          <InputFile control={control} name="profileImage" />
+          {/* <label onKeyDown={handleKeyDown} className="relative h-100 w-100 cursor-pointer rounded-full" tabIndex={0}>
             <input ref={input} onClick={handleFileDelete} onChange={handleFileChange} type="file" className="hidden" accept="image/*" />
             <Image
               src={value.profileImage || defaultImg}
@@ -57,8 +67,9 @@ const ProfilePage = () => {
               alt="이미지 추가 버튼"
               className={classNames("rounded-full object-cover", { "hover:brightness-50": value.profileImage })}
             />
-          </label>
+          </label> */}
         </div>
+        <button onClick={() => console.log(getValues("profileImage"))}>확인</button>
       </div>
       <div className="flex flex-col gap-8">
         <p className="text-16">닉네임</p>

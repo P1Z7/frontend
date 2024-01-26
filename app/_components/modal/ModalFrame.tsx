@@ -1,12 +1,14 @@
 "use client";
 
 import { ReactNode } from "react";
-import { useStore } from "@/store/index";
 import ModalPortal from "./ModalPortal";
 
-const ModalFrame = ({ children }: { children: ReactNode }) => {
-  const { closeModal } = useStore((state) => ({ closeModal: state.closeModal }));
+interface Props {
+  children: ReactNode;
+  closeModal: () => void;
+}
 
+const ModalFrame = ({ children, closeModal }: Props) => {
   return (
     <ModalPortal>
       <div onClick={closeModal} className="fixed left-0 top-0 flex h-screen w-full items-center justify-center bg-black bg-opacity-70 text-center">

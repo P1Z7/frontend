@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
+import InputText from "@/components/input/InputText";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 import { SignUpFormType } from "@/types/index";
-import InputContainer from "../InputContainer";
 
 const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
   const { formState, control } = useFormContext<SignUpFormType>();
@@ -11,7 +11,7 @@ const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
   return (
     <div className="flex flex-col gap-24 p-12">
       <p className=" text-16 font-700 text-black">프로필을 입력해주세요</p>
-      <InputContainer<SignUpFormType>
+      <InputText
         control={control}
         name="nickName"
         hint="n/10"
@@ -19,7 +19,7 @@ const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
         rules={{ required: ERROR_MESSAGES.nickname.nicknameField, pattern: { value: REG_EXP.CHECK_NICKNAME, message: ERROR_MESSAGES.nickname.nicknamePattern } }}
       >
         닉네임
-      </InputContainer>
+      </InputText>
       <button type="button" onClick={onNext} className="h-40 bg-slate-200 text-12" disabled={isButtonDisabled}>
         다음
       </button>
