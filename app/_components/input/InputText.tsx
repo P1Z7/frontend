@@ -16,7 +16,7 @@ type Function = <TFieldValues extends FieldValues = FieldValues, TName extends F
   prop: UseControllerProps<TFieldValues, TName> & Prop,
 ) => ReactNode;
 
-const InputC: Function = ({ type: initialType, children, placeholder, autoComplete, hint, maxLength, ...control }) => {
+const InputText: Function = ({ type: initialType, children, placeholder, autoComplete, hint, maxLength, ...control }) => {
   const { field, fieldState } = useController(control);
   const [type, setType] = useState(initialType ?? "text");
 
@@ -59,4 +59,4 @@ const InputC: Function = ({ type: initialType, children, placeholder, autoComple
   );
 };
 
-export default InputC;
+export default InputText;
