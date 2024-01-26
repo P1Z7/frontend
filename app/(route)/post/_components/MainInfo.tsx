@@ -6,16 +6,19 @@ import "react-day-picker/dist/style.css";
 import { useForm } from "react-hook-form";
 import AddressModal from "@/components/modal/AddressModal";
 import CalendarModal from "@/components/modal/CalendarModal";
+import { useModal } from "@/hooks/useModal";
 import { useStore } from "@/store/index";
 
-const MainInfo = () => {
-  const { modal, openModal, setStep, setInfo, info } = useStore((state) => ({
-    modal: state.modal,
-    openModal: state.openModal,
-    setStep: state.setStep,
+interface Props {
+  onNextStep: () => void;
+}
+
+const MainInfo = ({ onNextStep }: Props) => {
+  const { setInfo, info } = useStore((state) => ({
     setInfo: state.setPostInfo,
     info: state.postInfo,
   }));
+  const { modal, openModal, closeModal } = useModal();
   const [address, setAddress] = useState("");
   const {
     register,
@@ -34,7 +37,7 @@ const MainInfo = () => {
       start_date: getValues("start_date"),
       end_date: getValues("end_date"),
     });
-    setStep(3);
+    onNextStep();
   };
 
   const date = watch("start_date");
@@ -56,6 +59,9 @@ const MainInfo = () => {
 
   return (
     <>
+      <div className="h-4 w-320 rounded-full bg-gray-200 dark:bg-gray-700">
+        <div className="h-4 w-1/2 rounded-full bg-blue-600"></div>
+      </div>
       <div>행사 정보를 입력해주세요🎈</div>
       <label>
         제목
@@ -76,10 +82,10 @@ const MainInfo = () => {
         ~
         <input placeholder="날짜 선택" readOnly className="bg-red-100" {...register("end_date")} onClick={() => openModal("date")} />
       </label>
-      {modal === "address" && <AddressModal setAddress={setAddress} />}
-      {modal === "date" && <CalendarModal setValue={setValue} />}
+      {modal === "address" && <AddressModal setAddress={setAddress} closeModal={closeModal} />}
+      {modal === "date" && <CalendarModal setValue={setValue} closeModal={closeModal} />}
       <br />
-      <button onClick={saveMainInfo} disabled={isEmpty} className={classNames("bg-slate-400", { "bg-red-200": !isEmpty })}>
+      <button onClick={saveMainInfo} className={classNames("bg-slate-400", { "bg-red-200": !isEmpty })}>
         다음으로
       </button>
     </>

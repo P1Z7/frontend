@@ -27,16 +27,19 @@ const DetailInfo = () => {
     //여기서 api 콜
   };
 
-  useEffect(() => {
-    setImgList(info?.images || []);
-  }, []);
+  // useEffect(() => {
+  //   setImgList(info?.images || []);
+  // }, []);
 
-  useEffect(() => {
-    setInfo({ ...info, images: imgList });
-  }, [imgList]);
+  // useEffect(() => {
+  //   setInfo({ ...info, images: imgList });
+  // }, [imgList]);
 
   return (
     <>
+      <div className="h-4 w-320 rounded-full bg-gray-200 dark:bg-gray-700">
+        <div className="h-4 w-full rounded-full bg-blue-600"></div>
+      </div>
       <div>이미지와 설명을 작성해주세요✨</div>
       <div>*선택 입력 사항입니다.</div>
       <div>이미지</div>

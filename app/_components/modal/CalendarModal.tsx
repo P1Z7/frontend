@@ -9,9 +9,10 @@ import ModalFrame from "./ModalFrame";
 
 interface Props {
   setValue: UseFormSetValue<FieldValues>;
+  closeModal: () => void;
 }
 
-const CalendarModal = ({ setValue }: Props) => {
+const CalendarModal = ({ setValue, closeModal }: Props) => {
   const [range, setRange] = useState<DateRange | undefined>();
 
   useEffect(() => {
@@ -26,7 +27,7 @@ const CalendarModal = ({ setValue }: Props) => {
   }, [range]);
 
   return (
-    <ModalFrame>
+    <ModalFrame closeModal={closeModal}>
       <div onClick={(event) => event.stopPropagation()}>
         <DayPicker id="test" mode="range" selected={range} onSelect={setRange} />
       </div>

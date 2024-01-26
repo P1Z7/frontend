@@ -4,11 +4,12 @@ import { useStore } from "@/store/index";
 
 const EVENT_TYPE_LIST = ["생일카페", "상영회", "팬싸", "또뭐하ㅏ지", "모르겠다", "배고프다", "붕어빵", "피자붕어빵"];
 
-const StarInfo = () => {
-  const { modal, openModal, setStep, setInfo, info } = useStore((state) => ({
-    modal: state.modal,
-    openModal: state.openModal,
-    setStep: state.setStep,
+interface Props {
+  onNextStep: () => void;
+}
+
+const StarInfo = ({ onNextStep }: Props) => {
+  const { setInfo, info } = useStore((state) => ({
     setInfo: state.setPostInfo,
     info: state.postInfo,
   }));
@@ -16,11 +17,14 @@ const StarInfo = () => {
 
   const saveStarInfo = () => {
     setInfo({ ...info, eventType });
-    setStep(2);
+    onNextStep();
   };
 
   return (
     <>
+      <div className="h-4 w-320 rounded-full bg-gray-200 dark:bg-gray-700">
+        <div className="h-4 w-1/4 rounded-full bg-blue-600"></div>
+      </div>
       <div>누구를 위한 행사인가요🎉?</div>
       <div>*필수 입력 사항입니다.</div>
       <label>

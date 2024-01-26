@@ -1,19 +1,17 @@
 "use client";
 
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import DaumPostcodeEmbed from "react-daum-postcode";
-import { useStore } from "@/store/index";
 import ModalFrame from "./ModalFrame";
 
 interface Props {
-  setAddress: any;
+  setAddress: Dispatch<SetStateAction<string>>;
+  closeModal: () => void;
 }
 
-const AddressModal = ({ setAddress }: Props) => {
-  const { closeModal } = useStore((state) => ({ closeModal: state.closeModal }));
-
+const AddressModal = ({ setAddress, closeModal }: Props) => {
   return (
-    <ModalFrame>
+    <ModalFrame closeModal={closeModal}>
       <DaumPostcodeEmbed
         onComplete={(data: any) => {
           setAddress(data.address);
