@@ -5,7 +5,7 @@ import { FieldPath, FieldValues, UseControllerProps, useController } from "react
 
 interface Prop {
   type?: "text" | "password";
-  children: ReactNode;
+  children?: ReactNode;
   placeholder?: string;
   autoComplete?: string;
   hint?: string;
