@@ -14,9 +14,9 @@
     "@tanstack/react-query-devtools": "^5.17.19",
     "@tanstack/react-query-next-experimental": "^5.17.19",
     "@types/classnames": "^2.3.1",
+    "@types/react-slick": "^0.23.13",
     "classnames": "^2.5.1",
     "date-fns": "^3.3.1",
-    "@types/react-slick": "^0.23.13",
     "next": "14.1.0",
     "next-auth": "^4.24.5",
     "react": "^18",
@@ -24,10 +24,11 @@
     "react-day-picker": "^8.10.0",
     "react-dom": "^18",
     "react-hook-form": "^7.49.3",
-    "tailwind-scrollbar-hide": "^1.1.7",
+    "react-hot-toast": "^2.4.1",
     "react-infinite-scroller": "^1.2.6",
     "react-slick": "^0.29.0",
     "slick-carousel": "^1.8.1",
+    "tailwind-scrollbar-hide": "^1.1.7",
     "zustand": "^4.5.0"
   },
   "devDependencies": {
