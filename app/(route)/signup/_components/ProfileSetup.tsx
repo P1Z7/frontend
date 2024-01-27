@@ -1,9 +1,9 @@
-import { ProfileSetupType } from "@/types/index";
-import { AccountInfo } from "./step/AccountInfo";
+import { ProfileSetupType, SignupStepNameType } from "@/types/index";
+import AccountInfo from "./step/AccountInfo";
 import MyArtistsInfo from "./step/MyArtistsInfo";
 import ProfileInfo from "./step/ProfileInfo";
 
-const ProfileSetup = ({ steps, handleNextClick, Funnel, Step }: ProfileSetupType) => {
+const ProfileSetup = ({ steps, handleNextClick, Funnel, Step }: ProfileSetupType<SignupStepNameType>) => {
   return (
     <Funnel>
       <Step name="계정 정보">

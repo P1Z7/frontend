@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import toast, { resolveValue } from "react-hot-toast";
+import toast from "react-hot-toast";
 import InputText from "../input/InputText";
 import ModalFrame from "./ModalFrame";
 

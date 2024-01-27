@@ -3,7 +3,7 @@ import InputText from "@/components/input/InputText";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 import { SignUpFormType } from "@/types/index";
 
-export const AccountInfo = ({ onNext }: { onNext: () => void }) => {
+const AccountInfo = ({ onNext }: { onNext: () => void }) => {
   const { formState, control, getValues } = useFormContext<SignUpFormType>();
 
   const isButtonDisabled = !!formState.errors.email || !!formState.errors.password || !!formState.errors.passwordCh || !formState.isDirty;
@@ -55,3 +55,5 @@ export const AccountInfo = ({ onNext }: { onNext: () => void }) => {
     </div>
   );
 };
+
+export default AccountInfo;

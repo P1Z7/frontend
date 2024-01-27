@@ -14,7 +14,7 @@ const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
       <InputText
         control={control}
         name="nickName"
-        hint="n/10"
+        maxLength={10}
         placeholder="닉네임을 입력해 주세요"
         rules={{ required: ERROR_MESSAGES.nickname.nicknameField, pattern: { value: REG_EXP.CHECK_NICKNAME, message: ERROR_MESSAGES.nickname.nicknamePattern } }}
       >

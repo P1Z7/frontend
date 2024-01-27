@@ -3,19 +3,26 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useFunnel } from "@/hooks/useFunnel";
-import { SignUpFormType, StepNameType } from "@/types/index";
+import { SignUpFormType, SignupStepNameType } from "@/types/index";
 import GenericForm from "./_components/GenericForm";
 import ProfileSetup from "./_components/ProfileSetup";
 
-const STEPS: StepNameType[] = ["계정 정보", "프로필 정보", "아티스트 선택"];
+const STEPS: SignupStepNameType[] = ["계정 정보", "프로필 정보", "아티스트 선택"];
 
-const DEFAULT_VALUES = { email: "", password: "", passwordCh: "", profileImg: "", nickName: "", myArtists: [] };
+const DEFAULT_VALUES = {
+  email: "",
+  password: "",
+  passwordCh: "",
+  profileImg: "",
+  nickName: "",
+  myArtists: [],
+};
 
 const SignUp = () => {
   const router = useRouter();
-  const { Funnel, Step, setStep, currentStep } = useFunnel(STEPS[0]);
+  const { Funnel, Step, setStep, currentStep } = useFunnel(STEPS);
 
-  const handleNextClick = (step: StepNameType) => {
+  const handleNextClick = (step: SignupStepNameType) => {
     setStep(step);
   };
   const handlePrevClick = () => {
