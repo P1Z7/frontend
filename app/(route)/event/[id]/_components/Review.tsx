@@ -1,23 +1,37 @@
+import { MyReviewProps } from "@/(route)/mypage/page";
 import Image from "next/image";
 import Evaluation from "@/components/Evaluation";
 
 interface Props {
-  data: {
-    user: {
-      nickname: string;
-      profileImage: string;
-    };
-    rate: boolean;
-    description: string;
-    images: string[];
-    like: number;
-  };
+  data:
+    | {
+        user: {
+          nickname: string;
+          profileImage: string;
+        };
+        rate: boolean;
+        description: string;
+        images: string[];
+        like: number;
+      }
+    | MyReviewProps;
+  type?: "eventReview" | "myReview";
 }
 
-const Review = ({ data }: Props) => {
+const Review = ({ data, type = "eventReview" }: Props) => {
   return (
     <div className="h-240 w-full border border-solid border-black">
-      <User user={data.user} />
+      {type === "eventReview" && "user" in data && (
+        <>
+          <User user={data.user} />
+        </>
+      )}
+      {type === "myReview" && "place" in data && (
+        <>
+          <p>{data.place}</p>
+          <p>{data.public ? "공개" : "비공개"}</p>
+        </>
+      )}
       <Evaluation rate={data.rate} />
       <p>{data.description}</p>
       <ul className="flex h-120 w-full gap-12 overflow-x-auto">

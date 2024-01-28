@@ -1,3 +1,4 @@
+import { useRouter } from "next/navigation";
 import BottomSheetFrame from "./BottomSheetFrame";
 
 interface Props {
@@ -12,11 +13,13 @@ const EditUserInfo = {
 };
 
 const MyPageBottomSheet = ({ closeBottomSheet }: Props) => {
+  const router = useRouter();
+
   return (
     <BottomSheetFrame closeBottomSheet={closeBottomSheet}>
       <div className="flex flex-col gap-20 p-20 text-16" onClick={(event) => event.stopPropagation()}>
-        <p>{EditUserInfo.profile}</p>
-        <p>{EditUserInfo.password}</p>
+        <button onClick={() => router.push("/setting/profile")}>{EditUserInfo.profile}</button>
+        <button onClick={() => router.push("/setting/password")}>{EditUserInfo.password}</button>
         <p>{EditUserInfo.logOut}</p>
         <p>{EditUserInfo.withdrawal}</p>
       </div>
