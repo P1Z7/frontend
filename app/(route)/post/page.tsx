@@ -2,13 +2,14 @@
 
 import Image from "next/image";
 import { useFunnel } from "@/hooks/useFunnel";
+import { PostStepNameType } from "@/types/index";
 import GenericForm from "../signup/_components/GenericForm";
 import DetailInfo from "./_components/DetailInfo";
 import MainInfo from "./_components/MainInfo";
 import StarInfo from "./_components/StarInfo";
 import SubInfo from "./_components/SubInfo";
 
-export const POST_STEPS = ["행사 대상", "행사 정보", "특전 정보", "상세 설명"];
+export const POST_STEPS: PostStepNameType[] = ["행사 대상", "행사 정보", "특전 정보", "상세 설명"] as const;
 
 const DEFAULT_INPUT_VALUES = {
   group: "",
@@ -30,7 +31,7 @@ const DEFAULT_INPUT_VALUES = {
 export type PostType = Omit<typeof DEFAULT_INPUT_VALUES, "gift" | "images" | "member"> & { gift: string[]; images: File[]; member: string[] };
 
 const Post = () => {
-  const { Funnel, Step, setStep, currentStep } = useFunnel(POST_STEPS[0]);
+  const { Funnel, Step, setStep, currentStep } = useFunnel(POST_STEPS);
 
   const handlePrevClick = () => {
     currentStep === POST_STEPS[0] ? window.history.back() : setStep(POST_STEPS[POST_STEPS.indexOf(currentStep) - 1]);
