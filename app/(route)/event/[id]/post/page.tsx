@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { ButtonHTMLAttributes, ReactNode, useState } from "react";
+import { ButtonHTMLAttributes, ReactNode, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import InputFile from "@/components/input/InputFile";
 import InputText from "@/components/input/InputText";
@@ -31,11 +31,21 @@ const ReviewPostPage = () => {
   });
 
   const { images } = watch();
+  const [imageList, setImageList] = useState<File[]>([]);
+
+  const removeImage = (removingImage: File) => {
+    setImageList((prev) => prev.filter((image) => image !== removingImage));
+  };
+
+  useEffect(() => {
+    const nextImageList = Array.from(images).filter((image) => !imageList.includes(image));
+    setImageList((prev) => [...prev, ...nextImageList]);
+  }, [images]);
 
   const isDisabled = !(isDirty && isValid && isEvaluated && checked);
 
   const postReview: SubmitHandler<FormValues> = (form) => {
-    console.log({ evaluation, ...form });
+    console.log({ evaluation, ...form, images: imageList });
   };
 
   return (
@@ -71,9 +81,11 @@ const ReviewPostPage = () => {
             이미지
           </InputFile>
         </li>
-        {Array.from(images)?.map((image, index) => (
-          <li key={index} className="relative h-100 w-100 flex-shrink-0">
-            <Image src={URL.createObjectURL(image)} alt="선택한 사진 미리보기" fill className="object-cover" />
+        {imageList.map((image, index) => (
+          <li key={index}>
+            <button type="button" onClick={() => removeImage(image)} className="relative h-100 w-100 flex-shrink-0">
+              <Image src={URL.createObjectURL(image)} alt="선택한 사진 미리보기" fill className="object-cover" />
+            </button>
           </li>
         ))}
       </ul>
