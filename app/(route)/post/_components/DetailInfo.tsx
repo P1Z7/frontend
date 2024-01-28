@@ -9,13 +9,19 @@ import FunnelTitle from "./FunnelTitle";
 import PostFooter from "./PostFooter";
 
 const DetailInfo = () => {
-  const { getValues, setValue, control } = useFormContext<PostType>();
+  const { getValues, setValue, control, watch } = useFormContext<PostType>();
   const [isCheck, setIsCheck] = useState(false);
   const [imgList, setImgList] = useState<File[]>(getValues("images"));
+  const { images } = watch();
+
+  const handleNextClick = () => {
+    setValue("images", imgList);
+  };
 
   useEffect(() => {
-    setValue("images", imgList);
-  }, [imgList]);
+    const newList = imgList.length > 0 ? Array.from(images).filter((file) => !imgList.includes(file)) : images;
+    setImgList((prev) => [...prev, ...newList]);
+  }, [images]);
 
   return (
     <div className="flex flex-col gap-24">
@@ -25,9 +31,9 @@ const DetailInfo = () => {
         <div>
           <div>이미지</div>
           <div className="flex gap-8">
-            <InputFile name="images" setState={setImgList} />
+            <InputFile name="images" />
             <div className="scrollbar-hide flex w-[400px] gap-8 overflow-x-scroll">
-              {imgList.map((file, idx) => (
+              {Array.from(imgList).map((file, idx) => (
                 <div key={idx} className="relative flex h-120 w-120 shrink-0">
                   <div className="absolute right-0 top-0 z-popup cursor-pointer" onClick={() => setImgList((prev) => prev.filter((item: File) => item !== file))}>
                     삭제
@@ -61,7 +67,7 @@ const DetailInfo = () => {
         <div className=" bg-slate-400">이용약관 어쩌구 저쩌구..</div>
         {isCheck ? <div onClick={() => setIsCheck(false)}>체크됨</div> : <div onClick={() => setIsCheck(true)}>체크안함</div>}
       </main>
-      <PostFooter isDisabled={!isCheck || getValues("detailText").length > 100} />
+      <PostFooter onNextStep={handleNextClick} isDisabled={!isCheck || getValues("detailText").length > 100} />
     </div>
   );
 };

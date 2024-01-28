@@ -5,26 +5,17 @@ import defaultImg from "@/public/icon/add-image_gray.svg";
 
 interface Props {
   children?: ReactNode;
-  setState: Dispatch<SetStateAction<File[]>>;
 }
 
 type Function = <TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>>(
   prop: UseControllerProps<TFieldValues, TName> & Props,
 ) => ReactNode;
 
-const InputFile: Function = ({ children, setState, ...props }) => {
+const InputFile: Function = ({ children, ...props }) => {
   const { field } = useController(props);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     field.onChange({ target: { value: e.target.files, name: field.name } });
-    if (!e.target.files) {
-      return;
-    }
-    const list: File[] = [];
-    for (let i = 0; i < e.target.files.length; i++) {
-      list.push(e.target.files[i]);
-    }
-    setState((prev) => [...prev, ...list]);
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {
