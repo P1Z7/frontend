@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from "react";
 import { FunnelType, SignupStepNameType, StepType } from "../_types";
 
-export const useFunnel = <T extends SignupStepNameType>(defaultStepArray: readonly T[]) => {
+export const useFunnel = <T extends {}>(defaultStepArray: readonly T[]) => {
   const firstStep = defaultStepArray[0];
   const [step, setStep] = useState(firstStep);
 

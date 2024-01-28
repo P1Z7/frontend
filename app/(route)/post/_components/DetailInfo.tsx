@@ -1,76 +1,88 @@
 import classNames from "classnames";
 import Image from "next/image";
-import { ChangeEvent, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useStore } from "@/store/index";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Controller, useFormContext } from "react-hook-form";
+import ProgressBar from "@/components/ProgressBar";
+import InputFile from "@/components/input/InputFile";
+import { PostType } from "../page";
+import FunnelTitle from "./FunnelTitle";
+import PostFooter from "./PostFooter";
 
 const DetailInfo = () => {
-  const { setInfo, info } = useStore((state) => ({
-    setInfo: state.setPostInfo,
-    info: state.postInfo,
-  }));
+  const { getValues, setValue, control, watch } = useFormContext<PostType>();
   const [isCheck, setIsCheck] = useState(false);
-  const [imgList, setImgList] = useState<File[]>([]);
-  const { register, getValues } = useForm();
+  const [imgList, setImgList] = useState<File[]>(getValues("images"));
+  const { images } = watch();
 
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files?.[0]) return;
-    const list = [...imgList];
-    for (let i = 0; i < event.target.files.length; i++) {
-      list.push(event.target.files[i]);
-    }
-    setImgList(list);
+  const handleNextClick = () => {
+    setValue("images", imgList);
   };
 
-  const saveDetailInfo = () => {
-    setInfo({ ...info, detail_text: getValues("detail_text"), images: imgList });
-    //여기서 api 콜
-  };
-
-  // useEffect(() => {
-  //   setImgList(info?.images || []);
-  // }, []);
-
-  // useEffect(() => {
-  //   setInfo({ ...info, images: imgList });
-  // }, [imgList]);
+  useEffect(() => {
+    const newList = imgList.length > 0 ? Array.from(images).filter((file) => !imgList?.includes(file)) : images;
+    setImgList((prev) => [...prev, ...newList]);
+  }, [images]);
 
   return (
-    <>
-      <div className="h-4 w-320 rounded-full bg-gray-200 dark:bg-gray-700">
-        <div className="h-4 w-full rounded-full bg-blue-600"></div>
-      </div>
-      <div>이미지와 설명을 작성해주세요✨</div>
-      <div>*선택 입력 사항입니다.</div>
-      <div>이미지</div>
-      <div className="flex w-[400px] overflow-x-scroll scrollbar-hide">
-        <div className="flex h-120 w-120 shrink-0 items-center justify-center bg-zinc-400">
-          <label>
-            추가
-            <input name="profileImg" type="file" multiple className="hidden" accept="image/*" onChange={handleFileChange} />
-          </label>
+    <div className="flex flex-col gap-24">
+      <ProgressBar ratio="full" />
+      <FunnelTitle step="상세 설명" />
+      <main>
+        <ImageSection imgList={imgList} setImgList={setImgList} />
+        <label className="flex flex-col">
+          상세 내용
+          <Controller
+            control={control}
+            name="detailText"
+            rules={{ maxLength: 100 }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <textarea
+                id="detail_text"
+                className="h-120 rounded-sm bg-gray-100 px-16 py-12"
+                placeholder="이벤트를 설명하세요."
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+              />
+            )}
+          />
+          <div className={classNames("text-12 text-[#A2A5AA]", { "text-red-600": getValues("detailText").length > 100 })}>{getValues("detailText").length} / 100</div>
+        </label>
+        <div className="rounded-sm bg-[#DDD] px-12 py-8">
+          허위 등록, 악의적인 등록은 삭제될 수 있으며, 이로 인한 피해가 발생할 경우 전적으로 게시자가 책임집니다.(대략이런내용) 이용약관 상수로 관리할까여말까여 흠 고민고민..
         </div>
-        {imgList.map((file, idx) => (
-          <div key={idx} className="relative flex h-120 w-120 shrink-0">
-            <div className="absolute right-0 top-0 z-popup" onClick={() => setImgList((prev) => prev.filter((item: File) => item !== file))}>
-              삭제
-            </div>
-            <Image src={URL.createObjectURL(file)} alt="선택한 사진 미리보기" fill className="object-cover" />
-          </div>
-        ))}
-      </div>
-      <div>첫번째 이미지 썸네일 등록</div>
-      <label>
-        상세 내용
-        <textarea id="detail_text" className="border-2" placeholder="내용을 입력하세요." {...register("detail_text")} />
-      </label>
-      <div className=" bg-slate-400">이용약관 어쩌구 저쩌구..</div>
-      {isCheck ? <div onClick={() => setIsCheck(false)}>체크됨</div> : <div onClick={() => setIsCheck(true)}>체크안함</div>}
-      <button disabled={!isCheck} onClick={saveDetailInfo} className={classNames("bg-slate-400", { "bg-red-200": isCheck })}>
-        등록하기
-      </button>
-    </>
+        {isCheck ? <div onClick={() => setIsCheck(false)}>체크됨</div> : <div onClick={() => setIsCheck(true)}>클릭하면 체크</div>}
+      </main>
+      <PostFooter onNextStep={handleNextClick} isDisabled={!isCheck || getValues("detailText").length > 100} />
+    </div>
   );
 };
 
 export default DetailInfo;
+
+interface ImageSectionProps {
+  imgList: File[];
+  setImgList: Dispatch<SetStateAction<File[]>>;
+}
+
+const ImageSection = ({ imgList, setImgList }: ImageSectionProps) => {
+  return (
+    <div className="flex flex-col gap-8">
+      <div>이미지</div>
+      <div className="flex gap-8">
+        <InputFile name="images" />
+        <div className="scrollbar-hide flex w-[400px] gap-8 overflow-x-scroll">
+          {Array.from(imgList).map((file, idx) => (
+            <div key={idx} className="relative flex h-120 w-120 shrink-0">
+              <div className="absolute right-0 top-0 z-popup cursor-pointer" onClick={() => setImgList((prev) => prev.filter((item: File) => item !== file))}>
+                삭제
+              </div>
+              <Image src={URL.createObjectURL(file)} alt="선택한 사진 미리보기" fill className="object-cover" />
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="text-12 text-[#A2A5AA]">첫번째 이미지 썸네일 등록</div>
+    </div>
+  );
+};
