@@ -1,5 +1,6 @@
 "use client";
 
+import { EditPostType } from "@/(route)/event/[id]/edit/page";
 import { PostType } from "@/(route)/post/page";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
@@ -9,7 +10,7 @@ import { UseFormSetValue } from "react-hook-form";
 import ModalFrame from "./ModalFrame";
 
 interface Props {
-  setValue: UseFormSetValue<PostType>;
+  setValue: UseFormSetValue<PostType> | UseFormSetValue<EditPostType>;
   closeModal: () => void;
 }
 

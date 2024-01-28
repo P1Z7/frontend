@@ -29,7 +29,7 @@ const DEFAULT_INPUT_VALUES = {
 
 const POST_STEPS: SignupStepNameType[] = ["계정 정보", "프로필 정보", "아티스트 선택"];
 
-export type PostType = Omit<typeof DEFAULT_INPUT_VALUES, "gift" | "images" | "member"> & { gift: string[]; images: File[]; member: string[] };
+export type PostType = Omit<typeof DEFAULT_INPUT_VALUES, "gift" | "images" | "member"> & { gift: string[]; images: File[] | string[]; member: string[] };
 
 const Post = () => {
   const { Funnel, Step, setStep, currentStep } = useFunnel(POST_STEPS);
