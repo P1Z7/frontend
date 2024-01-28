@@ -32,17 +32,14 @@ export type PostType = Omit<typeof DEFAULT_INPUT_VALUES, "gift" | "images" | "me
 const Post = () => {
   const { Funnel, Step, setStep, currentStep } = useFunnel(POST_STEPS[0]);
 
+  const handlePrevClick = () => {
+    currentStep === POST_STEPS[0] ? window.history.back() : setStep(POST_STEPS[POST_STEPS.indexOf(currentStep) - 1]);
+  };
+
   return (
     <div className="flex h-svh flex-col gap-24 p-20 text-16">
       <div className="flex gap-8 pb-20 pt-12">
-        <Image
-          src="/icon/left-arrow.svg"
-          alt="뒤로가기 버튼"
-          width={24}
-          height={24}
-          onClick={() => (currentStep === POST_STEPS[0] ? window.history.back() : setStep(POST_STEPS[POST_STEPS.indexOf(currentStep) - 1]))}
-          className="cursor-pointer"
-        />
+        <Image src="/icon/left-arrow.svg" alt="뒤로가기 버튼" width={24} height={24} onClick={handlePrevClick} className="cursor-pointer" />
         <div className="text-20 font-900">등록하기</div>
       </div>
       <GenericForm formOptions={{ mode: "onBlur", defaultValues: DEFAULT_INPUT_VALUES, shouldFocusError: true }}>

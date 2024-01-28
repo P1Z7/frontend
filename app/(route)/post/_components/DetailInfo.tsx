@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import ProgressBar from "@/components/ProgressBar";
 import InputFile from "@/components/input/InputFile";
@@ -19,7 +19,7 @@ const DetailInfo = () => {
   };
 
   useEffect(() => {
-    const newList = imgList.length > 0 ? Array.from(images).filter((file) => !imgList.includes(file)) : images;
+    const newList = imgList.length > 0 ? Array.from(images).filter((file) => !imgList?.includes(file)) : images;
     setImgList((prev) => [...prev, ...newList]);
   }, [images]);
 
@@ -28,23 +28,7 @@ const DetailInfo = () => {
       <ProgressBar ratio="full" />
       <FunnelTitle step="상세 설명" />
       <main>
-        <div>
-          <div>이미지</div>
-          <div className="flex gap-8">
-            <InputFile name="images" />
-            <div className="scrollbar-hide flex w-[400px] gap-8 overflow-x-scroll">
-              {Array.from(imgList).map((file, idx) => (
-                <div key={idx} className="relative flex h-120 w-120 shrink-0">
-                  <div className="absolute right-0 top-0 z-popup cursor-pointer" onClick={() => setImgList((prev) => prev.filter((item: File) => item !== file))}>
-                    삭제
-                  </div>
-                  <Image src={URL.createObjectURL(file)} alt="선택한 사진 미리보기" fill className="object-cover" />
-                </div>
-              ))}
-            </div>
-          </div>
-          <div>첫번째 이미지 썸네일 등록</div>
-        </div>
+        <ImageSection imgList={imgList} setImgList={setImgList} />
         <label className="flex flex-col">
           상세 내용
           <Controller
@@ -64,8 +48,10 @@ const DetailInfo = () => {
           />
           <div className={classNames("text-12 text-[#A2A5AA]", { "text-red-600": getValues("detailText").length > 100 })}>{getValues("detailText").length} / 100</div>
         </label>
-        <div className=" bg-slate-400">이용약관 어쩌구 저쩌구..</div>
-        {isCheck ? <div onClick={() => setIsCheck(false)}>체크됨</div> : <div onClick={() => setIsCheck(true)}>체크안함</div>}
+        <div className="rounded-sm bg-[#DDD] px-12 py-8">
+          허위 등록, 악의적인 등록은 삭제될 수 있으며, 이로 인한 피해가 발생할 경우 전적으로 게시자가 책임집니다.(대략이런내용) 이용약관 상수로 관리할까여말까여 흠 고민고민..
+        </div>
+        {isCheck ? <div onClick={() => setIsCheck(false)}>체크됨</div> : <div onClick={() => setIsCheck(true)}>클릭하면 체크</div>}
       </main>
       <PostFooter onNextStep={handleNextClick} isDisabled={!isCheck || getValues("detailText").length > 100} />
     </div>
@@ -73,3 +59,30 @@ const DetailInfo = () => {
 };
 
 export default DetailInfo;
+
+interface ImageSectionProps {
+  imgList: File[];
+  setImgList: Dispatch<SetStateAction<File[]>>;
+}
+
+const ImageSection = ({ imgList, setImgList }: ImageSectionProps) => {
+  return (
+    <div className="flex flex-col gap-8">
+      <div>이미지</div>
+      <div className="flex gap-8">
+        <InputFile name="images" />
+        <div className="scrollbar-hide flex w-[400px] gap-8 overflow-x-scroll">
+          {Array.from(imgList).map((file, idx) => (
+            <div key={idx} className="relative flex h-120 w-120 shrink-0">
+              <div className="absolute right-0 top-0 z-popup cursor-pointer" onClick={() => setImgList((prev) => prev.filter((item: File) => item !== file))}>
+                삭제
+              </div>
+              <Image src={URL.createObjectURL(file)} alt="선택한 사진 미리보기" fill className="object-cover" />
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="text-12 text-[#A2A5AA]">첫번째 이미지 썸네일 등록</div>
+    </div>
+  );
+};
