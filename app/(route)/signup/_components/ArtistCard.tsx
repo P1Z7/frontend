@@ -13,7 +13,7 @@ const ArtistCard = ({ data, onClick, myArtists }: Props) => {
 
   const handleChange = () => {
     onClick(name, !isChecked);
-    setIsChecked(!isChecked);
+    setIsChecked((prev) => !prev);
   };
 
   return (

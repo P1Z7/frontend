@@ -9,8 +9,7 @@ const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
   const isButtonDisabled = !!formState.errors.nickName || !formState.isValid;
 
   return (
-    <div className="flex flex-col gap-24 p-12">
-      <p className=" text-16 font-700 text-black">프로필을 입력해주세요</p>
+    <>
       <InputText
         control={control}
         name="nickName"
@@ -23,7 +22,7 @@ const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
       <button type="button" onClick={onNext} className="h-40 bg-slate-200 text-12" disabled={isButtonDisabled}>
         다음
       </button>
-    </div>
+    </>
   );
 };
 

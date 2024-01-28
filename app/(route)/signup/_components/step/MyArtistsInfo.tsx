@@ -21,14 +21,13 @@ const MyArtistsInfo = () => {
   };
 
   return (
-    <div className="flex w-screen flex-col gap-8 p-12">
-      <p className=" text-16 font-700 text-black">좋아하는 아티스트를 선택해주세요</p>
+    <>
       <SearchArtist data={MOCK} onClick={handleClick} myArtists={myArtists} />
       <button disabled={isButtonDisabled} className="h-40 bg-slate-200 text-12">
         가입하기
       </button>
       <button className="h-40 bg-slate-200 text-12">다음에 할게요.</button>
-    </div>
+    </>
   );
 };
 
