@@ -26,6 +26,7 @@
     "react-day-picker": "^8.10.0",
     "react-dom": "^18",
     "react-hook-form": "^7.49.3",
+    "react-hot-toast": "^2.4.1",
     "react-infinite-scroller": "^1.2.6",
     "react-slick": "^0.29.0",
     "slick-carousel": "^1.8.1",
