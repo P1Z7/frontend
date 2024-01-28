@@ -1,88 +1,49 @@
 "use client";
 
-import classNames from "classnames";
-import Image from "next/image";
-import { ChangeEvent, KeyboardEvent, MouseEvent, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import InputFile from "@/components/input/InputFile";
 import InputText from "@/components/input/InputText";
-import defaultImg from "@/public/icon/icon_add-image_gray.svg";
+import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
+
+const PROFILE_DEFAULT = {
+  mode: "onChange",
+  defaultValues: {
+    profileImage: "",
+    nickname: "",
+  },
+} as const;
+
+type DefaultValues = (typeof PROFILE_DEFAULT)["defaultValues"];
 
 const ProfilePage = () => {
-  const [value, setValue] = useState({ profileImage: "", nickname: "" });
-  const isLengthLimit = value.nickname.length > 10;
-  const isError = !value.profileImage && !value.nickname;
+  const { formState, control, handleSubmit } = useForm(PROFILE_DEFAULT);
+  console.log(formState.isValid);
 
-  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue((prev) => ({ ...prev, nickname: e.target.value }));
+  const isError = !!formState.errors.profileImage || !!formState.errors.nickname || !formState.isValid;
+
+  const handleProfileSubmit: SubmitHandler<DefaultValues> = async ({ profileImage, nickname }) => {
+    console.log(profileImage, nickname);
   };
-
-  const handleKeyBlock = (e: KeyboardEvent) => {
-    if (e.key === " ") {
-      e.preventDefault();
-    }
-  };
-
-  const input = useRef<HTMLInputElement>(null);
-  const handleKeyDown = (e: KeyboardEvent<HTMLLabelElement>) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      input.current?.click();
-    }
-  };
-
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files?.[0]) {
-      return;
-    }
-    const selectedFile = e.target.files[0];
-    const previewUrl = URL.createObjectURL(selectedFile);
-    setValue((prev) => ({ ...prev, profileImage: previewUrl }));
-  };
-
-  const handleFileDelete = (e: MouseEvent) => {
-    if (value.profileImage) {
-      e.preventDefault();
-      setValue((prev) => ({ ...prev, profileImage: "" }));
-    }
-  };
-
-  const { getValues, control } = useForm({
-    defaultValues: {
-      profileImage: "",
-      nickname: "",
-    },
-  });
 
   return (
-    <div className="flex flex-col gap-24">
-      <div className="flex flex-col gap-8">
-        <div className="">
-          <InputFile control={control} name="profileImage">
-            프로필 사진
-          </InputFile>
-          {/* <label onKeyDown={handleKeyDown} className="relative h-100 w-100 cursor-pointer rounded-full" tabIndex={0}>
-            <input ref={input} onClick={handleFileDelete} onChange={handleFileChange} type="file" className="hidden" accept="image/*" />
-            <Image
-              src={value.profileImage || defaultImg}
-              fill
-              alt="이미지 추가 버튼"
-              className={classNames("rounded-full object-cover", { "hover:brightness-50": value.profileImage })}
-            />
-          </label> */}
-        </div>
-      </div>
-      <div className="flex flex-col gap-8">
-        <InputText name="nickname" control={control}>
-          닉네임
-        </InputText>
-      </div>
-      <button
-        className={classNames("rounded-sm px-16 py-12 text-16", { "bg-black text-white": !isError && !isLengthLimit }, { "bg-gray-300 text-black": isError || isLengthLimit })}
+    <form onSubmit={handleSubmit(handleProfileSubmit)} className="flex flex-col gap-24 py-60">
+      <InputFile control={control} name="profileImage" rules={{ required: "입력" }}>
+        프로필 사진
+      </InputFile>
+      <InputText
+        name="nickname"
+        control={control}
+        maxLength={10}
+        rules={{
+          required: ERROR_MESSAGES.nickname.nicknameField,
+          pattern: { value: REG_EXP.CHECK_NICKNAME, message: ERROR_MESSAGES.nickname.nicknamePattern },
+          maxLength: { value: 10, message: ERROR_MESSAGES.nickname.nicknamePattern },
+        }}
       >
-        변경하기
-      </button>
-    </div>
+        닉네임
+      </InputText>
+      <button className={`rounded-sm bg-black px-16 py-12 text-16 text-white`}>변경하기</button>
+    </form>
   );
 };
 export default ProfilePage;

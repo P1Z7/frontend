@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import Image from "next/image";
 import { ChangeEvent, KeyboardEvent, ReactNode } from "react";
 import { FieldPath, FieldValues, UseControllerProps, useController } from "react-hook-form";
@@ -12,7 +13,7 @@ type Function = <TFieldValues extends FieldValues = FieldValues, TName extends F
 ) => ReactNode;
 
 const InputFile: Function = ({ children, ...props }) => {
-  const { field } = useController(props);
+  const { field, fieldState } = useController(props);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     field.onChange({ target: { value: e.target.files, name: field.name } });
@@ -32,9 +33,10 @@ const InputFile: Function = ({ children, ...props }) => {
   return (
     <div>
       <p className="mb-8 text-14">{children}</p>
-      <label className="flex cursor-pointer justify-center rounded-full">
+      <label className="flex cursor-pointer flex-col items-center justify-center rounded-full">
         <Image onKeyDown={handleKeyDown} src={defaultImg} alt="이미지 추가 버튼" tabIndex={0} className="rounded-full object-cover" />
         <input type="file" name={field.name} ref={field.ref} multiple onChange={handleChange} className="hidden" accept="image/*" />
+        <p className={classNames(`font-normal mt-4 h-8 text-12`, { "text-red-500": fieldState.error, "text-gray-400": !fieldState.error })}>{fieldState?.error?.message}</p>
       </label>
     </div>
   );

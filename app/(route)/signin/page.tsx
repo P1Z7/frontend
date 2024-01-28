@@ -1,53 +1,28 @@
 "use client";
 
-import classNames from "classnames";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import { redirect } from "next/navigation";
-import { FocusEvent, FormEvent, KeyboardEvent, ReactNode, useRef, useState } from "react";
-import { validateSignin } from "@/utils/signValidate";
-import leftArrow from "@/public/icon/left-arrow.svg";
+import { KeyboardEvent, useRef } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import InputText from "@/components/input/InputText";
+import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 
-const SIGNIN_INPUTS = [
-  {
-    name: "email",
-    title: "이메일",
-    placeholder: "example@kpop.com",
+const SIGNIN_DEFAULT = {
+  mode: "onBlur",
+  defaultValues: {
+    email: "",
+    password: "",
   },
-  {
-    name: "password",
-    title: "비밀번호",
-    placeholder: "영문, 숫자, 특수문자 포함 8자 이상",
-  },
-] as const;
+} as const;
+
+type DefaultValues = (typeof SIGNIN_DEFAULT)["defaultValues"];
 
 const SignInPage = () => {
-  const { status } = useSession();
-  if (status === "authenticated") {
-    redirect("/");
-  }
-
-  const [value, setValue] = useState({ email: null, password: null });
-  const [errMsg, setErrMsg] = useState({ email: null, password: null });
-
-  const isError = errMsg.email !== "" || errMsg.password !== "";
-
-  const handleBlur = async (e: FocusEvent<HTMLInputElement>) => {
-    const type = e.target.type as "email" | "password";
-    const value = e.target.value;
-    setValue((prev) => ({ ...prev, [type]: value }));
-
-    const newErrMsg = await validateSignin({ type, value });
-    setErrMsg((prev) => ({ ...prev, [type]: newErrMsg }));
-  };
-
   const formSection = useRef<HTMLFormElement>(null);
 
-  const handleNextStep = (currentIdx: number) => (e: KeyboardEvent) => {
-    const formChildren = formSection.current?.querySelectorAll("input, button");
-    if (!formChildren) {
-      return;
-    }
+  const handleNextStep = (e: KeyboardEvent) => {
+    const formChildren = Array.from(formSection.current?.querySelectorAll("input, button")!);
+    const currentIdx = formChildren.indexOf(e.target as HTMLElement);
     const nextStep = formChildren[currentIdx + 1] as HTMLElement;
     if (e.key === "Enter" && nextStep) {
       e.preventDefault();
@@ -55,40 +30,38 @@ const SignInPage = () => {
     }
   };
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    if (isError) {
-      return;
-    }
+  const { formState, control, handleSubmit } = useForm(SIGNIN_DEFAULT);
+  console.log(formState.isValid);
+  const isError = !!formState.errors.email || !!formState.errors.password || !formState.isValid;
 
-    console.log(value);
+  const handleSignin: SubmitHandler<DefaultValues> = async ({ email, password }) => {
+    console.log(email, password);
   };
 
   return (
-    <div className="flex h-dvh w-dvw flex-col px-20 pt-32">
-      <div className="flex items-center gap-8 self-start pb-20">
-        <button>
-          <Image src={leftArrow} alt="뒤로가기 버튼" />
-        </button>
-        <h1 className="text-18 font-900">로그인</h1>
-      </div>
-      <form ref={formSection} onSubmit={handleSubmit} className="flex flex-col gap-24 py-60">
-        {SIGNIN_INPUTS.map((config, idx) => (
-          <label className={"flex flex-col gap-8 text-16"} key={config.name}>
-            {config.title}
-            <input
-              onBlur={handleBlur}
-              onKeyDown={handleNextStep(idx)}
-              type={config.name}
-              placeholder={config.placeholder}
-              className={classNames("h-48 rounded-sm bg-gray-200 px-12 py-16", { "border-[1px] border-solid border-red-500": errMsg[config.name] })}
-            />
-            <p className="h-16 text-14 text-red-500">{errMsg[config.name]}</p>
-          </label>
-        ))}
-        <button className={classNames("flex-grow rounded-sm bg-black px-16 py-12 text-16 text-white", { ["bg-gray-300 text-black"]: isError })}>로그인</button>
-      </form>
-    </div>
+    <form ref={formSection} onSubmit={handleSubmit(handleSignin)} className="flex flex-col gap-24 py-60">
+      <InputText
+        name="email"
+        placeholder="example@illo.com"
+        control={control}
+        onKeyDown={handleNextStep}
+        rules={{ required: ERROR_MESSAGES.email.emailField, pattern: { value: REG_EXP.CHECK_EMAIL, message: ERROR_MESSAGES.email.emailPattern } }}
+      >
+        이메일
+      </InputText>
+      <InputText
+        name="password"
+        type="password"
+        control={control}
+        rules={{ required: ERROR_MESSAGES.password.passwordField, pattern: { value: REG_EXP.CHECK_PASSWORD, message: ERROR_MESSAGES.password.passwordPattern } }}
+        onKeyDown={handleNextStep}
+      >
+        비밀번호
+      </InputText>
+      <button disabled={isError} className={`flex-grow rounded-sm px-16 py-12 text-16 ${isError ? "bg-gray-300 text-black" : "bg-black text-white"}`}>
+        로그인
+      </button>
+    </form>
   );
 };
 export default SignInPage;
