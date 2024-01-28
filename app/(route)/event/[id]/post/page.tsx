@@ -32,6 +32,8 @@ const ReviewPostPage = () => {
 
   const { images } = watch();
 
+  const isDisabled = !(isDirty && isValid && isEvaluated && checked);
+
   const postReview: SubmitHandler<FormValues> = (form) => {
     console.log({ evaluation, ...form });
   };
@@ -80,7 +82,7 @@ const ReviewPostPage = () => {
         <input type="checkbox" checked={checked} onChange={() => setChecked((prev) => !prev)} />
         <span>동의합니다.</span>
       </div>
-      <button disabled={!(isDirty && isValid && isEvaluated && checked)} className="h-40 w-full border border-solid border-black disabled:bg-slate-300">
+      <button disabled={isDisabled} className="h-40 w-full border border-solid border-black disabled:bg-slate-300">
         작성하기
       </button>
     </form>
