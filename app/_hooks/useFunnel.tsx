@@ -1,22 +1,15 @@
-import React, { ReactElement, ReactNode, useState } from "react";
+import React, { ReactElement, useState } from "react";
+import { FunnelType, SignupStepNameType, StepType } from "../_types";
 
-export interface StepProps {
-  name: string;
-  children: ReactNode;
-}
+export const useFunnel = <T extends SignupStepNameType>(defaultStepArray: readonly T[]) => {
+  const firstStep = defaultStepArray[0];
+  const [step, setStep] = useState(firstStep);
 
-export interface FunnelProps {
-  children: Array<ReactElement<StepProps>>;
-}
-
-export const useFunnel = (defaultStep: string) => {
-  const [step, setStep] = useState(defaultStep);
-
-  const Step = (props: StepProps): ReactElement => {
+  const Step = (props: StepType<T>): ReactElement => {
     return <>{props.children}</>;
   };
 
-  const Funnel = ({ children }: FunnelProps) => {
+  const Funnel = ({ children }: FunnelType<T>): ReactElement => {
     const targetStep = children.find((childStep) => childStep.props.name === step);
 
     return <>{targetStep}</>;

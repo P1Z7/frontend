@@ -45,7 +45,7 @@ const FavoritePage = () => {
 };
 export default FavoritePage;
 
-const MOCK = [
+export const MOCK = [
   {
     name: "정우",
     profileImage: "",

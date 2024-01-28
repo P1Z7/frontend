@@ -43,7 +43,7 @@ const DetailInfo = () => {
       <div>이미지와 설명을 작성해주세요✨</div>
       <div>*선택 입력 사항입니다.</div>
       <div>이미지</div>
-      <div className="scrollbar-hide flex w-[400px] overflow-x-scroll">
+      <div className="flex w-[400px] overflow-x-scroll scrollbar-hide">
         <div className="flex h-120 w-120 shrink-0 items-center justify-center bg-zinc-400">
           <label>
             추가
