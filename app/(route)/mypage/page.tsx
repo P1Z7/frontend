@@ -2,7 +2,9 @@
 
 import Tabs from "@/components/Tabs";
 import SettingHeader from "../setting/_components/SettingHeader";
+import { MOCK } from "../setting/favorite/page";
 import UserProfile from "./_components/UserProfile";
+import ArtistTab from "./_components/tab/ArtistTab";
 
 const MOCK_USER_INFO = {
   nickName: "민정사랑해",
@@ -18,7 +20,7 @@ const MyPage = () => {
       </div>
       <UserProfile data={MOCK_USER_INFO} />
       <Tabs names={["아티스트", "내 후기"]}>
-        <></>
+        <ArtistTab data={MOCK} />
         <></>
       </Tabs>
     </div>
