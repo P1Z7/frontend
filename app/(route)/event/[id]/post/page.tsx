@@ -49,7 +49,18 @@ const ReviewPostPage = () => {
           </EvaluationButton>
         </div>
       </div>
-      <InputText control={control} name="description">
+      <InputText
+        control={control}
+        name="description"
+        maxLength={100}
+        rules={{
+          required: "내용을 작성해주세요.",
+          pattern: {
+            value: /^.{0,100}$/,
+            message: "100자 이내로 작성해주세요.",
+          },
+        }}
+      >
         상세 내용
       </InputText>
       <ul className="flex gap-8 overflow-x-auto">
