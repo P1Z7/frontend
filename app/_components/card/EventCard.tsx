@@ -3,11 +3,16 @@ interface EventCardProps {
   artistName: string;
   eventType: string;
   address: string;
-  date: string;
+  startDate: string | Date;
+  endDate: string | Date;
 }
 
 // 하트 버튼은 추후 기능 만들면서 수정할 예정(디자인 바뀔 수 있음 이슈)
-const EventCard = ({ placeName, artistName, eventType, address, date }: EventCardProps) => {
+const EventCard = ({ placeName, artistName, eventType, address, startDate, endDate }: EventCardProps) => {
+  // "2024-" 부분을 제외하고 날짜를 보여주기 위해 Date 객체 사용
+  const formattedStartDate = new Date(startDate).toLocaleDateString(undefined, { month: "2-digit", day: "2-digit" });
+  const formattedEndDate = new Date(endDate).toLocaleDateString(undefined, { month: "2-digit", day: "2-digit" });
+
   return (
     <div className="flex w-180 flex-col gap-8 border border-solid border-black p-[10px]">
       <div className="h-160 bg-[#e7e7e7]" />
@@ -18,7 +23,9 @@ const EventCard = ({ placeName, artistName, eventType, address, date }: EventCar
           <p>{eventType}</p>
           <p>{address}</p>
         </div>
-        <p>{date}</p>
+        <p>
+          {formattedStartDate} ~ {formattedEndDate}
+        </p>
       </div>
     </div>
   );
