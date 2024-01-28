@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const HomeNav = () => {
+const BottomNav = () => {
   return (
     <nav className="fixed bottom-0 left-0 flex flex-row gap-20 bg-white">
       <NavButton href="/" button_type="홈" src="/icon/home-3_black.svg" />
@@ -27,4 +27,4 @@ const NavButton = ({ href, button_type, src }: NavButtonProps) => {
   );
 };
 
-export default HomeNav;
+export default BottomNav;
