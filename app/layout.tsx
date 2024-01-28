@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { Toaster } from "react-hot-toast";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import "@/public/font/pretendard/font.css";
 import "./globals.css";
@@ -24,6 +25,7 @@ export default function RootLayout({
     <html lang="ko">
       <body>
         <div id="modal"></div>
+        <Toaster />
         <ReactQueryProvider>
           {children}
           <div id="bottom-sheet" />
