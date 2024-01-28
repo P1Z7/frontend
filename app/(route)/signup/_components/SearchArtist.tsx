@@ -51,7 +51,7 @@ const SearchArtist = ({ data, onClick, myArtists }: Props) => {
       </button>
       <div className="grid w-fit grid-cols-3 gap-8">
         {searchedData.map((cardList) => (
-          <ArtistCard data={cardList} onClick={onClick} myArtists={myArtists} key={cardList.name} />
+          <Card data={cardList} onClick={onClick} myArtists={myArtists} key={cardList.name} />
         ))}
       </div>
       {modal === "req_artist" && <ReqNewArtistModal closeModal={closeModal} />}
@@ -60,3 +60,30 @@ const SearchArtist = ({ data, onClick, myArtists }: Props) => {
 };
 
 export default SearchArtist;
+
+interface CardProps {
+  data: { name: string; profileImage: string };
+  onClick: (id: string, isChecked: boolean) => void;
+  myArtists: string[];
+}
+
+const Card = ({ data, onClick, myArtists }: CardProps) => {
+  const { name, profileImage } = data;
+
+  const [isChecked, setIsChecked] = useState<boolean>(myArtists.includes(name));
+
+  const handleChange = () => {
+    onClick(name, !isChecked);
+    setIsChecked((prev) => !prev);
+  };
+
+  return (
+    <>
+      <label htmlFor={name}>
+        <ArtistCard className={isChecked ? "border border-red-500" : ""} name={name} profileImage={profileImage} />
+      </label>
+
+      <input name="myArtists" type="checkbox" id={name} onChange={handleChange} checked={isChecked} hidden />
+    </>
+  );
+};
