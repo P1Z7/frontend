@@ -1,88 +1,75 @@
 "use client";
 
-import classNames from "classnames";
 import Image from "next/image";
-import { ChangeEvent, KeyboardEvent, MouseEvent, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import InputFile from "@/components/input/InputFile";
 import InputText from "@/components/input/InputText";
-import defaultImg from "@/public/icon/icon_add-image_gray.svg";
+import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
+
+interface DefaultValues {
+  profileImage: File[];
+  nickname: string;
+}
 
 const ProfilePage = () => {
-  const [value, setValue] = useState({ profileImage: "", nickname: "" });
-  const isLengthLimit = value.nickname.length > 10;
-  const isError = !value.profileImage && !value.nickname;
-
-  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue((prev) => ({ ...prev, nickname: e.target.value }));
-  };
-
-  const handleKeyBlock = (e: KeyboardEvent) => {
-    if (e.key === " ") {
-      e.preventDefault();
-    }
-  };
-
-  const input = useRef<HTMLInputElement>(null);
-  const handleKeyDown = (e: KeyboardEvent<HTMLLabelElement>) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      input.current?.click();
-    }
-  };
-
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files?.[0]) {
-      return;
-    }
-    const selectedFile = e.target.files[0];
-    const previewUrl = URL.createObjectURL(selectedFile);
-    setValue((prev) => ({ ...prev, profileImage: previewUrl }));
-  };
-
-  const handleFileDelete = (e: MouseEvent) => {
-    if (value.profileImage) {
-      e.preventDefault();
-      setValue((prev) => ({ ...prev, profileImage: "" }));
-    }
-  };
-
-  const { getValues, control } = useForm({
+  const { formState, control, handleSubmit, watch } = useForm<DefaultValues>({
+    mode: "onChange",
     defaultValues: {
-      profileImage: "",
+      profileImage: [],
       nickname: "",
     },
   });
 
+  const handleProfileSubmit: SubmitHandler<DefaultValues> = async ({ profileImage, nickname }) => {
+    console.log(profileImage, nickname);
+  };
+
+  const [newFile] = watch("profileImage");
+
+  const [thumbnail, setThumbnail] = useState("");
+
+  useEffect(() => {
+    if (newFile) {
+      const newURL = URL.createObjectURL(newFile);
+      setThumbnail(newURL);
+    }
+
+    return () => {
+      URL.revokeObjectURL(thumbnail);
+    };
+  }, [newFile]);
+
+  const nicknameRules = formState.dirtyFields.profileImage
+    ? { required: false }
+    : {
+        required: ERROR_MESSAGES.nickname.nicknameField,
+        pattern: { value: REG_EXP.CHECK_NICKNAME, message: ERROR_MESSAGES.nickname.nicknamePattern },
+        maxLength: { value: 10, message: ERROR_MESSAGES.nickname.nicknamePattern },
+      };
+
   return (
-    <div className="flex flex-col gap-24">
-      <div className="flex flex-col gap-8">
-        <div className="">
-          <InputFile control={control} name="profileImage">
-            프로필 사진
-          </InputFile>
-          {/* <label onKeyDown={handleKeyDown} className="relative h-100 w-100 cursor-pointer rounded-full" tabIndex={0}>
-            <input ref={input} onClick={handleFileDelete} onChange={handleFileChange} type="file" className="hidden" accept="image/*" />
-            <Image
-              src={value.profileImage || defaultImg}
-              fill
-              alt="이미지 추가 버튼"
-              className={classNames("rounded-full object-cover", { "hover:brightness-50": value.profileImage })}
-            />
-          </label> */}
-        </div>
+    <form onSubmit={handleSubmit(handleProfileSubmit)} className="flex flex-col gap-24 py-60">
+      <div className="relative flex flex-col">
+        <InputFile control={control} name="profileImage">
+          프로필 사진
+        </InputFile>
+        <Image
+          src={thumbnail || "/icon/no-profile.svg"}
+          width={100}
+          height={100}
+          alt="설정할 프로필 이미지"
+          className="pointer-events-none absolute left-1/2 top-1/2 -mt-[0.2rem] h-100 -translate-x-1/2 -translate-y-1/2 rounded-full object-cover"
+        />
+        <button type="button" onClick={() => setThumbnail("")} className="w-max self-center text-14 underline">
+          기본 이미지로 설정하기
+        </button>
       </div>
-      <div className="flex flex-col gap-8">
-        <InputText name="nickname" control={control}>
-          닉네임
-        </InputText>
-      </div>
-      <button
-        className={classNames("rounded-sm px-16 py-12 text-16", { "bg-black text-white": !isError && !isLengthLimit }, { "bg-gray-300 text-black": isError || isLengthLimit })}
-      >
-        변경하기
-      </button>
-    </div>
+      <InputText name="nickname" control={control} maxLength={10} rules={nicknameRules}>
+        닉네임
+      </InputText>
+      <button className={`rounded-sm bg-black px-16 py-12 text-16 text-white`}>변경하기</button>
+    </form>
   );
 };
 export default ProfilePage;

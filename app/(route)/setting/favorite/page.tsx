@@ -16,7 +16,7 @@ const FavoritePage = () => {
     setFavorite((prev) => [...prev, name]);
   };
 
-  const { isVisible, setIsVisible, infRef } = useInfScroll();
+  const { isVisible, infRef } = useInfScroll();
   const [cursorId, setCursorId] = useState(12);
 
   useEffect(() => {
