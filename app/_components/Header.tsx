@@ -11,7 +11,7 @@ const TITLE: { [a: string]: string } = {
   "/mypage": "마이페이지",
 };
 
-const SettingHeader = () => {
+const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -24,4 +24,4 @@ const SettingHeader = () => {
     </>
   );
 };
-export default SettingHeader;
+export default Header;
