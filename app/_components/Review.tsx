@@ -36,7 +36,7 @@ const Review = ({ data, type = "eventReview" }: Props) => {
       <p>{data.description}</p>
       <ul className="flex h-120 w-full gap-12 overflow-x-auto">
         {data.images.map((image, index) => (
-          <li key={index} className="relative h-120 w-120 flex-shrink-0 overflow-hidden">
+          <li key={index} className="relative h-120 w-120 shrink-0 overflow-hidden">
             <Image src={image} alt={"후기 사진"} fill className="object-cover" />
           </li>
         ))}
