@@ -22,8 +22,6 @@ const SignInPage = () => {
   const { formSection, handleEnterNext } = useEnterNext();
 
   const { formState, control, handleSubmit } = useForm(SIGNIN_DEFAULT);
-  console.log(formState.isValid);
-  const isError = !!formState.errors.email || !!formState.errors.password || !formState.isValid;
 
   const handleSignin: SubmitHandler<DefaultValues> = async ({ email, password }) => {
     console.log(email, password);
@@ -49,9 +47,7 @@ const SignInPage = () => {
       >
         비밀번호
       </InputText>
-      <button disabled={isError} className={`flex-grow rounded-sm px-16 py-12 text-16 ${isError ? "bg-gray-300 text-black" : "bg-black text-white"}`}>
-        로그인
-      </button>
+      <button className={`"bg-black flex-grow rounded-sm px-16 py-12 text-16 text-white`}>로그인</button>
     </form>
   );
 };
