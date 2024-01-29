@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroller";
-import { ProfileMockData } from "../card/ProfileMockData";
 import ArtistProfile from "./ArtistProfile";
+import { ProfileMockData } from "./ProfileMockData";
 
 const ArtistList = () => {
   const [artists, setArtists] = useState(ProfileMockData);

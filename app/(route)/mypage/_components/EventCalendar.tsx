@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import EventCard from "@/components/card/EventCard";
+import VerticalEventCard from "@/components/card/VerticalEventCard";
 
 interface ScheduleData {
   placeName: string;
@@ -76,7 +76,7 @@ const EventCalendar = () => {
           {mockData
             .filter((event) => !date || (new Date(event.startDate).getTime() <= date.getTime() && new Date(event.endDate).getTime() >= date.getTime()))
             .map((event, index) => (
-              <EventCard
+              <VerticalEventCard
                 key={index}
                 placeName={event.placeName}
                 artistName={event.artistName}

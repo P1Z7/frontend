@@ -33,3 +33,13 @@ export interface SignUpFormType {
   nickName: string;
   myArtists: string[] | [];
 }
+
+export interface EventCardProps {
+  placeName: string;
+  artistName: string;
+  eventType: string;
+  address: string;
+  startDate: string;
+  endDate: string;
+  gifts?: string[];
+}

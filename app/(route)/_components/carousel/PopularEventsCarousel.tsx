@@ -1,6 +1,6 @@
 import Carousel from "@/components/Carousel";
-import EventCard from "@/components/card/EventCard";
-import { EventMockData } from "../EventMockData";
+import { EventMockData } from "@/components/card/EventMockData";
+import VerticalEventCard from "@/components/card/VerticalEventCard";
 
 const PopularEventsCarousel = () => {
   return (
@@ -18,7 +18,7 @@ const PopularEvents = () => {
     <>
       {popularEvents.map((event, index) => (
         <div key={index}>
-          <EventCard
+          <VerticalEventCard
             placeName={event.placeName}
             artistName={event.artistName}
             eventType={event.eventType}
