@@ -14,13 +14,14 @@ interface Prop {
   readOnly?: boolean;
   disabled?: boolean;
   onKeyDown?: (e: KeyboardEvent) => void;
+  onClick?: () => void;
 }
 
 type Function = <TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>>(
   prop: UseControllerProps<TFieldValues, TName> & Prop,
 ) => ReactNode;
 
-const InputText: Function = ({ type: initialType, children, placeholder, autoComplete, hint, maxLength, hidden, readOnly, disabled, onKeyDown, ...control }) => {
+const InputText: Function = ({ type: initialType, children, placeholder, autoComplete, hint, maxLength, hidden, readOnly, disabled, onClick, onKeyDown, ...control }) => {
   const { field, fieldState } = useController(control);
   const [type, setType] = useState(initialType ?? "text");
 
@@ -44,6 +45,7 @@ const InputText: Function = ({ type: initialType, children, placeholder, autoCom
         autoComplete={autoComplete ?? "off"}
         readOnly={readOnly ?? false}
         disabled={disabled ?? false}
+        onClick={onClick}
         {...field}
         onKeyDown={onKeyDown}
         className={classNames(
@@ -61,13 +63,8 @@ const InputText: Function = ({ type: initialType, children, placeholder, autoCom
           {<Image src={type === "password" ? "/icon/closed-eyes_black.svg" : "/icon/opened-eyes_black.svg"} alt="비밀번호 아이콘" width={16} height={16} />}
         </button>
       )}
-      {initialType !== "password" && (
-        <button
-          onClick={handleDelete}
-          onKeyDown={onKeyDown}
-          type="button"
-          className="absolute right-0 top-44 flex h-24 w-24 -translate-x-1/2 -translate-y-1/2 items-center justify-center"
-        >
+      {initialType !== "password" && !hidden && (
+        <button onClick={handleDelete} onKeyDown={onKeyDown} type="button" className="absolute right-0 top-44 h-24 w-24 -translate-x-1/2 -translate-y-1/2">
           <Image src="/icon/x_gray.svg" alt="초기화 버튼" width={16} height={16} />
         </button>
       )}

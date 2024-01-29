@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import Image from "next/image";
-import { ChangeEvent, KeyboardEvent, ReactNode } from "react";
+import { ChangeEvent, Dispatch, KeyboardEvent, ReactNode, SetStateAction } from "react";
 import { FieldPath, FieldValues, UseControllerProps, useController } from "react-hook-form";
 import defaultImg from "@/public/icon/add-image_gray.svg";
 

@@ -1,17 +1,15 @@
 import { useFormContext } from "react-hook-form";
 import InputText from "@/components/input/InputText";
-import { ERROR_MESSAGES, REG_EXP } from "../../../_utils/signupValidation";
-import { SignUpFormValues } from "../page";
-import InputContainer from "./InputContainer";
+import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
+import { SignUpFormType } from "@/types/index";
 
-export const AccountInfo = ({ onNext }: { onNext: () => void }) => {
-  const { formState, control, getValues } = useFormContext<SignUpFormValues>();
+const AccountInfo = ({ onNext }: { onNext: () => void }) => {
+  const { formState, control, getValues } = useFormContext<SignUpFormType>();
 
-  const isButtonDisabled = !!formState.errors.email || !!formState.errors.password || !!formState.errors.passwordCh || !formState.isValid;
+  const isButtonDisabled = !!formState.errors.email || !!formState.errors.password || !!formState.errors.passwordCh || !formState.isDirty;
 
   return (
-    <div className="flex flex-col gap-24 p-12">
-      <p className=" text-16 font-700 text-black">로그인 정보를 입력해주세요</p>
+    <>
       <InputText
         control={control}
         name="email"
@@ -21,7 +19,7 @@ export const AccountInfo = ({ onNext }: { onNext: () => void }) => {
       >
         이메일
       </InputText>
-      <InputContainer
+      <InputText
         control={control}
         name="password"
         type="password"
@@ -31,8 +29,8 @@ export const AccountInfo = ({ onNext }: { onNext: () => void }) => {
         rules={{ required: ERROR_MESSAGES.password.passwordField, pattern: { value: REG_EXP.CHECK_PASSWORD, message: ERROR_MESSAGES.password.passwordPattern } }}
       >
         비밀번호
-      </InputContainer>
-      <InputContainer
+      </InputText>
+      <InputText
         control={control}
         name="passwordCh"
         type="password"
@@ -49,10 +47,12 @@ export const AccountInfo = ({ onNext }: { onNext: () => void }) => {
         }}
       >
         비밀번호 확인
-      </InputContainer>
+      </InputText>
       <button type="button" onClick={onNext} disabled={isButtonDisabled} className="h-40 bg-slate-200 text-12">
         다음
       </button>
-    </div>
+    </>
   );
 };
+
+export default AccountInfo;
