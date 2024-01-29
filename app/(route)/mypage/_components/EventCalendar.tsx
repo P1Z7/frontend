@@ -69,7 +69,7 @@ const EventCalendar = () => {
 
   return (
     <div>
-      <Calendar onChange={handleClickToday} value={date} tileContent={tileContent} />
+      <Calendar locale="en" onChange={handleClickToday} value={date} tileContent={tileContent} />
       <div>
         <ul>
           {/* 날짜를 선택하지 않았을 때 모든 Event를 보여줌 */}
