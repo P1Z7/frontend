@@ -50,7 +50,11 @@ const PasswordPage = () => {
           name="newPw"
           type="password"
           control={control}
-          rules={{ required: ERROR_MESSAGES.password.passwordField, pattern: { value: REG_EXP.CHECK_PASSWORD, message: ERROR_MESSAGES.password.passwordPattern } }}
+          rules={{
+            required: ERROR_MESSAGES.password.passwordField,
+            pattern: { value: REG_EXP.CHECK_PASSWORD, message: ERROR_MESSAGES.password.passwordPattern },
+            deps: ["newPwCheck"],
+          }}
           onKeyDown={handleEnterNext}
         >
           새 비밀번호
@@ -67,7 +71,6 @@ const PasswordPage = () => {
                 return passwordValue === value || ERROR_MESSAGES.passwordCh.passwordChField;
               },
             },
-            deps: ["newPw"],
           }}
           onKeyDown={handleEnterNext}
         >
