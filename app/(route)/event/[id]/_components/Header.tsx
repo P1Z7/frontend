@@ -1,10 +1,10 @@
 "use client";
 
 import BottomSheetFrame from "@/components/bottom-sheet/BottomSheetFrame";
-import { useStore } from "@/store/index";
+import { useBottomSheet } from "@/hooks/useBottomSheet";
 
 const Header = () => {
-  const { bottomSheet, openBottomSheet } = useStore((state) => ({ bottomSheet: state.bottomSheet, openBottomSheet: state.openBottomSheet }));
+  const { bottomSheet, openBottomSheet, closeBottomSheet } = useBottomSheet();
 
   const openKebeb = () => {
     openBottomSheet("event-kebab");
@@ -17,7 +17,7 @@ const Header = () => {
         <button onClick={openKebeb}>케밥 버튼</button>
       </header>
       {bottomSheet === "event-kebab" && (
-        <BottomSheetFrame>
+        <BottomSheetFrame closeBottomSheet={closeBottomSheet}>
           <button>수정하기</button>
           <button>신고히기</button>
         </BottomSheetFrame>

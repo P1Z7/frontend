@@ -1,18 +1,25 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import GiftTag from "@/components/GiftTag";
-import { useStore } from "@/store/index";
+import ProgressBar from "@/components/ProgressBar";
+import InputText from "@/components/input/InputText";
+import { PostType } from "../page";
+import FunnelTitle from "./FunnelTitle";
+import PostFooter from "./PostFooter";
 
 const SNS_TYPE_LIST = ["트위터", "인스타그램", "유튜브", "기타"];
 const GIFT_LIST = ["컵홀더", "포토카드", "엽서", "티켓", "포스터", "스티커", "굿즈", "기타"];
 
-const SubInfo = () => {
-  const { info, setInfo, setStep } = useStore((state) => ({ info: state.postInfo, setInfo: state.setPostInfo, setStep: state.setStep }));
-  const [snsType, setSnsType] = useState("");
-  const [giftList, setGiftList] = useState<string[]>([]);
-  const { register, getValues, setValue } = useForm({ mode: "onBlur" });
+interface Props {
+  onNextStep: () => void;
+}
+
+const SubInfo = ({ onNextStep }: Props) => {
+  const { setValue, getValues } = useFormContext<PostType>();
+  const [snsType, setSnsType] = useState(getValues("snsType"));
+  const [giftList, setGiftList] = useState<string[]>(getValues("gift"));
 
   const handleRadioChange = (event: any) => {
     setSnsType(event.target.value);
@@ -23,49 +30,44 @@ const SubInfo = () => {
     setGiftList((prev) => [...prev, gift]);
   };
 
-  const saveSubInfo = () => {
-    setInfo({ ...info, sns_id: getValues("sns_id"), sns_type: snsType, event_url: getValues("event_url"), gift: giftList });
-    setStep(4);
-  };
+  useEffect(() => {
+    setValue("gift", giftList);
+  }, [giftList]);
 
   useEffect(() => {
-    setValue("sns_id", info?.sns_id);
-    setSnsType(info?.sns_type || "");
-    setValue("event_url", info?.event_url);
-    setGiftList(info?.gift || []);
-  }, []);
+    setValue("snsType", snsType);
+  }, [snsType]);
 
   return (
-    <>
-      <div>주최자와 특전 정보를 추가해주세요🎁</div>
-      <div>*선택 입력 사항입니다.</div>
-      <label>
-        주최자
-        <input placeholder="SNS 아이디 입력" {...register("sns_id")} />
+    <div className="flex flex-col gap-24">
+      <ProgressBar ratio="3/4" />
+      <FunnelTitle step="특전 정보" />
+      <main>
+        <InputText name="snsId" placeholder="SNS 아이디 입력">
+          주최자
+        </InputText>
         {SNS_TYPE_LIST.map((type) => (
           <label key={type}>
             <input name="sns" value={type} type="radio" onChange={handleRadioChange} checked={snsType === type} />
             {type}
           </label>
         ))}
-      </label>
-      <br />
-      <label>
-        행사 링크
-        <input placeholder="URL 입력" {...register("event_url")} />
-      </label>
-      <br />
-      <label>
-        특전
-        {GIFT_LIST.map((gift) => (
-          <GiftTag key={gift} handleClick={handleGiftClick} initialChecked={info?.gift ? info?.gift.includes(gift) : false}>
-            {gift}
-          </GiftTag>
-        ))}
-      </label>
-      <br />
-      <button onClick={saveSubInfo}>다음으로</button>
-    </>
+        <InputText name="eventUrl" placeholder="URL 입력">
+          행사 링크
+        </InputText>
+        <label>
+          특전
+          {GIFT_LIST.map((gift) => (
+            <GiftTag key={gift} handleClick={handleGiftClick} initialChecked={giftList.includes(gift)}>
+              {gift}
+            </GiftTag>
+          ))}
+        </label>
+      </main>
+      <InputText name="gift" hidden />
+      <InputText name="snsType" hidden />
+      <PostFooter onNextStep={onNextStep} />
+    </div>
   );
 };
 

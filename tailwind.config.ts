@@ -33,6 +33,7 @@ const config: Config = {
       14: "1.4rem",
       16: "1.6rem",
       18: "1.8rem",
+      20: "2.0rem",
       24: "2.4rem",
       32: "3.2rem",
       64: "6.4rem",
