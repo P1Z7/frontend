@@ -1,80 +1,83 @@
 "use client";
 
-import classNames from "classnames";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { FocusEvent, FormEvent, KeyboardEvent, useRef, useState } from "react";
-import { validateCurrentPw, validateNewPw } from "@/utils/settingValidate";
+import { SubmitHandler, useForm } from "react-hook-form";
+import InputText from "@/components/input/InputText";
+import useEnterNext from "@/hooks/useEnterNext";
+import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 
-const SIGNIN_INPUTS = [
-  {
-    name: "current",
-    title: "현재 비밀번호",
-    placeholder: "현재 비밀번호를 입력해주세요.",
+const PWCHANGE_DEFAULT = {
+  mode: "onBlur",
+  defaultValues: {
+    currentPw: "",
+    newPw: "",
+    newPwCheck: "",
   },
-  {
-    name: "new",
-    title: "새 비밀번호",
-    placeholder: "영문, 숫자, 특수문자 포함 8자 이상",
-  },
-] as const;
+} as const;
+
+type DefaultValues = (typeof PWCHANGE_DEFAULT)["defaultValues"];
 
 const PasswordPage = () => {
-  const [value, setValue] = useState({ current: null, new: null });
-  const [errMsg, setErrMsg] = useState({ current: null, new: null });
+  const { formSection, handleEnterNext } = useEnterNext();
 
-  const isError = errMsg.current !== "" || errMsg.new !== "";
+  const { formState, control, handleSubmit, getValues } = useForm(PWCHANGE_DEFAULT);
 
-  const handleBlur = async (e: FocusEvent<HTMLInputElement>) => {
-    const name = e.target.name as "current" | "new";
-    const value = e.target.value;
-    setValue((prev) => ({ ...prev, [name]: value }));
-
-    const newErrMsg = await (name === "current" ? validateCurrentPw : validateNewPw)({ name, value });
-    setErrMsg((prev) => ({ ...prev, [name]: newErrMsg }));
-  };
-
-  const formSection = useRef<HTMLFormElement>(null);
-
-  const handleNextStep = (currentIdx: number) => (e: KeyboardEvent) => {
-    const formChildren = formSection.current?.querySelectorAll("input, button");
-    if (!formChildren) {
-      return;
-    }
-    const nextStep = formChildren[currentIdx + 1] as HTMLElement;
-    if (e.key === "Enter" && nextStep) {
-      e.preventDefault();
-      nextStep.focus();
-    }
-  };
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    if (isError) {
-      return;
-    }
-
-    console.log(value);
+  const handlePwChange: SubmitHandler<DefaultValues> = ({ currentPw, newPw }) => {
+    console.log(currentPw, newPw);
   };
 
   return (
-    <form ref={formSection} onSubmit={handleSubmit} className="flex flex-grow flex-col justify-between py-60">
+    <form ref={formSection} onSubmit={handleSubmit(handlePwChange)} className="flex flex-grow flex-col justify-between py-60">
       <div className="flex flex-col gap-24">
-        {SIGNIN_INPUTS.map((config, idx) => (
-          <label className={"flex flex-col gap-8 text-16"} key={config.name}>
-            {config.title}
-            <input
-              onBlur={handleBlur}
-              onKeyDown={handleNextStep(idx)}
-              name={config.name}
-              placeholder={config.placeholder}
-              className={classNames("h-48 rounded-sm bg-gray-200 px-12 py-16", { "border-[1px] border-solid border-red-500": errMsg[config.name] })}
-            />
-            <p className="h-16 text-14 text-red-500">{errMsg[config.name]}</p>
-          </label>
-        ))}
+        <InputText
+          name="currentPw"
+          type="password"
+          control={control}
+          rules={{
+            required: ERROR_MESSAGES.password.passwordField,
+            validate: {
+              matchPassword: (value: string) => {
+                //React-Query로 현재비밀번호 확인하면 됨.
+                const passwordValue = "iwant18080";
+                return passwordValue === value || ERROR_MESSAGES.passwordCh.passwordChField;
+              },
+            },
+          }}
+          onKeyDown={handleEnterNext}
+        >
+          현재 비밀번호
+        </InputText>
+        <InputText
+          name="newPw"
+          type="password"
+          control={control}
+          rules={{
+            required: ERROR_MESSAGES.password.passwordField,
+            pattern: { value: REG_EXP.CHECK_PASSWORD, message: ERROR_MESSAGES.password.passwordPattern },
+            deps: ["newPwCheck"],
+          }}
+          onKeyDown={handleEnterNext}
+        >
+          새 비밀번호
+        </InputText>
+        <InputText
+          name="newPwCheck"
+          type="password"
+          control={control}
+          rules={{
+            required: ERROR_MESSAGES.password.passwordField,
+            validate: {
+              matchPassword: (value) => {
+                const passwordValue = getValues("newPw");
+                return passwordValue === value || ERROR_MESSAGES.passwordCh.passwordChField;
+              },
+            },
+          }}
+          onKeyDown={handleEnterNext}
+        >
+          새 비밀번호 확인
+        </InputText>
       </div>
-      <button className={classNames("rounded-sm px-16 py-12 text-16", { "bg-black text-white": !isError }, { "bg-gray-300 text-black": isError })}>변경하기</button>
+      <button className="rounded-sm bg-black px-16 py-12 text-16 text-white">변경하기</button>
     </form>
   );
 };

@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import Image from "next/image";
-import { ReactNode, useState } from "react";
+import { KeyboardEvent, ReactNode, useState } from "react";
 import { FieldPath, FieldValues, UseControllerProps, useController } from "react-hook-form";
 
 interface Prop {
@@ -13,6 +13,7 @@ interface Prop {
   hidden?: boolean;
   readOnly?: boolean;
   disabled?: boolean;
+  onKeyDown?: (e: KeyboardEvent) => void;
   onClick?: () => void;
 }
 
@@ -20,7 +21,7 @@ type Function = <TFieldValues extends FieldValues = FieldValues, TName extends F
   prop: UseControllerProps<TFieldValues, TName> & Prop,
 ) => ReactNode;
 
-const InputText: Function = ({ type: initialType, children, placeholder, autoComplete, hint, maxLength, hidden, readOnly, disabled, onClick, ...control }) => {
+const InputText: Function = ({ type: initialType, children, placeholder, autoComplete, hint, maxLength, hidden, readOnly, disabled, onClick, onKeyDown, ...control }) => {
   const { field, fieldState } = useController(control);
   const [type, setType] = useState(initialType ?? "text");
 
@@ -46,18 +47,24 @@ const InputText: Function = ({ type: initialType, children, placeholder, autoCom
         disabled={disabled ?? false}
         onClick={onClick}
         {...field}
+        onKeyDown={onKeyDown}
         className={classNames(
           "border-solid-gray body1-normal placeholder:text-gray-4 focus:border-purple mt-10 h-48 w-full rounded-md bg-blue-50 p-16 text-14 text-black outline-none",
           { hidden: hidden ?? false },
         )}
       />
       {initialType === "password" && (
-        <button onClick={handlePasswordShow} type="button" className="absolute right-0 top-44 h-24 w-24 -translate-x-1/2 -translate-y-1/2">
+        <button
+          onClick={handlePasswordShow}
+          onKeyDown={onKeyDown}
+          type="button"
+          className="absolute right-0 top-44 flex h-24 w-24 -translate-x-1/2 -translate-y-1/2 items-center justify-center"
+        >
           {<Image src={type === "password" ? "/icon/closed-eyes_black.svg" : "/icon/opened-eyes_black.svg"} alt="비밀번호 아이콘" width={16} height={16} />}
         </button>
       )}
       {initialType !== "password" && !hidden && (
-        <button onClick={handleDelete} type="button" className="absolute right-0 top-44 h-24 w-24 -translate-x-1/2 -translate-y-1/2">
+        <button onClick={handleDelete} onKeyDown={onKeyDown} type="button" className="absolute right-0 top-44 h-24 w-24 -translate-x-1/2 -translate-y-1/2">
           <Image src="/icon/x_gray.svg" alt="초기화 버튼" width={16} height={16} />
         </button>
       )}

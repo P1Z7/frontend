@@ -13,7 +13,7 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
       <InputText
         control={control}
         name="email"
-        autoComplete="username"
+        autoComplete="email"
         placeholder="이메일을 입력해 주세요"
         rules={{ required: ERROR_MESSAGES.email.emailField, pattern: { value: REG_EXP.CHECK_EMAIL, message: ERROR_MESSAGES.email.emailPattern } }}
       >
