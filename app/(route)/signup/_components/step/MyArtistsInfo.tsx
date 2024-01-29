@@ -1,4 +1,4 @@
-import { MOCK } from "@/(route)/setting/favorite/page";
+import { MOCK } from "app/_constants/mock";
 import { useFormContext, useWatch } from "react-hook-form";
 import { SignUpFormType } from "@/types/index";
 import SearchArtist from "../SearchArtist";

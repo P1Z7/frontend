@@ -1,15 +1,14 @@
 "use client";
 
+// import { POST_STEPS } from "app/_constants/post";
 import Image from "next/image";
 import { useFunnel } from "@/hooks/useFunnel";
-import { PostStepNameType } from "@/types/index";
+import { SignupStepNameType } from "@/types/index";
 import GenericForm from "../signup/_components/GenericForm";
 import DetailInfo from "./_components/DetailInfo";
 import MainInfo from "./_components/MainInfo";
 import StarInfo from "./_components/StarInfo";
 import SubInfo from "./_components/SubInfo";
-
-export const POST_STEPS: PostStepNameType[] = ["행사 대상", "행사 정보", "특전 정보", "상세 설명"] as const;
 
 const DEFAULT_INPUT_VALUES = {
   group: "",
@@ -27,6 +26,8 @@ const DEFAULT_INPUT_VALUES = {
   images: [],
   detailText: "",
 };
+
+const POST_STEPS: SignupStepNameType[] = ["계정 정보", "프로필 정보", "아티스트 선택"];
 
 export type PostType = Omit<typeof DEFAULT_INPUT_VALUES, "gift" | "images" | "member"> & { gift: string[]; images: File[]; member: string[] };
 
