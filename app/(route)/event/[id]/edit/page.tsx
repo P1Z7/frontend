@@ -1,9 +1,6 @@
 "use client";
 
 import GenericForm from "@/(route)/signup/_components/GenericForm";
-import { useEffect } from "react";
-import Header from "@/components/Header";
-import { useStore } from "@/store/index";
 import EditContent from "./_components/EditContent";
 
 const EDIT_MOCKUP_DATA = {
@@ -33,11 +30,11 @@ const Edit = () => {
   //여기서 get하고 이미지들 file 형식으로 변환해서 default 값 설정..?
 
   return (
-    <>
+    <div className="flex flex-col gap-24 p-20 text-16">
       <GenericForm formOptions={{ mode: "onBlur", defaultValues: EDIT_MOCKUP_DATA, shouldFocusError: true }}>
         <EditContent />
       </GenericForm>
-    </>
+    </div>
   );
 };
 

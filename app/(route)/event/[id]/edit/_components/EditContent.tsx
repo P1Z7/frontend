@@ -20,8 +20,8 @@ const EditContent = () => {
     formState: { isDirty, defaultValues },
   } = useFormContext<PostType>();
   const [imgList, setImgList] = useState<(File | string)[]>([]);
-  const [isCheck, setIsCheck] = useState(false);
   const { images, address, startDate, endDate, eventType, snsType, gift } = watch();
+  const { isCheck } = useStore((state) => ({ isCheck: state.isWarningCheck }));
 
   const checkUpdated = () => {
     if (defaultValues?.address !== address) return true;
@@ -41,16 +41,7 @@ const EditContent = () => {
       <MainInput setValue={setValue} />
       <StarInput getValues={getValues} setValue={setValue} />
       <SubInput getValues={getValues} setValue={setValue} />
-      <DetailInput
-        images={images}
-        control={control}
-        isCheck={isCheck}
-        setIsCheck={setIsCheck}
-        imgList={imgList}
-        setImgList={setImgList}
-        getValues={getValues}
-        setValue={setValue}
-      />
+      <DetailInput images={images} control={control} imgList={imgList} setImgList={setImgList} getValues={getValues} setValue={setValue} />
       <button disabled={!isValid} className={classNames("w-full bg-gray-200 p-16", { "bg-yellow-200": isValid })} onClick={() => openModal("endEdit")}>
         수정 요청
       </button>

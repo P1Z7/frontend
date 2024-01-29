@@ -1,13 +1,12 @@
 import classNames from "classnames";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { Control, Controller, UseFormGetValues, UseFormSetValue } from "react-hook-form";
+import WarningCheck from "@/components/WarningCheck";
 import { PostType } from "../../page";
 import ImageSection from "../ImageSection";
 
 interface Props {
   control: Control<PostType, any>;
-  isCheck: boolean;
-  setIsCheck: Dispatch<SetStateAction<boolean>>;
   imgList: (File | string)[];
   setImgList: Dispatch<SetStateAction<(File | string)[]>>;
   images: (File | string)[];
@@ -15,7 +14,7 @@ interface Props {
   setValue: UseFormSetValue<PostType>;
 }
 
-const DetailInput = ({ control, isCheck, setIsCheck, imgList, setImgList, images, getValues, setValue }: Props) => {
+const DetailInput = ({ control, imgList, setImgList, images, getValues, setValue }: Props) => {
   useEffect(() => {
     if (Array.from(images).filter((image) => !imgList.includes(image)).length === 0) {
       return;
@@ -43,10 +42,7 @@ const DetailInput = ({ control, isCheck, setIsCheck, imgList, setImgList, images
         />
         <div className={classNames("text-12 text-[#A2A5AA]", { "text-red-600": getValues("detailText").length > 100 })}>{getValues("detailText").length} / 100</div>
       </label>
-      <div className="rounded-sm bg-[#DDD] px-12 py-8">
-        허위 등록, 악의적인 등록은 삭제될 수 있으며, 이로 인한 피해가 발생할 경우 전적으로 게시자가 책임집니다.(대략이런내용) 이용약관 상수로 관리할까여말까여 흠 고민고민..
-      </div>
-      {isCheck ? <div onClick={() => setIsCheck(false)}>체크됨</div> : <div onClick={() => setIsCheck(true)}>클릭하면 체크</div>}
+      <WarningCheck />
     </>
   );
 };
