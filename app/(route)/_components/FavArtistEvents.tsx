@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import Carousel from "@/components/card/Carousel";
+import Carousel from "@/components/Carousel";
 import EventCard from "@/components/card/EventCard";
 import { EventMockData } from "./EventMockData";
 import PopularEvents from "./PopularEvents";

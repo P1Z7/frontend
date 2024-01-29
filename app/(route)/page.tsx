@@ -1,5 +1,5 @@
+import Carousel from "@/components/Carousel";
 import Artists from "@/components/card/Artists";
-import Carousel from "@/components/card/Carousel";
 import FavArtistEvents from "./_components/FavArtistEvents";
 import HomeNav from "./_components/HomeNav";
 import NewestEvents from "./_components/NewestEvents";
