@@ -9,8 +9,7 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
   const isButtonDisabled = !!formState.errors.email || !!formState.errors.password || !!formState.errors.passwordCh || !formState.isDirty;
 
   return (
-    <div className="flex flex-col gap-24 p-12">
-      <p className=" text-16 font-700 text-black">로그인 정보를 입력해주세요</p>
+    <>
       <InputText
         control={control}
         name="email"
@@ -52,7 +51,7 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
       <button type="button" onClick={onNext} disabled={isButtonDisabled} className="h-40 bg-slate-200 text-12">
         다음
       </button>
-    </div>
+    </>
   );
 };
 
