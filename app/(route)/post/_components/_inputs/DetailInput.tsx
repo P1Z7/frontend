@@ -1,20 +1,21 @@
-import classNames from "classnames";
-import { Dispatch, SetStateAction, useEffect } from "react";
-import { Control, Controller, UseFormGetValues, UseFormSetValue } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { useFormContext } from "react-hook-form";
 import WarningCheck from "@/components/WarningCheck";
+import InputArea from "@/components/input/InputArea";
+import { validateEdit } from "@/utils/editValidate";
 import { PostType } from "../../page";
 import ImageSection from "../ImageSection";
 
-interface Props {
-  control: Control<PostType, any>;
-  imgList: (File | string)[];
-  setImgList: Dispatch<SetStateAction<(File | string)[]>>;
-  images: (File | string)[];
-  getValues: UseFormGetValues<PostType>;
-  setValue: UseFormSetValue<PostType>;
-}
+const DetailInput = () => {
+  const {
+    formState: { defaultValues },
+    getValues,
+    setValue,
+    watch,
+  } = useFormContext<PostType>();
+  const [imgList, setImgList] = useState<(File | string)[]>(getValues("images"));
+  const { images } = watch();
 
-const DetailInput = ({ control, imgList, setImgList, images, getValues, setValue }: Props) => {
   useEffect(() => {
     if (Array.from(images).filter((image) => !imgList.includes(image)).length === 0) {
       return;
@@ -30,18 +31,9 @@ const DetailInput = ({ control, imgList, setImgList, images, getValues, setValue
   return (
     <>
       <ImageSection imgList={imgList} setImgList={setImgList} />
-      <label className="flex flex-col">
+      <InputArea name="detailText" placeholder="이벤트 설명을 입력하세요." rules={{ maxLength: 100 }} isEdit={validateEdit(defaultValues?.detailText !== getValues("detailText"))}>
         상세 내용
-        <Controller
-          control={control}
-          name="detailText"
-          rules={{ maxLength: 100 }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <textarea id="detail_text" className="h-120 rounded-sm bg-gray-100 px-16 py-12" placeholder="이벤트를 설명하세요." onChange={onChange} onBlur={onBlur} value={value} />
-          )}
-        />
-        <div className={classNames("text-12 text-[#A2A5AA]", { "text-red-600": getValues("detailText").length > 100 })}>{getValues("detailText").length} / 100</div>
-      </label>
+      </InputArea>
       <WarningCheck />
     </>
   );

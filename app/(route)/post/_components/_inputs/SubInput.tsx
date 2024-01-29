@@ -1,6 +1,5 @@
-import { EditPostType } from "@/(route)/event/[id]/edit/page";
 import { useEffect, useState } from "react";
-import { UseFormGetValues, UseFormSetValue, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import GiftTag from "@/components/GiftTag";
 import InputText from "@/components/input/InputText";
 import { PostType } from "../../page";
@@ -8,15 +7,12 @@ import { PostType } from "../../page";
 const SNS_TYPE_LIST = ["트위터", "인스타그램", "유튜브", "기타"];
 const GIFT_LIST = ["컵홀더", "포토카드", "엽서", "티켓", "포스터", "스티커", "굿즈", "기타"];
 
-interface Props {
-  getValues: UseFormGetValues<PostType>;
-  setValue: UseFormSetValue<PostType>;
-}
-
-const SubInput = ({ getValues, setValue }: Props) => {
+const SubInput = () => {
   const {
     formState: { defaultValues },
     watch,
+    getValues,
+    setValue,
   } = useFormContext<PostType>();
   const [snsType, setSnsType] = useState(getValues("snsType"));
   const [giftList, setGiftList] = useState<string[]>(getValues("gift"));

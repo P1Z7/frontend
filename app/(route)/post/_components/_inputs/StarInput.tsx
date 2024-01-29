@@ -1,21 +1,15 @@
-import { EditPostType } from "@/(route)/event/[id]/edit/page";
 import { useEffect, useState } from "react";
-import { UseFormGetValues, UseFormSetValue, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import Dropdown from "@/components/Dropdown";
 import StarBottomSheet from "@/components/bottom-sheet/StarBottomSheet";
 import InputText from "@/components/input/InputText";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
-import { useStore } from "@/store/index";
 import { PostType } from "../../page";
 
 const EVENT_TYPE_LIST = ["생일카페", "상영회", "팬싸", "또뭐하ㅏ지", "모르겠다", "배고프다", "붕어빵", "피자붕어빵"];
 
-interface Props {
-  getValues: UseFormGetValues<PostType>;
-  setValue: UseFormSetValue<PostType>;
-}
-
-const StarInput = ({ getValues, setValue }: Props) => {
+const StarInput = () => {
+  const { getValues, setValue } = useFormContext<PostType>();
   const { bottomSheet, openBottomSheet, closeBottomSheet } = useBottomSheet();
   const [eventType, setEventType] = useState(getValues("eventType"));
 

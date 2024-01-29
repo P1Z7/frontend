@@ -1,22 +1,17 @@
-import { usePathname } from "next/navigation";
-import { UseFormSetValue, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import InputText from "@/components/input/InputText";
 import AddressModal from "@/components/modal/AddressModal";
 import CalendarModal from "@/components/modal/CalendarModal";
 import { useModal } from "@/hooks/useModal";
-import { useStore } from "@/store/index";
 import { validateEdit } from "@/utils/editValidate";
 import { PostType } from "../../page";
 
-interface Props {
-  setValue: UseFormSetValue<PostType>;
-}
-
-const MainInput = ({ setValue }: Props) => {
+const MainInput = () => {
   const { modal, openModal, closeModal } = useModal();
   const {
     formState: { defaultValues },
     watch,
+    setValue,
   } = useFormContext<PostType>();
   const { title, address, detailAddress, startDate, endDate } = watch();
 

@@ -14,7 +14,6 @@ interface Props {
 
 const MainInfo = ({ onNextStep }: Props) => {
   const {
-    setValue,
     watch,
     formState: { isValid },
   } = useFormContext<PostType>();
@@ -26,7 +25,7 @@ const MainInfo = ({ onNextStep }: Props) => {
     <div className="flex flex-col gap-24">
       <ProgressBar ratio="1/2" />
       <FunnelTitle step="행사 정보" isRequired />
-      <MainInput setValue={setValue} />
+      <MainInput />
       <PostFooter onNextStep={onNextStep} isDisabled={isDisabled} />
     </div>
   );
