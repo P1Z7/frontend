@@ -1,23 +1,17 @@
 "use client";
 
+import Header from "@/components/Header";
 import Tabs from "@/components/Tabs";
-import SettingHeader from "../setting/_components/SettingHeader";
 import { MOCK } from "../setting/favorite/page";
 import UserProfile from "./_components/UserProfile";
 import ArtistTab from "./_components/tab/ArtistTab";
 import MyReviewTab from "./_components/tab/MyReviewTab";
 
-const MOCK_USER_INFO = {
-  nickName: "민정사랑해",
-  email: "iloveminjeong@mail.com",
-  profileImg: null,
-};
-
 const MyPage = () => {
   return (
     <div className="flex flex-col gap-24 p-16">
       <div className="flex items-center gap-8 self-start pb-20">
-        <SettingHeader />
+        <Header />
       </div>
       <UserProfile data={MOCK_USER_INFO} />
       <Tabs names={["아티스트", "내 후기"]}>
@@ -29,6 +23,12 @@ const MyPage = () => {
 };
 
 export default MyPage;
+
+const MOCK_USER_INFO = {
+  nickName: "민정사랑해",
+  email: "iloveminjeong@mail.com",
+  profileImg: null,
+};
 
 export interface MyReviewProps {
   place: string;

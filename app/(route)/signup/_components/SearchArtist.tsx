@@ -1,10 +1,10 @@
 import { ArtistType, MOCK } from "@/(route)/setting/favorite/page";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import ArtistCard from "@/components/ArtistCard";
 import InputText from "@/components/input/InputText";
 import ReqNewArtistModal from "@/components/modal/ReqNewArtistModal";
 import { useModal } from "@/hooks/useModal";
-import ArtistCard from "./ArtistCard";
 
 interface Props {
   data: ArtistType[];

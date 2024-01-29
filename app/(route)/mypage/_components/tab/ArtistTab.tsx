@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import ArtistCard from "@/components/ArtistCard";
 
 interface Props {
   data: {
@@ -19,17 +20,14 @@ const ArtistTab = ({ data }: Props) => {
       </div>
       <div className="grid w-fit grid-cols-3 gap-8">
         {data.map((cardList) => (
-          <button
-            className="flex w-100 flex-col items-center justify-center gap-8 rounded-sm p-12 hover:bg-sky-50"
+          <ArtistCard
             key={cardList.name}
+            name={cardList.name}
+            profileImage={cardList.profileImage}
             onClick={() => {
               console.log(`${cardList.name}(으)로 검색`);
             }}
-          >
-            <Image src={cardList.profileImage ? cardList.profileImage : "/icon/no-profile.svg"} alt="아티스트" width={80} height={80} />
-            <p className="text-14">{cardList.name}</p>
-          </button>
-          // ArtistCard 컴포넌트로 대체 예정
+          />
         ))}
       </div>
     </>

@@ -1,4 +1,4 @@
-import Review from "../Review";
+import Review from "../../../../../_components/Review";
 import ReviewButton from "../ReviewButton";
 
 const REVIEWS = [

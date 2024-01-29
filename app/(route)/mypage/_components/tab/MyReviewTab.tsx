@@ -1,4 +1,4 @@
-import Review from "@/(route)/event/[id]/_components/Review";
+import Review from "@/components/Review";
 import { MyReviewProps } from "../../page";
 
 const MyReviewTab = ({ reviewList }: { reviewList: MyReviewProps[] }) => {
