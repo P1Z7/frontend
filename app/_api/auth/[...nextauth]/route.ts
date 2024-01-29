@@ -1,7 +1,12 @@
 import NextAuth from "next-auth";
-import Credentials from "next-auth/providers/credentials";
+import Credentials, { CredentialsConfig } from "next-auth/providers/credentials";
 
-export const authOptions = {
+interface AuthOptions {
+  providers: CredentialsConfig<{ email: { label: string; type: string; placeholder: string }; password: { label: string; type: string; placeholder: string } }>[];
+  pages: { signIn: string };
+}
+
+export const authOptions: AuthOptions = {
   providers: [
     Credentials({
       name: "signin",

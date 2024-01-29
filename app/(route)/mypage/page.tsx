@@ -1,8 +1,8 @@
 "use client";
 
+import { MOCK } from "app/_constants/mock";
 import Header from "@/components/Header";
 import Tabs from "@/components/Tabs";
-import { MOCK } from "../setting/favorite/page";
 import UserProfile from "./_components/UserProfile";
 import ArtistTab from "./_components/tab/ArtistTab";
 import MyReviewTab from "./_components/tab/MyReviewTab";
