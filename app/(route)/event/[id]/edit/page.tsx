@@ -1,6 +1,9 @@
 "use client";
 
 import GenericForm from "@/(route)/signup/_components/GenericForm";
+import { useEffect } from "react";
+import Header from "@/components/Header";
+import { useStore } from "@/store/index";
 import EditContent from "./_components/EditContent";
 
 const EDIT_MOCKUP_DATA = {
@@ -10,8 +13,8 @@ const EDIT_MOCKUP_DATA = {
   title: "홍대 ㅁㅁ카페",
   address: "서울 마포구 와우산로 94",
   detailAddress: "홍익대학교",
-  startDate: "2024년 1월 9일 화",
-  endDate: "2024년 1월 12일 금",
+  startDate: "2024-01-09",
+  endDate: "2024-01-12",
   snsId: "@karrrrr",
   snsType: "트위터",
   eventUrl: "https://m.cafe.daum.net/zoomin62/GNO8/755003?svc=topRank",
@@ -30,9 +33,11 @@ const Edit = () => {
   //여기서 get하고 이미지들 file 형식으로 변환해서 default 값 설정..?
 
   return (
-    <GenericForm formOptions={{ mode: "onBlur", defaultValues: EDIT_MOCKUP_DATA, shouldFocusError: true }}>
-      <EditContent />
-    </GenericForm>
+    <>
+      <GenericForm formOptions={{ mode: "onBlur", defaultValues: EDIT_MOCKUP_DATA, shouldFocusError: true }}>
+        <EditContent />
+      </GenericForm>
+    </>
   );
 };
 

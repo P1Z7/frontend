@@ -1,10 +1,11 @@
 import { EditPostType } from "@/(route)/event/[id]/edit/page";
 import { useEffect, useState } from "react";
-import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
+import { UseFormGetValues, UseFormSetValue, useFormContext } from "react-hook-form";
 import Dropdown from "@/components/Dropdown";
 import StarBottomSheet from "@/components/bottom-sheet/StarBottomSheet";
 import InputText from "@/components/input/InputText";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
+import { useStore } from "@/store/index";
 import { PostType } from "../../page";
 
 const EVENT_TYPE_LIST = ["생일카페", "상영회", "팬싸", "또뭐하ㅏ지", "모르겠다", "배고프다", "붕어빵", "피자붕어빵"];
@@ -25,11 +26,11 @@ const StarInput = ({ getValues, setValue }: Props) => {
   return (
     <>
       <div className="flex-item flex flex-col gap-20">
-        <label>
+        <div>
           연예인
           <InputText name="group" placeholder="그룹선택" readOnly onClick={() => openBottomSheet("starGroup")} />
           <InputText name="member" placeholder="멤버선택" readOnly />
-        </label>
+        </div>
         <div>
           <div>행사 유형</div>
           <Dropdown itemList={EVENT_TYPE_LIST} selected={eventType} setSelected={setEventType} />
