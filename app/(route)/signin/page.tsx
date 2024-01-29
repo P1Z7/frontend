@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { KeyboardEvent, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import InputText from "@/components/input/InputText";
+import useEnterNext from "@/hooks/useEnterNext";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 
 const SIGNIN_DEFAULT = {
@@ -18,17 +19,7 @@ const SIGNIN_DEFAULT = {
 type DefaultValues = (typeof SIGNIN_DEFAULT)["defaultValues"];
 
 const SignInPage = () => {
-  const formSection = useRef<HTMLFormElement>(null);
-
-  const handleNextStep = (e: KeyboardEvent) => {
-    const formChildren = Array.from(formSection.current?.querySelectorAll("input, button")!);
-    const currentIdx = formChildren.indexOf(e.target as HTMLElement);
-    const nextStep = formChildren[currentIdx + 1] as HTMLElement;
-    if (e.key === "Enter" && nextStep) {
-      e.preventDefault();
-      nextStep.focus();
-    }
-  };
+  const { formSection, handleEnterNext } = useEnterNext();
 
   const { formState, control, handleSubmit } = useForm(SIGNIN_DEFAULT);
   console.log(formState.isValid);
@@ -44,7 +35,7 @@ const SignInPage = () => {
         name="email"
         placeholder="example@illo.com"
         control={control}
-        onKeyDown={handleNextStep}
+        onKeyDown={handleEnterNext}
         rules={{ required: ERROR_MESSAGES.email.emailField, pattern: { value: REG_EXP.CHECK_EMAIL, message: ERROR_MESSAGES.email.emailPattern } }}
       >
         이메일
@@ -54,7 +45,7 @@ const SignInPage = () => {
         type="password"
         control={control}
         rules={{ required: ERROR_MESSAGES.password.passwordField, pattern: { value: REG_EXP.CHECK_PASSWORD, message: ERROR_MESSAGES.password.passwordPattern } }}
-        onKeyDown={handleNextStep}
+        onKeyDown={handleEnterNext}
       >
         비밀번호
       </InputText>
