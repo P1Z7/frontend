@@ -1,28 +1,22 @@
-import Carousel from "@/components/Carousel";
-import Artists from "@/components/card/Artists";
-import FavArtistEvents from "./_components/FavArtistEvents";
-import HomeNav from "./_components/HomeNav";
-import NewestEvents from "./_components/NewestEvents";
-import PopularEvents from "./_components/PopularEvents";
+import ArtistList from "@/components/artist-list/ArtistList";
+import BottomNav from "./_components/BottomNav";
+import FavArtistEventsCarousel from "./_components/carousel/FavArtistEventsCarousel";
+import NewestEventsCarousel from "./_components/carousel/NewestEventsCarousel";
+import PopularEventsCarousel from "./_components/carousel/PopularEventsCarousel";
 
 const Home = () => {
   return (
-    <main className="flex flex-col overflow-hidden px-20 pb-120 pt-60">
-      <div className="flex flex-col gap-40">
-        <FavArtistEvents />
-        <Carousel title="실시간 인기 행사" customSettings={{ autoplay: true }}>
-          <PopularEvents />
-        </Carousel>
-        <Carousel title="최신 등록 행사">
-          <NewestEvents />
-        </Carousel>
-        <div>
-          <h2>아티스트로 찾아보기</h2>
-          <Artists />
+    <>
+      <main className="flex flex-col overflow-hidden px-20 pb-120 pt-60">
+        <div className="flex flex-col gap-40">
+          <FavArtistEventsCarousel />
+          <PopularEventsCarousel />
+          <NewestEventsCarousel />
+          <ArtistList />
         </div>
-      </div>
-      <HomeNav />
-    </main>
+      </main>
+      <BottomNav />
+    </>
   );
 };
 export default Home;
