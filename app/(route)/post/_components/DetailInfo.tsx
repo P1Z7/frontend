@@ -9,12 +9,8 @@ import DetailInput from "./_inputs/DetailInput";
 const DetailInfo = () => {
   const { getValues, setValue, control, watch } = useFormContext<PostType>();
   const [isCheck, setIsCheck] = useState(false);
-  const [imgList, setImgList] = useState<File[]>(getValues("images"));
+  const [imgList, setImgList] = useState<(File | string)[]>(getValues("images"));
   const { images } = watch();
-
-  const handleNextClick = () => {
-    setValue("images", imgList);
-  };
 
   return (
     <div className="flex flex-col gap-24">
@@ -30,7 +26,7 @@ const DetailInfo = () => {
         getValues={getValues}
         setValue={setValue}
       />
-      <PostFooter onNextStep={handleNextClick} isDisabled={!isCheck || getValues("detailText").length > 100} />
+      <PostFooter isDisabled={!isCheck || getValues("detailText").length > 100} />
     </div>
   );
 };

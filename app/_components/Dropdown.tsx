@@ -23,7 +23,7 @@ const Dropdown = ({ itemList, selected, setSelected }: Props) => {
           </span>
         </Listbox.Button>
         <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
-          <Listbox.Options className="mt-1 py-1 text-base sm:text-sm absolute max-h-[170px] w-full overflow-auto rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
+          <Listbox.Options className="mt-1 py-1 text-base sm:text-sm absolute z-popup max-h-[170px] w-full overflow-auto rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
             {itemList.map((item, idx) => (
               <Listbox.Option
                 key={idx}

@@ -24,7 +24,7 @@ const StarInput = ({ getValues, setValue }: Props) => {
 
   return (
     <>
-      <main className="flex-item flex flex-col gap-20">
+      <div className="flex-item flex flex-col gap-20">
         <label>
           연예인
           <InputText name="group" placeholder="그룹선택" readOnly onClick={() => openBottomSheet("starGroup")} />
@@ -34,7 +34,7 @@ const StarInput = ({ getValues, setValue }: Props) => {
           <div>행사 유형</div>
           <Dropdown itemList={EVENT_TYPE_LIST} selected={eventType} setSelected={setEventType} />
         </div>
-      </main>
+      </div>
       <InputText name="eventType" hidden />
       {bottomSheet === "starGroup" && <StarBottomSheet closeBottomSheet={closeBottomSheet} />}
     </>

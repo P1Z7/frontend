@@ -15,7 +15,7 @@ const StarInfo = ({ onNextStep }: Props) => {
   return (
     <div className="flex flex-col gap-24">
       <ProgressBar ratio="1/4" />
-      <FunnelTitle step="행사 대상" />
+      <FunnelTitle step="행사 대상" isRequired />
       <StarInput setValue={setValue} getValues={getValues} />
       <PostFooter onNextStep={onNextStep} />
     </div>

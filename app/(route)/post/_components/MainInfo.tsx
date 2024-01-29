@@ -25,7 +25,7 @@ const MainInfo = ({ onNextStep }: Props) => {
   return (
     <div className="flex flex-col gap-24">
       <ProgressBar ratio="1/2" />
-      <FunnelTitle step="행사 정보" />
+      <FunnelTitle step="행사 정보" isRequired />
       <MainInput setValue={setValue} />
       <PostFooter onNextStep={onNextStep} isDisabled={isDisabled} />
     </div>

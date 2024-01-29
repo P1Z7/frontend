@@ -18,7 +18,7 @@ const MainInput = ({ setValue }: Props) => {
   const { title, address, detailAddress, startDate, endDate } = watch();
 
   return (
-    <main>
+    <>
       <InputText name="title" placeholder="카페 이름" rules={{ required: "제목을 입력해주세요." }} isEdit={defaultValues?.title !== title}>
         제목
       </InputText>
@@ -32,7 +32,7 @@ const MainInput = ({ setValue }: Props) => {
       <InputText name="endDate" placeholder="날짜 선택" readOnly onClick={() => openModal("date")} isEdit={defaultValues?.endDate !== endDate} />
       {modal === "address" && <AddressModal setValue={setValue} closeModal={closeModal} />}
       {modal === "date" && <CalendarModal setValue={setValue} closeModal={closeModal} />}
-    </main>
+    </>
   );
 };
 

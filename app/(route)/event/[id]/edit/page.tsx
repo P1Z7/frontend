@@ -5,7 +5,7 @@ import EditContent from "./_components/EditContent";
 
 const EDIT_MOCKUP_DATA = {
   group: "에스파",
-  member: ["카리나"],
+  member: ["카리나", "윈터"],
   eventType: "생일카페",
   title: "홍대 ㅁㅁ카페",
   address: "서울 마포구 와우산로 94",
@@ -27,6 +27,8 @@ const EDIT_MOCKUP_DATA = {
 export type EditPostType = typeof EDIT_MOCKUP_DATA;
 
 const Edit = () => {
+  //여기서 get하고 이미지들 file 형식으로 변환해서 default 값 설정..?
+
   return (
     <GenericForm formOptions={{ mode: "onBlur", defaultValues: EDIT_MOCKUP_DATA, shouldFocusError: true }}>
       <EditContent />

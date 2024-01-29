@@ -1,6 +1,6 @@
 import { EditPostType } from "@/(route)/event/[id]/edit/page";
 import { useEffect, useState } from "react";
-import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
+import { UseFormGetValues, UseFormSetValue, useFormContext } from "react-hook-form";
 import GiftTag from "@/components/GiftTag";
 import InputText from "@/components/input/InputText";
 import { PostType } from "../../page";
@@ -14,8 +14,13 @@ interface Props {
 }
 
 const SubInput = ({ getValues, setValue }: Props) => {
+  const {
+    formState: { defaultValues },
+    watch,
+  } = useFormContext<PostType>();
   const [snsType, setSnsType] = useState(getValues("snsType"));
   const [giftList, setGiftList] = useState<string[]>(getValues("gift"));
+  const { snsId, eventUrl } = watch();
 
   const handleRadioChange = (event: any) => {
     setSnsType(event.target.value);
@@ -36,8 +41,8 @@ const SubInput = ({ getValues, setValue }: Props) => {
 
   return (
     <>
-      <main>
-        <InputText name="snsId" placeholder="SNS 아이디 입력">
+      <div>
+        <InputText name="snsId" placeholder="SNS 아이디 입력" isEdit={defaultValues?.snsId !== snsId}>
           주최자
         </InputText>
         {SNS_TYPE_LIST.map((type) => (
@@ -46,7 +51,7 @@ const SubInput = ({ getValues, setValue }: Props) => {
             {type}
           </label>
         ))}
-        <InputText name="eventUrl" placeholder="URL 입력">
+        <InputText name="eventUrl" placeholder="URL 입력" isEdit={defaultValues?.eventUrl !== eventUrl}>
           행사 링크
         </InputText>
         <label>
@@ -57,7 +62,7 @@ const SubInput = ({ getValues, setValue }: Props) => {
             </GiftTag>
           ))}
         </label>
-      </main>
+      </div>
       <InputText name="gift" hidden />
       <InputText name="snsType" hidden />
     </>
