@@ -7,26 +7,27 @@ import InputFile from "@/components/input/InputFile";
 import InputText from "@/components/input/InputText";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 
-const PROFILE_DEFAULT = {
-  mode: "onChange",
-  defaultValues: {
-    profileImage: "",
-    nickname: "",
-  },
-} as const;
-
-type DefaultValues = (typeof PROFILE_DEFAULT)["defaultValues"];
+interface DefaultValues {
+  profileImage: File[];
+  nickname: string;
+}
 
 const ProfilePage = () => {
-  const { formState, control, handleSubmit, watch } = useForm(PROFILE_DEFAULT);
+  const { formState, control, handleSubmit, watch } = useForm<DefaultValues>({
+    mode: "onChange",
+    defaultValues: {
+      profileImage: [],
+      nickname: "",
+    },
+  });
 
   const handleProfileSubmit: SubmitHandler<DefaultValues> = async ({ profileImage, nickname }) => {
     console.log(profileImage, nickname);
   };
 
-  const [newFile] = watch("profileImage") as any;
+  const [newFile] = watch("profileImage");
 
-  const [thumbnail, setThumbnail] = useState(newFile);
+  const [thumbnail, setThumbnail] = useState("");
 
   useEffect(() => {
     if (newFile) {
