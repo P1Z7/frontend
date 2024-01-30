@@ -6,6 +6,7 @@ export const EventMockData = [
     address: "마포구",
     startDate: "2024-01-28",
     endDate: "2024-01-30",
+    gifts: ["컵홀더", "포토카드", "엽서", "스티커"],
   },
   {
     placeName: "윤정한 카페",
@@ -15,6 +16,7 @@ export const EventMockData = [
     date: "01.19 ~ 01.20",
     startDate: "2024-01-28",
     endDate: "2024-01-30",
+    gifts: ["컵홀더", "포토카드", "엽서", "스티커"],
   },
   {
     placeName: "홍지수 카페",
@@ -24,6 +26,7 @@ export const EventMockData = [
     date: "01.19 ~ 01.20",
     startDate: "2024-01-28",
     endDate: "2024-01-30",
+    gifts: ["컵홀더", "포토카드", "엽서", "스티커"],
   },
   {
     placeName: "문준휘 카페",
@@ -33,6 +36,7 @@ export const EventMockData = [
     date: "01.19 ~ 01.20",
     startDate: "2024-01-28",
     endDate: "2024-01-30",
+    gifts: ["컵홀더", "포토카드", "엽서", "스티커"],
   },
   {
     placeName: "권순영 카페",
@@ -42,6 +46,7 @@ export const EventMockData = [
     date: "01.19 ~ 01.20",
     startDate: "2024-01-28",
     endDate: "2024-01-30",
+    gifts: ["컵홀더", "포토카드", "엽서", "스티커"],
   },
   {
     placeName: "전원우 카페",
@@ -51,6 +56,7 @@ export const EventMockData = [
     date: "01.19 ~ 01.20",
     startDate: "2024-01-28",
     endDate: "2024-01-30",
+    gifts: ["컵홀더", "포토카드", "엽서", "스티커"],
   },
   {
     placeName: "이지훈 카페",
@@ -60,24 +66,27 @@ export const EventMockData = [
     date: "01.19 ~ 01.20",
     startDate: "2024-01-28",
     endDate: "2024-01-30",
+    gifts: ["컵홀더", "포토카드", "엽서", "스티커"],
   },
   {
-    placeName: "이지훈 카페",
-    artistName: "이지훈",
+    placeName: "서명호 카페",
+    artistName: "서명호",
     eventType: "생일카페",
     address: "마포구",
     date: "01.19 ~ 01.20",
     startDate: "2024-01-28",
     endDate: "2024-01-30",
+    gifts: ["컵홀더", "포토카드", "엽서", "스티커"],
   },
   {
-    placeName: "최승철 카페",
+    placeName: "김민규 카페",
     artistName: "김민규",
     eventType: "생일카페",
     address: "마포구",
     date: "01.19 ~ 01.20",
     startDate: "2024-01-28",
     endDate: "2024-01-30",
+    gifts: ["컵홀더", "포토카드", "엽서", "스티커"],
   },
   {
     placeName: "이석민 카페",
@@ -87,6 +96,7 @@ export const EventMockData = [
     date: "01.19 ~ 01.20",
     startDate: "2024-01-28",
     endDate: "2024-01-30",
+    gifts: ["컵홀더", "포토카드", "엽서", "스티커"],
   },
   {
     placeName: "부승관 카페",
@@ -96,6 +106,7 @@ export const EventMockData = [
     date: "01.19 ~ 01.20",
     startDate: "2024-01-28",
     endDate: "2024-01-30",
+    gifts: ["컵홀더", "포토카드", "엽서", "스티커"],
   },
   {
     placeName: "최한솔 카페",
@@ -105,6 +116,7 @@ export const EventMockData = [
     date: "01.19 ~ 01.20",
     startDate: "2024-01-28",
     endDate: "2024-01-30",
+    gifts: ["컵홀더", "포토카드", "엽서", "스티커"],
   },
   {
     placeName: "이찬 카페",
@@ -114,5 +126,6 @@ export const EventMockData = [
     date: "01.19 ~ 01.20",
     startDate: "2024-01-28",
     endDate: "2024-01-30",
+    gifts: ["컵홀더", "포토카드", "엽서", "스티커"],
   },
 ];

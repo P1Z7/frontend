@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { useState } from "react";
 import Carousel from "@/components/Carousel";
-import EventCard from "@/components/card/EventCard";
-import { EventMockData } from "../EventMockData";
+import { EventMockData } from "@/components/card/EventMockData";
+import VerticalEventCard from "@/components/card/VerticalEventCard";
 
 const FavArtistEventsCarousel = () => {
   // 추후 next auth로 변경 예정
@@ -17,14 +17,17 @@ const FavArtistEventsCarousel = () => {
 
   return (
     <>
-      <h2>좋아요한 아티스트의 새 행사</h2>
+      <div className="flex justify-between">
+        <h2>좋아요한 아티스트의 새 행사</h2>
+        <Link href="/my-artist-event">전체보기</Link>
+      </div>
       {status ? (
         hasFavoriteEvents ? (
           <Carousel customSettings={{ dots: true, infinite: false }}>
-            <EventCard placeName="카페" artistName="아티스트" eventType="생일 카페" address="주소" startDate="날짜" endDate="날짜" />
-            <EventCard placeName="카페" artistName="아티스트" eventType="생일 카페" address="주소" startDate="날짜" endDate="날짜" />
-            <EventCard placeName="카페" artistName="아티스트" eventType="생일 카페" address="주소" startDate="날짜" endDate="날짜" />
-            <EventCard placeName="카페" artistName="아티스트" eventType="생일 카페" address="주소" startDate="날짜" endDate="날짜" />
+            <VerticalEventCard placeName="카페" artistName="아티스트" eventType="생일 카페" address="주소" startDate="날짜" endDate="날짜" />
+            <VerticalEventCard placeName="카페" artistName="아티스트" eventType="생일 카페" address="주소" startDate="날짜" endDate="날짜" />
+            <VerticalEventCard placeName="카페" artistName="아티스트" eventType="생일 카페" address="주소" startDate="날짜" endDate="날짜" />
+            <VerticalEventCard placeName="카페" artistName="아티스트" eventType="생일 카페" address="주소" startDate="날짜" endDate="날짜" />
           </Carousel>
         ) : (
           <NoFavCard buttonName="아티스트 둘러보기" href={"/setting/artist"} />
