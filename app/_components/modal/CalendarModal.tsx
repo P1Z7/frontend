@@ -2,14 +2,14 @@
 
 import { PostType } from "@/(route)/post/page";
 import { format } from "date-fns";
-import { ko } from "date-fns/locale";
 import { useEffect, useState } from "react";
 import { DateRange, DayPicker } from "react-day-picker";
+import "react-day-picker/dist/style.css";
 import { UseFormSetValue } from "react-hook-form";
 import ModalFrame from "./ModalFrame";
 
 interface Props {
-  setValue: UseFormSetValue<PostType>;
+  setValue: UseFormSetValue<PostType> | any;
   closeModal: () => void;
 }
 
@@ -19,10 +19,10 @@ const CalendarModal = ({ setValue, closeModal }: Props) => {
   useEffect(() => {
     if (range?.from) {
       if (!range.to) {
-        setValue("startDate", format(range.from, "PPP EE", { locale: ko }));
+        setValue("startDate", format(range.from, "yyyy-MM-dd"));
       } else if (range.to) {
-        setValue("startDate", format(range.from, "PPP EE", { locale: ko }));
-        setValue("endDate", format(range.to, "PPP EE", { locale: ko }));
+        setValue("startDate", format(range.from, "yyyy-MM-dd"));
+        setValue("endDate", format(range.to, "yyyy-MM-dd"));
       }
     }
   }, [range]);

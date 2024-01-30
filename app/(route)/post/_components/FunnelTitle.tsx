@@ -7,10 +7,10 @@ const POST_FUNNEL_TITLE = {
 
 interface Props {
   step: "행사 대상" | "행사 정보" | "특전 정보" | "상세 설명";
+  isRequired?: boolean;
 }
 
-const FunnelTitle = ({ step }: Props) => {
-  const isRequired = step.includes("행사");
+const FunnelTitle = ({ step, isRequired = false }: Props) => {
   return (
     <div className="flex-col gap-8">
       <div className="text-20 font-900">{POST_FUNNEL_TITLE[step]}</div>
