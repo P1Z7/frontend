@@ -9,6 +9,7 @@ const TITLE: { [a: string]: string } = {
   "/setting/profile": "프로필 수정",
   "/setting/favorite": "좋아하는 아티스트 수정",
   "/mypage": "마이페이지",
+  "/my-artist-event": "좋아요한 아티스트의 새 행사",
 };
 
 const Header = () => {
