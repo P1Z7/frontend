@@ -6,6 +6,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import InputFile from "@/components/input/InputFile";
 import InputText from "@/components/input/InputText";
 
+const ERROR_MESSAGES = {
+  empty: "내용을 작성해주세요.",
+  exceedMaxLength: "100자 이내로 작성해주세요.",
+};
+
 interface FormValues {
   description: string;
   images: File[];
@@ -66,24 +71,21 @@ const ReviewPostPage = () => {
         name="description"
         maxLength={100}
         rules={{
-          required: "내용을 작성해주세요.",
-          pattern: {
-            value: /^.{0,100}$/,
-            message: "100자 이내로 작성해주세요.",
-          },
+          required: ERROR_MESSAGES.empty,
+          maxLength: { value: 100, message: ERROR_MESSAGES.exceedMaxLength },
         }}
       >
         상세 내용
       </InputText>
       <ul className="flex gap-8 overflow-x-auto">
-        <li className="flex-shrink-0">
+        <li className="shrink-0">
           <InputFile control={control} name="images">
             이미지
           </InputFile>
         </li>
         {imageList.map((image, index) => (
           <li key={index}>
-            <button type="button" onClick={() => removeImage(image)} className="relative h-100 w-100 flex-shrink-0">
+            <button type="button" onClick={() => removeImage(image)} className="relative h-100 w-100 shrink-0">
               <Image src={URL.createObjectURL(image)} alt="선택한 사진 미리보기" fill className="object-cover" />
             </button>
           </li>

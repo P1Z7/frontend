@@ -9,7 +9,6 @@ import InputText from "@/components/input/InputText";
 import AddressModal from "@/components/modal/AddressModal";
 import CalendarModal from "@/components/modal/CalendarModal";
 import { useModal } from "@/hooks/useModal";
-import { useStore } from "@/store/index";
 import { PostType } from "../page";
 import FunnelTitle from "./FunnelTitle";
 import PostFooter from "./PostFooter";
