@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import BigRegionBottomSheet from "@/components/bottom-sheet/BigRegionBottomSheet";
+import CalenderBottomSheet from "@/components/bottom-sheet/CalendarBottomSheet";
+import GiftBottomSheet from "@/components/bottom-sheet/GiftsBottomSheet";
 import SmallRegionBottomSheet from "@/components/bottom-sheet/SmallRegionBottomSheet";
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
@@ -31,12 +33,16 @@ const MOCK_EVENTS = [
 interface FilterType {
   bigRegion: (typeof BIG_REGIONS)[number] | "";
   smallRegion: string;
-  gifts: string;
+  startDate: string | null;
+  endDate: string | null;
+  gifts: string[];
 }
 
 const BOTTOM_SHEET = {
   bigRegion: "big-region_bottom-sheet",
   smallRegion: "small-region_bottom-sheet",
+  calender: "calender_bottom-sheet",
+  gift: "gift_bottom-sheet",
 };
 
 const SearchPage = () => {
@@ -44,7 +50,9 @@ const SearchPage = () => {
   const [filter, setFilter] = useState<FilterType>({
     bigRegion: "",
     smallRegion: "전지역",
-    gifts: "",
+    startDate: null,
+    endDate: null,
+    gifts: [],
   });
 
   const setBigRegionFilter = (bigRegion: (typeof BIG_REGIONS)[number] | "") => {
@@ -53,6 +61,15 @@ const SearchPage = () => {
   };
   const setSmallRegionFilter = (smallRegion: string) => {
     setFilter((prev) => ({ ...prev, smallRegion }));
+  };
+  const setStartDateFilter = (startDate: string) => {
+    setFilter((prev) => ({ ...prev, startDate }));
+  };
+  const setEndDateFilter = (endDate: string) => {
+    setFilter((prev) => ({ ...prev, endDate }));
+  };
+  const setGiftsFilter = (gift: string) => {
+    setFilter((prev) => ({ ...prev, gifts: [...prev.gifts, gift] }));
   };
 
   return (
@@ -71,11 +88,11 @@ const SearchPage = () => {
                 {filter.smallRegion}
               </button>
             )}
-            <button>기간</button>
-            <button>특전</button>
+            <button onClick={() => openBottomSheet(BOTTOM_SHEET.calender)}>기간</button>
+            <button onClick={() => openBottomSheet(BOTTOM_SHEET.gift)}>특전</button>
           </div>
           <div className="flex gap-8">
-            <button>최신순</button>
+            <button onClick={() => console.log(filter)}>최신순</button>
             <button>인기순</button>
           </div>
         </section>
@@ -89,6 +106,10 @@ const SearchPage = () => {
       {bottomSheet === BOTTOM_SHEET.smallRegion && (
         <SmallRegionBottomSheet closeBottomSheet={closeBottomSheet} bigRegion={filter.bigRegion as (typeof BIG_REGIONS)[number]} setSmallRegionFilter={setSmallRegionFilter} />
       )}
+      {bottomSheet === BOTTOM_SHEET.calender && (
+        <CalenderBottomSheet closeBottomSheet={closeBottomSheet} setStartDateFilter={setStartDateFilter} setEndDateFilter={setEndDateFilter} />
+      )}
+      {bottomSheet === BOTTOM_SHEET.gift && <GiftBottomSheet closeBottomSheet={closeBottomSheet} setGiftsFilter={setGiftsFilter} />}
     </>
   );
 };
