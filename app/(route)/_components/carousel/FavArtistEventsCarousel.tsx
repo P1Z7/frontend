@@ -6,6 +6,15 @@ import Carousel from "@/components/Carousel";
 import { EventMockData } from "@/components/card/EventMockData";
 import VerticalEventCard from "@/components/card/VerticalEventCard";
 
+const DATA = {
+  placeName: "카페",
+  artistName: "아티스트",
+  eventType: "생일 카페",
+  address: "주소",
+  startDate: "날짜",
+  endDate: "날짜",
+};
+
 const FavArtistEventsCarousel = () => {
   // 추후 next auth로 변경 예정
   const [status, setStatus] = useState(true);
@@ -24,10 +33,11 @@ const FavArtistEventsCarousel = () => {
       {status ? (
         hasFavoriteEvents ? (
           <Carousel customSettings={{ dots: true, infinite: false }}>
-            <VerticalEventCard placeName="카페" artistName="아티스트" eventType="생일 카페" address="주소" startDate="날짜" endDate="날짜" />
-            <VerticalEventCard placeName="카페" artistName="아티스트" eventType="생일 카페" address="주소" startDate="날짜" endDate="날짜" />
-            <VerticalEventCard placeName="카페" artistName="아티스트" eventType="생일 카페" address="주소" startDate="날짜" endDate="날짜" />
-            <VerticalEventCard placeName="카페" artistName="아티스트" eventType="생일 카페" address="주소" startDate="날짜" endDate="날짜" />
+            <VerticalEventCard data={DATA} />
+            <VerticalEventCard data={DATA} />
+            <VerticalEventCard data={DATA} />
+            <VerticalEventCard data={DATA} />
+            <VerticalEventCard data={DATA} />
           </Carousel>
         ) : (
           <NoFavCard buttonName="아티스트 둘러보기" href={"/setting/artist"} />

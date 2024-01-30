@@ -8,15 +8,7 @@ const MyArtistEvent = () => {
     <>
       {EventMockData.map((event, index) => (
         <div key={index}>
-          <HorizontalEventCard
-            placeName={event.placeName}
-            artistName={event.artistName}
-            eventType={event.eventType}
-            address={event.address}
-            startDate={event.startDate}
-            endDate={event.endDate}
-            gifts={event.gifts}
-          />
+          <HorizontalEventCard data={event} />
         </div>
       ))}
     </>
