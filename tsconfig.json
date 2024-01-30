@@ -29,6 +29,7 @@
       "@/store/*": ["app/_store/*"],
       "@/utils/*": ["app/_utils/*"],
       "@/types/*": ["app/_types/*"],
+      "@/constants/*": ["app/_constants/*"],
       "@/public/*": ["public/*"],
     },
   },

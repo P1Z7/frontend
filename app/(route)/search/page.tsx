@@ -31,10 +31,7 @@ const SearchPage = () => {
   return (
     <main className="w-full px-20 pt-40">
       <div className="relative">
-        <input placeholder="그룹 / 아티스트명으로 검색해주세요." className="w-full border-b border-solid border-gray-400 py-12 text-20 outline-none" />
-        <button className="absolute right-4 top-20">
-          <Image src={closeIcon} width={16} height={16} alt="검색어 삭제 버튼" />
-        </button>
+        <input placeholder="최애의 행사를 찾아보세요!" className="h-44 w-full rounded-full bg-gray-300 px-12 text-16 font-400" />
       </div>
       <section>
         {MOCK_EVENTS.map((event) => (
