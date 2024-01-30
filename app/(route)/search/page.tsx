@@ -1,5 +1,6 @@
 "use client";
 
+import classNames from "classnames";
 import { useState } from "react";
 import BigRegionBottomSheet from "@/components/bottom-sheet/BigRegionBottomSheet";
 import CalenderBottomSheet from "@/components/bottom-sheet/CalendarBottomSheet";
@@ -72,6 +73,8 @@ const SearchPage = () => {
     setFilter((prev) => ({ ...prev, gifts: [...prev.gifts, gift] }));
   };
 
+  const [sort, setSort] = useState<"최신순" | "인기순">("최신순");
+
   return (
     <>
       <main className="w-full px-20 pt-40">
@@ -92,8 +95,12 @@ const SearchPage = () => {
             <button onClick={() => openBottomSheet(BOTTOM_SHEET.gift)}>특전</button>
           </div>
           <div className="flex gap-8">
-            <button onClick={() => console.log(filter)}>최신순</button>
-            <button>인기순</button>
+            <button onClick={() => setSort("최신순")} className={classNames({ "text-black": sort === "최신순" })}>
+              최신순
+            </button>
+            <button onClick={() => setSort("인기순")} className={classNames({ "text-black": sort === "인기순" })}>
+              인기순
+            </button>
           </div>
         </section>
         <section>
