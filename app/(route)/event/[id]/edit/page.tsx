@@ -22,7 +22,7 @@ const EDIT_MOCKUP_DATA = {
     "https://fandomship.com/data/file/aespa/thumb-d405020284be78411e389d91af05cdb6_c1VUxAOY_2fb4abd335ccf36c1972868aadb03ed29e557262_835x1181.jpg",
   ],
   detailText: "카리나 생일 축하합니다",
-};
+} as const;
 
 export type EditPostType = typeof EDIT_MOCKUP_DATA;
 

@@ -27,7 +27,7 @@ const InputArea: Function = ({ children, placeholder, onKeyDown, isEdit, ...cont
         placeholder={placeholder ?? "입력해주세요."}
         {...field}
         onKeyDown={onKeyDown}
-        className={classNames("h-120 rounded-sm bg-gray-100 px-16 py-12", { "border-2 border-blue-700": isEdit })}
+        className={classNames("h-120 rounded-sm bg-gray-100 px-16 py-12", { "border border-blue-500 outline-none": isEdit })}
       />
       <div className={classNames("text-12 text-[#A2A5AA]", { "text-red-600": field.value.length > 100 })}>{field.value.length} / 100</div>
     </div>

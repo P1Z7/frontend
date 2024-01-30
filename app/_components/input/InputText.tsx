@@ -53,7 +53,7 @@ const InputText: Function = ({ type: initialType, children, placeholder, autoCom
           className={classNames(
             "border-solid-gray body1-normal placeholder:text-gray-4 focus:border-purple mt-10 h-48 w-full rounded-md bg-blue-50 p-16 text-14 text-black outline-none",
             { hidden: hidden ?? false },
-            { "outline-1 outline-blue-700": isEdit },
+            { "border border-blue-500 outline-none": isEdit },
           )}
         />
         {initialType === "password" && (

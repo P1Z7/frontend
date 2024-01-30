@@ -9,27 +9,60 @@ import EditModal from "@/components/modal/EditModal";
 import { useModal } from "@/hooks/useModal";
 import { useStore } from "@/store/index";
 
+type PostValueType =
+  | "title"
+  | "group"
+  | "member"
+  | "eventType"
+  | "address"
+  | "detailAddress"
+  | "startDate"
+  | "endDate"
+  | "snsId"
+  | "snsType"
+  | "eventUrl"
+  | "gift"
+  | "images"
+  | "detailText";
+
 const EditContent = () => {
   const { modal, openModal, closeModal } = useModal();
   const {
     watch,
-    formState: { isDirty, defaultValues },
+    formState: { defaultValues },
   } = useFormContext<PostType>();
-  const { address, startDate, endDate, eventType, snsType, gift } = watch();
   const { isCheck } = useStore((state) => ({ isCheck: state.isWarningCheck }));
 
+  const watchedValue = watch();
+
   const checkUpdated = () => {
-    if (defaultValues?.address !== address) return true;
-    if (defaultValues.startDate !== startDate) return true;
-    if (defaultValues.endDate !== endDate) return true;
-    if (defaultValues.eventType !== eventType) return true;
-    if (defaultValues.snsType !== snsType) return true;
-    if (defaultValues?.gift?.length !== gift.length) return true;
-    if (gift.filter((item) => !defaultValues?.gift?.includes(item)).length !== 0) return true;
+    let isUpdated = false;
+    if (!defaultValues) {
+      return;
+    }
+    for (const key of Object.keys(defaultValues)) {
+      if (postTypeGuard(defaultValues, key)) {
+        const prev = defaultValues[key];
+        const cur = watchedValue[key];
+        switch (key) {
+          case "member":
+          case "gift":
+          case "images":
+            if (typeof prev === "string") return false;
+            isUpdated = cur.length !== prev?.length || !prev?.every((c, i) => c === cur[i]);
+            break;
+          default:
+            isUpdated = prev !== cur;
+        }
+        if (isUpdated) {
+          return true;
+        }
+      }
+    }
     return false;
   };
 
-  const isValid = (isDirty || checkUpdated()) && isCheck;
+  const isValid = checkUpdated() && isCheck;
 
   return (
     <div className="text-16">
@@ -46,3 +79,7 @@ const EditContent = () => {
 };
 
 export default EditContent;
+
+const postTypeGuard = (obj: { [a: string]: any }, key: string): key is PostValueType => {
+  return !!obj[key];
+};
