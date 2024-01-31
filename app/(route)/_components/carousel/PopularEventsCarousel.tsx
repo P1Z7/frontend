@@ -18,14 +18,7 @@ const PopularEvents = () => {
     <>
       {popularEvents.map((event, index) => (
         <div key={index}>
-          <VerticalEventCard
-            placeName={event.placeName}
-            artistName={event.artistName}
-            eventType={event.eventType}
-            address={event.address}
-            startDate={event.startDate}
-            endDate={event.endDate}
-          />
+          <VerticalEventCard data={event} />
         </div>
       ))}
     </>

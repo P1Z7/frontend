@@ -76,15 +76,7 @@ const EventCalendar = () => {
           {mockData
             .filter((event) => !date || (new Date(event.startDate).getTime() <= date.getTime() && new Date(event.endDate).getTime() >= date.getTime()))
             .map((event, index) => (
-              <VerticalEventCard
-                key={index}
-                placeName={event.placeName}
-                artistName={event.artistName}
-                eventType={event.eventType}
-                address={event.address}
-                startDate={event.startDate}
-                endDate={event.endDate}
-              />
+              <VerticalEventCard key={index} data={event} />
             ))}
         </ul>
       </div>

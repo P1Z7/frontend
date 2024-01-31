@@ -34,7 +34,7 @@ export interface SignUpFormType {
   myArtists: string[] | [];
 }
 
-export interface EventCardProps {
+export interface EventCardType {
   placeName: string;
   artistName: string;
   eventType: string;
