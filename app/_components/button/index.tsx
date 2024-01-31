@@ -12,12 +12,10 @@ interface Props {
   type?: "filled" | "lined";
   size?: "sm" | "md" | "lg" | "xl";
   onClick?: () => void;
-  disabled?: boolean;
-  heart?: boolean;
-  icon?: boolean;
+  isDisabled?: boolean;
 }
 
-const Button = ({ children, type = "filled", size = "lg", onClick, disabled = false, ...props }: Props) => {
+const Button = ({ children, type = "filled", size = "lg", onClick, isDisabled = false, ...props }: Props) => {
   const Children =
     React.Children.count(children) === 1
       ? children
@@ -27,7 +25,7 @@ const Button = ({ children, type = "filled", size = "lg", onClick, disabled = fa
               width: "20",
               height: "20",
               viewBox: "0 0 24 24",
-              stroke: disabled ? ICON_COLOR[type].disabled : ICON_COLOR[type].stroke,
+              stroke: isDisabled ? ICON_COLOR[type].disabled : ICON_COLOR[type].stroke,
             };
 
             return cloneElement(child as ReactElement, {
@@ -38,7 +36,7 @@ const Button = ({ children, type = "filled", size = "lg", onClick, disabled = fa
         });
 
   return (
-    <button className={`flex-center w-full shrink-0 gap-4 border px-16 font-600 ${BUTTON_SIZE[size]} ${BUTTON_TYPE[type]}`} onClick={onClick} disabled={disabled} {...props}>
+    <button className={`flex-center w-full shrink-0 gap-4 border px-16 font-600 ${BUTTON_SIZE[size]} ${BUTTON_TYPE[type]}`} onClick={onClick} disabled={isDisabled} {...props}>
       {Children}
     </button>
   );
