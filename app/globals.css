@@ -4,6 +4,70 @@
 
 @layer base {
   :root {
+    --white-black: 255 255 255;
+    --black-white: 0 0 0;
+    --white-white: 255 255 255;
+    --gray-50: 241 242 243;
+    --gray-100: 224 226 230;
+    --gray-200: 210 213 218;
+    --gray-300: 193 197 204;
+    --gray-400: 160 165 177;
+    --gray-500: 126 134 149;
+    --gray-600: 99 106 121;
+    --gray-700: 73 79 90;
+    --gray-800: 50 54 62;
+    --gray-900: 28 30 34;
+    --sub-pink: 255 80 170;
+    --sub-blue: 51 101 250;
+    --sub-purple: 160 85 255;
+    --sub-yellow: 255 160 18;
+    --sub-skyblue: 40 198 255;
+    --sub-scarlet: 255 103 55;
+    --main-purple: 130 101 248;
+    --red: 246 61 61;
+    --blue: 57 160 255;
+  }
+
+  :root[data-theme="dark"] {
+    --white-black: 255 255 255;
+    --black-white: 0 0 0;
+    --white-white: 255 255 255;
+    --gray-50: 241 242 243;
+    --gray-100: 224 226 230;
+    --gray-200: 210 213 218;
+    --gray-300: 193 197 204;
+    --gray-400: 160 165 177;
+    --gray-500: 126 134 149;
+    --gray-600: 99 106 121;
+    --gray-700: 73 79 90;
+    --gray-800: 50 54 62;
+    --gray-900: 28 30 34;
+    --sub-pink: 255 80 170;
+    --sub-blue: 51 101 250;
+    --sub-purple: 160 85 255;
+    --sub-yellow: 255 160 18;
+    --sub-skyblue: 40 198 255;
+    --sub-scarlet: 255 103 55;
+    --main-purple: 130 101 248;
+    --red: 246 61 61;
+    --blue: 57 160 255;
+  }
+
+  :root {
     font-size: 62.5%;
+  }
+
+  body {
+    @apply text-black-white;
+  }
+}
+
+@layer utilities {
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .absolute-center {
+    @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
   }
 }
