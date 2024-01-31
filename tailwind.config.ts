@@ -52,10 +52,11 @@ const config: Config = {
       },
       main: {
         purple: {
-          50: "rgb(var(--main-purple) / 0.12)",
-          300: "rgb(var(--main-purple) / 0.5)",
-          500: "rgb(var(--main-purple) / <alpha-value>)",
+          50: "rgb(var(--main-purple-50) / <alpha-value>)",
+          300: "rgb(var(--main-purple-300) / <alpha-value>)",
+          500: "rgb(var(--main-purple-500) / <alpha-value>)",
           700: "rgb(var(--main-purple-700) / <alpha-value>)",
+          900: "rgb(var(--main-purple-900) / <alpha-value>)",
         },
       },
       red: "rgb(var(--red) / <alpha-value>)",

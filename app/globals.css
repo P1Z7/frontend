@@ -23,8 +23,11 @@
     --sub-yellow: 255 160 18;
     --sub-skyblue: 40 198 255;
     --sub-scarlet: 255 103 55;
-    --main-purple: 130 101 248;
-    --main-purple-700: 111 82 231;
+    --main-purple-50: 243 240 254;
+    --main-purple-300: 171 152 250;
+    --main-purple-500: 130 101 248;
+    --main-purple-700: 92 72 176;
+    --main-purple-900: 55 42 104;
     --red: 246 61 61;
     --blue: 57 160 255;
   }
@@ -49,8 +52,11 @@
     --sub-yellow: 255 160 18;
     --sub-skyblue: 40 198 255;
     --sub-scarlet: 255 103 55;
-    --main-purple: 130 101 248;
-    --main-purple-700: 111 82 231;
+    --main-purple-50: 243 240 254;
+    --main-purple-300: 171 152 250;
+    --main-purple-500: 130 101 248;
+    --main-purple-700: 92 72 176;
+    --main-purple-900: 55 42 104;
     --red: 246 61 61;
     --blue: 57 160 255;
   }
