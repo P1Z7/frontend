@@ -11,6 +11,9 @@ interface Props {
   closeModal: () => void;
 }
 
+/**
+ * TODO: 바텀시트로 변경 예정
+ */
 const AddressModal = ({ setValue, closeModal }: Props) => {
   return (
     <ModalFrame closeModal={closeModal}>

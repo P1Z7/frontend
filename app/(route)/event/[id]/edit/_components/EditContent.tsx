@@ -5,7 +5,7 @@ import SubInput from "@/(route)/post/_components/_inputs/SubInput";
 import { PostType } from "@/(route)/post/page";
 import classNames from "classnames";
 import { useFormContext } from "react-hook-form";
-import EditModal from "@/components/modal/EditModal";
+import Modal from "@/components/modal";
 import { useModal } from "@/hooks/useModal";
 import { useStore } from "@/store/index";
 
@@ -73,7 +73,13 @@ const EditContent = () => {
       <button disabled={!isValid} className={classNames("w-full bg-gray-200 p-16", { "bg-yellow-200": isValid })} onClick={() => openModal("endEdit")}>
         수정 요청
       </button>
-      {modal === "endEdit" && <EditModal closeModal={closeModal} />}
+      {modal === "endEdit" && (
+        <Modal.Alert closeModal={closeModal}>
+          수정사항은 사용자 3인 이상의
+          <br />
+          승인 후에 반영됩니다.
+        </Modal.Alert>
+      )}
     </div>
   );
 };

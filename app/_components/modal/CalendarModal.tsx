@@ -13,6 +13,9 @@ interface Props {
   closeModal: () => void;
 }
 
+/**
+ * TODO: 바텀시트로 변경 예정
+ */
 const CalendarModal = ({ setValue, closeModal }: Props) => {
   const [range, setRange] = useState<DateRange | undefined>();
 
