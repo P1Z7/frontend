@@ -7,7 +7,7 @@ import { UseFormSetValue } from "react-hook-form";
 import ModalFrame from "./ModalFrame";
 
 interface Props {
-  setValue: UseFormSetValue<PostType> | UseFormSetValue<EditPostType>;
+  setValue: UseFormSetValue<PostType>;
   closeModal: () => void;
 }
 
