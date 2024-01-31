@@ -51,7 +51,12 @@ const config: Config = {
         scarlet: { DEFAULT: "rgb(var(--sub-scarlet) / <alpha-value>)", bg: "rgb(var(--sub-scarlet) / 0.12)" },
       },
       main: {
-        purple: "rgb(var(--main-purple) / <alpha-value>)",
+        purple: {
+          50: "rgb(var(--main-purple) / 0.12)",
+          300: "rgb(var(--main-purple) / 0.5)",
+          500: "rgb(var(--main-purple) / <alpha-value>)",
+          700: "rgb(var(--main-purple-700) / <alpha-value>)",
+        },
       },
       red: "rgb(var(--red) / <alpha-value>)",
       blue: "rgb(var(--blue) / <alpha-value>)",
