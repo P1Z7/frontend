@@ -14,8 +14,8 @@ const ArtistCard = ({ children, onClick, profileImage, isChecked = false, isSmal
       <Image
         src={profileImage ? profileImage : "/image/no-profile.png"}
         alt="아티스트 이미지"
-        width={80}
-        height={80}
+        width={88}
+        height={88}
         className={`rounded-full ${isChecked ? "border-2 border-main-purple-500" : "border border-gray-100"}`}
       />
       <p className={isSmall ? "text-14 font-600 text-gray-700" : "text-16 font-600 text-gray-900"}>{children}</p>
