@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import InputText from "../input/InputText";
-import ModalFrame from "./ModalFrame";
+import Modal from "./ModalMaterial";
 
 interface Props {
   closeModal: () => void;
@@ -18,7 +18,7 @@ const ReqNewArtistModal = ({ closeModal }: Props) => {
   };
 
   return (
-    <ModalFrame closeModal={closeModal}>
+    <Modal.Frame closeModal={closeModal}>
       <div onClick={(event) => event.stopPropagation()}>
         <p className="text-14 font-700">아티스트 등록 요청</p>
         <InputText name="reqArtist" control={control} placeholder="허위사실,악의적리뷰,욕설비방">
@@ -28,7 +28,7 @@ const ReqNewArtistModal = ({ closeModal }: Props) => {
           등록하기
         </button>
       </div>
-    </ModalFrame>
+    </Modal.Frame>
   );
 };
 

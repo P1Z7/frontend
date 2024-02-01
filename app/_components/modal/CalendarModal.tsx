@@ -6,13 +6,16 @@ import { useEffect, useState } from "react";
 import { DateRange, DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { UseFormSetValue } from "react-hook-form";
-import ModalFrame from "./ModalFrame";
+import Modal from "./ModalMaterial";
 
 interface Props {
   setValue: UseFormSetValue<PostType> | any;
   closeModal: () => void;
 }
 
+/**
+ * TODO: 바텀시트로 변경 예정
+ */
 const CalendarModal = ({ setValue, closeModal }: Props) => {
   const [range, setRange] = useState<DateRange | undefined>();
 
@@ -28,11 +31,11 @@ const CalendarModal = ({ setValue, closeModal }: Props) => {
   }, [range]);
 
   return (
-    <ModalFrame closeModal={closeModal}>
+    <Modal.Frame closeModal={closeModal}>
       <div onClick={(event) => event.stopPropagation()}>
         <DayPicker id="test" mode="range" selected={range} onSelect={setRange} />
       </div>
-    </ModalFrame>
+    </Modal.Frame>
   );
 };
 
