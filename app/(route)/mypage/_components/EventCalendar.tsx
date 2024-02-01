@@ -12,6 +12,7 @@ interface ScheduleData {
   address: string;
   startDate: string;
   endDate: string;
+  eventImage: string;
 }
 
 const mockData: ScheduleData[] = [
@@ -22,6 +23,7 @@ const mockData: ScheduleData[] = [
     address: "마포구",
     startDate: "2024-01-25T00:00:00",
     endDate: "2024-02-01T00:00:00",
+    eventImage: "",
   },
 
   {
@@ -31,6 +33,7 @@ const mockData: ScheduleData[] = [
     address: "마포구",
     startDate: "2024-01-28T00:00:00",
     endDate: "2024-01-31T00:00:00",
+    eventImage: "",
   },
   {
     placeName: "김민지 카페",
@@ -39,6 +42,7 @@ const mockData: ScheduleData[] = [
     address: "마포구",
     startDate: "2024-01-26T00:00:00",
     endDate: "2024-01-28T00:00:00",
+    eventImage: "",
   },
 ];
 
