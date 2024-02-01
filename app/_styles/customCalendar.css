@@ -79,7 +79,9 @@
 }
 
 .rdp-month {
-  margin: 0 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .rdp-month:first-child {
@@ -211,11 +213,14 @@
 
 .rdp-head {
   border: 0;
+  color: #c1c5cc;
 }
 
 .rdp-head_row,
 .rdp-row {
   height: 100%;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
 }
 
 .rdp-head_cell {
@@ -231,6 +236,9 @@
 
 .rdp-tbody {
   border: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .rdp-tfoot {
@@ -267,11 +275,31 @@
 .rdp-day_today:not(.rdp-day_outside) {
   font-weight: 700;
   background-color: #f1f2f3;
+  border-radius: 100%;
+}
+
+.rdp-cell:has(.my-day_range_end) {
+  background-color: var(--rdp-background-color);
+  border-top-right-radius: 100%;
+  border-bottom-right-radius: 100%;
+}
+
+.rdp-cell:has(.my-day_range_start) {
+  background-color: var(--rdp-background-color);
+  border-top-left-radius: 100%;
+  border-bottom-left-radius: 100%;
+}
+
+.rdp-cell:has(.rdp-day_today:not(.rdp-day_outside).my-selected) {
+  /* 오늘이 선택된 경우 */
+  background-color: var(--rdp-background-color);
+  border-radius: 0;
 }
 
 .rdp-day_selected,
 .rdp-day_selected:focus-visible,
 .rdp-day_selected:hover {
+  font-weight: 500;
   color: var(--rdp-selected-color);
   opacity: 1;
   background-color: var(--rdp-accent-color);

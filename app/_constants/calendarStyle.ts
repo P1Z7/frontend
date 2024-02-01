@@ -1,20 +1,17 @@
 export const CALENDAR_STYLE = `
-.my-outside{
-  background-color: yellow;
+.my-day_range_start.my-selected{
+  background-color: #FF50AA;
+  color: white;
+  border-radius: 100%;
 }
 .my-day_range_end.my-selected{
   background-color: #FF50AA;
   color: white;
-  font-weight: 700;
   border-radius: 100%;
-}
-.my-today {
-  font-weight: 700;
-  background-color: #f1f2f3;
 }
 .my-selected { 
   background-color: #ffeaf4;
-  border-radius: 100%;
+  border-radius: 0;
 }
 .my-selected:hover { 
   color: black;
