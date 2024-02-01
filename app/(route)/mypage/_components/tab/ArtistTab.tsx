@@ -21,13 +21,15 @@ const ArtistTab = ({ data }: Props) => {
       <div className="grid w-fit grid-cols-3 gap-8">
         {data.map((cardList) => (
           <ArtistCard
+            isSmall
             key={cardList.name}
-            name={cardList.name}
             profileImage={cardList.profileImage}
             onClick={() => {
               console.log(`${cardList.name}(으)로 검색`);
             }}
-          />
+          >
+            {cardList.name}
+          </ArtistCard>
         ))}
       </div>
     </>

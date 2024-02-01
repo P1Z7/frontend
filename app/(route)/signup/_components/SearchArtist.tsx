@@ -80,7 +80,9 @@ const Card = ({ data, onClick, myArtists }: CardProps) => {
   return (
     <>
       <label htmlFor={name}>
-        <ArtistCard className={isChecked ? "border border-red-500" : ""} name={name} profileImage={profileImage} />
+        <ArtistCard isChecked={isChecked} profileImage={profileImage} isSmall>
+          {name}
+        </ArtistCard>
       </label>
 
       <input name="myArtists" type="checkbox" id={name} onChange={handleChange} checked={isChecked} hidden />
