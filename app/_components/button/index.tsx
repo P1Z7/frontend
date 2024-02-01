@@ -28,7 +28,7 @@ const Button = ({ children, type = "filled", size = "lg", onClick, isDisabled = 
               stroke: isDisabled ? ICON_COLOR[type].disabled : ICON_COLOR[type].stroke,
             };
 
-            return cloneElement(child as ReactElement, {
+            return cloneElement(child, {
               ...clone,
             });
           }
