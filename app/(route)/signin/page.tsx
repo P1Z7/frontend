@@ -1,6 +1,6 @@
 "use client";
 
-import { signIn, signOut } from "next-auth/react";
+import { getSession, signIn, signOut, useSession } from "next-auth/react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import InputText from "@/components/input/InputText";
 import useEnterNext from "@/hooks/useEnterNext";
@@ -17,6 +17,8 @@ const SIGNIN_DEFAULT = {
 type DefaultValues = (typeof SIGNIN_DEFAULT)["defaultValues"];
 
 const SignInPage = () => {
+  const session = useSession();
+  console.log(session);
   const { formSection, handleEnterNext } = useEnterNext();
 
   const { formState, control, handleSubmit } = useForm(SIGNIN_DEFAULT);
@@ -50,7 +52,7 @@ const SignInPage = () => {
       </form>
       <div>
         <button onClick={() => signIn("google")}>구글 로그인</button>
-        <button onClick={() => signOut()}>로그아웃</button>
+        <button onClick={() => signOut({ callbackUrl: "/" })}>로그아웃</button>
       </div>
     </>
   );

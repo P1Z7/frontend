@@ -1,7 +1,6 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import React, { ReactNode, cloneElement } from "react";
 
 const handler = NextAuth({
   providers: [
@@ -48,15 +47,34 @@ const handler = NextAuth({
             },
             body: JSON.stringify(signupData),
           });
-          console.log(signupRes);
+          const signupResult = await signupRes.json();
+          account.local_accessToken = signupResult.accessToken;
+          account.local_refreshToken = signupResult.refreshToken;
+          return signupRes.status === 201 ? true : false;
         }
+
+        const signinResult = await signinRes.json();
+        account.local_accessToken = signinResult.accessToken;
+        account.local_refreshToken = signinResult.refreshToken;
+        return true;
       }
       return true;
     },
+    async jwt({ token, account }) {
+      if (account) {
+        token.accessToken = account.local_accessToken;
+        token.refreshToken = account.local_refreshToken;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      const { accessToken, refreshToken } = token;
+      return { ...session, accessToken, refreshToken };
+    },
   },
-  // pages: {
-  //   signIn: "/signin",
-  // },
+  pages: {
+    signIn: "/signin",
+  },
 });
 
 export { handler as GET, handler as POST };
