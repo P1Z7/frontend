@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactElement, cloneElement } from "react";
-import PostIcon from "@/public/icon/add-outline_black.svg";
+import PostIcon from "@/public/icon/add-outline.svg";
 import HomeIcon from "@/public/icon/home.svg";
 import SearchIcon from "@/public/icon/search_black.svg";
 
