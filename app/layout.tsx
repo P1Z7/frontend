@@ -24,11 +24,11 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <div id="modal"></div>
         <Toaster />
         <ReactQueryProvider>
           {children}
           <div id="bottom-sheet" />
+          <div id="modal"></div>
         </ReactQueryProvider>
       </body>
       <Script src="https://developers.kakao.com/sdk/js/kakao.js" async />

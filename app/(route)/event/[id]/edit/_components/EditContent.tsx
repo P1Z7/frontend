@@ -5,7 +5,7 @@ import SubInput from "@/(route)/post/_components/_inputs/SubInput";
 import { PostType } from "@/(route)/post/page";
 import classNames from "classnames";
 import { useFormContext } from "react-hook-form";
-import EditModal from "@/components/modal/EditModal";
+import TextModal from "@/components/modal/TextModal";
 import { useModal } from "@/hooks/useModal";
 import { useStore } from "@/store/index";
 
@@ -28,6 +28,7 @@ type PostValueType =
 const EditContent = () => {
   const { modal, openModal, closeModal } = useModal();
   const {
+    control,
     watch,
     formState: { defaultValues },
   } = useFormContext<PostType>();
@@ -73,7 +74,9 @@ const EditContent = () => {
       <button disabled={!isValid} className={classNames("w-full bg-gray-200 p-16", { "bg-yellow-200": isValid })} onClick={() => openModal("endEdit")}>
         수정 요청
       </button>
-      {modal === "endEdit" && <EditModal closeModal={closeModal} />}
+      {modal === "endEdit" && (
+        <TextModal title="텍스트 모달 타이틀" btnText="오케이" textareaId="text" closeModal={closeModal} {...{ control: control, placeholder: "텍스트 모달입니다." }} />
+      )}
     </div>
   );
 };
