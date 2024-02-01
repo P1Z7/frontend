@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { DateRange, DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { UseFormSetValue } from "react-hook-form";
-import ModalFrame from "./ModalFrame";
+import Modal from "./ModalMaterial";
 
 interface Props {
   setValue: UseFormSetValue<PostType> | any;
@@ -31,11 +31,11 @@ const CalendarModal = ({ setValue, closeModal }: Props) => {
   }, [range]);
 
   return (
-    <ModalFrame closeModal={closeModal}>
+    <Modal.Frame closeModal={closeModal}>
       <div onClick={(event) => event.stopPropagation()}>
         <DayPicker id="test" mode="range" selected={range} onSelect={setRange} />
       </div>
-    </ModalFrame>
+    </Modal.Frame>
   );
 };
 

@@ -1,7 +1,6 @@
 import { ModalBaseType } from "@/types/index";
 import InputText from "../input/InputText";
-import ModalFrame from "./ModalFrame";
-import { ModalButton, ModalTitle } from "./ModalMaterial";
+import Modal from "./ModalMaterial";
 
 interface Props extends ModalBaseType {
   title: string;
@@ -17,13 +16,13 @@ interface Props extends ModalBaseType {
  */
 const InputModal = ({ title, label, closeModal, handleBtnClick, btnText, ...props }: Props) => {
   return (
-    <ModalFrame closeModal={closeModal}>
-      <ModalTitle>{title}</ModalTitle>
+    <Modal.Frame closeModal={closeModal}>
+      <Modal.Title>{title}</Modal.Title>
       <InputText name={label} {...props}>
         {label}
       </InputText>
-      <ModalButton handleYesClick={handleBtnClick || closeModal}>{btnText}</ModalButton>
-    </ModalFrame>
+      <Modal.Button handleYesClick={handleBtnClick || closeModal}>{btnText}</Modal.Button>
+    </Modal.Frame>
   );
 };
 

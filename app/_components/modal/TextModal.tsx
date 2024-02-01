@@ -1,7 +1,6 @@
 import { ModalBaseType } from "@/types/index";
 import InputArea from "../input/InputArea";
-import ModalFrame from "./ModalFrame";
-import { ModalButton, ModalTitle } from "./ModalMaterial";
+import Modal from "./ModalMaterial";
 
 interface Props extends ModalBaseType {
   title: string;
@@ -15,11 +14,11 @@ interface Props extends ModalBaseType {
  */
 const TextModal = ({ closeModal, handleBtnClick, title, btnText, textareaId, ...props }: Props) => {
   return (
-    <ModalFrame closeModal={closeModal}>
-      <ModalTitle>{title}</ModalTitle>
+    <Modal.Frame closeModal={closeModal}>
+      <Modal.Title>{title}</Modal.Title>
       <InputArea name={textareaId} {...props} />
-      <ModalButton handleYesClick={handleBtnClick || closeModal}>{btnText}</ModalButton>
-    </ModalFrame>
+      <Modal.Button handleYesClick={handleBtnClick || closeModal}>{btnText}</Modal.Button>
+    </Modal.Frame>
   );
 };
 

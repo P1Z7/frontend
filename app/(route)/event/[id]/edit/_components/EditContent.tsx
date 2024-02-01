@@ -5,7 +5,7 @@ import SubInput from "@/(route)/post/_components/_inputs/SubInput";
 import { PostType } from "@/(route)/post/page";
 import classNames from "classnames";
 import { useFormContext } from "react-hook-form";
-import Modal from "@/components/modal";
+import TextModal from "@/components/modal/TextModal";
 import { useModal } from "@/hooks/useModal";
 import { useStore } from "@/store/index";
 
@@ -75,7 +75,7 @@ const EditContent = () => {
         수정 요청
       </button>
       {modal === "endEdit" && (
-        <Modal.Text title="텍스트 모달 타이틀" btnText="오케이" textareaId="text" closeModal={closeModal} {...{ control: control, placeholder: "텍스트 모달입니다." }} />
+        <TextModal title="텍스트 모달 타이틀" btnText="오케이" textareaId="text" closeModal={closeModal} {...{ control: control, placeholder: "텍스트 모달입니다." }} />
       )}
     </div>
   );

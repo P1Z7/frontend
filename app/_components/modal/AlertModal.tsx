@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 import { ModalBaseType } from "@/types/index";
-import ModalFrame from "./ModalFrame";
-import { ModalButton, ModalTitle } from "./ModalMaterial";
+import Modal from "./ModalMaterial";
 
 interface AlertModalType extends ModalBaseType {
   children: ReactNode;
@@ -15,12 +14,12 @@ interface AlertModalType extends ModalBaseType {
  */
 const AlertModal = ({ children, hasCancelBtn, closeModal, handleBtnClick }: AlertModalType) => {
   return (
-    <ModalFrame closeModal={closeModal}>
-      <ModalTitle>{children}</ModalTitle>
-      <ModalButton hasCancelBtn={hasCancelBtn} handleYesClick={handleBtnClick || closeModal} handleNoClick={closeModal}>
+    <Modal.Frame closeModal={closeModal}>
+      <Modal.Title>{children}</Modal.Title>
+      <Modal.Button hasCancelBtn={hasCancelBtn} handleYesClick={handleBtnClick || closeModal} handleNoClick={closeModal}>
         확인
-      </ModalButton>
-    </ModalFrame>
+      </Modal.Button>
+    </Modal.Frame>
   );
 };
 
