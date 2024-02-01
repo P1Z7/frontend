@@ -1,11 +1,13 @@
+import classNames from "classnames";
 import React, { ReactNode } from "react";
+import Button from "../button";
 
 interface ModalTitleProps {
   children: ReactNode;
 }
 
 export const ModalTitle = ({ children }: ModalTitleProps) => {
-  return <div className="text-center font-500">{children}</div>;
+  return <div className="px-20 text-center font-500">{children}</div>;
 };
 
 interface ModalButtonProps {
@@ -18,14 +20,14 @@ interface ModalButtonProps {
 export const ModalButton = ({ hasCancelBtn = false, handleYesClick, handleNoClick, children }: ModalButtonProps) => {
   //다시 레이아웃 예정
   return (
-    <div className="flex justify-center gap-[10px]">
-      <button className="bg-main-purple" onClick={handleYesClick}>
+    <div className={classNames("justify-center px-20", { "grid grid-cols-2 gap-[10px]": hasCancelBtn })}>
+      <Button type="lined" onClick={handleYesClick}>
         {children}
-      </button>
+      </Button>
       {hasCancelBtn && (
-        <button className="bg-main-purple" onClick={handleNoClick}>
+        <Button type="lined" onClick={handleNoClick}>
           취소
-        </button>
+        </Button>
       )}
     </div>
   );

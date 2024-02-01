@@ -6,20 +6,19 @@ import { ModalButton, ModalTitle } from "./ModalMaterial";
 interface Props extends ModalBaseType {
   title: string;
   btnText: string;
-  handleBtnClick: () => void;
+  handleBtnClick?: () => void;
   textareaId: string;
-  placeholder?: string;
 }
 
 /**
  * title과 textarea로 이루어진 모달
  */
-const TextModal = ({ closeModal, handleBtnClick, title, btnText, textareaId, placeholder = "내용을 입력하세요." }: Props) => {
+const TextModal = ({ closeModal, handleBtnClick, title, btnText, textareaId, ...props }: Props) => {
   return (
     <ModalFrame closeModal={closeModal}>
       <ModalTitle>{title}</ModalTitle>
-      <InputArea name={textareaId} placeholder={placeholder} />
-      <ModalButton handleYesClick={handleBtnClick}>{btnText}</ModalButton>
+      <InputArea name={textareaId} {...props} />
+      <ModalButton handleYesClick={handleBtnClick || closeModal}>{btnText}</ModalButton>
     </ModalFrame>
   );
 };

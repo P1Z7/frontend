@@ -7,22 +7,22 @@ interface Props extends ModalBaseType {
   title: string;
   label: string;
   btnText: string;
-  placeholder?: string;
-  isRequired?: boolean;
-  handleBtnClick: () => void;
+  handleBtnClick?: () => void;
 }
 
 /**
  * title과 input으로 이루어진 모달 컴포넌트
+ * @param title Modal의 title
+ * @param label input 컴포넌트의 label
  */
-const InputModal = ({ title, label, closeModal, handleBtnClick, btnText, placeholder = "내용을 입력하세요.", isRequired = false }: Props) => {
+const InputModal = ({ title, label, closeModal, handleBtnClick, btnText, ...props }: Props) => {
   return (
     <ModalFrame closeModal={closeModal}>
       <ModalTitle>{title}</ModalTitle>
-      <InputText name={label} placeholder={placeholder} rules={{ required: isRequired }}>
+      <InputText name={label} {...props}>
         {label}
       </InputText>
-      <ModalButton handleYesClick={handleBtnClick}>{btnText}</ModalButton>
+      <ModalButton handleYesClick={handleBtnClick || closeModal}>{btnText}</ModalButton>
     </ModalFrame>
   );
 };

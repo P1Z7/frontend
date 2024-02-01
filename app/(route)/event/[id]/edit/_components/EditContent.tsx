@@ -28,6 +28,7 @@ type PostValueType =
 const EditContent = () => {
   const { modal, openModal, closeModal } = useModal();
   const {
+    control,
     watch,
     formState: { defaultValues },
   } = useFormContext<PostType>();
@@ -74,11 +75,7 @@ const EditContent = () => {
         수정 요청
       </button>
       {modal === "endEdit" && (
-        <Modal.Alert closeModal={closeModal}>
-          수정사항은 사용자 3인 이상의
-          <br />
-          승인 후에 반영됩니다.
-        </Modal.Alert>
+        <Modal.Text title="텍스트 모달 타이틀" btnText="오케이" textareaId="text" closeModal={closeModal} {...{ control: control, placeholder: "텍스트 모달입니다." }} />
       )}
     </div>
   );
