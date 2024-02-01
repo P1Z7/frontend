@@ -28,7 +28,7 @@ const SearchInput = ({ setKeyword, placeholder = "검색어를 입력하세요."
   return (
     <div className="relative">
       <input
-        className="text-black-white placeholder:gray-200 h-48 w-full rounded-full bg-gray-50 px-16 py-12 pr-68 shadow-md focus:outline-none"
+        className="text-black-white placeholder:gray-400 h-48 w-full rounded-full bg-gray-50 px-16 py-12 pr-68 shadow-md focus:outline-none"
         placeholder={placeholder}
         {...register("search")}
         onKeyDown={handleSearchEnter}
