@@ -1,10 +1,12 @@
 "use client";
 
-import { getSession, signIn, signOut, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 import { SubmitHandler, useForm } from "react-hook-form";
 import InputText from "@/components/input/InputText";
 import useEnterNext from "@/hooks/useEnterNext";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
+import GoogleLogo from "@/public/icon/logo_google.svg";
 
 const SIGNIN_DEFAULT = {
   mode: "onBlur",
@@ -51,8 +53,22 @@ const SignInPage = () => {
         <button className={`"bg-black text-white flex-grow rounded-sm px-16 py-12 text-16`}>로그인</button>
       </form>
       <div>
-        <button onClick={() => signIn("google")}>구글 로그인</button>
-        <button onClick={() => signOut({ callbackUrl: "/" })}>로그아웃</button>
+        <button onClick={(e) => (e.preventDefault(), signIn("google"))} className="flex-center w-dvw gap-8 bg-gray-50 py-16 text-16">
+          <GoogleLogo />
+          <p>Google 계정으로 로그인</p>
+        </button>
+        <div className="flex flex-col gap-8 text-16">
+          <p>구글 로그인 확인</p>
+          <p>이메일: {session.data?.user?.email}</p>
+          <p>이름: {session.data?.user?.name}</p>
+          <div className="flex">
+            프로필이미지:
+            <Image src={session.data?.user?.image || ""} width={50} height={50} alt="" className="rounded-full" />
+          </div>
+        </div>
+        <button onClick={() => signOut()} className="bg-gray-50 p-16 text-16">
+          로그아웃
+        </button>
       </div>
     </>
   );
