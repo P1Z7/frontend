@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import BottomButton from "@/components/button/BottomButton";
 import InputFile from "@/components/input/InputFile";
 import InputText from "@/components/input/InputText";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
@@ -68,7 +69,8 @@ const ProfilePage = () => {
       <InputText name="nickname" control={control} maxLength={10} rules={nicknameRules}>
         닉네임
       </InputText>
-      <button className={`rounded-sm bg-black px-16 py-12 text-16 text-white`}>변경하기</button>
+      {/* <button className={`rounded-sm bg-black px-16 py-12 text-16 text-white`}>변경하기</button> */}
+      <BottomButton>변경 내용 저장</BottomButton>
     </form>
   );
 };

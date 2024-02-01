@@ -1,6 +1,7 @@
 "use client";
 
 import { SubmitHandler, useForm } from "react-hook-form";
+import BottomButton from "@/components/button/BottomButton";
 import InputText from "@/components/input/InputText";
 import useEnterNext from "@/hooks/useEnterNext";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
@@ -77,7 +78,8 @@ const PasswordPage = () => {
           새 비밀번호 확인
         </InputText>
       </div>
-      <button className="rounded-sm bg-black px-16 py-12 text-16 text-white">변경하기</button>
+      {/* <button className="rounded-sm bg-black px-16 py-12 text-16 text-white">변경하기</button> */}
+      <BottomButton>변경 내용 저장</BottomButton>
     </form>
   );
 };
