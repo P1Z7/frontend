@@ -1,4 +1,5 @@
 import ProgressBar from "@/components/ProgressBar";
+import BottomButton from "@/components/button/BottomButton";
 import FunnelTitle from "./FunnelTitle";
 import PostFooter from "./PostFooter";
 import StarInput from "./_inputs/StarInput";
@@ -13,7 +14,8 @@ const StarInfo = ({ onNextStep }: Props) => {
       <ProgressBar ratio="1/4" />
       <FunnelTitle step="행사 대상" isRequired />
       <StarInput />
-      <PostFooter onNextStep={onNextStep} />
+      {/* <PostFooter onNextStep={onNextStep} /> */}
+      <BottomButton onClick={onNextStep}>다음으로</BottomButton>
     </div>
   );
 };

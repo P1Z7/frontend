@@ -3,6 +3,7 @@
 import "react-day-picker/dist/style.css";
 import { useFormContext } from "react-hook-form";
 import ProgressBar from "@/components/ProgressBar";
+import BottomButton from "@/components/button/BottomButton";
 import { PostType } from "../page";
 import FunnelTitle from "./FunnelTitle";
 import PostFooter from "./PostFooter";
@@ -26,7 +27,10 @@ const MainInfo = ({ onNextStep }: Props) => {
       <ProgressBar ratio="1/2" />
       <FunnelTitle step="행사 정보" isRequired />
       <MainInput />
-      <PostFooter onNextStep={onNextStep} isDisabled={isDisabled} />
+      {/* <PostFooter onNextStep={onNextStep} isDisabled={isDisabled} /> */}
+      <BottomButton onClick={onNextStep} isDisabled={isDisabled}>
+        다음으로
+      </BottomButton>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 "use client";
 
 import ProgressBar from "@/components/ProgressBar";
+import BottomButton from "@/components/button/BottomButton";
 import FunnelTitle from "./FunnelTitle";
 import PostFooter from "./PostFooter";
 import SubInput from "./_inputs/SubInput";
@@ -15,7 +16,8 @@ const SubInfo = ({ onNextStep }: Props) => {
       <ProgressBar ratio="3/4" />
       <FunnelTitle step="특전 정보" />
       <SubInput />
-      <PostFooter onNextStep={onNextStep} />
+      {/* <PostFooter onNextStep={onNextStep} /> */}
+      <BottomButton onClick={onNextStep}>다음으로</BottomButton>
     </div>
   );
 };
