@@ -5,7 +5,7 @@ import { ModalButton, ModalTitle } from "./ModalMaterial";
 
 interface AlertModalType extends ModalBaseType {
   children: ReactNode;
-  hasCancleBtn?: boolean;
+  hasCancelBtn?: boolean;
   handleBtnClick?: () => void;
 }
 
@@ -13,11 +13,11 @@ interface AlertModalType extends ModalBaseType {
  * @param children 경고 문구
  * @param hasCancleBtn 취소버튼 유무
  */
-const AlertModal = ({ children, hasCancleBtn, closeModal, handleBtnClick }: AlertModalType) => {
+const AlertModal = ({ children, hasCancelBtn, closeModal, handleBtnClick }: AlertModalType) => {
   return (
     <ModalFrame closeModal={closeModal}>
       <ModalTitle>{children}</ModalTitle>
-      <ModalButton hasCancelBtn={hasCancleBtn} handleYesClick={handleBtnClick || closeModal} handleNoClick={closeModal}>
+      <ModalButton hasCancelBtn={hasCancelBtn} handleYesClick={handleBtnClick || closeModal} handleNoClick={closeModal}>
         확인
       </ModalButton>
     </ModalFrame>
