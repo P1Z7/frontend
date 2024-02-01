@@ -7,6 +7,7 @@ import { DateRange, DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { UseFormSetValue } from "react-hook-form";
 import { CALENDAR_STYLE } from "@/constants/calendarStyle";
+import "@/constants/new.css";
 import Modal from "./ModalMaterial";
 
 interface Props {
@@ -41,7 +42,7 @@ const CalendarModal = ({ setValue, closeModal }: Props) => {
             mode="range"
             selected={range}
             onSelect={setRange}
-            modifiersClassNames={{ today: "my-today", selected: "my-selected", range_end: "my-day_range_end", range_start: "my-day_range_end" }}
+            modifiersClassNames={{ selected: "my-selected", range_end: "my-day_range_end", range_start: "my-day_range_end" }}
           />
         </div>
       </Modal.Frame>
