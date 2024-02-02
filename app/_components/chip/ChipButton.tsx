@@ -10,10 +10,11 @@ type MappedHandler = {
 
 interface Props extends MappedHandler {
   label: string;
+  selected?: boolean;
 }
 
-const ChipButton = ({ label, onClick, onDelete }: Props) => {
-  const [selected, setSelected] = useState(false);
+const ChipButton = ({ label, selected: initial = false, onClick, onDelete }: Props) => {
+  const [selected, setSelected] = useState(initial);
   const [isDelete, setIsDelete] = useState(false);
   const handleClick = (e: MouseEvent) => {
     setSelected((prev) => !prev);
