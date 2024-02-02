@@ -1,7 +1,7 @@
 "use client";
 
-import { EditPostType } from "@/(route)/event/[id]/edit/page";
-import { PostType } from "@/(route)/post/page";
+import { EditPostType } from "@/(route)/(header)/event/[id]/edit/page";
+import { PostType } from "@/(route)/(header)/post/page";
 import DaumPostcodeEmbed from "react-daum-postcode";
 import { UseFormSetValue } from "react-hook-form";
 import Modal from "./ModalMaterial";
