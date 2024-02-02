@@ -3,6 +3,7 @@
 import { MOCK } from "app/_constants/mock";
 import Header from "@/components/Header";
 import Tabs from "@/components/Tabs";
+import EventCalendar from "./_components/EventCalendar";
 import UserProfile from "./_components/UserProfile";
 import ArtistTab from "./_components/tab/ArtistTab";
 import MyReviewTab from "./_components/tab/MyReviewTab";
@@ -14,7 +15,8 @@ const MyPage = () => {
         <Header />
       </div>
       <UserProfile data={MOCK_USER_INFO} />
-      <Tabs names={["아티스트", "내 후기"]}>
+      <Tabs names={["내 행사", "아티스트", "내 후기"]}>
+        <EventCalendar scheduleData={mockScheduleData} />
         <ArtistTab data={MOCK} />
         <MyReviewTab reviewList={REVIEWS} />
       </Tabs>
@@ -66,5 +68,50 @@ const REVIEWS: MyReviewProps[] = [
       "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
     ],
     like: 0,
+  },
+];
+
+export interface ScheduleDataProps {
+  placeName: string;
+  artistName: string;
+  eventType: "카페";
+  address: string;
+  startDate: string;
+  endDate: string;
+  eventImage: string;
+  gifts: ["포토카드"];
+}
+
+const mockScheduleData: ScheduleDataProps[] = [
+  {
+    placeName: "윤정한 카페",
+    artistName: "윤정한",
+    eventType: "카페",
+    address: "마포구",
+    startDate: "2024-01-25T00:00:00",
+    endDate: "2024-02-01T00:00:00",
+    eventImage: "",
+    gifts: ["포토카드"],
+  },
+
+  {
+    placeName: "김정우 카페",
+    artistName: "김정우",
+    eventType: "카페",
+    address: "마포구",
+    startDate: "2024-01-28T00:00:00",
+    endDate: "2024-01-31T00:00:00",
+    eventImage: "",
+    gifts: ["포토카드"],
+  },
+  {
+    placeName: "김민지 카페",
+    artistName: "김민지",
+    eventType: "카페",
+    address: "마포구",
+    startDate: "2024-01-26T00:00:00",
+    endDate: "2024-01-28T00:00:00",
+    eventImage: "",
+    gifts: ["포토카드"],
   },
 ];

@@ -1,3 +1,14 @@
+interface EventMockDataProps {
+  placeName: string;
+  artistName: string;
+  eventType: string;
+  address: string;
+  startDate: string;
+  endDate: string;
+  gifts: string[];
+  eventImage: string;
+}
+
 export const EventMockData = [
   {
     placeName: "최승철 카페 카페 이름이 매우 길어요",
