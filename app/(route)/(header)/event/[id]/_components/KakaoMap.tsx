@@ -20,15 +20,31 @@ const KakaoMap = ({ name, address }: MapType) => {
           if (status === window.kakao.maps.services.Status.OK) {
             const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
 
+            const imageSrc = "/icon/marker.svg";
+            const imageSize = new window.kakao.maps.Size(20, 20);
+            const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
+
             const marker = new window.kakao.maps.Marker({
               map: map,
               position: coords,
+              image: markerImage,
             });
+            marker.setMap(map);
 
-            const infowindow = new window.kakao.maps.InfoWindow({
-              content: `<div style="width:150px;text-align:center;padding:6px 0;">${name}</div>`,
+            const content =
+              '<div class="relative w-fit rounded-full bg-gray-900 px-12 py-8 text-center text-14 font-600 text-white-black">' +
+              name +
+              '<div class="absolute -bottom-12 right-1/2 translate-x-1/2">' +
+              '<img src="/icon/marker-bottom.svg" />' +
+              "</div>" +
+              "</div>";
+
+            const customOverlay = new window.kakao.maps.CustomOverlay({
+              map: map,
+              position: coords,
+              content: content,
+              yAnchor: 1.9,
             });
-            infowindow.open(map, marker);
 
             map.setCenter(coords);
           }
