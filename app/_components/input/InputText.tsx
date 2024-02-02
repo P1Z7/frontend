@@ -4,14 +4,16 @@ import { KeyboardEvent, ReactNode, useState } from "react";
 import { FieldPath, FieldValues, UseControllerProps, useController } from "react-hook-form";
 
 interface Prop {
-  type?: "text" | "password";
   children?: ReactNode;
+  type?: "text" | "password";
+  horizontal?: boolean;
   placeholder?: string;
   autoComplete?: string;
   hint?: string;
   maxLength?: number;
   hidden?: boolean;
   readOnly?: boolean;
+  required?: boolean;
   disabled?: boolean;
   onKeyDown?: (e: KeyboardEvent) => void;
   onClick?: () => void;
@@ -22,7 +24,23 @@ type Function = <TFieldValues extends FieldValues = FieldValues, TName extends F
   prop: UseControllerProps<TFieldValues, TName> & Prop,
 ) => ReactNode;
 
-const InputText: Function = ({ type: initialType, children, placeholder, autoComplete, hint, maxLength, hidden, readOnly, disabled, onClick, onKeyDown, isEdit, ...control }) => {
+const InputText: Function = ({
+  children,
+  type: initialType,
+  horizontal,
+  placeholder,
+  autoComplete,
+  hint,
+  maxLength,
+  hidden,
+  required,
+  readOnly,
+  disabled,
+  onClick,
+  onKeyDown,
+  isEdit,
+  ...control
+}) => {
   const { field, fieldState } = useController(control);
   const [type, setType] = useState(initialType ?? "text");
 
@@ -35,16 +53,18 @@ const InputText: Function = ({ type: initialType, children, placeholder, autoCom
   };
 
   return (
-    <div>
-      <label htmlFor={field.name} className="text-14">
+    <div className={`${horizontal && "flex gap-28"}`}>
+      <label htmlFor={field.name} className={`text-14 ${horizontal && "mt-20"}`}>
         {children}
+        <span className="ml-4 text-red">{required && "*"}</span>
       </label>
-      <div className="relative">
+      <div className={`relative ${horizontal && "flex-1"}`}>
         <input
           id={field.name}
           type={type}
           placeholder={placeholder ?? "입력해주세요."}
           autoComplete={autoComplete ?? "off"}
+          required={required ?? false}
           readOnly={readOnly ?? false}
           disabled={disabled ?? false}
           onClick={onClick}
@@ -69,7 +89,7 @@ const InputText: Function = ({ type: initialType, children, placeholder, autoCom
         )}
         <div className="flex gap-8">
           {maxLength ? <span className={classNames("mt-4 h-8", { "text-red": field.value.length > maxLength })}>{`(${field.value.length}/${maxLength})`}</span> : null}
-          <p className={`font-normal mt-4 h-8 text-12 ${fieldState.error ? "text-red" : "text-gray-400"}`}>{fieldState?.error?.message || hint}</p>
+          <p className={`font-normal mt-4 h-12 text-12 ${fieldState.error ? "text-red" : "text-gray-400"}`}>{fieldState?.error?.message || hint}</p>
         </div>
       </div>
     </div>

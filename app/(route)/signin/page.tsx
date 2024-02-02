@@ -31,10 +31,12 @@ const SignInPage = () => {
   return (
     <form ref={formSection} onSubmit={handleSubmit(handleSignin)} className="flex flex-col gap-24 px-12 py-60">
       <InputText
+        horizontal
         name="email"
         placeholder="example@opener.com"
         control={control}
         onKeyDown={handleEnterNext}
+        required
         rules={{ required: ERROR_MESSAGES.email.emailField, pattern: { value: REG_EXP.CHECK_EMAIL, message: ERROR_MESSAGES.email.emailPattern } }}
       >
         이메일
