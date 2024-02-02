@@ -1,4 +1,4 @@
-import { PostType } from "@/(route)/post/page";
+import { PostType } from "@/(route)/(header)/post/page";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
@@ -24,16 +24,16 @@ const StarBottomSheet = ({ closeBottomSheet }: Props) => {
   } = useQuery({
     queryKey: ["group"],
     queryFn: async () => {
-      // return instance.get("/group/solo", { size: 12, page: 1 });
-      return instance.post<Req_Post_Type["signup"]>("/users", {
-        userName: "",
-        signupMethod: "opener",
-        email: "post@test.com",
-        password: "asdf1234",
-        myArtists: [],
-        passwordCheck: "asdf1234",
-        nickName: "post테스트",
-      });
+      return instance.get("/group/solo", { size: 12, page: 1 });
+      // return instance.post<Req_Post_Type["signup"]>("/users", {
+      //   userName: "",
+      //   signupMethod: "opener",
+      //   email: "post@test.com",
+      //   password: "asdf1234",
+      //   myArtists: [],
+      //   passwordCheck: "asdf1234",
+      //   nickName: "post테스트",
+      // });
     },
   });
   // const {
