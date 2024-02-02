@@ -1,10 +1,30 @@
-export type ArtistType = {
+export type ArtistNGroupType = {
+  id: string;
+  name: string;
+  image: string;
+  type: "member" | "group";
+};
+
+export type ArtistNGroupListType = {
+  page: number;
+  size: number;
+  artistAndGroupList: ArtistNGroupType[];
+};
+
+export type GroupType = {
+  groupId: string;
+  groupName: string;
+  debutDate: string;
+  groupImage: string;
+};
+
+export type MockArtistType = {
   name: string;
   group?: string[];
   profileImage: string;
 };
 
-export const MOCK: ArtistType[] = [
+export const MOCK: MockArtistType[] = [
   {
     name: "마크",
     group: ["NCT", "NCT127", "NCT DREAM"],

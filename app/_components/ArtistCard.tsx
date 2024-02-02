@@ -12,7 +12,7 @@ const ArtistCard = ({ children, onClick, profileImage, isChecked = false, isSmal
   return (
     <div className="flex-center h-fit w-fit flex-col gap-8 rounded-sm p-4 hover:cursor-pointer" onClick={onClick}>
       <Image
-        src={profileImage ? profileImage : "/image/no-profile.png"}
+        src={profileImage !== "http://image.co.kr" ? profileImage : "/image/no-profile.png"}
         alt="아티스트 이미지"
         width={88}
         height={88}

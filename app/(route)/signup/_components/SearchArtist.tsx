@@ -1,4 +1,4 @@
-import { ArtistType, MOCK } from "app/_constants/mock";
+import { ArtistNGroupType } from "app/_constants/mock";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import ArtistCard from "@/components/ArtistCard";
@@ -7,7 +7,7 @@ import ReqNewArtistModal from "@/components/modal/ReqNewArtistModal";
 import { useModal } from "@/hooks/useModal";
 
 interface Props {
-  data: ArtistType[];
+  data: ArtistNGroupType[];
   onClick: (id: string, isChecked: boolean) => void;
   myArtists: string[];
 }
@@ -31,11 +31,7 @@ const SearchArtist = ({ data, onClick, myArtists }: Props) => {
     clearPreviousTimer();
 
     timerId = setTimeout(() => {
-      setSearchedData(
-        MOCK.filter((item) => {
-          return item.name.toLowerCase().includes(searchValue.toLowerCase()) || (item.group && item.group.some((group) => group.toLowerCase().includes(searchValue.toLowerCase())));
-        }),
-      );
+      setSearchedData(data);
     }, 300);
 
     return () => {
@@ -50,8 +46,8 @@ const SearchArtist = ({ data, onClick, myArtists }: Props) => {
         찾으시는 아티스트가 없으신가요?
       </button>
       <div className="grid w-fit grid-cols-3 gap-8">
-        {searchedData.map((cardList) => (
-          <Card data={cardList} onClick={onClick} myArtists={myArtists} key={cardList.name} />
+        {searchedData.map((card) => (
+          <Card data={card} onClick={onClick} myArtists={myArtists} key={card.id} />
         ))}
       </div>
       {modal === "req_artist" && <ReqNewArtistModal closeModal={closeModal} />}
@@ -62,13 +58,13 @@ const SearchArtist = ({ data, onClick, myArtists }: Props) => {
 export default SearchArtist;
 
 interface CardProps {
-  data: { name: string; profileImage: string };
+  data: ArtistNGroupType;
   onClick: (id: string, isChecked: boolean) => void;
   myArtists: string[];
 }
 
 const Card = ({ data, onClick, myArtists }: CardProps) => {
-  const { name, profileImage } = data;
+  const { name, image } = data;
 
   const [isChecked, setIsChecked] = useState<boolean>(myArtists.includes(name));
 
@@ -80,7 +76,7 @@ const Card = ({ data, onClick, myArtists }: CardProps) => {
   return (
     <>
       <label htmlFor={name}>
-        <ArtistCard isChecked={isChecked} profileImage={profileImage} isSmall>
+        <ArtistCard isChecked={isChecked} profileImage={image} isSmall>
           {name}
         </ArtistCard>
       </label>
