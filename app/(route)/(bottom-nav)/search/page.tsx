@@ -22,13 +22,13 @@ const MOCK_EVENTS = [
     eventImage: "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
   },
   {
-    placeName: "강남역",
+    placeName: "투썸플레이스",
     eventType: "팬광고",
     artistName: "하니",
     startDate: "2024-01-29",
     endDate: "2024-01-30",
     address: "강남구",
-    gifts: ["포토카드", "엽서"],
+    gifts: ["컵홀더", "포스터", "스티커", "티켓", "포토카드", "엽서", "굿즈", "기타"],
     eventImage: "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
   },
 ];
@@ -105,7 +105,7 @@ const SearchPage = () => {
             </button>
           </div>
         </section>
-        <section>
+        <section className="flex flex-col items-center">
           {MOCK_EVENTS.map((event, index) => (
             <HorizontalEventCard key={index} data={event} />
           ))}

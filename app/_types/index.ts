@@ -37,13 +37,16 @@ export interface SignUpFormType {
   myArtists: string[] | [];
 }
 
+export type EventType = "카페" | "나눔" | "팬광고" | "팝업스토어" | "상영회" | "기타";
+export type GiftType = "컵홀더" | "포스터" | "스티커" | "티켓" | "포토카드" | "엽서" | "굿즈" | "기타";
+
 export interface EventCardType {
   placeName: string;
   artistName: string;
-  eventType: string;
+  eventType: EventType;
   address: string;
   startDate: string;
   endDate: string;
-  gifts?: string[];
+  gifts?: GiftType[];
   eventImage: string;
 }
