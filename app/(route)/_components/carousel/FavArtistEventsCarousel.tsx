@@ -6,15 +6,6 @@ import Carousel from "@/components/Carousel";
 import { EventMockData } from "@/components/card/EventMockData";
 import VerticalEventCard from "@/components/card/VerticalEventCard";
 
-const DATA = {
-  placeName: "카페",
-  artistName: "아티스트",
-  eventType: "생일 카페",
-  address: "주소",
-  startDate: "날짜",
-  endDate: "날짜",
-};
-
 const FavArtistEventsCarousel = () => {
   // 추후 next auth로 변경 예정
   const [status, setStatus] = useState(true);
@@ -24,27 +15,33 @@ const FavArtistEventsCarousel = () => {
   const hasFavoriteEvents = EventMockData.length > 0;
   // const hasFavoriteEvents = false;
 
+  const renderContent = () => {
+    if (!status) {
+      return <NoFavCard buttonName="로그인 하기" href={"/signin"} />;
+    }
+
+    if (!hasFavoriteEvents) {
+      <NoFavCard buttonName="아티스트 둘러보기" href={"/setting/artist"} />;
+    }
+
+    return (
+      <Carousel customSettings={{ dots: true, infinite: false }}>
+        {EventMockData.map((event, index) => (
+          <div key={index}>
+            <VerticalEventCard data={event} />
+          </div>
+        ))}
+      </Carousel>
+    );
+  };
+
   return (
     <>
       <div className="flex justify-between">
         <h2>좋아요한 아티스트의 새 행사</h2>
         <Link href="/my-artist-event">전체보기</Link>
       </div>
-      {status ? (
-        hasFavoriteEvents ? (
-          <Carousel customSettings={{ dots: true, infinite: false }}>
-            <VerticalEventCard data={DATA} />
-            <VerticalEventCard data={DATA} />
-            <VerticalEventCard data={DATA} />
-            <VerticalEventCard data={DATA} />
-            <VerticalEventCard data={DATA} />
-          </Carousel>
-        ) : (
-          <NoFavCard buttonName="아티스트 둘러보기" href={"/setting/artist"} />
-        )
-      ) : (
-        <NoFavCard buttonName="로그인 하기" href={"/signin"} />
-      )}
+      {renderContent()}
     </>
   );
 };
@@ -57,7 +54,7 @@ interface NoFavCardProps {
 const NoFavCard = ({ href, buttonName }: NoFavCardProps) => {
   return (
     <div className="flex h-148 w-320 items-center justify-center bg-[#EFEFEF]">
-      <Link href={href} className="block h-32 w-120 rounded-[4px] bg-[#676767] text-center text-14 leading-[32px] text-white">
+      <Link href={href} className="text-white block h-32 w-120 rounded-[4px] bg-[#676767] text-center text-14 leading-[32px]">
         {buttonName}
       </Link>
     </div>

@@ -45,4 +45,5 @@ export interface EventCardType {
   startDate: string;
   endDate: string;
   gifts?: string[];
+  eventImage: string;
 }
