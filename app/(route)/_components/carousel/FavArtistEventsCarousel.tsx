@@ -25,7 +25,7 @@ const FavArtistEventsCarousel = () => {
     }
 
     return (
-      <Carousel customSettings={{ dots: true, infinite: false }}>
+      <Carousel customSettings={{ infinite: false }}>
         {MOCK_EVENTS.map((event, index) => (
           <div key={index}>
             <VerticalEventCard data={event} />
@@ -36,13 +36,15 @@ const FavArtistEventsCarousel = () => {
   };
 
   return (
-    <>
-      <div className="flex justify-between">
-        <h2>좋아요한 아티스트의 새 행사</h2>
-        <Link href="/my-artist-event">전체보기</Link>
+    <div className="flex flex-col gap-16">
+      <div className="flex items-center justify-between self-stretch">
+        <h2 className="text-20 font-700 text-gray-900">좋아요한 아티스트의 새 행사</h2>
+        <Link href="/my-artist-event" className="text-12 font-600 text-blue">
+          전체보기
+        </Link>
       </div>
       {renderContent()}
-    </>
+    </div>
   );
 };
 

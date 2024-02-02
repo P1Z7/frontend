@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroller";
-import ArtistProfile from "./ArtistProfile";
+import ArtistCard from "../../../_components/ArtistCard";
 import { ProfileMockData } from "./ProfileMockData";
 
 const ArtistList = () => {
@@ -26,8 +26,8 @@ const ArtistList = () => {
   };
 
   return (
-    <div>
-      <h2>아티스트로 찾아보기</h2>
+    <div className="flex flex-col gap-16">
+      <h2 className="text-20 font-700 text-gray-900">아티스트로 찾아보기</h2>
       <InfiniteScroll
         pageStart={0}
         loadMore={loadMore}
@@ -37,11 +37,12 @@ const ArtistList = () => {
             Loading ...
           </div>
         }
+        className="w-320"
       >
-        <ul className="grid w-320 grid-cols-3 gap-24 px-16">
+        <ul className="grid w-320 grid-cols-3 gap-12 px-8">
           {artists.map((artist, index) => (
             <li key={index}>
-              <ArtistProfile src={artist.profileImage} artistName={artist.name} />
+              <ArtistCard profileImage={artist.profileImage}>{artist.name}</ArtistCard>
             </li>
           ))}
         </ul>

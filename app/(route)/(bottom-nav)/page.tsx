@@ -1,20 +1,23 @@
-import ArtistList from "@/components/artist-list/ArtistList";
+import ArtistList from "@/(route)/_components/artist-list/ArtistList";
+import Logo from "@/public/icon/logo.svg";
 import FavArtistEventsCarousel from "../_components/carousel/FavArtistEventsCarousel";
 import NewestEventsCarousel from "../_components/carousel/NewestEventsCarousel";
 import PopularEventsCarousel from "../_components/carousel/PopularEventsCarousel";
 
 const Home = () => {
   return (
-    <>
-      <main className="flex flex-col overflow-hidden px-20 pb-120 pt-60">
-        <div className="flex flex-col gap-40">
-          <FavArtistEventsCarousel />
-          <PopularEventsCarousel />
-          <NewestEventsCarousel />
-          <ArtistList />
-        </div>
+    <div className="flex flex-col gap-40 pb-72 pt-88">
+      <header className="fixed left-0 top-0 z-nav h-88 w-full bg-white-black px-20 pb-16 pt-48">
+        <Logo />
+      </header>
+      <main className="flex flex-col gap-40 overflow-hidden px-20">
+        <FavArtistEventsCarousel />
+        <PopularEventsCarousel />
+        <NewestEventsCarousel />
+        <ArtistList />
       </main>
-    </>
+      <footer className="bg p-20"></footer>
+    </div>
   );
 };
 export default Home;
