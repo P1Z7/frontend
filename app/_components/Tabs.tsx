@@ -18,7 +18,7 @@ const Tabs = ({ children, names }: Props) => {
 
   return (
     <section className="w-full">
-      <div className="mb-44 flex h-44 w-full items-center border-b border-gray-50 px-20">
+      <div className="flex h-44 w-full items-center border-b border-gray-50 px-20">
         {names.map((name, index) => (
           <TabButton key={name} onClick={() => setSelectedTab({ name, index })} selected={name === selectedTab.name}>
             {name}
