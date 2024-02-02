@@ -1,28 +1,39 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
+import BottomSheetFrame from "@/components/bottom-sheet/BottomSheetFrame";
+import { useBottomSheet } from "@/hooks/useBottomSheet";
+import useHeaderTitle from "@/hooks/useHeaderTitle";
 import ArrowLeft from "@/public/icon/arrow-left_lg.svg";
-
-const TITLE: { [a: string]: string } = {
-  "/setting/password": "비밀번호 변경",
-  "/setting/profile": "프로필 수정",
-  "/setting/favorite": "팔로우 아티스트 수정",
-  "/my-artist-event": "좋아요한 아티스트의 새 행사",
-  "/signup": "회원가입",
-  "/post": "등록하기",
-};
+import KebabButton from "@/public/icon/kebab.svg";
 
 const Header = () => {
+  const { bottomSheet, openBottomSheet, closeBottomSheet } = useBottomSheet();
+
+  const openKebeb = () => {
+    openBottomSheet("event-kebab");
+  };
+
   const router = useRouter();
   const pathname = usePathname();
+  const { id } = useParams();
+  const title = useHeaderTitle();
 
   return (
-    <header className="fixed left-0 top-0 z-nav flex h-72 w-360 gap-16 border-b border-gray-50 bg-white-white px-20 pb-12 pt-36">
-      <button onClick={() => router.back()}>
-        <ArrowLeft />
-      </button>
-      <h1 className="w-240 text-center text-16 font-500 text-gray-900">{TITLE[pathname]}</h1>
-    </header>
+    <>
+      <header className="fixed left-0 top-0 z-nav flex h-72 w-360 gap-16 border-b border-gray-50 bg-white-white px-20 pb-12 pt-36">
+        <ArrowLeft onClick={() => router.back()} className="cursor-pointer" />
+        <h1 className="w-240 text-center text-16 font-500 text-gray-900">{title}</h1>
+        {pathname === `/event/${id}` && <KebabButton onClick={openKebeb} className="cursor-pointer" />}
+      </header>
+      {bottomSheet === "event-kebab" && (
+        <BottomSheetFrame closeBottomSheet={closeBottomSheet}>
+          <button>수정하기</button>
+          <button>신고히기</button>
+        </BottomSheetFrame>
+      )}
+    </>
   );
 };
+
 export default Header;

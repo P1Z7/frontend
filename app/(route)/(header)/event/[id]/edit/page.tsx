@@ -1,6 +1,6 @@
 "use client";
 
-import GenericForm from "@/(route)/signup/_components/GenericForm";
+import GenericForm from "@/(route)/(header)/signup/_components/GenericForm";
 import EditContent from "./_components/EditContent";
 
 const EDIT_MOCKUP_DATA = {
