@@ -1,4 +1,4 @@
-import { MyReviewProps } from "@/(route)/mypage/page";
+import { MyReviewProps } from "@/(route)/(bottom-nav)/mypage/page";
 import Image from "next/image";
 import Evaluation from "@/components/Evaluation";
 
@@ -20,7 +20,7 @@ interface Props {
 
 const Review = ({ data, type = "eventReview" }: Props) => {
   return (
-    <div className="h-240 w-full border border-solid border-black">
+    <div className="border-black h-240 w-full border border-solid">
       {type === "eventReview" && "user" in data && (
         <>
           <User user={data.user} />
