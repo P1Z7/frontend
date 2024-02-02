@@ -44,6 +44,7 @@ export interface EventCardType {
   address: string;
   startDate: string;
   endDate: string;
+  link?: string;
   gifts?: string[];
   eventImage: string;
 }
