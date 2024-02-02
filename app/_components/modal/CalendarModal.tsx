@@ -1,6 +1,6 @@
 "use client";
 
-import { PostType } from "@/(route)/post/page";
+import { PostType } from "@/(route)/(header)/post/page";
 import "@/styles/customCalendar.css";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";

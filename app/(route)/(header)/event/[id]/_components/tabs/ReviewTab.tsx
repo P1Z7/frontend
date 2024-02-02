@@ -1,5 +1,5 @@
 import BottomButton from "@/components/button/BottomButton";
-import Review from "../../../../../_components/Review";
+import Review from "../../../../../../_components/Review";
 
 const REVIEWS = [
   {
