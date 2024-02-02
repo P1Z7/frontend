@@ -1,10 +1,6 @@
 "use client";
 
-import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
-import { KeyboardEvent, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import Alert from "@/components/Alert";
 import InputText from "@/components/input/InputText";
 import useEnterNext from "@/hooks/useEnterNext";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
@@ -47,7 +43,6 @@ const SignInPage = () => {
         placeholder="8자 이상 입력해주세요."
         control={control}
         onKeyDown={handleEnterNext}
-        horizontal
         required
         rules={{ required: ERROR_MESSAGES.password.passwordField, pattern: { value: REG_EXP.CHECK_PASSWORD, message: ERROR_MESSAGES.password.passwordPattern } }}
       >
