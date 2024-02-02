@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroller";
-import ArtistCard from "../../../_components/ArtistCard";
+import ArtistCard from "@/components/ArtistCard";
 import { ProfileMockData } from "./ProfileMockData";
 
 const ArtistList = () => {
