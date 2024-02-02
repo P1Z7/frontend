@@ -49,6 +49,8 @@ const config: Config = {
         yellow: { DEFAULT: "rgb(var(--sub-yellow) / <alpha-value>)", bg: "rgb(var(--sub-yellow) / 0.12)" },
         skyblue: { DEFAULT: "rgb(var(--sub-skyblue) / <alpha-value>)", bg: "rgb(var(--sub-skyblue) / 0.12)" },
         scarlet: { DEFAULT: "rgb(var(--sub-scarlet) / <alpha-value>)", bg: "rgb(var(--sub-scarlet) / 0.12)" },
+        green: { DEFAULT: "rgb(var(--sub-green) / <alpha-value>)", bg: "rgb(var(--sub-green) / 0.12)" },
+        red: { DEFAULT: "rgb(var(--sub-red) / <alpha-value>)", bg: "rgb(var(--sub-red) / 0.12)" },
       },
       main: {
         purple: {
