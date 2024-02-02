@@ -1,9 +1,7 @@
 "use client";
 
-import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
-import { KeyboardEvent, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import Chip from "@/components/chip/Chip";
 import InputText from "@/components/input/InputText";
 import useEnterNext from "@/hooks/useEnterNext";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
@@ -47,7 +45,8 @@ const SignInPage = () => {
       >
         비밀번호
       </InputText>
-      <button className={`"bg-black flex-grow rounded-sm px-16 py-12 text-16 text-white`}>로그인</button>
+      <Chip kind="event" label="나눔" />
+      <button className={`"bg-black text-white flex-grow rounded-sm px-16 py-12 text-16`}>로그인</button>
     </form>
   );
 };
