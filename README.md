@@ -1,7 +1,7 @@
 # K-POP 오프라인 행사 정보 공유 서비스 : Opener
 
 
-> 개발기간: 2024. 01. 20 ~ 2023. 01. 16 (ver.1)
+> 개발기간: 2024. 01. 20 ~ 2024. 02. 16 (ver.1)
 
 > 배포 URL : https://frontend-five-topaz-25.vercel.app/
 
