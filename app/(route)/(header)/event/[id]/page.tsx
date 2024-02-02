@@ -12,7 +12,7 @@ const EventInfoPage = () => {
       <Banner data={eventData} />
       <Tabs names={["행사정보", "위치", "후기"]}>
         <DescriptionTab images={eventData.eventImages} description={eventData.description} />
-        <LocationTab name="을지로 위워크" address="서울 중구 삼일대로 343" />
+        <LocationTab name={eventData.placeName} address={eventData.address} />
         <ReviewTab />
       </Tabs>
     </>

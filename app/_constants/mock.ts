@@ -120,7 +120,7 @@ export const MOCK_EVENTS: EventInfoType[] = [
     artists: ["민지"],
     startDate: "2024-01-29",
     endDate: "2024-01-30",
-    address: "서울특별시 마포구 와우산로 00-00 1층",
+    address: "서울 중구 삼일대로 343",
     addressDetail: "",
     userId: "test-user",
     eventImages: ["https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize"],

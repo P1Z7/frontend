@@ -37,7 +37,7 @@ const KakaoMap = ({ name, address }: MapType) => {
     }
   }, []);
 
-  return <div id="map" className="h-400 w-400" />;
+  return <div id="map" className="h-[52rem] w-full" />;
 };
 
 export default KakaoMap;
