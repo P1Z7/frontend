@@ -1,7 +1,6 @@
 "use client";
 
 import { SubmitHandler, useForm } from "react-hook-form";
-import Chip from "@/components/chip/Chip";
 import InputText from "@/components/input/InputText";
 import useEnterNext from "@/hooks/useEnterNext";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
