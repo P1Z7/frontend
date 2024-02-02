@@ -31,11 +31,11 @@ const SignInPage = () => {
   return (
     <form ref={formSection} onSubmit={handleSubmit(handleSignin)} className="flex flex-col gap-24 px-12 py-60">
       <InputText
-        horizontal
         name="email"
         placeholder="example@opener.com"
         control={control}
         onKeyDown={handleEnterNext}
+        horizontal
         required
         rules={{ required: ERROR_MESSAGES.email.emailField, pattern: { value: REG_EXP.CHECK_EMAIL, message: ERROR_MESSAGES.email.emailPattern } }}
       >
@@ -46,8 +46,10 @@ const SignInPage = () => {
         type="password"
         placeholder="8자 이상 입력해주세요."
         control={control}
-        rules={{ required: ERROR_MESSAGES.password.passwordField, pattern: { value: REG_EXP.CHECK_PASSWORD, message: ERROR_MESSAGES.password.passwordPattern } }}
         onKeyDown={handleEnterNext}
+        horizontal
+        required
+        rules={{ required: ERROR_MESSAGES.password.passwordField, pattern: { value: REG_EXP.CHECK_PASSWORD, message: ERROR_MESSAGES.password.passwordPattern } }}
       >
         비밀번호
       </InputText>

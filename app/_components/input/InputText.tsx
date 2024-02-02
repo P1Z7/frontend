@@ -64,7 +64,6 @@ const InputText: Function = ({
           type={type}
           placeholder={placeholder ?? "입력해주세요."}
           autoComplete={autoComplete ?? "off"}
-          required={required ?? false}
           readOnly={readOnly ?? false}
           disabled={disabled ?? false}
           onClick={onClick}
