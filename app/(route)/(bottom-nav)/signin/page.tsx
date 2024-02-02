@@ -1,10 +1,6 @@
 "use client";
 
-import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
-import { KeyboardEvent, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import Header from "@/components/Header";
 import InputText from "@/components/input/InputText";
 import useEnterNext from "@/hooks/useEnterNext";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
@@ -29,30 +25,27 @@ const SignInPage = () => {
   };
 
   return (
-    <>
-      <Header />
-      <form ref={formSection} onSubmit={handleSubmit(handleSignin)} className="flex flex-col gap-24 py-60">
-        <InputText
-          name="email"
-          placeholder="example@illo.com"
-          control={control}
-          onKeyDown={handleEnterNext}
-          rules={{ required: ERROR_MESSAGES.email.emailField, pattern: { value: REG_EXP.CHECK_EMAIL, message: ERROR_MESSAGES.email.emailPattern } }}
-        >
-          이메일
-        </InputText>
-        <InputText
-          name="password"
-          type="password"
-          control={control}
-          rules={{ required: ERROR_MESSAGES.password.passwordField, pattern: { value: REG_EXP.CHECK_PASSWORD, message: ERROR_MESSAGES.password.passwordPattern } }}
-          onKeyDown={handleEnterNext}
-        >
-          비밀번호
-        </InputText>
-        <button className={`"bg-black text-white flex-grow rounded-sm px-16 py-12 text-16`}>로그인</button>
-      </form>
-    </>
+    <form ref={formSection} onSubmit={handleSubmit(handleSignin)} className="flex flex-col gap-24 py-60">
+      <InputText
+        name="email"
+        placeholder="example@illo.com"
+        control={control}
+        onKeyDown={handleEnterNext}
+        rules={{ required: ERROR_MESSAGES.email.emailField, pattern: { value: REG_EXP.CHECK_EMAIL, message: ERROR_MESSAGES.email.emailPattern } }}
+      >
+        이메일
+      </InputText>
+      <InputText
+        name="password"
+        type="password"
+        control={control}
+        rules={{ required: ERROR_MESSAGES.password.passwordField, pattern: { value: REG_EXP.CHECK_PASSWORD, message: ERROR_MESSAGES.password.passwordPattern } }}
+        onKeyDown={handleEnterNext}
+      >
+        비밀번호
+      </InputText>
+      <button className={`"bg-black text-white flex-grow rounded-sm px-16 py-12 text-16`}>로그인</button>
+    </form>
   );
 };
 export default SignInPage;
