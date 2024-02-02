@@ -2,7 +2,7 @@ import Image from "next/image";
 import { formatAddress, formatDate } from "@/utils/formatString";
 import { EventInfoType } from "@/types/index";
 import HeartButton from "../button/HeartButton";
-import Chip from "./Chip";
+import Chip from "../chip/Chip";
 
 interface Props {
   data: EventInfoType;
@@ -36,8 +36,7 @@ const VerticalEventCard = ({ data }: Props) => {
         </div>
         <div className="flex gap-8">
           <p className="text-16 font-600 text-gray-900">{data.artists[0]}</p>
-          {/* 공통 컴포넌트로 수정 예정 */}
-          <Chip chipName={data.eventType} />
+          <Chip label={data.eventType} kind="event" />
         </div>
       </div>
     </div>
