@@ -4,7 +4,7 @@ import VerticalEventCard from "@/components/card/VerticalEventCard";
 
 const NewestEventsCarousel = () => {
   return (
-    <Carousel title="최신 등록 행사" customSettings={{ autoplay: false }}>
+    <Carousel title="최신 등록 행사" customSettings={{ autoplay: true }}>
       <NewestEvents />
     </Carousel>
   );

@@ -4,7 +4,7 @@ import VerticalEventCard from "@/components/card/VerticalEventCard";
 
 const PopularEventsCarousel = () => {
   return (
-    <Carousel title="실시간 인기 행사" customSettings={{ autoplay: false }}>
+    <Carousel title="실시간 인기 행사" customSettings={{ autoplay: true }}>
       <PopularEvents />
     </Carousel>
   );
