@@ -19,6 +19,7 @@ const MOCK_EVENTS = [
     endDate: "2024-01-30",
     address: "중구",
     gifts: ["포토카드", "엽서"],
+    eventImage: "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
   },
   {
     placeName: "강남역",
@@ -28,6 +29,7 @@ const MOCK_EVENTS = [
     endDate: "2024-01-30",
     address: "강남구",
     gifts: ["포토카드", "엽서"],
+    eventImage: "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
   },
 ];
 

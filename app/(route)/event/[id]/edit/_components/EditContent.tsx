@@ -5,6 +5,7 @@ import SubInput from "@/(route)/post/_components/_inputs/SubInput";
 import { PostType } from "@/(route)/post/page";
 import classNames from "classnames";
 import { useFormContext } from "react-hook-form";
+import BottomButton from "@/components/button/BottomButton";
 import TextModal from "@/components/modal/TextModal";
 import { useModal } from "@/hooks/useModal";
 import { useStore } from "@/store/index";
@@ -71,9 +72,9 @@ const EditContent = () => {
       <StarInput />
       <SubInput />
       <DetailInput />
-      <button disabled={!isValid} className={classNames("w-full bg-gray-200 p-16", { "bg-yellow-200": isValid })} onClick={() => openModal("endEdit")}>
-        수정 요청
-      </button>
+      <BottomButton isDisabled={!isValid} onClick={() => openModal("endEdit")}>
+        수정사항 등록
+      </BottomButton>
       {modal === "endEdit" && (
         <TextModal title="텍스트 모달 타이틀" btnText="오케이" textareaId="text" closeModal={closeModal} {...{ control: control, placeholder: "텍스트 모달입니다." }} />
       )}

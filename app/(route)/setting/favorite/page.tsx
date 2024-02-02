@@ -3,6 +3,7 @@
 import { MOCK } from "app/_constants/mock";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
+import BottomButton from "@/components/button/BottomButton";
 import useInfScroll from "@/hooks/useInfScroll";
 
 const INITIAL = ["정우"];
@@ -40,7 +41,8 @@ const FavoritePage = () => {
         ))}
         <div ref={infRef} />
       </div>
-      <button className={classNames("rounded-sm px-16 py-12 text-16", { "bg-black text-white": favorite.length }, { "bg-gray-300 text-black": !favorite.length })}>변경하기</button>
+      {/* <button className={classNames("rounded-sm px-16 py-12 text-16", { "bg-black text-white": favorite.length }, { "bg-gray-300 text-black": !favorite.length })}>변경하기</button> */}
+      <BottomButton isDisabled={!favorite.length}>변경 내용 저장</BottomButton>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import ProgressBar from "@/components/ProgressBar";
+import BottomButton from "@/components/button/BottomButton";
 import { useStore } from "@/store/index";
 import { PostType } from "../page";
 import FunnelTitle from "./FunnelTitle";
@@ -15,7 +16,8 @@ const DetailInfo = () => {
       <ProgressBar ratio="full" />
       <FunnelTitle step="상세 설명" />
       <DetailInput />
-      <PostFooter isDisabled={!isCheck || getValues("detailText").length > 100} />
+      {/* <PostFooter isDisabled={!isCheck || getValues("detailText").length > 100} /> */}
+      <BottomButton isDisabled={!isCheck || getValues("detailText").length > 100}>작성 완료</BottomButton>
     </div>
   );
 };

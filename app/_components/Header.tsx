@@ -1,15 +1,15 @@
 "use client";
 
-import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import leftArrow from "@/public/icon/left-arrow.svg";
+import ArrowLeft from "@/public/icon/arrow-left_lg.svg";
 
 const TITLE: { [a: string]: string } = {
   "/setting/password": "비밀번호 변경",
   "/setting/profile": "프로필 수정",
-  "/setting/favorite": "좋아하는 아티스트 수정",
-  "/mypage": "마이페이지",
+  "/setting/favorite": "팔로우 아티스트 수정",
   "/my-artist-event": "좋아요한 아티스트의 새 행사",
+  "/signup": "회원가입",
+  "/post": "등록하기",
 };
 
 const Header = () => {
@@ -17,12 +17,12 @@ const Header = () => {
   const pathname = usePathname();
 
   return (
-    <>
+    <header className="fixed left-0 top-0 z-nav flex h-72 w-360 gap-16 border-b border-gray-50 bg-white-white px-20 pb-12 pt-36">
       <button onClick={() => router.back()}>
-        <Image src={leftArrow} alt="뒤로가기 버튼" />
+        <ArrowLeft />
       </button>
-      <h1 className="text-18 font-900">{TITLE[pathname]}</h1>
-    </>
+      <h1 className="w-240 text-center text-16 font-500 text-gray-900">{TITLE[pathname]}</h1>
+    </header>
   );
 };
 export default Header;

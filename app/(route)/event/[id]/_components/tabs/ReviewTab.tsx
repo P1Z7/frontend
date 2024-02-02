@@ -1,5 +1,5 @@
+import BottomButton from "@/components/button/BottomButton";
 import Review from "../../../../../_components/Review";
-import ReviewButton from "../ReviewButton";
 
 const REVIEWS = [
   {
@@ -37,7 +37,7 @@ const REVIEWS = [
 const ReviewTab = () => {
   return (
     <div className="h-400 w-full">
-      <ReviewButton />
+      <BottomButton>후기 작성하기</BottomButton>
       <ul className="w-full">
         {REVIEWS.map((data, index) => (
           <li key={index}>
