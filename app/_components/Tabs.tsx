@@ -17,16 +17,14 @@ const Tabs = ({ children, names }: Props) => {
   const [selectedTab, setSelectedTab] = useState<Tab>({ name: names[0], index: 0 });
 
   return (
-    <section>
-      <ul className="flex gap-12">
+    <section className="w-full">
+      <div className="mb-44 flex h-44 w-full items-center border-b border-gray-50 px-20">
         {names.map((name, index) => (
-          <li key={name}>
-            <TabButton onClick={() => setSelectedTab({ name, index })} selected={name === selectedTab.name}>
-              {name}
-            </TabButton>
-          </li>
+          <TabButton key={name} onClick={() => setSelectedTab({ name, index })} selected={name === selectedTab.name}>
+            {name}
+          </TabButton>
         ))}
-      </ul>
+      </div>
       {children[selectedTab.index]}
     </section>
   );
@@ -40,7 +38,7 @@ interface TabButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const TabButton = ({ children, onClick, selected }: TabButtonProps) => {
   return (
-    <button onClick={onClick} className={classNames("border border-solid border-black", { "bg-black text-white": selected })}>
+    <button onClick={onClick} className={`grow py-12 text-center text-14 ${selected ? "border-b-2 border-gray-900 font-600 text-gray-900" : "font-500 text-gray-500"}`}>
       {children}
     </button>
   );
