@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { useState } from "react";
 import Carousel from "@/components/Carousel";
-import { EventMockData } from "@/components/card/EventMockData";
 import VerticalEventCard from "@/components/card/VerticalEventCard";
+import { MOCK_EVENTS } from "@/constants/mock";
 
 const FavArtistEventsCarousel = () => {
   // 추후 next auth로 변경 예정
@@ -12,7 +12,7 @@ const FavArtistEventsCarousel = () => {
 
   // 목업의 길이를 기반으로 좋아요한 이벤트의 수 확인
   // 추후 수정 예정
-  const hasFavoriteEvents = EventMockData.length > 0;
+  const hasFavoriteEvents = MOCK_EVENTS.length > 0;
   // const hasFavoriteEvents = false;
 
   const renderContent = () => {
@@ -26,7 +26,7 @@ const FavArtistEventsCarousel = () => {
 
     return (
       <Carousel customSettings={{ dots: true, infinite: false }}>
-        {EventMockData.map((event, index) => (
+        {MOCK_EVENTS.map((event, index) => (
           <div key={index}>
             <VerticalEventCard data={event} />
           </div>
