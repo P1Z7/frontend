@@ -1,11 +1,12 @@
 "use client";
 
-import { PostType } from "@/(route)/post/page";
+import { PostType } from "@/(route)/(header)/post/page";
+import "@/styles/customCalendar.css";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { DateRange, DayPicker } from "react-day-picker";
-import "react-day-picker/dist/style.css";
 import { UseFormSetValue } from "react-hook-form";
+import { CALENDAR_STYLE } from "@/constants/calendarStyle";
 import Modal from "./ModalMaterial";
 
 interface Props {
@@ -31,11 +32,20 @@ const CalendarModal = ({ setValue, closeModal }: Props) => {
   }, [range]);
 
   return (
-    <Modal.Frame closeModal={closeModal}>
-      <div onClick={(event) => event.stopPropagation()}>
-        <DayPicker id="test" mode="range" selected={range} onSelect={setRange} />
-      </div>
-    </Modal.Frame>
+    <>
+      <style>{CALENDAR_STYLE}</style>
+      <Modal.Frame closeModal={closeModal}>
+        <div onClick={(event) => event.stopPropagation()}>
+          <DayPicker
+            id="test"
+            mode="range"
+            selected={range}
+            onSelect={setRange}
+            modifiersClassNames={{ selected: "my-selected", range_end: "my-day_range_end", range_start: "my-day_range_start" }}
+          />
+        </div>
+      </Modal.Frame>
+    </>
   );
 };
 

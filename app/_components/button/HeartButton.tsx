@@ -11,8 +11,8 @@ const HeartButton = ({ isSmall = false, isSelected = false, onClick, ...props }:
   return (
     <button className="w-fit" onClick={onClick} {...props}>
       <Heart
-        width={isSmall ? "20" : "24"}
-        height={isSmall ? "20" : "24"}
+        width={isSmall ? "24" : "28"}
+        height={isSmall ? "24" : "28"}
         viewBox="0 0 24 24"
         stroke={isSelected ? "#FF50AA" : isSmall ? "#A0A5B1" : "white"}
         fill={isSelected ? "#FF50AA" : "none"}
