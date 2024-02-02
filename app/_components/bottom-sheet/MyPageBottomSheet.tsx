@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation";
-import BottomSheetFrame from "./BottomSheetFrame";
+import BottomSheetFrame from "./BottomSheetMaterial";
 
 interface Props {
   closeBottomSheet: () => void;

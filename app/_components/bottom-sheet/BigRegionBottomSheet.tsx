@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes, ReactNode } from "react";
 import { BIG_REGIONS } from "@/constants/regions";
-import BottomSheetFrame from "./BottomSheetFrame";
+import BottomSheetFrame from "./BottomSheetMaterial";
 
 interface Props {
   closeBottomSheet: () => void;

@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import BottomSheetFrame from "@/components/bottom-sheet/BottomSheetFrame";
+import BottomSheet from "@/components/bottom-sheet/BottomSheetMaterial";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
 import ArrowLeft from "@/public/icon/arrow-left_lg.svg";
 import KebabButton from "@/public/icon/kebab.svg";
@@ -40,10 +40,10 @@ const Header = ({ params }: Props) => {
         {pathname === `/event/${params.id}` && <KebabButton onClick={openKebeb} className="cursor-pointer" />}
       </header>
       {bottomSheet === "event-kebab" && (
-        <BottomSheetFrame closeBottomSheet={closeBottomSheet}>
+        <BottomSheet.Frame closeBottomSheet={closeBottomSheet}>
           <button>수정하기</button>
           <button>신고히기</button>
-        </BottomSheetFrame>
+        </BottomSheet.Frame>
       )}
     </>
   );

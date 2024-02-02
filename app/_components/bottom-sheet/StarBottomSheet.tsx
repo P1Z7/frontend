@@ -1,6 +1,6 @@
 import { useState } from "react";
 import SearchInput from "../input/SearchInput";
-import BottomSheetFrame from "./BottomSheetFrame";
+import BottomSheetFrame from "./BottomSheetMaterial";
 
 interface Props {
   closeBottomSheet: () => void;

@@ -5,7 +5,7 @@ import { ko } from "date-fns/locale";
 import { useEffect, useState } from "react";
 import { DateRange, DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
-import BottomSheetFrame from "./BottomSheetFrame";
+import BottomSheetFrame from "./BottomSheetMaterial";
 
 interface Props {
   closeBottomSheet: () => void;
