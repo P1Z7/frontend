@@ -395,3 +395,66 @@ export const MOCK_EVENTS: EventInfoType[] = [
     tags: ["컵홀더", "포토카드", "엽서", "스티커"],
   },
 ];
+
+export const MOCK_REVIEWS = [
+  {
+    userId: "test",
+    eventId: "test",
+    isPublic: true,
+    rating: true,
+    description: "메뉴도 진짜 맛있고 특전도 너무 예뻐요. KTX타고 3시간 걸려서 갔는데 후회 없습니다. 3일차 오후라서 포카 없을까봐 걱정했는데 다행히 수량 넉넉해서 다 받았어요.",
+    reviewImages: [
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+    ],
+    like: 1,
+  },
+  {
+    userId: "test",
+    eventId: "test",
+    isPublic: false,
+    rating: false,
+    description: "사람 너무 많아요 특전 다나갔습니다 가실분들 참고",
+    reviewImages: [
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+    ],
+    like: 0,
+  },
+  {
+    userId: "test",
+    eventId: "test",
+    isPublic: true,
+    rating: true,
+    description: "메뉴도 진짜 맛있고 특전도 너무 예뻐요. KTX타고 3시간 걸려서 갔는데 후회 없습니다. 3일차 오후라서 포카 없을까봐 걱정했는데 다행히 수량 넉넉해서 다 받았어요.",
+    reviewImages: [
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+    ],
+    like: 2,
+  },
+
+  {
+    userId: "test",
+    eventId: "test",
+    public: false,
+    rating: false,
+    description: "사람 너무 많아요 특전 다나갔습니다 가실분들 참고",
+    reviewImages: [
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+    ],
+    like: 0,
+  },
+];

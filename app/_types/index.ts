@@ -63,7 +63,8 @@ export interface ReviewType {
   userId: string;
   eventId: string;
   isPublic?: boolean;
-  rating: true;
+  rating: boolean;
   description: string;
   reviewImages?: string[];
+  like: number;
 }
