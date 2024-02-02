@@ -1,6 +1,6 @@
 import Carousel from "@/components/Carousel";
-import { EventMockData } from "@/components/card/EventMockData";
 import VerticalEventCard from "@/components/card/VerticalEventCard";
+import { MOCK_EVENTS } from "@/constants/mock";
 
 const PopularEventsCarousel = () => {
   return (
@@ -12,7 +12,7 @@ const PopularEventsCarousel = () => {
 
 const PopularEvents = () => {
   // 추후 인기순으로 10개 잘라낼 예정
-  const popularEvents = EventMockData.slice(0, 10);
+  const popularEvents = MOCK_EVENTS.slice(0, 10);
 
   return (
     <>
