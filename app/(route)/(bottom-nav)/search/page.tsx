@@ -105,7 +105,7 @@ const SearchPage = () => {
             </button>
           </div>
         </section>
-        <section>
+        <section className="flex flex-col items-center">
           {MOCK_EVENTS.map((event, index) => (
             <HorizontalEventCard key={index} data={event} />
           ))}

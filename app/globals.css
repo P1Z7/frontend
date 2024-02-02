@@ -66,7 +66,7 @@
   }
 
   body {
-    @apply text-black-white;
+    @apply text-gray-900;
   }
 }
 
