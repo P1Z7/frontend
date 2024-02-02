@@ -1,8 +1,8 @@
-import DetailInput from "@/(route)/post/_components/_inputs/DetailInput";
-import MainInput from "@/(route)/post/_components/_inputs/MainInput";
-import StarInput from "@/(route)/post/_components/_inputs/StarInput";
-import SubInput from "@/(route)/post/_components/_inputs/SubInput";
-import { PostType } from "@/(route)/post/page";
+import DetailInput from "@/(route)/(header)/post/_components/_inputs/DetailInput";
+import MainInput from "@/(route)/(header)/post/_components/_inputs/MainInput";
+import StarInput from "@/(route)/(header)/post/_components/_inputs/StarInput";
+import SubInput from "@/(route)/(header)/post/_components/_inputs/SubInput";
+import { PostType } from "@/(route)/(header)/post/page";
 import classNames from "classnames";
 import { useFormContext } from "react-hook-form";
 import BottomButton from "@/components/button/BottomButton";

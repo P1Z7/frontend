@@ -42,7 +42,7 @@ const Post = () => {
     <div className="flex h-svh flex-col gap-24 p-20 text-16">
       <div className="flex gap-8 pb-20 pt-12">
         <Image src="/icon/left-arrow.svg" alt="뒤로가기 버튼" width={24} height={24} onClick={handlePrevClick} className="cursor-pointer" />
-        <div className="text-20 font-900">등록하기</div>
+        <div className="font-900 text-20">등록하기</div>
       </div>
       <GenericForm formOptions={{ mode: "onBlur", defaultValues: DEFAULT_INPUT_VALUES, shouldFocusError: true }}>
         <Funnel>
