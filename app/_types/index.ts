@@ -37,14 +37,33 @@ export interface SignUpFormType {
   myArtists: string[] | [];
 }
 
-export interface EventCardType {
+export type EventType = "카페" | "나눔" | "팬광고" | "팝업스토어" | "상영회" | "기타";
+export type GiftType = "컵홀더" | "포스터" | "스티커" | "티켓" | "포토카드" | "엽서" | "굿즈" | "기타";
+export type SnsType = "트위터" | "인스타그램" | "유튜브" | "기타";
+
+export interface EventInfoType {
   placeName: string;
-  artistName: string;
-  eventType: string;
-  address: string;
+  eventType: EventType;
+  groupId?: string;
+  artists: string[];
   startDate: string;
   endDate: string;
-  link?: string;
-  gifts?: string[];
-  eventImage: string;
+  address: string;
+  addressDetail: string;
+  userId: string;
+  eventImages?: string[];
+  description?: string;
+  eventUrl?: string;
+  organizerSns?: string;
+  snsType?: SnsType;
+  tags?: GiftType[];
+}
+
+export interface ReviewType {
+  userId: string;
+  eventId: string;
+  isPublic?: boolean;
+  rating: true;
+  description: string;
+  reviewImages?: string[];
 }

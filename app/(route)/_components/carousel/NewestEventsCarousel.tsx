@@ -1,6 +1,6 @@
 import Carousel from "@/components/Carousel";
-import { EventMockData } from "@/components/card/EventMockData";
 import VerticalEventCard from "@/components/card/VerticalEventCard";
+import { MOCK_EVENTS } from "@/constants/mock";
 
 const NewestEventsCarousel = () => {
   return (
@@ -12,7 +12,7 @@ const NewestEventsCarousel = () => {
 
 const NewestEvents = () => {
   // 추후 최신순으로 10개 잘라낼 예정
-  const newestEvents = EventMockData.slice(0, 10);
+  const newestEvents = MOCK_EVENTS.slice(0, 10);
 
   return (
     <>
