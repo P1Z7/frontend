@@ -63,6 +63,7 @@ export const MYPAGE_CALENDAR_STYLE = `
 }
 
 .react-calendar__tile {
+  width: 44px;
   text-align: center;
   min-height: 40px;
   padding: 2px 6.6667px;
@@ -76,7 +77,7 @@ export const MYPAGE_CALENDAR_STYLE = `
 .react-calendar__tile > div {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  align-items: center;
   gap: 4px;
 }
 
@@ -105,7 +106,8 @@ export const MYPAGE_CALENDAR_STYLE = `
 
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile--now:hover {
-  background: #F1F2F3
+  background: #F1F2F3;
+  border-radius: 4px;
 }
 
 .react-calendar__tile:enabled:focus,
@@ -124,26 +126,4 @@ export const MYPAGE_CALENDAR_STYLE = `
   background: none;
   color: black;
 }
-
-// .react-calendar__navigation__label > span {
-//   color: var(#3a3a3a);
-//   font-family: SUIT Variable;
-//   font-size: 13px;
-//   font-weight: 500;
-//   line-height: 140%;
-// }
-// .react-calendar__month-view__days__day--weekend {
-//   color: var(#3a3a3a);
-// }
-// .react-calendar__tile:enabled:hover,
-// .react-calendar__tile:enabled:focus {
-//   background: var(#ff7a00);
-// }
-//   background: white;
-//   color: var(#3a3a3a);
-// }
-// .react-calendar__tile--active {
-//   background: var(#ff7a00);
-//   color: white;
-// }
 `;
