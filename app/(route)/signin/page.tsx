@@ -45,7 +45,6 @@ const SignInPage = () => {
       >
         비밀번호
       </InputText>
-      <Chip kind="event" label="나눔" />
       <button className={`"bg-black text-white flex-grow rounded-sm px-16 py-12 text-16`}>로그인</button>
     </form>
   );

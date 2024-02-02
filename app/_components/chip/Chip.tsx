@@ -2,11 +2,11 @@ type ColorEvent = keyof typeof COLOR_EVENT;
 type ColorGoods = keyof typeof COLOR_GOODS;
 type Label<T> = T extends "event" ? ColorEvent : ColorGoods;
 type Kind = "event" | "goods";
-type Theme = "light" | "dark";
+type Theme<T> = T extends "event" ? "light" : "light" | "dark";
 interface Props<T> {
   label: Label<T>;
   kind: T;
-  theme?: Theme;
+  theme?: Theme<T>;
 }
 
 const Chip = <T extends Kind>({ label, kind, theme = "light" }: Props<T>) => {
@@ -22,7 +22,7 @@ const Chip = <T extends Kind>({ label, kind, theme = "light" }: Props<T>) => {
 
   return (
     <div className={`w-max rounded-lg px-8 py-4 ${colorStyle()}`}>
-      <span className="text-12">{label}</span>
+      <span className="text-12 font-600">{label}</span>
     </div>
   );
 };
@@ -41,7 +41,7 @@ const COLOR_EVENT = {
 };
 const COLOR_GOODS = {
   컵홀더: `bg-sub-pink-bg text-sub-pink`,
-  포스터: `bg-sub-red-bg text-sub-red`,
+  포스터: `bg-sub-scarlet-bg text-sub-scarlet`,
   스티커: `bg-sub-yellow-bg text-sub-yellow`,
   티켓: `bg-sub-green-bg text-sub-green`,
   포토카드: `bg-sub-skyblue-bg text-sub-skyblue`,
