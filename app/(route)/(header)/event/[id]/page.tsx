@@ -6,11 +6,12 @@ import LocationTab from "./_components/tab/LocationTab";
 import ReviewTab from "./_components/tab/ReviewTab";
 
 const EventInfoPage = () => {
+  const eventData = MOCK_EVENTS[0];
   return (
     <>
-      <Banner data={MOCK_EVENTS[0]} />
+      <Banner data={eventData} />
       <Tabs names={["행사정보", "위치", "후기"]}>
-        <DescriptionTab />
+        <DescriptionTab images={eventData.eventImages} description={eventData.description} />
         <LocationTab name="을지로 위워크" address="서울 중구 삼일대로 343" />
         <ReviewTab />
       </Tabs>

@@ -1,13 +1,18 @@
+"use client";
+
 import Image from "next/image";
 
-const DescriptionTab = () => {
+interface Props {
+  images: string[] | undefined;
+  description: string | undefined;
+}
+
+const DescriptionTab = ({ images, description }: Props) => {
   return (
-    <>
-      <div className="relative h-400 w-full">
-        <Image src="https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize" alt={"행사 정보 사진"} fill className="object-cover" />
-      </div>
-      <p>민지 생일 카페입니다.</p>
-    </>
+    <div className="mb-40 flex w-full flex-col gap-16 px-20 py-24 pt-24">
+      {images?.map((image) => <Image src={image} alt={"행사 정보 사진"} width={0} height={0} sizes="100vw" className="w-full" />)}
+      <p className="text-14 font-500">{description}</p>
+    </div>
   );
 };
 
