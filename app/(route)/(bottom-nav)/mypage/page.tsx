@@ -72,6 +72,7 @@ const REVIEWS: MyReviewProps[] = [
 ];
 
 export interface ScheduleDataProps {
+  id: number;
   placeName: string;
   artistName: string;
   eventType: "카페";
@@ -84,17 +85,18 @@ export interface ScheduleDataProps {
 
 const mockScheduleData: ScheduleDataProps[] = [
   {
+    id: 1,
     placeName: "윤정한 카페",
     artistName: "윤정한",
     eventType: "카페",
     address: "마포구",
-    startDate: "2024-01-25T00:00:00",
+    startDate: "2024-01-28T00:00:00",
     endDate: "2024-02-01T00:00:00",
     eventImage: "",
     gifts: ["포토카드"],
   },
-
   {
+    id: 2,
     placeName: "김정우 카페",
     artistName: "김정우",
     eventType: "카페",
@@ -105,6 +107,7 @@ const mockScheduleData: ScheduleDataProps[] = [
     gifts: ["포토카드"],
   },
   {
+    id: 3,
     placeName: "김민지 카페",
     artistName: "김민지",
     eventType: "카페",

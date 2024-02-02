@@ -35,7 +35,7 @@ const HorizontalEventCard = ({ data, hasHeart = false, onHeartClick }: Props) =>
           <span className="mr-8 border-r border-gray-400 pr-8">{formattedDate}</span>
           <span>{data.address}</span>
         </p>
-        <ul className="flex flex-wrap gap-4">{data.gifts?.map((gift) => <Chip kind="goods" label={gift} />)}</ul>
+        <ul className="flex flex-wrap gap-4">{data.gifts?.map((gift, i) => <Chip kind="goods" label={gift} key={i} />)}</ul>
       </div>
     </div>
   );
