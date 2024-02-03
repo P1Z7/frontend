@@ -42,7 +42,7 @@ const Post = () => {
   return (
     <>
       <Header handleClick={handlePrevClick} />
-      <div className="flex h-svh flex-col gap-24 p-20 text-16">
+      <div className="p-20 pb-92 pt-36 text-16">
         <GenericForm formOptions={{ mode: "onBlur", defaultValues: DEFAULT_INPUT_VALUES, shouldFocusError: true }}>
           <Funnel>
             <Step name={POST_STEPS[0]}>

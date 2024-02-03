@@ -11,7 +11,7 @@ const EVENT_TYPE_LIST = ["생일카페", "상영회", "팬싸", "또뭐하ㅏ지
 const StarInput = () => {
   const { getValues, setValue } = useFormContext<PostType>();
   const { bottomSheet, openBottomSheet, closeBottomSheet } = useBottomSheet();
-  const [eventType, setEventType] = useState(getValues("eventType"));
+  const [eventType, setEventType] = useState("");
 
   useEffect(() => {
     setValue("eventType", eventType);
@@ -20,17 +20,19 @@ const StarInput = () => {
   return (
     <>
       <div className="flex-item flex flex-col gap-20">
-        <div>
-          연예인
-          <InputText name="group" placeholder="그룹선택" readOnly onClick={() => openBottomSheet("starGroup")} />
-          <InputText name="member" placeholder="멤버선택" readOnly />
+        <div className="flex flex-col gap-4">
+          아티스트
+          <div className="flex gap-8">
+            <InputText name="group" placeholder="그룹 선택" readOnly onClick={() => openBottomSheet("starGroup")} />
+            <InputText name="member" placeholder="멤버 선택" readOnly />
+          </div>
         </div>
-        <div>
-          <div>행사 유형</div>
-          <Dropdown itemList={EVENT_TYPE_LIST} selected={eventType} setSelected={setEventType} />
-        </div>
+        <InputText name="eventType" readOnly placeholder="행사 유형을 선택하세요.">
+          행사 유형
+        </InputText>
+        {/* <Dropdown itemList={EVENT_TYPE_LIST} selected={eventType} setSelected={setEventType} /> */}
       </div>
-      <InputText name="eventType" hidden />
+
       {bottomSheet === "starGroup" && <StarBottomSheet closeBottomSheet={closeBottomSheet} />}
     </>
   );
