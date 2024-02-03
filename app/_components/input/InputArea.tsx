@@ -28,7 +28,9 @@ const InputArea: Function = ({ children, placeholder, onKeyDown, isEdit, hasLimi
         placeholder={placeholder ?? "입력해주세요."}
         {...field}
         onKeyDown={onKeyDown}
-        className={classNames("h-120 resize-none rounded-sm bg-gray-50 px-16 py-12", { "border border-blue-500 outline-none": isEdit })}
+        className={classNames("h-120 resize-none rounded-sm bg-gray-50 px-16 py-12 text-16 placeholder:text-gray-400 focus:outline focus:outline-1 focus:outline-blue", {
+          "outline outline-1 outline-blue": isEdit,
+        })}
       />
       {hasLimit && <div className={classNames("text-12 text-[#A2A5AA]", { "text-red-600": field.value.length > 100 })}>{field.value.length} / 100</div>}
     </div>
