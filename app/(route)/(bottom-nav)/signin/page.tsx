@@ -1,6 +1,6 @@
 "use client";
 
-import { getSession, signIn, signOut, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { SubmitHandler, useForm } from "react-hook-form";
 import InputText from "@/components/input/InputText";
@@ -44,6 +44,7 @@ const SignInPage = () => {
         <InputText
           name="password"
           type="password"
+          placeholder="8자 이상 입력해주세요."
           control={control}
           rules={{ required: ERROR_MESSAGES.password.passwordField, pattern: { value: REG_EXP.CHECK_PASSWORD, message: ERROR_MESSAGES.password.passwordPattern } }}
           onKeyDown={handleEnterNext}
@@ -58,13 +59,15 @@ const SignInPage = () => {
           <p>Google 계정으로 로그인</p>
         </button>
         <div className="flex flex-col gap-8 text-16">
-          <p>구글 로그인 확인</p>
-          <p>이메일: {session.data?.user?.email}</p>
+          <p>로그인 확인</p>
+          <p>이메일: {session.data?.user.email}</p>
           <p>이름: {session.data?.user.name}</p>
           <div className="flex">
             프로필이미지:
-            <Image src={session.data?.user?.image || ""} width={50} height={50} alt="" className="rounded-full" />
+            <Image src={session.data?.user.image || ""} width={50} height={50} alt="" className="rounded-full" />
           </div>
+          <p>액세스토큰: {session.data?.accessToken}</p>
+          <p>리프레쉬토큰: {session.data?.refreshToken}</p>
         </div>
         <button onClick={() => signOut()} className="bg-gray-50 p-16 text-16">
           로그아웃
