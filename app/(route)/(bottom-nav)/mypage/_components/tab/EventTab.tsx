@@ -1,26 +1,19 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
+import ChipButton from "@/components/chip/ChipButton";
 import { MYPAGE_CALENDAR_STYLE } from "@/constants/calendarStyle";
 import NextIcon from "@/public/icon/arrow-left_lg.svg";
 import PrevIcon from "@/public/icon/arrow-right_lg.svg";
 import { ScheduleDataProps } from "../../page";
 
 const EventTab = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) => {
-  const [date, setDate] = useState<Date | null>(null);
+  const [data, setData] = useState(scheduleData);
   const [calendarStyle, setCalendarStyle] = useState("");
 
-  const handleClickToday = (selectedDate: any) => {
-    if (date?.getTime() === selectedDate.getTime()) {
-      setDate(null);
-      return;
-    }
-    setDate(selectedDate);
-  };
-
   const tileContent = ({ date }: { date: Date }) => {
-    const eventsForDate = scheduleData.filter((event) => new Date(event.startDate).getTime() <= date.getTime() && new Date(event.endDate).getTime() >= date.getTime());
+    const eventsForDate = data.filter((event) => new Date(event.startDate).getTime() <= date.getTime() && new Date(event.endDate).getTime() >= date.getTime());
 
     if (eventsForDate.length > 0) {
       const sortedEvents = eventsForDate.sort((a, b) => {
@@ -50,7 +43,6 @@ const EventTab = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) => {
             } else {
               type = SHAPE_TYPE.middleDay;
             }
-
             return <span key={event.id} className={`h-4 rounded-sm ${type} ${COLOR_TYPE[(event.id + 1) % 6]}`} />;
           })}
         </div>
@@ -60,13 +52,60 @@ const EventTab = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) => {
     return null;
   };
 
-  const handleClick = () => {
-    console.log("내 행사 데이터 다시 받아오기");
-  };
-
   useEffect(() => {
     setCalendarStyle(MYPAGE_CALENDAR_STYLE);
   }, []);
+
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
+  const handleClickToday = (date: any) => {
+    if (selectedDate?.getTime() === date.getTime()) {
+      setSelectedDate(null);
+      return;
+    }
+    setSelectedDate(date);
+  };
+
+  const handleHeartClick = () => {
+    console.log("내 행사 데이터 다시 받아오기");
+  };
+
+  const [currentLabel, setCurrentLabel] = useState("");
+
+  const handleChipClick = (label: "예정" | "진행중" | "종료") => {
+    const today = new Date();
+
+    switch (label) {
+      case currentLabel:
+        setData(scheduleData);
+        setCurrentLabel("");
+        break;
+      case "예정":
+        setData(
+          scheduleData.filter((event) => {
+            return new Date(event.startDate) > today;
+          }),
+        );
+        setCurrentLabel(label);
+        break;
+      case "종료":
+        setData(
+          scheduleData.filter((event) => {
+            return new Date(event.endDate) < today;
+          }),
+        );
+        setCurrentLabel(label);
+        break;
+      case "진행중":
+        setData(
+          scheduleData.filter((event) => {
+            return new Date(event.startDate) <= today && new Date(event.endDate) >= today;
+          }),
+        );
+        setCurrentLabel(label);
+        break;
+    }
+  };
 
   return (
     <>
@@ -75,7 +114,7 @@ const EventTab = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) => {
         <Calendar
           locale="ko"
           onChange={handleClickToday}
-          value={date}
+          value={selectedDate}
           tileContent={tileContent}
           nextLabel={<PrevIcon width={16} height={16} viewBox="0 0 24 24" stroke="#A2A5AA" />}
           prevLabel={<NextIcon width={16} height={16} viewBox="0 0 24 24" stroke="#A2A5AA" />}
@@ -88,11 +127,16 @@ const EventTab = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) => {
           }}
         />
         <div>
+          <div className="flex gap-12">
+            <ChipButton label="예정" onClick={() => handleChipClick("예정")} selected={currentLabel === "예정"} />
+            <ChipButton label="진행중" onClick={() => handleChipClick("진행중")} selected={currentLabel === "진행중"} />
+            <ChipButton label="종료" onClick={() => handleChipClick("종료")} selected={currentLabel === "종료"} />
+          </div>
           <ul>
-            {scheduleData
-              .filter((event) => !date || (new Date(event.startDate).getTime() <= date.getTime() && new Date(event.endDate).getTime() >= date.getTime()))
+            {data
+              .filter((event) => !selectedDate || (new Date(event.startDate).getTime() <= selectedDate.getTime() && new Date(event.endDate).getTime() >= selectedDate.getTime()))
               .map((event) => (
-                <HorizontalEventCard key={event.id} data={event} hasHeart onHeartClick={handleClick} />
+                <HorizontalEventCard key={event.id} data={event} hasHeart onHeartClick={handleHeartClick} />
               ))}
           </ul>
         </div>
