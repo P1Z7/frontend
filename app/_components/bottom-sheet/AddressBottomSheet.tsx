@@ -1,13 +1,10 @@
 import { PostType } from "@/(route)/post/page";
 import DaumPostcodeEmbed from "react-daum-postcode";
 import { useFormContext } from "react-hook-form";
+import { BottomSheetBaseType } from "@/types/index";
 import BottomSheet from "./BottomSheetMaterial";
 
-interface Props {
-  closeBottomSheet: () => void;
-}
-
-const AddressBottomSheet = ({ closeBottomSheet }: Props) => {
+const AddressBottomSheet = ({ closeBottomSheet }: BottomSheetBaseType) => {
   const { setValue } = useFormContext<PostType>();
 
   return (

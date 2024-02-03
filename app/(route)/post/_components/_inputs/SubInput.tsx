@@ -69,9 +69,6 @@ const SubInput = () => {
               <li>
                 <ChipButton key={gift} label={gift} onClick={() => handleGiftClick(gift)} selected={giftList.includes(gift)} />
               </li>
-              // <GiftTag key={gift} handleClick={handleGiftClick} initialChecked={giftList.includes(gift)}>
-              //   {gift}
-              // </GiftTag>
             ))}
           </ul>
         </div>
