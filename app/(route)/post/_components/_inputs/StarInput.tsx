@@ -20,9 +20,9 @@ const StarInput = () => {
   return (
     <>
       <div className="flex-item flex flex-col gap-20">
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col">
           아티스트
-          <div className="flex gap-8">
+          <div className="grid grid-cols-2 gap-8">
             <InputText name="group" placeholder="그룹 선택" readOnly onClick={() => openBottomSheet("starGroup")} />
             <InputText name="member" placeholder="멤버 선택" readOnly />
           </div>

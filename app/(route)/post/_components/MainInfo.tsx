@@ -6,7 +6,7 @@ import ProgressBar from "@/components/ProgressBar";
 import BottomButton from "@/components/button/BottomButton";
 import { PostType } from "../page";
 import FunnelTitle from "./FunnelTitle";
-import PostFooter from "./PostFooter";
+import PostFrame from "./PostFrame";
 import MainInput from "./_inputs/MainInput";
 
 interface Props {
@@ -23,15 +23,16 @@ const MainInfo = ({ onNextStep }: Props) => {
   const isDisabled = !title || !address || !startDate || !endDate || !isValid;
 
   return (
-    <div className="flex flex-col gap-24">
-      <ProgressBar ratio="1/2" />
-      <FunnelTitle step="행사 정보" isRequired />
+    <PostFrame>
+      <div className="flex flex-col gap-28">
+        <ProgressBar ratio="1/2" />
+        <FunnelTitle step="행사 정보" isRequired />
+      </div>
       <MainInput />
-      {/* <PostFooter onNextStep={onNextStep} isDisabled={isDisabled} /> */}
       <BottomButton onClick={onNextStep} isDisabled={isDisabled}>
         다음으로
       </BottomButton>
-    </div>
+    </PostFrame>
   );
 };
 
