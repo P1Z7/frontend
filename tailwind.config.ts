@@ -96,6 +96,10 @@ const config: Config = {
       animation: {
         slideUp: "slideUp 0.1s ease-in-out",
       },
+      boxShadow: {
+        top: "0px -4px 16px 0px rgba(0, 0, 0, 0.04)",
+        hero: "0px 4px 12px 0px rgba(0, 0, 0, 0.04)",
+      },
     },
   },
   plugins: [require("tailwind-scrollbar-hide")],

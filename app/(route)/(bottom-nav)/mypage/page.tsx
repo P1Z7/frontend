@@ -70,47 +70,44 @@ const REVIEWS: MyReviewProps[] = [
 export interface ScheduleDataProps {
   id: number;
   placeName: string;
-  artistName: string;
+  artists: string[];
   eventType: "카페";
   address: string;
   startDate: string;
   endDate: string;
-  eventImage: string;
-  gifts: ["포토카드"];
+  eventImages?: string[];
+  tags: ["포토카드"];
 }
 
 const mockScheduleData: ScheduleDataProps[] = [
   {
     id: 1,
     placeName: "윤정한 카페",
-    artistName: "윤정한",
+    artists: ["윤정한"],
     eventType: "카페",
-    address: "마포구",
+    address: "서울특별시 마포구 와우산로 00-00 1층",
     startDate: "2024-01-28T00:00:00+09:00",
     endDate: "2024-02-01T00:00:00+09:00",
-    eventImage: "",
-    gifts: ["포토카드"],
+    tags: ["포토카드"],
   },
   {
     id: 2,
     placeName: "김정우 카페",
-    artistName: "김정우",
+    artists: ["김정우"],
     eventType: "카페",
-    address: "마포구",
+    address: "서울특별시 강남구 와우산로 00-00 1층",
     startDate: "2024-01-26T00:00:00+09:00",
     endDate: "2024-01-26T00:00:00+09:00",
-    eventImage: "",
-    gifts: ["포토카드"],
+    tags: ["포토카드"],
   },
   {
     id: 3,
     placeName: "김민지 카페",
-    artistName: "김민지",
+    artists: ["김민지"],
     eventType: "카페",
-    address: "마포구",
+    address: "서울특별시 강남구 와우산로 00-00 1층",
     startDate: "2024-01-26T00:00:00+09:00",
     endDate: "2024-01-28T00:00:00+09:00",
-    eventImage: "",
-    gifts: ["포토카드"],
+    tags: ["포토카드"],
   },
 ];

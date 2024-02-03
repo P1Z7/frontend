@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes, ReactNode } from "react";
 import { BIG_REGIONS, SMALL_REGIONS } from "@/constants/regions";
-import BottomSheetFrame from "./BottomSheetFrame";
+import BottomSheet from "./BottomSheetMaterial";
 
 interface Props {
   closeBottomSheet: () => void;
@@ -10,8 +10,8 @@ interface Props {
 
 const SmallRegionBottomSheet = ({ closeBottomSheet, bigRegion, setSmallRegionFilter }: Props) => {
   return (
-    <BottomSheetFrame closeBottomSheet={closeBottomSheet}>
-      <h1 className="px-20 text-start text-14">시/군/구 선택</h1>
+    <BottomSheet.Frame closeBottomSheet={closeBottomSheet}>
+      <BottomSheet.Title>시/군/구 선택</BottomSheet.Title>
       <section className="grid grid-cols-2 gap-24 p-24">
         <RegionButton
           onClick={() => {
@@ -33,7 +33,7 @@ const SmallRegionBottomSheet = ({ closeBottomSheet, bigRegion, setSmallRegionFil
           </RegionButton>
         ))}
       </section>
-    </BottomSheetFrame>
+    </BottomSheet.Frame>
   );
 };
 
@@ -45,7 +45,7 @@ interface RegionButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const RegionButton = ({ children, onClick }: RegionButtonProps) => {
   return (
-    <button onClick={onClick} className="text-start text-16">
+    <button onClick={onClick} className="text-start text-14">
       {children}
     </button>
   );

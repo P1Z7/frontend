@@ -8,30 +8,8 @@ import GiftBottomSheet from "@/components/bottom-sheet/GiftsBottomSheet";
 import SmallRegionBottomSheet from "@/components/bottom-sheet/SmallRegionBottomSheet";
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
+import { MOCK_EVENTS } from "@/constants/mock";
 import { BIG_REGIONS } from "@/constants/regions";
-
-const MOCK_EVENTS = [
-  {
-    placeName: "스타벅스",
-    eventType: "카페",
-    artistName: "민지",
-    startDate: "2024-01-29",
-    endDate: "2024-01-30",
-    address: "중구",
-    gifts: ["포토카드", "엽서"],
-    eventImage: "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
-  },
-  {
-    placeName: "투썸플레이스",
-    eventType: "팬광고",
-    artistName: "하니",
-    startDate: "2024-01-29",
-    endDate: "2024-01-30",
-    address: "강남구",
-    gifts: ["컵홀더", "포스터", "스티커", "티켓", "포토카드", "엽서", "굿즈", "기타"],
-    eventImage: "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
-  },
-];
 
 interface FilterType {
   bigRegion: (typeof BIG_REGIONS)[number] | "";

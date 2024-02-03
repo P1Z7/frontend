@@ -1,17 +1,16 @@
 import Image from "next/image";
-import { EventCardType } from "@/types/index";
+import { formatAddress, formatDate } from "@/utils/formatString";
+import { EventInfoType } from "@/types/index";
 import HeartButton from "../button/HeartButton";
-import Chip from "./Chip";
+import Chip from "../chip/Chip";
 
 interface Props {
-  data: EventCardType;
+  data: EventInfoType;
 }
 
 const VerticalEventCard = ({ data }: Props) => {
-  const startDate = data.startDate.split("-");
-  const endDate = data.endDate.split("-");
-
-  const formattedDate = `${startDate[1]}.${startDate[2]} ~ ${endDate[1]}.${endDate[2]}`;
+  const formattedDate = formatDate(data.startDate, data.endDate);
+  const formattedAddress = formatAddress(data.address);
 
   return (
     <div className="border-black flex w-148 flex-col gap-12">
@@ -20,7 +19,7 @@ const VerticalEventCard = ({ data }: Props) => {
           <HeartButton />
         </div>
         <Image
-          src={data.eventImage}
+          src={data.eventImages?.[0] || ""}
           fill
           style={{
             objectFit: "cover",
@@ -33,12 +32,11 @@ const VerticalEventCard = ({ data }: Props) => {
         <p className="truncate text-16 font-600 text-gray-900">{data.placeName}</p>
         <div className="flex gap-8 text-12 font-600 text-gray-400">
           <p className="border-r border-gray-400 pr-8">{formattedDate}</p>
-          <p>{data.address}</p>
+          <p>{formattedAddress}</p>
         </div>
         <div className="flex gap-8">
-          <p className="text-16 font-600 text-gray-900">{data.artistName}</p>
-          {/* 공통 컴포넌트로 수정 예정 */}
-          <Chip chipName={data.eventType} />
+          <p className="text-16 font-600 text-gray-900">{data.artists[0]}</p>
+          <Chip label={data.eventType} kind="event" />
         </div>
       </div>
     </div>
