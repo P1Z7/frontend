@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Api } from "@/api/api";
 import { Req_Post_Type } from "@/types/reqType";
-import ArtistProfile from "../artist-list/ArtistProfile";
 import SearchInput from "../input/SearchInput";
 import BottomSheet from "./BottomSheetMaterial";
 

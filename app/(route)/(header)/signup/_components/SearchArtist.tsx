@@ -1,10 +1,11 @@
-import { ArtistType, MOCK } from "app/_constants/mock";
+import { MOCK } from "app/_constants/mock";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import ArtistCard from "@/components/ArtistCard";
 import InputText from "@/components/input/InputText";
 import ReqNewArtistModal from "@/components/modal/ReqNewArtistModal";
 import { useModal } from "@/hooks/useModal";
+import { ArtistType } from "@/types/index";
 
 interface Props {
   data: ArtistType[];
