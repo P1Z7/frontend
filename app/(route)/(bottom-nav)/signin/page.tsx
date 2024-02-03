@@ -1,6 +1,6 @@
 "use client";
 
-import { signIn, signOut, useSession } from "next-auth/react";
+import { getSession, signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { SubmitHandler, useForm } from "react-hook-form";
 import InputText from "@/components/input/InputText";
@@ -23,10 +23,10 @@ const SignInPage = () => {
   console.log(session);
   const { formSection, handleEnterNext } = useEnterNext();
 
-  const { formState, control, handleSubmit } = useForm(SIGNIN_DEFAULT);
+  const { control, handleSubmit } = useForm(SIGNIN_DEFAULT);
 
   const handleSignin: SubmitHandler<DefaultValues> = async ({ email, password }) => {
-    console.log(email, password);
+    signIn("credentials", { email, password });
   };
 
   return (
@@ -60,7 +60,7 @@ const SignInPage = () => {
         <div className="flex flex-col gap-8 text-16">
           <p>구글 로그인 확인</p>
           <p>이메일: {session.data?.user?.email}</p>
-          <p>이름: {session.data?.user?.name}</p>
+          <p>이름: {session.data?.user.name}</p>
           <div className="flex">
             프로필이미지:
             <Image src={session.data?.user?.image || ""} width={50} height={50} alt="" className="rounded-full" />
