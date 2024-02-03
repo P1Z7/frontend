@@ -1,6 +1,5 @@
 "use client";
 
-import "@/styles/customCarousel.css";
 import { ReactNode } from "react";
 import Slider, { Settings } from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
