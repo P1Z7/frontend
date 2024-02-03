@@ -1,4 +1,4 @@
-import BottomSheetFrame from "./BottomSheetFrame";
+import BottomSheet from "./BottomSheetMaterial";
 
 interface Props {
   closeBottomSheet: () => void;
@@ -7,9 +7,11 @@ interface Props {
 
 const GiftsBottomSheet = ({ closeBottomSheet, setGiftsFilter }: Props) => {
   return (
-    <BottomSheetFrame closeBottomSheet={closeBottomSheet}>
+    <BottomSheet.Frame closeBottomSheet={closeBottomSheet}>
+      <BottomSheet.Title>특전 선택</BottomSheet.Title>
       <button onClick={() => setGiftsFilter("포토카드")}>포토카드</button>
-    </BottomSheetFrame>
+      <BottomSheet.Button onClick={closeBottomSheet} />
+    </BottomSheet.Frame>
   );
 };
 
