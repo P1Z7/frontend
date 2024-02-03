@@ -30,7 +30,7 @@ const SignInPage = () => {
   };
 
   return (
-    <>
+    <div className="flex flex-col p-12">
       <form ref={formSection} onSubmit={handleSubmit(handleSignin)} className="flex flex-col gap-24 py-60">
         <InputText
           name="email"
@@ -54,7 +54,7 @@ const SignInPage = () => {
         <button className={`"bg-black text-white flex-grow rounded-sm px-16 py-12 text-16`}>로그인</button>
       </form>
       <div>
-        <button onClick={(e) => (e.preventDefault(), signIn("google"))} className="flex-center w-dvw gap-8 bg-gray-50 py-16 text-16">
+        <button onClick={(e) => (e.preventDefault(), signIn("google"))} className="flex-center w-full gap-8 rounded-sm bg-gray-50 py-16 text-16 font-500">
           <GoogleLogo />
           <p>Google 계정으로 로그인</p>
         </button>
@@ -73,7 +73,7 @@ const SignInPage = () => {
           로그아웃
         </button>
       </div>
-    </>
+    </div>
   );
 };
 export default SignInPage;

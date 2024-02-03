@@ -82,9 +82,9 @@ const handler = NextAuth({
     },
     // signIn 함수는 무조건 boolean | string "/error/auth"
     async jwt({ token, account, user }) {
-      if (account || user) {
-        token.accessToken = (account || user).local_accessToken;
-        token.refreshToken = (account || user).local_refreshToken;
+      if (user || account) {
+        token.accessToken = (user || account).local_accessToken;
+        token.refreshToken = (user || account).local_refreshToken;
       }
       return token;
       // token을 리턴해서 token을 저장하는 함수
