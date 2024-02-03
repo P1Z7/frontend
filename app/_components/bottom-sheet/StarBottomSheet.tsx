@@ -65,7 +65,7 @@ const StarBottomSheet = ({ closeBottomSheet }: BottomSheetBaseType) => {
   //   refetchMember();
   // }, [groupId]);
 
-  console.log(groupData);
+  // console.log(groupData);
 
   return (
     <BottomSheet.Frame closeBottomSheet={closeBottomSheet}>
@@ -82,7 +82,7 @@ const StarBottomSheet = ({ closeBottomSheet }: BottomSheetBaseType) => {
         ) : (
           <>
             <SearchInput setKeyword={setKeyword} />
-            <div className="grid h-[34rem] grid-cols-3 overflow-y-scroll">
+            <div className="scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-gray-100 grid h-[34rem] grid-cols-3 overflow-y-scroll">
               {isLoading && <div>데이터 로딩중 ~~</div>}
               {isSuccess &&
                 groupData.groupAndSoloList.map(({ id, image, name, type }: any) => (
