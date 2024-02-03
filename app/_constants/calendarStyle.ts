@@ -87,6 +87,10 @@ export const MYPAGE_CALENDAR_STYLE = `
   font-weight: 500;
 }
 
+.react-calendar__month-view__days__day--weekend {
+  color: #F63D3D
+}
+
 .react-calendar__month-view__days__day:not(.react-calendar__month-view__days__day--weekend):not(.react-calendar__month-view__days__day--neighboringMonth)
   + .react-calendar__month-view__days__day--weekend {
   color: black

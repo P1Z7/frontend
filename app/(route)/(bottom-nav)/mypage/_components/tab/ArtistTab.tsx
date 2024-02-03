@@ -13,26 +13,27 @@ const ArtistTab = ({ data }: Props) => {
   const router = useRouter();
 
   return (
-    <>
-      <div className="flex items-center justify-between py-20">
-        <p className="text-16 font-700">좋아요한 아티스트</p>
-        <button onClick={() => router.push("/setting/favorite")}>버튼</button>
+    <div className="flex flex-col items-start gap-16 px-20 py-24">
+      <button className="text-14 font-500 text-blue" onClick={() => router.push("/setting/favorite")}>
+        팔로우 아티스트 수정하기
+      </button>
+      <div className="flex w-full flex-col items-center">
+        <div className="grid w-fit grid-cols-3 gap-20">
+          {data.map((cardList) => (
+            <ArtistCard
+              isSmall
+              key={cardList.name}
+              profileImage={cardList.profileImage}
+              onClick={() => {
+                console.log(`${cardList.name}(으)로 검색`);
+              }}
+            >
+              {cardList.name}
+            </ArtistCard>
+          ))}
+        </div>
       </div>
-      <div className="grid w-fit grid-cols-3 gap-8">
-        {data.map((cardList) => (
-          <ArtistCard
-            isSmall
-            key={cardList.name}
-            profileImage={cardList.profileImage}
-            onClick={() => {
-              console.log(`${cardList.name}(으)로 검색`);
-            }}
-          >
-            {cardList.name}
-          </ArtistCard>
-        ))}
-      </div>
-    </>
+    </div>
   );
 };
 

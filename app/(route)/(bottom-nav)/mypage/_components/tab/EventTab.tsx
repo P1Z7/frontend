@@ -5,9 +5,9 @@ import HorizontalEventCard from "@/components/card/HorizontalEventCard";
 import { MYPAGE_CALENDAR_STYLE } from "@/constants/calendarStyle";
 import NextIcon from "@/public/icon/arrow-left_lg.svg";
 import PrevIcon from "@/public/icon/arrow-right_lg.svg";
-import { ScheduleDataProps } from "../page";
+import { ScheduleDataProps } from "../../page";
 
-const EventCalendar = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) => {
+const EventTab = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) => {
   const [date, setDate] = useState<Date | null>(null);
   const [calendarStyle, setCalendarStyle] = useState("");
 
@@ -70,7 +70,7 @@ const EventCalendar = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) 
 
   return (
     <>
-      <div>
+      <div className="flex flex-col gap-16 px-20 py-16">
         <style>{calendarStyle}</style>
         <Calendar
           locale="ko"
@@ -101,7 +101,7 @@ const EventCalendar = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) 
   );
 };
 
-export default EventCalendar;
+export default EventTab;
 
 const COLOR_TYPE: Record<number, string> = {
   1: `bg-sub-pink`,

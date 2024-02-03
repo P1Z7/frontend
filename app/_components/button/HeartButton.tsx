@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import Heart from "@/public/icon/heart.svg";
 

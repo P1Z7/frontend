@@ -1,22 +1,18 @@
 "use client";
 
 import { MOCK } from "app/_constants/mock";
-import Header from "@/components/Header";
 import Tabs from "@/components/Tabs";
-import EventCalendar from "./_components/EventCalendar";
 import UserProfile from "./_components/UserProfile";
 import ArtistTab from "./_components/tab/ArtistTab";
+import EventTab from "./_components/tab/EventTab";
 import MyReviewTab from "./_components/tab/MyReviewTab";
 
 const MyPage = () => {
   return (
-    <div className="flex flex-col gap-24 p-16">
-      <div className="flex items-center gap-8 self-start pb-20">
-        <Header />
-      </div>
+    <div className="flex w-360 flex-col gap-24 pb-72">
       <UserProfile data={MOCK_USER_INFO} />
       <Tabs names={["내 행사", "아티스트", "내 후기"]}>
-        <EventCalendar scheduleData={mockScheduleData} />
+        <EventTab scheduleData={mockScheduleData} />
         <ArtistTab data={MOCK} />
         <MyReviewTab reviewList={REVIEWS} />
       </Tabs>
