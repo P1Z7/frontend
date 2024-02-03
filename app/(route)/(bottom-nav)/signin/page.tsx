@@ -25,10 +25,10 @@ const SignInPage = () => {
   };
 
   return (
-    <form ref={formSection} onSubmit={handleSubmit(handleSignin)} className="flex flex-col gap-24 py-60">
+    <form ref={formSection} onSubmit={handleSubmit(handleSignin)} className="flex flex-col gap-24 px-12 py-60">
       <InputText
         name="email"
-        placeholder="example@illo.com"
+        placeholder="example@opener.com"
         control={control}
         onKeyDown={handleEnterNext}
         rules={{ required: ERROR_MESSAGES.email.emailField, pattern: { value: REG_EXP.CHECK_EMAIL, message: ERROR_MESSAGES.email.emailPattern } }}
@@ -38,13 +38,14 @@ const SignInPage = () => {
       <InputText
         name="password"
         type="password"
+        placeholder="8자 이상 입력해주세요."
         control={control}
-        rules={{ required: ERROR_MESSAGES.password.passwordField, pattern: { value: REG_EXP.CHECK_PASSWORD, message: ERROR_MESSAGES.password.passwordPattern } }}
         onKeyDown={handleEnterNext}
+        rules={{ required: ERROR_MESSAGES.password.passwordField, pattern: { value: REG_EXP.CHECK_PASSWORD, message: ERROR_MESSAGES.password.passwordPattern } }}
       >
         비밀번호
       </InputText>
-      <button className={`"bg-black text-white flex-grow rounded-sm px-16 py-12 text-16`}>로그인</button>
+      <button className={`flex-grow rounded-sm bg-gray-900 px-16 py-12 text-16 text-white-black`}>로그인</button>
     </form>
   );
 };
