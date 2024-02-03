@@ -1,9 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import Header from "@/components/Header";
 import { useFunnel } from "@/hooks/useFunnel";
 import { PostStepNameType } from "@/types/index";
-import GenericForm from "../signup/_components/GenericForm";
+import BackIcon from "@/public/icon/arrow-left_lg.svg";
+import GenericForm from "../(header)/signup/_components/GenericForm";
 import DetailInfo from "./_components/DetailInfo";
 import MainInfo from "./_components/MainInfo";
 import StarInfo from "./_components/StarInfo";
@@ -38,28 +40,27 @@ const Post = () => {
   };
 
   return (
-    <div className="flex h-svh flex-col gap-24 p-20 text-16">
-      <div className="flex gap-8 pb-20 pt-12">
-        <Image src="/icon/left-arrow.svg" alt="뒤로가기 버튼" width={24} height={24} onClick={handlePrevClick} className="cursor-pointer" />
-        <div className="text-20 font-900">등록하기</div>
+    <>
+      <Header handleClick={handlePrevClick} />
+      <div className="flex h-svh flex-col gap-24 p-20 text-16">
+        <GenericForm formOptions={{ mode: "onBlur", defaultValues: DEFAULT_INPUT_VALUES, shouldFocusError: true }}>
+          <Funnel>
+            <Step name={POST_STEPS[0]}>
+              <StarInfo onNextStep={() => setStep(POST_STEPS[1])} />
+            </Step>
+            <Step name={POST_STEPS[1]}>
+              <MainInfo onNextStep={() => setStep(POST_STEPS[2])} />
+            </Step>
+            <Step name={POST_STEPS[2]}>
+              <SubInfo onNextStep={() => setStep(POST_STEPS[3])} />
+            </Step>
+            <Step name={POST_STEPS[3]}>
+              <DetailInfo />
+            </Step>
+          </Funnel>
+        </GenericForm>
       </div>
-      <GenericForm formOptions={{ mode: "onBlur", defaultValues: DEFAULT_INPUT_VALUES, shouldFocusError: true }}>
-        <Funnel>
-          <Step name={POST_STEPS[0]}>
-            <StarInfo onNextStep={() => setStep(POST_STEPS[1])} />
-          </Step>
-          <Step name={POST_STEPS[1]}>
-            <MainInfo onNextStep={() => setStep(POST_STEPS[2])} />
-          </Step>
-          <Step name={POST_STEPS[2]}>
-            <SubInfo onNextStep={() => setStep(POST_STEPS[3])} />
-          </Step>
-          <Step name={POST_STEPS[3]}>
-            <DetailInfo />
-          </Step>
-        </Funnel>
-      </GenericForm>
-    </div>
+    </>
   );
 };
 
