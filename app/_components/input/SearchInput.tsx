@@ -28,17 +28,17 @@ const SearchInput = ({ setKeyword, placeholder = "검색어를 입력하세요."
   return (
     <div className="relative">
       <input
-        className="placeholder:gray-400 h-48 w-full rounded-full bg-gray-50 px-16 py-12 pr-68 text-black-white focus:outline-none"
+        className="placeholder:gray-400 h-48 w-full rounded-full bg-gray-50 px-16 py-12 pr-68 text-16 text-gray-700 focus:outline-none"
         placeholder={placeholder}
         {...register("search")}
         onKeyDown={handleSearchEnter}
       />
-      <button className="absolute right-16 top-12" onClick={() => setKeyword(getValues("search"))}>
+      <button className="absolute right-12 top-12" onClick={() => setKeyword(getValues("search"))}>
         <SearchIcon />
       </button>
       {search && (
-        <button className="absolute right-48 top-12" onClick={handleCloseClick}>
-          <CloseIcon stroke="#A0A5B1" />
+        <button className="absolute right-48 top-16" onClick={handleCloseClick}>
+          <CloseIcon stroke="#A0A5B1" width={16} height={16} />
         </button>
       )}
     </div>
