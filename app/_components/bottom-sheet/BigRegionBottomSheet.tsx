@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, ReactNode } from "react";
+import { ButtonHTMLAttributes, ReactNode, forwardRef } from "react";
 import { BIG_REGIONS } from "@/constants/regions";
 import BottomSheet from "./BottomSheetMaterial";
 
@@ -7,9 +7,9 @@ interface Props {
   setBigRegionFilter: (bigRegion: (typeof BIG_REGIONS)[number] | "") => void;
 }
 
-const BigRegionBottomSheet = ({ closeBottomSheet, setBigRegionFilter }: Props) => {
+const BigRegionBottomSheet = forwardRef<HTMLDivElement, Props>(({ closeBottomSheet, setBigRegionFilter }, ref) => {
   return (
-    <BottomSheet.Frame closeBottomSheet={closeBottomSheet}>
+    <BottomSheet.Frame closeBottomSheet={closeBottomSheet} ref={ref}>
       <BottomSheet.Title>시/도 선택</BottomSheet.Title>
       <section className="grid grid-cols-2 gap-24 p-24">
         <RegionButton
@@ -34,7 +34,8 @@ const BigRegionBottomSheet = ({ closeBottomSheet, setBigRegionFilter }: Props) =
       </section>
     </BottomSheet.Frame>
   );
-};
+});
+BigRegionBottomSheet.displayName = "BigRegionBottomSheet";
 
 export default BigRegionBottomSheet;
 

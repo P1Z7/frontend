@@ -27,7 +27,7 @@ const BOTTOM_SHEET = {
 };
 
 const SearchPage = () => {
-  const { bottomSheet, openBottomSheet, closeBottomSheet } = useBottomSheet();
+  const { bottomSheet, openBottomSheet, closeBottomSheet, sheet } = useBottomSheet();
   const [filter, setFilter] = useState<FilterType>({
     bigRegion: "",
     smallRegion: "전지역",
@@ -89,7 +89,7 @@ const SearchPage = () => {
           ))}
         </section>
       </main>
-      {bottomSheet === BOTTOM_SHEET.bigRegion && <BigRegionBottomSheet closeBottomSheet={closeBottomSheet} setBigRegionFilter={setBigRegionFilter} />}
+      {bottomSheet === BOTTOM_SHEET.bigRegion && <BigRegionBottomSheet closeBottomSheet={closeBottomSheet} setBigRegionFilter={setBigRegionFilter} ref={sheet} />}
       {bottomSheet === BOTTOM_SHEET.smallRegion && (
         <SmallRegionBottomSheet closeBottomSheet={closeBottomSheet} bigRegion={filter.bigRegion as (typeof BIG_REGIONS)[number]} setSmallRegionFilter={setSmallRegionFilter} />
       )}
