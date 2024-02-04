@@ -1,44 +1,33 @@
 "use client";
 
-import { PostType } from "@/(route)/post/page";
 import "@/styles/customCalendar.css";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import { useEffect, useState } from "react";
 import { DateRange, DayPicker } from "react-day-picker";
-import { useFormContext } from "react-hook-form";
 import { CALENDAR_STYLE } from "@/constants/calendarStyle";
 import BottomSheet from "./BottomSheetMaterial";
 
 interface Props {
   closeBottomSheet: () => void;
-  setStartDateFilter?: (data: string) => void;
-  setEndDateFilter?: (date: string) => void;
+  setStartDateFilter: (data: string) => void;
+  setEndDateFilter: (date: string) => void;
+  isFormatting?: boolean;
 }
 
 // TODO: 값 설정을 버튼이 눌렸을 때로 수정 필요
 
-const CalenderBottomSheet = ({ closeBottomSheet, setStartDateFilter, setEndDateFilter }: Props) => {
-  const { setValue } = useFormContext<PostType>();
+const CalenderBottomSheet = ({ closeBottomSheet, setStartDateFilter, setEndDateFilter, isFormatting = false }: Props) => {
   const [range, setRange] = useState<DateRange | undefined>();
+  const formatStyle = isFormatting ? "yyyy.MM.dd" : "PPP EE";
 
   useEffect(() => {
     if (range?.from) {
       if (!range.to) {
-        if (setStartDateFilter) {
-          setStartDateFilter(format(range.from, "PPP EE", { locale: ko }));
-        }
-        setValue("startDate", format(range.from, "yyyy-MM-dd"));
+        setStartDateFilter(format(range.from, formatStyle, { locale: ko }));
       } else if (range.to) {
-        if (setStartDateFilter) {
-          setStartDateFilter(format(range.from, "PPP EE", { locale: ko }));
-        }
-        if (setEndDateFilter) {
-          setEndDateFilter(format(range.to, "PPP EE", { locale: ko }));
-        }
-        setValue("startDate", format(range.from, "yyyy-MM-dd"));
-        setValue("endDate", format(range.to, "yyyy-MM-dd"));
-        // closeBottomSheet();
+        setStartDateFilter(format(range.from, formatStyle, { locale: ko }));
+        setEndDateFilter(format(range.to, formatStyle, { locale: ko }));
       }
     }
   }, [range]);

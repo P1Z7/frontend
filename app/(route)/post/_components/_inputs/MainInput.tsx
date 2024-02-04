@@ -2,7 +2,6 @@ import { useFormContext } from "react-hook-form";
 import AddressBottomSheet from "@/components/bottom-sheet/AddressBottomSheet";
 import CalenderBottomSheet from "@/components/bottom-sheet/CalendarBottomSheet";
 import InputText from "@/components/input/InputText";
-import AddressModal from "@/components/modal/AddressModal";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
 import { useModal } from "@/hooks/useModal";
 import { validateEdit } from "@/utils/editValidate";
@@ -42,7 +41,14 @@ const MainInput = () => {
         </div>
       </div>
       {bottomSheet === "address" && <AddressBottomSheet closeBottomSheet={closeBottomSheet} />}
-      {bottomSheet === "date" && <CalenderBottomSheet closeBottomSheet={closeBottomSheet} />}
+      {bottomSheet === "date" && (
+        <CalenderBottomSheet
+          closeBottomSheet={closeBottomSheet}
+          setEndDateFilter={(date: string) => setValue("endDate", date)}
+          setStartDateFilter={(date: string) => setValue("startDate", date)}
+          isFormatting
+        />
+      )}
     </>
   );
 };
