@@ -19,8 +19,8 @@ const InputArea: Function = ({ children, placeholder, onKeyDown, isEdit, hasLimi
   const { field } = useController(control);
 
   return (
-    <div className="flex flex-col ">
-      <label htmlFor={field.name} className="text-14">
+    <div className="flex flex-col">
+      <label htmlFor={field.name} className="pb-8 text-16 text-gray-900">
         {children}
       </label>
       <textarea
@@ -32,7 +32,7 @@ const InputArea: Function = ({ children, placeholder, onKeyDown, isEdit, hasLimi
           "outline outline-1 outline-blue": isEdit,
         })}
       />
-      {hasLimit && <div className={classNames("text-12 text-[#A2A5AA]", { "text-red-600": field.value.length > 100 })}>{field.value.length} / 100</div>}
+      {hasLimit && <div className={classNames("pt-4 text-12 font-500 text-gray-500", { "text-red": field.value.length > 100 })}>{field.value.length} / 100</div>}
     </div>
   );
 };

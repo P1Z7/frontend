@@ -19,7 +19,7 @@ const BottomSheetFrame = ({ children, closeBottomSheet }: BottomSheetFrameProps)
           className="relative flex max-h-[55.6rem] w-full animate-slideUp flex-col overflow-y-auto rounded-t-md bg-white-black pt-16"
         >
           <button onClick={closeBottomSheet} className="absolute right-20 top-16">
-            <CloseIcon stroke="#C1C5CC" />
+            <CloseIcon stroke="#C1C5CC" width="24" height="24" />
           </button>
           {children}
         </div>
