@@ -47,8 +47,8 @@ export default Button;
 const BUTTON_DISABLED = "disabled:text-white-white disabled:bg-gray-200 disabled:border-gray-200";
 
 const BUTTON_TYPE = {
-  filled: `bg-main-purple-500 text-white-white border-main-purple-500 disabled:bg-gray-200 disabled:border-gray-200 ${BUTTON_DISABLED}`,
-  lined: `bg-main-purple-50 text-main-purple-700 border-main-purple-300 ${BUTTON_DISABLED}`,
+  filled: `bg-main-pink-500 text-white-white border-main-pink-500 disabled:bg-gray-200 disabled:border-gray-200 ${BUTTON_DISABLED}`,
+  lined: `bg-main-pink-50 text-main-pink-white border-main-pink-300 ${BUTTON_DISABLED}`,
   linedGray: `bg-gray-50 text-gray-700 border-gray-400 disabled:bg-gray-200 disabled:border-gray-200 ${BUTTON_DISABLED}`,
 };
 

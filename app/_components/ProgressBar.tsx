@@ -10,10 +10,10 @@ interface Props {
 }
 
 const ProgressBar = ({ ratio }: Props) => {
-  const style = STYLE[ratio] + " h-4 rounded-full bg-main-purple-500";
+  const style = STYLE[ratio] + " h-4 rounded-full bg-main-pink-500";
 
   return (
-    <div className="bg-main-purple-50 h-4 w-full rounded-full">
+    <div className="bg-main-pink-50 h-4 w-full rounded-full">
       <div className={style} />
     </div>
   );

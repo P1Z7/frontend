@@ -47,7 +47,7 @@ const SubInput = () => {
             {SNS_TYPE_LIST.map((type) => (
               <label key={type} className="flex cursor-pointer items-center gap-4">
                 <input
-                  className="h-16 w-16 cursor-pointer appearance-none rounded-full border-2 border-gray-200 checked:border-[0.5rem] checked:border-main-purple-500 hover:bg-main-purple-50"
+                  className="checked:border-main-pink-500 hover:bg-main-pink-50 h-16 w-16 cursor-pointer appearance-none rounded-full border-2 border-gray-200 checked:border-[0.5rem]"
                   name="sns"
                   value={type}
                   type="radio"
