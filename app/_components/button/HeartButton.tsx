@@ -14,7 +14,7 @@ const HeartButton = ({ isSmall = false, isSelected = false, onClick, ...props }:
 
   const handleClick = () => {
     setSelected((prev) => !prev);
-    onClick && onClick();
+    onClick?.();
   };
 
   return (

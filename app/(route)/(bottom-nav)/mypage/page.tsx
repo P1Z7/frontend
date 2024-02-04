@@ -1,7 +1,6 @@
 "use client";
 
 import { MOCK, MOCK_REVIEWS } from "app/_constants/mock";
-import Header from "@/components/Header";
 import Tabs from "@/components/Tabs";
 import UserProfile from "./_components/UserProfile";
 import ArtistTab from "./_components/tab/ArtistTab";
@@ -10,9 +9,9 @@ import MyReviewTab from "./_components/tab/MyReviewTab";
 
 const MyPage = () => {
   return (
-    <div className="flex w-360 flex-col gap-24 pb-72">
+    <div className="flex w-full flex-col gap-24 pb-72">
       <UserProfile data={MOCK_USER_INFO} />
-      <Tabs names={["내 행사", "아티스트", "내 후기"]}>
+      <Tabs names={["행사", "아티스트", "후기"]}>
         <EventTab scheduleData={mockScheduleData} />
         <ArtistTab data={MOCK} />
         <MyReviewTab reviewList={MOCK_REVIEWS} />

@@ -3,6 +3,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
 import ChipButton from "@/components/chip/ChipButton";
+import { sortEvents } from "@/utils/sortEventList";
 import { MYPAGE_CALENDAR_STYLE } from "@/constants/calendarStyle";
 import NextIcon from "@/public/icon/arrow-left_lg.svg";
 import PrevIcon from "@/public/icon/arrow-right_lg.svg";
@@ -16,19 +17,7 @@ const EventTab = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) => {
     const eventsForDate = data.filter((event) => new Date(event.startDate).getTime() <= date.getTime() && new Date(event.endDate).getTime() >= date.getTime());
 
     if (eventsForDate.length > 0) {
-      const sortedEvents = eventsForDate.sort((a, b) => {
-        const startDateA = new Date(a.startDate).getTime();
-        const startDateB = new Date(b.startDate).getTime();
-
-        if (startDateA === startDateB) {
-          const endDateA = new Date(a.endDate).getTime();
-          const endDateB = new Date(b.endDate).getTime();
-
-          return endDateB - endDateA;
-        }
-
-        return startDateA - startDateB;
-      });
+      const sortedEvents: ScheduleDataProps[] = sortEvents(eventsForDate);
 
       return (
         <div>
@@ -111,21 +100,23 @@ const EventTab = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) => {
     <>
       <div className="flex flex-col gap-16 px-20 py-16">
         <style>{calendarStyle}</style>
-        <Calendar
-          locale="ko"
-          onChange={handleClickToday}
-          value={selectedDate}
-          tileContent={tileContent}
-          nextLabel={<PrevIcon width={16} height={16} viewBox="0 0 24 24" stroke="#A2A5AA" />}
-          prevLabel={<NextIcon width={16} height={16} viewBox="0 0 24 24" stroke="#A2A5AA" />}
-          next2Label={null}
-          prev2Label={null}
-          formatDay={(locale, date) => date.getDate().toString()}
-          formatShortWeekday={(locale, date) => {
-            const shortWeekdays = ["S", "M", "T", "W", "T", "F", "S"];
-            return shortWeekdays[date.getDay()];
-          }}
-        />
+        {calendarStyle !== "" && (
+          <Calendar
+            locale="ko"
+            onChange={handleClickToday}
+            value={selectedDate}
+            tileContent={tileContent}
+            nextLabel={<PrevIcon width={16} height={16} viewBox="0 0 24 24" stroke="#A2A5AA" />}
+            prevLabel={<NextIcon width={16} height={16} viewBox="0 0 24 24" stroke="#A2A5AA" />}
+            next2Label={null}
+            prev2Label={null}
+            formatDay={(locale, date) => date.getDate().toString()}
+            formatShortWeekday={(locale, date) => {
+              const shortWeekdays = ["S", "M", "T", "W", "T", "F", "S"];
+              return shortWeekdays[date.getDay()];
+            }}
+          />
+        )}
         <div>
           <div className="flex gap-12">
             <ChipButton label="예정" onClick={() => handleChipClick("예정")} selected={currentLabel === "예정"} />
