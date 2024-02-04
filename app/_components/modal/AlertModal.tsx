@@ -14,7 +14,7 @@ interface AlertModalType extends ModalBaseType {
  */
 const AlertModal = ({ children, hasCancelBtn, closeModal, handleBtnClick }: AlertModalType) => {
   return (
-    <Modal.Frame closeModal={closeModal}>
+    <Modal.Frame closeModal={closeModal} hasNotCloseBtn>
       <Modal.Title>{children}</Modal.Title>
       <Modal.Button hasCancelBtn={hasCancelBtn} handleYesClick={handleBtnClick || closeModal} handleNoClick={closeModal}>
         확인
