@@ -54,10 +54,12 @@ const InputText: Function = ({
 
   return (
     <div className={`${horizontal && "flex gap-28"}`}>
-      <label htmlFor={field.name} className={`text-14 ${horizontal && "mt-20"}`}>
-        {children}
-        <span className="ml-4 text-red">{required && "*"}</span>
-      </label>
+      {children && (
+        <label htmlFor={field.name} className={`text-16 ${horizontal && "mt-20"}`}>
+          {children}
+          <span className="ml-4 text-red">{required && "*"}</span>
+        </label>
+      )}
       <div className={`relative ${horizontal && "flex-1"}`}>
         <input
           id={field.name}
@@ -86,10 +88,12 @@ const InputText: Function = ({
             <Image src="/icon/x_gray.svg" alt="초기화 버튼" width={16} height={16} />
           </button>
         )}
-        <div className="flex gap-8">
-          {maxLength ? <span className={classNames("mt-4 h-8", { "text-red": field.value.length > maxLength })}>{`(${field.value.length}/${maxLength})`}</span> : null}
-          <p className={`font-normal mt-4 h-12 text-12 ${fieldState.error ? "text-red" : "text-gray-400"}`}>{fieldState?.error?.message || hint}</p>
-        </div>
+        {(maxLength || fieldState.error || hint) && (
+          <div className="flex gap-8">
+            {maxLength ? <span className={classNames("mt-4 h-8", { "text-red": field.value.length > maxLength })}>{`(${field.value.length}/${maxLength})`}</span> : null}
+            <p className={`font-normal mt-4 h-12 text-12 ${fieldState.error ? "text-red" : "text-gray-400"}`}>{fieldState?.error?.message || hint}</p>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -3,6 +3,10 @@ import { ReactElement, ReactNode } from "react";
 export interface ModalBaseType {
   closeModal: () => void;
 }
+
+export interface BottomSheetBaseType {
+  closeBottomSheet: () => void;
+}
 export interface MapType {
   name: string;
   address: string;
