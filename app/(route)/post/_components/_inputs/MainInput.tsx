@@ -46,7 +46,6 @@ const MainInput = () => {
           closeBottomSheet={closeBottomSheet}
           setEndDateFilter={(date: string) => setValue("endDate", date)}
           setStartDateFilter={(date: string) => setValue("startDate", date)}
-          isFormatting
         />
       )}
     </>
