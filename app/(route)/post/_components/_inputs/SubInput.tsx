@@ -37,7 +37,7 @@ const SubInput = () => {
   }, [snsType]);
 
   return (
-    <>
+    <div>
       <div className="flex flex-col gap-20">
         <div className="flex flex-col gap-16">
           <InputText name="snsId" placeholder="sns 계정을 입력해주세요." isEdit={validateEdit(defaultValues?.snsId !== snsId)}>
@@ -75,7 +75,7 @@ const SubInput = () => {
       </div>
       <InputText name="gift" hidden />
       <InputText name="snsType" hidden />
-    </>
+    </div>
   );
 };
 
