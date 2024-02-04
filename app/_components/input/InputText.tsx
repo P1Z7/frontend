@@ -72,7 +72,7 @@ const InputText: Function = ({
           onKeyDown={onKeyDown}
           {...field}
           className={classNames(
-            "mt-8 h-48 w-full rounded-sm bg-gray-50 px-16 py-12 pr-36 text-16 text-gray-900 placeholder:text-gray-400 focus:border focus:border-blue",
+            "focus:border-1 mt-8 h-48 w-full rounded-sm bg-gray-50 px-16 py-12 pr-36 text-16 text-gray-900 placeholder:text-gray-400 focus:border focus:border-blue focus:outline-none",
             { "outline outline-1 outline-red": fieldState.error },
             { hidden: hidden ?? false },
             { "border border-blue outline-none": isEdit },
