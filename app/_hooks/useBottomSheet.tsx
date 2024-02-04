@@ -66,7 +66,7 @@ export function useBottomSheet() {
           timer.current = setInterval(closeBottomSheet, 100);
         }
         if (currentY < snap) {
-          node.style.setProperty("transform", `translateY(${0}px)`);
+          node.style.setProperty("transform", "translateY(0px)");
         }
 
         metrics.current.isContentAreaTouched = false;
