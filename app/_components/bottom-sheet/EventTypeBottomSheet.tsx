@@ -21,7 +21,7 @@ const EventTypeBottomSheet = ({ closeBottomSheet }: BottomSheetBaseType) => {
           <li
             key={event}
             onClick={() => handleEventClick(event)}
-            className="cursor-pointer border-b border-gray-50 px-24 py-20 text-16 font-500 text-gray-900 hover:bg-main-purple-50"
+            className="hover:bg-main-pink-50 cursor-pointer border-b border-gray-50 px-24 py-20 text-16 font-500 text-gray-900"
           >
             {event}
           </li>

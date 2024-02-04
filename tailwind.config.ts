@@ -53,12 +53,11 @@ const config: Config = {
         red: { DEFAULT: "rgb(var(--sub-red) / <alpha-value>)", bg: "rgb(var(--sub-red) / 0.12)" },
       },
       main: {
-        purple: {
-          50: "rgb(var(--main-purple-50) / <alpha-value>)",
-          300: "rgb(var(--main-purple-300) / <alpha-value>)",
-          500: "rgb(var(--main-purple-500) / <alpha-value>)",
-          700: "rgb(var(--main-purple-700) / <alpha-value>)",
-          900: "rgb(var(--main-purple-900) / <alpha-value>)",
+        pink: {
+          50: "rgb(var(--main-pink) / 0.12)",
+          300: "rgb(var(--main-pink) / 0.5)",
+          500: "rgb(var(--main-pink) / <alpha-value>)",
+          white: "rgb(var(--main-pink-white) / <alpha-value>)",
         },
       },
       red: "rgb(var(--red) / <alpha-value>)",

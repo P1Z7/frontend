@@ -18,6 +18,7 @@
     "^@/types/(.*)$",
     "^@/constants/(.*)$",
     "^@/public/(.*)$",
+    "^@/styles/(.*)$",
     "^[./]"
   ],
   "importOrderSortSpecifiers": true,
