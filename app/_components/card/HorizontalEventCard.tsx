@@ -17,11 +17,11 @@ const HorizontalEventCard = ({ data, hasHeart = false, onHeartClick }: Props) =>
   const formattedAddress = formatAddress(data.address);
 
   return (
-    <div className="flex w-320 items-center gap-12 border-b border-gray-50 bg-transparent py-12">
+    <div className="flex w-full items-center gap-12 border-b border-gray-50 bg-transparent py-12">
       <div className="relative h-112 w-84 shrink-0">
         <Image src={data.eventImages?.[0] || NoImage} className="rounded-[0.4rem] object-cover" fill alt="행사 포스터" />
       </div>
-      <div className="relative flex w-224 flex-col justify-center gap-4">
+      <div className="relative flex w-full min-w-160 flex-col justify-center gap-4">
         <div className="absolute right-0 top-0">
           <HeartButton isSmall isSelected={hasHeart} onClick={onHeartClick} />
         </div>

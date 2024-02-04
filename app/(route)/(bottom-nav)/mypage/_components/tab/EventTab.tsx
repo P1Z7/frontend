@@ -98,7 +98,7 @@ const EventTab = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) => {
 
   return (
     <>
-      <div className="flex flex-col gap-16 px-20 py-16">
+      <div className="flex flex-col items-center justify-stretch gap-20 px-20 py-16">
         <style>{calendarStyle}</style>
         {calendarStyle !== "" && (
           <Calendar
@@ -117,8 +117,8 @@ const EventTab = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) => {
             }}
           />
         )}
-        <div>
-          <div className="flex gap-12">
+        <div className="w-full">
+          <div className="flex w-full gap-12">
             <ChipButton label="예정" onClick={() => handleChipClick("예정")} selected={currentLabel === "예정"} />
             <ChipButton label="진행중" onClick={() => handleChipClick("진행중")} selected={currentLabel === "진행중"} />
             <ChipButton label="종료" onClick={() => handleChipClick("종료")} selected={currentLabel === "종료"} />

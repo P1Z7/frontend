@@ -33,7 +33,7 @@ export const MYPAGE_CALENDAR_STYLE = `
 }
 
 .react-calendar__navigation {
-  height: 24px
+  height: 24px;
 }
 
 .react-calendar__navigation button {
@@ -42,7 +42,7 @@ export const MYPAGE_CALENDAR_STYLE = `
   padding: 0 24px;
   background: none;
   font-weight: 500;
-  font-size: 16px
+  font-size: 16px;
 }
 
 .react-calendar__navigation button:enabled:hover,
@@ -58,7 +58,7 @@ export const MYPAGE_CALENDAR_STYLE = `
   padding-bottom: 4px;
   abbr { 
     color: #C1C5CC;
-    text-decoration: none
+    text-decoration: none;
   }
 }
 
@@ -88,12 +88,12 @@ export const MYPAGE_CALENDAR_STYLE = `
 }
 
 .react-calendar__month-view__days__day--weekend {
-  color: #F63D3D
+  color: #F63D3D;
 }
 
 .react-calendar__month-view__days__day:not(.react-calendar__month-view__days__day--weekend):not(.react-calendar__month-view__days__day--neighboringMonth)
   + .react-calendar__month-view__days__day--weekend {
-  color: black
+  color: black;
 }
 
 .react-calendar__month-view__days__day--neighboringMonth {
@@ -125,7 +125,7 @@ export const MYPAGE_CALENDAR_STYLE = `
 
 .react-calendar__tile--now {
   abbr {
-    background-color: #F1F2F3
+    background-color: #F1F2F3;
   }
   background: none;
   color: black;
