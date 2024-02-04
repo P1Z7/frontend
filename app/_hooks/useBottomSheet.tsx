@@ -62,7 +62,7 @@ export function useBottomSheet() {
         const currentY = node.getBoundingClientRect().y;
 
         if (currentY > snap) {
-          node.style.setProperty("transform", `translateY(${touchStart.sheetY}px)`);
+          node.style.setProperty("transform", `translateY(${window.innerHeight - touchStart.sheetY}px)`);
           timer.current = setInterval(closeBottomSheet, 100);
         }
         if (currentY < snap) {
@@ -82,7 +82,6 @@ export function useBottomSheet() {
     if (node !== null) {
       const handleTouchStart = () => {
         metrics.current.isContentAreaTouched = true;
-        console.log("CONTENT");
       };
 
       node.addEventListener("touchstart", handleTouchStart);
