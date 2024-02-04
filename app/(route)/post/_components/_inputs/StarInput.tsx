@@ -4,7 +4,7 @@ import InputText from "@/components/input/InputText";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
 
 const StarInput = () => {
-  const { bottomSheet, openBottomSheet, closeBottomSheet } = useBottomSheet();
+  const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
 
   return (
     <>
@@ -20,8 +20,8 @@ const StarInput = () => {
           행사 유형
         </InputText>
       </div>
-      {bottomSheet === "event" && <EventTypeBottomSheet closeBottomSheet={closeBottomSheet} />}
-      {bottomSheet === "starGroup" && <StarBottomSheet closeBottomSheet={closeBottomSheet} />}
+      {bottomSheet === "event" && <EventTypeBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} />}
+      {bottomSheet === "starGroup" && <StarBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} />}
     </>
   );
 };

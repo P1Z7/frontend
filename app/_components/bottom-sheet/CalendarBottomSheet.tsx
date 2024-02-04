@@ -1,24 +1,24 @@
 "use client";
 
 import { PostType } from "@/(route)/post/page";
-import "@/styles/customCalendar.css";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import { useEffect, useState } from "react";
 import { DateRange, DayPicker } from "react-day-picker";
 import { useFormContext } from "react-hook-form";
+import { BottomSheetBaseType } from "@/types/index";
 import { CALENDAR_STYLE } from "@/constants/calendarStyle";
+import "@/styles/customCalendar.css";
 import BottomSheet from "./BottomSheetMaterial";
 
-interface Props {
-  closeBottomSheet: () => void;
+interface Props extends BottomSheetBaseType {
   setStartDateFilter?: (data: string) => void;
   setEndDateFilter?: (date: string) => void;
 }
 
 // TODO: 값 설정을 버튼이 눌렸을 때로 수정 필요
 
-const CalenderBottomSheet = ({ closeBottomSheet, setStartDateFilter, setEndDateFilter }: Props) => {
+const CalenderBottomSheet = ({ closeBottomSheet, refs, setStartDateFilter, setEndDateFilter }: Props) => {
   const { setValue } = useFormContext<PostType>();
   const [range, setRange] = useState<DateRange | undefined>();
 
@@ -46,9 +46,9 @@ const CalenderBottomSheet = ({ closeBottomSheet, setStartDateFilter, setEndDateF
   return (
     <>
       <style>{CALENDAR_STYLE}</style>
-      <BottomSheet.Frame closeBottomSheet={closeBottomSheet}>
+      <BottomSheet.Frame closeBottomSheet={closeBottomSheet} ref={refs.sheet}>
         <BottomSheet.Title>날짜 선택</BottomSheet.Title>
-        <div className="flex w-full justify-center">
+        <div className="flex w-full justify-center" ref={refs.content}>
           <DayPicker
             weekStartsOn={1}
             id="test"

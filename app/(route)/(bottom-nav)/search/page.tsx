@@ -99,9 +99,9 @@ const SearchPage = () => {
         />
       )}
       {bottomSheet === BOTTOM_SHEET.calender && (
-        <CalenderBottomSheet closeBottomSheet={closeBottomSheet} setStartDateFilter={setStartDateFilter} setEndDateFilter={setEndDateFilter} />
+        <CalenderBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} setStartDateFilter={setStartDateFilter} setEndDateFilter={setEndDateFilter} />
       )}
-      {bottomSheet === BOTTOM_SHEET.gift && <GiftBottomSheet closeBottomSheet={closeBottomSheet} setGiftsFilter={setGiftsFilter} />}
+      {bottomSheet === BOTTOM_SHEET.gift && <GiftBottomSheet refs={refs} closeBottomSheet={closeBottomSheet} setGiftsFilter={setGiftsFilter} />}
     </>
   );
 };

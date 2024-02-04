@@ -4,13 +4,13 @@ import { useFormContext } from "react-hook-form";
 import { BottomSheetBaseType } from "@/types/index";
 import BottomSheet from "./BottomSheetMaterial";
 
-const AddressBottomSheet = ({ closeBottomSheet }: BottomSheetBaseType) => {
+const AddressBottomSheet = ({ closeBottomSheet, refs }: BottomSheetBaseType) => {
   const { setValue } = useFormContext<PostType>();
 
   return (
-    <BottomSheet.Frame closeBottomSheet={closeBottomSheet}>
+    <BottomSheet.Frame closeBottomSheet={closeBottomSheet} ref={refs.sheet}>
       <BottomSheet.Title>주소 검색</BottomSheet.Title>
-      <div className="w-full pt-8">
+      <div ref={refs.content} className="w-full pt-8">
         <DaumPostcodeEmbed
           className="!h-[48rem]"
           animation
