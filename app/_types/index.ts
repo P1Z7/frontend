@@ -72,3 +72,9 @@ export interface ReviewType {
   reviewImages?: string[];
   like: number;
 }
+
+export type ArtistType = {
+  name: string;
+  group?: string[];
+  profileImage: string;
+};

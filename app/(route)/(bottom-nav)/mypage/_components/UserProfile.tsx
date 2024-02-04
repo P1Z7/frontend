@@ -14,12 +14,12 @@ const UserProfile = ({ data }: Props) => {
   const { bottomSheet, openBottomSheet, closeBottomSheet } = useBottomSheet();
 
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-8">
+    <div className="flex items-center justify-between px-20 pt-48">
+      <div className="flex items-center gap-12">
         <Image src={data.profileImg ? data.profileImg : "/icon/no-profile.svg"} alt="이미지 추가 버튼" width={56} height={56} className="rounded-full" priority />
-        <div>
-          <p>{data.nickName}</p>
-          <p>{data.email}</p>
+        <div className="flex flex-col gap-4">
+          <p className="text-16 font-600">{data.nickName}</p>
+          <p className="font-12 font-500 text-gray-400">{data.email}</p>
         </div>
       </div>
       <button onClick={() => openBottomSheet("mypage")}>

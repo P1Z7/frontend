@@ -1,10 +1,4 @@
-import { EventInfoType } from "../_types";
-
-export type ArtistType = {
-  name: string;
-  group?: string[];
-  profileImage: string;
-};
+import { ArtistType, EventInfoType } from "../_types";
 
 export const MOCK: ArtistType[] = [
   {
