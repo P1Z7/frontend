@@ -6,6 +6,7 @@ interface BottomSheetMetrics {
     touchY: number;
   };
   snap: number;
+  isContentAreaTouched: boolean;
 }
 
 export function useBottomSheet() {
@@ -31,10 +32,11 @@ export function useBottomSheet() {
       touchY: 0,
     },
     snap: 0,
+    isContentAreaTouched: false,
   });
   const timer = useRef<NodeJS.Timeout>();
 
-  const sheet = useCallback((node: HTMLElement) => {
+  const sheet = useCallback((node: HTMLElement | null) => {
     if (node !== null) {
       const handleTouchStart = (e: TouchEvent) => {
         const { touchStart } = metrics.current;
@@ -45,11 +47,14 @@ export function useBottomSheet() {
       };
 
       const handleTouchMove = (e: TouchEvent) => {
-        const { touchStart } = metrics.current;
+        const { touchStart, isContentAreaTouched } = metrics.current;
         const currentTouch = e.touches[0];
 
-        const touchOffset = currentTouch.clientY - touchStart.touchY;
-        node.style.setProperty("transform", `translateY(${touchOffset > 0 ? touchOffset : 0}px)`);
+        if (!isContentAreaTouched) {
+          e.preventDefault();
+          const touchOffset = currentTouch.clientY - touchStart.touchY;
+          node.style.setProperty("transform", `translateY(${touchOffset > 0 ? touchOffset : 0}px)`);
+        }
       };
 
       const handleTouchEnd = (e: TouchEvent) => {
@@ -60,10 +65,11 @@ export function useBottomSheet() {
           node.style.setProperty("transform", `translateY(${touchStart.sheetY}px)`);
           timer.current = setInterval(closeBottomSheet, 100);
         }
-
         if (currentY < snap) {
           node.style.setProperty("transform", `translateY(${0}px)`);
         }
+
+        metrics.current.isContentAreaTouched = false;
       };
 
       node.addEventListener("touchstart", handleTouchStart);
@@ -71,6 +77,19 @@ export function useBottomSheet() {
       node.addEventListener("touchend", handleTouchEnd);
     }
   }, []);
+
+  const content = useCallback((node: HTMLElement | null) => {
+    if (node !== null) {
+      const handleTouchStart = () => {
+        metrics.current.isContentAreaTouched = true;
+        console.log("CONTENT");
+      };
+
+      node.addEventListener("touchstart", handleTouchStart);
+    }
+  }, []);
+
+  const refs = { sheet, content };
 
   useEffect(() => {
     if (!bottomSheet) return;
@@ -80,5 +99,5 @@ export function useBottomSheet() {
     };
   }, [bottomSheet]);
 
-  return { bottomSheet, openBottomSheet, closeBottomSheet, sheet };
+  return { bottomSheet, openBottomSheet, closeBottomSheet, refs };
 }

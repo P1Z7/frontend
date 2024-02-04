@@ -1,11 +1,16 @@
-import { ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode, RefObject } from "react";
 
 export interface ModalBaseType {
   closeModal: () => void;
 }
 
+type BottomSheetRefs = {
+  sheet: (node: HTMLElement | null) => void;
+  content: (node: HTMLElement | null) => void;
+};
 export interface BottomSheetBaseType {
   closeBottomSheet: () => void;
+  refs: BottomSheetRefs;
 }
 export interface MapType {
   name: string;
