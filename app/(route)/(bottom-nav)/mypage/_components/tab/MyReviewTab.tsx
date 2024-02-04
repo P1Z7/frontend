@@ -1,7 +1,7 @@
 import Review from "@/components/Review";
-import { MyReviewProps } from "../../page";
+import { ReviewType } from "@/types/index";
 
-const MyReviewTab = ({ reviewList }: { reviewList: MyReviewProps[] }) => {
+const MyReviewTab = ({ reviewList }: { reviewList: ReviewType[] }) => {
   return (
     <div className="h-400 w-full">
       <ul className="w-full">
