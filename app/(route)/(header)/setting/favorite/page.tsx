@@ -29,7 +29,7 @@ const FavoritePage = () => {
           btnText="요청하기"
           handleBtnClick={() => openModal("confirm")}
           closeModal={closeModal}
-          {...{ placeholder: "인풋 모달입니다.", rules: { required: "내용을 입력하세요." }, control: control }}
+          {...{ placeholder: "찾으시는 아티스트를 알려주세요.", rules: { required: "내용을 입력하세요." }, control: control }}
         />
       )}
       {modal === "confirm" && <AlertModal closeModal={closeModal}>등록 요청이 제출되었습니다.</AlertModal>}
