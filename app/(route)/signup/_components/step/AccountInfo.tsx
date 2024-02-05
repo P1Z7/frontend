@@ -12,7 +12,7 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
   const isButtonDisabled = !!(formState.errors.email || formState.errors.password || formState.errors.passwordCh) || !(email && password && passwordCh);
 
   return (
-    <>
+    <div className="flex flex-col gap-20 pt-36">
       <InputText
         control={control}
         name="email"
@@ -55,7 +55,7 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
       <BottomButton onClick={handleSubmit(onNext)} isDisabled={isButtonDisabled}>
         다음으로
       </BottomButton>
-    </>
+    </div>
   );
 };
 

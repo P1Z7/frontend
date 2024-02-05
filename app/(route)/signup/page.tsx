@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useFunnel } from "@/hooks/useFunnel";
 import { SignUpFormType, SignupStepNameType } from "@/types/index";
+import ArrowLeft from "@/public/icon/arrow-left_lg.svg";
 import GenericForm from "./_components/GenericForm";
 import ProfileSetup from "./_components/ProfileSetup";
 
@@ -37,7 +37,7 @@ const SignUp = () => {
     <>
       <Header onClick={handlePrevClick} />
       <GenericForm<SignUpFormType> formOptions={{ mode: "onBlur", defaultValues: DEFAULT_VALUES }}>
-        <div className="flex flex-col gap-24 p-12">
+        <div className="flex flex-col px-20">
           <ProfileSetup steps={STEPS} handleNextClick={handleNextClick} Funnel={Funnel} Step={Step} />
         </div>
       </GenericForm>
@@ -49,11 +49,11 @@ export default SignUp;
 
 const Header = ({ onClick }: { onClick: () => void }) => {
   return (
-    <div className="flex gap-8 p-12">
-      <button onClick={onClick}>
-        <Image src="/icon/back-arrow_black.svg" alt="뒤로가기 버튼" width={24} height={24} />
+    <header className="sticky left-0 top-0 z-nav flex h-72 w-full justify-between border-b border-gray-50 bg-white-white px-20 pb-12 pt-36">
+      <button onClick={onClick} className="z-nav">
+        <ArrowLeft />
       </button>
-      <p className="text-16 font-700">회원가입</p>
-    </div>
+      <h1 className="absolute left-0 w-full text-center text-16 font-600 text-gray-900">회원가입</h1>
+    </header>
   );
 };

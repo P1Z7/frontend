@@ -12,7 +12,7 @@ export const ERROR_MESSAGES = {
   },
   nickname: {
     nicknameField: "닉네임을 입력해주세요.",
-    nicknamePattern: "닉네임은 영어 또는 한글을 사용해 10자 이하로 작성해주세요.",
+    nicknamePattern: "2~10자 영문 또는 한글 닉네임을 사용해주세요.",
   },
   password: {
     passwordField: "비밀번호를 입력해주세요.",

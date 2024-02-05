@@ -45,18 +45,18 @@ const SearchArtist = ({ data, onClick, myArtists }: Props) => {
   }, [searchValue]);
 
   return (
-    <>
-      <InputText name="search" autoComplete="입력해주세요." control={control}></InputText>
-      <button className="w-fit text-gray-400 underline" onClick={() => openModal("req_artist")} type="button">
+    <div className="flex flex-col gap-24 pt-8">
+      <button className="w-fit text-14 font-500 text-gray-400 underline" onClick={() => openModal("req_artist")} type="button">
         찾으시는 아티스트가 없으신가요?
       </button>
-      <div className="flex w-full flex-wrap justify-center gap-8 px-8">
+      <InputText name="search" autoComplete="입력해주세요." control={control}></InputText>
+      <div className="flex w-full flex-wrap justify-center gap-x-16 gap-y-20 px-8">
         {searchedData.map((cardList) => (
           <Card data={cardList} onClick={onClick} myArtists={myArtists} key={cardList.name} />
         ))}
       </div>
       {modal === "req_artist" && <ReqNewArtistModal closeModal={closeModal} />}
-    </>
+    </div>
   );
 };
 

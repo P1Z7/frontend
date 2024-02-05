@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import Button from "../button";
 import InputText from "../input/InputText";
 import Modal from "./ModalMaterial";
 
@@ -10,7 +11,16 @@ interface Props {
 const ReqNewArtistModal = ({ closeModal }: Props) => {
   const { formState, control } = useForm({ defaultValues: { reqArtist: "" } });
 
-  const notify = () => toast.success("등록 요청이 제출되었습니다.", { position: "bottom-center" });
+  const notify = () =>
+    toast.success("등록 요청이 제출되었습니다.", {
+      position: "bottom-center",
+      style: {
+        padding: "16px 28px",
+        fontFamily: "Pretendard",
+        fontWeight: "600",
+        fontSize: "16px",
+      },
+    });
 
   const handleClick = () => {
     closeModal();
@@ -20,13 +30,13 @@ const ReqNewArtistModal = ({ closeModal }: Props) => {
   return (
     <Modal.Frame closeModal={closeModal}>
       <div onClick={(event) => event.stopPropagation()}>
-        <p className="text-14 font-700">아티스트 등록 요청</p>
-        <InputText name="reqArtist" control={control} placeholder="허위사실,악의적리뷰,욕설비방">
-          아티스트 명
-        </InputText>
-        <button disabled={!formState.isDirty} onClick={handleClick} className="h-40 w-full ">
-          등록하기
-        </button>
+        <p className="pb-12 text-16 font-500">아티스트 등록 요청</p>
+        <InputText name="reqArtist" control={control} placeholder="찾으시는 아티스트를 알려주세요." />
+        <div className="px-28 pt-20">
+          <Button type="lined" isDisabled={!formState.isDirty} onClick={handleClick}>
+            등록하기
+          </Button>
+        </div>
       </div>
     </Modal.Frame>
   );
