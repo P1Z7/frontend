@@ -50,7 +50,7 @@ const SearchArtist = ({ data, onClick, myArtists }: Props) => {
       <button className="w-fit text-gray-400 underline" onClick={() => openModal("req_artist")} type="button">
         찾으시는 아티스트가 없으신가요?
       </button>
-      <div className="grid w-fit grid-cols-3 gap-8">
+      <div className="flex w-full flex-wrap justify-center gap-8 px-8">
         {searchedData.map((cardList) => (
           <Card data={cardList} onClick={onClick} myArtists={myArtists} key={cardList.name} />
         ))}
