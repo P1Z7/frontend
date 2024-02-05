@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 import { KeyboardEvent } from "react";
 import { useForm } from "react-hook-form";

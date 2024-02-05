@@ -5,7 +5,7 @@ import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 import { SignUpFormType } from "@/types/index";
 
 const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
-  const { formState, control } = useFormContext<SignUpFormType>();
+  const { formState, control, handleSubmit } = useFormContext<SignUpFormType>();
 
   const isButtonDisabled = !!formState.errors.nickName || !formState.isValid;
 
@@ -20,10 +20,7 @@ const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
       >
         닉네임
       </InputText>
-      {/* <button type="button" onClick={onNext} className="h-40 bg-slate-200 text-12" disabled={isButtonDisabled}>
-        다음
-      </button> */}
-      <BottomButton onClick={onNext} isDisabled={isButtonDisabled}>
+      <BottomButton onClick={handleSubmit(onNext)} isDisabled={isButtonDisabled}>
         다음으로
       </BottomButton>
     </>
