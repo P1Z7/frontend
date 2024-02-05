@@ -69,12 +69,11 @@ const EditContent = () => {
   const isValid = checkUpdated() && isCheck;
 
   return (
-    <div className="text-16">
-      <MainInput />
+    <div className="flex flex-col gap-20 pb-120">
       <StarInput />
+      <MainInput />
       <SubInput />
       <DetailInput />
-      <div className="pb-84" />
       <BottomButton isDisabled={!isValid} onClick={() => openModal("endEdit")}>
         수정사항 등록
       </BottomButton>
