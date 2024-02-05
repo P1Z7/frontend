@@ -1,4 +1,4 @@
-import React, { ReactNode, cloneElement } from "react";
+import React, { ButtonHTMLAttributes, ReactNode, cloneElement } from "react";
 
 interface IconProps {
   width: string;
@@ -9,9 +9,9 @@ interface IconProps {
 
 interface Props {
   children: ReactNode;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   type?: "filled" | "lined" | "linedGray";
   size?: "sm" | "md" | "lg" | "xl";
-  onClick?: () => void;
   isDisabled?: boolean;
 }
 

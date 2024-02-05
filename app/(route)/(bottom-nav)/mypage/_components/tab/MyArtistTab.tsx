@@ -9,7 +9,7 @@ interface Props {
   }[];
 }
 
-const ArtistTab = ({ data }: Props) => {
+const MyArtistTab = ({ data }: Props) => {
   const router = useRouter();
 
   return (
@@ -37,4 +37,4 @@ const ArtistTab = ({ data }: Props) => {
   );
 };
 
-export default ArtistTab;
+export default MyArtistTab;

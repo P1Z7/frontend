@@ -6,7 +6,7 @@ import EditContent from "./_components/EditContent";
 const EDIT_MOCKUP_DATA = {
   group: "에스파",
   member: ["카리나", "윈터"],
-  eventType: "생일카페",
+  eventType: "카페",
   title: "홍대 ㅁㅁ카페",
   address: "서울 마포구 와우산로 94",
   detailAddress: "홍익대학교",
