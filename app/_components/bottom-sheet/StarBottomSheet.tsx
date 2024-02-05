@@ -21,7 +21,7 @@ const StarBottomSheet = ({ closeBottomSheet, refs }: BottomSheetBaseType) => {
   } = useQuery({
     queryKey: ["group"],
     queryFn: async () => {
-      return instance.get("/group/solo", { size: 12, page: 1 });
+      return instance.get("/group/solo", { size: 12, page: 1, keyword: keyword });
     },
   });
   const {
