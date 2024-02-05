@@ -13,7 +13,7 @@ interface Props {
 }
 
 const Header = ({ handleClick }: Props) => {
-  const { bottomSheet, openBottomSheet, closeBottomSheet } = useBottomSheet();
+  const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
 
   const openKebeb = () => {
     openBottomSheet("event-kebab");
@@ -38,9 +38,11 @@ const Header = ({ handleClick }: Props) => {
         )}
       </header>
       {bottomSheet === "event-kebab" && (
-        <BottomSheet.Frame closeBottomSheet={closeBottomSheet}>
-          <button>수정하기</button>
-          <button>신고히기</button>
+        <BottomSheet.Frame closeBottomSheet={closeBottomSheet} ref={refs.sheet}>
+          <div ref={refs.content}>
+            <button>수정하기</button>
+            <button>신고히기</button>
+          </div>
         </BottomSheet.Frame>
       )}
     </>

@@ -1,18 +1,18 @@
 import { ButtonHTMLAttributes, ReactNode } from "react";
+import { BottomSheetBaseType } from "@/types/index";
 import { BIG_REGIONS, SMALL_REGIONS } from "@/constants/regions";
 import BottomSheet from "./BottomSheetMaterial";
 
-interface Props {
-  closeBottomSheet: () => void;
+interface Props extends BottomSheetBaseType {
   bigRegion: (typeof BIG_REGIONS)[number];
   setSmallRegionFilter: (bigRegion: string) => void;
 }
 
-const SmallRegionBottomSheet = ({ closeBottomSheet, bigRegion, setSmallRegionFilter }: Props) => {
+const SmallRegionBottomSheet = ({ closeBottomSheet, refs, bigRegion, setSmallRegionFilter }: Props) => {
   return (
-    <BottomSheet.Frame closeBottomSheet={closeBottomSheet}>
+    <BottomSheet.Frame closeBottomSheet={closeBottomSheet} ref={refs.sheet}>
       <BottomSheet.Title>시/군/구 선택</BottomSheet.Title>
-      <section className="grid grid-cols-2 gap-24 p-24">
+      <section ref={refs.content} className="grid grid-cols-2 gap-24 p-24">
         <RegionButton
           onClick={() => {
             setSmallRegionFilter("전지역");
