@@ -1,12 +1,17 @@
 import NextAuth, { DefaultUser, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import KakaoProvider from "next-auth/providers/kakao";
 
 const handler = NextAuth({
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+    }),
+    KakaoProvider({
+      clientId: process.env.KAKAO_CLIENT_ID || "",
+      clientSecret: process.env.KAKAO_CLIENT_SECRET || "",
     }),
     CredentialsProvider({
       name: "opener",
@@ -40,7 +45,7 @@ const handler = NextAuth({
     // account 소셜 로그인 정보값
     // user Authorize함수에서 리턴한 값
     // credientials signIn("credentials") 이렇게 호출해서 authorize 함수 없이 바로 일반로그인 시도할때, 유저가 입력한 email, password가 담긴 객체
-    async signIn({ profile, account }) {
+    async signIn({ account, user }) {
       const isOAuth = account && account.provider !== "credentials";
       if (!isOAuth) {
         return true;
@@ -48,7 +53,7 @@ const handler = NextAuth({
 
       const signinData = {
         accessToken: account.access_token,
-        email: profile?.email,
+        email: user.email,
         signinMethod: account.provider,
       };
 
@@ -60,8 +65,17 @@ const handler = NextAuth({
         body: JSON.stringify(signinData),
       });
 
-      if (signinRes.status === 400) {
-        const signupData = { userName: profile?.name, signupMethod: account.provider, email: profile?.email, password: "00000000", passwordCheck: "00000000" };
+      if (signinRes.status >= 400 && signinRes.status <= 500) {
+        const signupData = {
+          userName: user.name,
+          signupMethod: account.provider,
+          email: user.email,
+          // password: "",
+          // passwordCheck: "",
+          // nickName: user.name,
+          // myArtists: [],
+        };
+        console.log(signupData);
         const signupRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/users`, {
           method: "POST",
           headers: {
@@ -69,22 +83,23 @@ const handler = NextAuth({
           },
           body: JSON.stringify(signupData),
         });
+        console.log(signupRes.status);
         const signupResult = await signupRes.json();
-        account.local_accessToken = signupResult.accessToken;
-        account.local_refreshToken = signupResult.refreshToken;
+        user.local_accessToken = signupResult.accessToken;
+        user.local_refreshToken = signupResult.refreshToken;
         return signupRes.status === 201 ? true : false;
       }
 
       const signinResult = await signinRes.json();
-      account.local_accessToken = signinResult.accessToken;
-      account.local_refreshToken = signinResult.refreshToken;
+      user.local_accessToken = signinResult.accessToken;
+      user.local_refreshToken = signinResult.refreshToken;
       return true;
     },
     // signIn 함수는 무조건 boolean | string "/error/auth"
-    async jwt({ token, account, user }) {
-      if (user || account) {
-        token.accessToken = (user || account).local_accessToken;
-        token.refreshToken = (user || account).local_refreshToken;
+    async jwt({ token, user }) {
+      if (user) {
+        token.accessToken = user.local_accessToken;
+        token.refreshToken = user.local_refreshToken;
       }
       return token;
       // token을 리턴해서 token을 저장하는 함수
