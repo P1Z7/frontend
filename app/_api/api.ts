@@ -43,13 +43,13 @@ export class Api {
 
     const res = await fetch(this.baseUrl, {
       method: "POST",
-      body: endPoint === "/file/upload" ? (body as FormData) : JSON.stringify(body),
+      body: endPoint === "/file/upload" ? (body as any) : JSON.stringify(body),
       headers: {
         ...(endPoint === "/file/upload" ? {} : { "Content-Type": "application/json" }),
         Authorization: `Bearer ${this.accessToken}`,
       },
     });
-    return await res.json();
+    return endPoint === "/file/upload" ? await res.text() : await res.json();
   }
 
   async put<T>(endPoint: string, body: T, queryObj?: QueryType) {

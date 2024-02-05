@@ -19,20 +19,14 @@ const MainInput = () => {
 
   return (
     <>
-      <InputText
-        required
-        name="title"
-        placeholder="장소 이름을 입력하세요."
-        rules={{ required: "제목을 입력해주세요." }}
-        isEdit={validateEdit(defaultValues?.placeName !== placeName)}
-      >
+      <InputText name="placeName" placeholder="장소 이름을 입력하세요." rules={{ required: "제목을 입력해주세요." }} isEdit={validateEdit(defaultValues?.placeName !== placeName)}>
         장소 이름
       </InputText>
       <div className="flex flex-col">
         <InputText name="address" placeholder="도로명주소 검색" readOnly onClick={() => openBottomSheet("address")} isEdit={validateEdit(defaultValues?.address !== address)}>
           주소
         </InputText>
-        <InputText name="addressDetail" placeholder="상세 주소 입력" isEdit={defaultValues?.addressDetail !== addressDetail} />
+        <InputText name="addressDetail" placeholder="상세 주소 입력" isEdit={validateEdit(defaultValues?.addressDetail !== addressDetail)} />
       </div>
       <div className="flex flex-col">
         기간

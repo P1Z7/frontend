@@ -19,8 +19,8 @@ const MainInfo = ({ onNextStep }: Props) => {
     formState: { isValid },
   } = useFormContext<PostType>();
 
-  const { title, address, startDate, endDate } = watch();
-  const isDisabled = !title || !address || !startDate || !endDate || !isValid;
+  const { placeName, address, startDate, endDate } = watch();
+  const isDisabled = !placeName || !address || !startDate || !endDate || !isValid;
 
   return (
     <PostFrame>
@@ -29,7 +29,7 @@ const MainInfo = ({ onNextStep }: Props) => {
         <FunnelTitle step="행사 정보" isRequired />
       </div>
       <MainInput />
-      <BottomButton onClick={onNextStep} isDisabled={isDisabled}>
+      <BottomButton onClick={onNextStep} isDisabled={true}>
         다음으로
       </BottomButton>
     </PostFrame>

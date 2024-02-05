@@ -1,8 +1,11 @@
+import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { FieldValues, FormProvider, UseFormProps, useForm } from "react-hook-form";
 import { Api } from "@/api/api";
+import { GiftType } from "@/types/index";
 import { Req_Post_Type } from "@/types/reqType";
+import { TAG } from "@/constants/data";
 
 interface GenericFormProps<T extends FieldValues> {
   children: React.ReactNode;
@@ -12,17 +15,55 @@ interface GenericFormProps<T extends FieldValues> {
 const GenericForm = <T extends FieldValues>({ children, formOptions }: GenericFormProps<T>) => {
   const methods = useForm<T>(formOptions);
   const path = usePathname();
-  const instance = new Api(
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4MzM3OWZjZi03YTMzLTQ1ZDctOTQ0OS1lYmQ2YjU0MTAzNmYiLCJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MDcxMjE1NTUsImV4cCI6MTcwNzEyNTE1NX0.GBV2OLxhxThgo_63oBAgtqEInciY_DrcEiNX99cSRYI",
-  );
+  const instance = new Api("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MDcxMjgwNDF9.AR8YcpB9rBxRpk8DcWM-JvSbU9oPkLjPRXL7g5GwG8w");
 
-  const onSubmit = () => {
+  const uploadImg = async (image: File) => {
+    const formData = new FormData();
+    formData.append("file", image);
+    const res = await instance.post<any>("/file/upload", formData, { category: "event" });
+    return res;
+  };
+
+  const handlePostSubmit = async () => {
+    const userInput = methods.getValues();
+    const { placeName, eventType, groupId, artists, startDate, endDate, address, addressDetail, eventImages, description, eventUrl, organizerSns, snsType, tags } = userInput;
+    let imageUrlList: string[] = [];
+    eventImages.map(async (image: File | string) => {
+      if (typeof image !== "string") {
+        const res = await uploadImg(image);
+        imageUrlList.push(res);
+      } else {
+        imageUrlList.push(image);
+      }
+    });
+    let tagList: string[] = [];
+    tags.map((goods: GiftType) => {
+      tagList.push(TAG[goods]);
+    });
+    // const response = await instance.post<Req_Post_Type["event"]>("/event", {
+    //   placeName,
+    //   eventType,
+    //   groupId,
+    //   artists,
+    //   startDate,
+    //   endDate,
+    //   address,
+    //   addressDetail,
+    //   description,
+    //   eventUrl,
+    //   organizerSns,
+    //   snsType,
+    //   eventImages: imageUrlList,
+    //   tags: tagList,
+    //   isAgreed: true,
+    //   userId: "post-api",
+    // });
+  };
+
+  const onSubmit = async () => {
     console.log(methods.getValues()); // 회원가입 POST할 정보
     if (path === "/post") {
-      const userInput = methods.getValues();
-      // userInput.eventImages.map((images) => {
-      //   await instance.post<Req_Post_Type[""]>("/file/upload", )
-      // });
+      handlePostSubmit();
     }
   };
 
