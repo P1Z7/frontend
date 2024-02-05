@@ -13,7 +13,7 @@ const StarInput = () => {
     formState: { defaultValues },
     watch,
   } = useFormContext<PostType>();
-  const { eventType, group, member } = watch();
+  const { eventType, groupName, groupId, artistNames, artists } = watch();
 
   return (
     <>
@@ -21,8 +21,8 @@ const StarInput = () => {
         <div className="flex flex-col">
           아티스트
           <div className="grid grid-cols-2 gap-8">
-            <InputText name="group" placeholder="그룹 선택" readOnly onClick={() => openBottomSheet("starGroup")} />
-            <InputText name="member" placeholder="멤버 선택" readOnly />
+            <InputText name="groupName" placeholder="아티스트 선택" readOnly onClick={() => openBottomSheet("starGroup")} />
+            <InputText name="artistNames" placeholder="" readOnly />
           </div>
         </div>
         <InputText
@@ -34,6 +34,8 @@ const StarInput = () => {
         >
           행사 유형
         </InputText>
+        <InputText name="groupId" hidden />
+        <InputText name="artists" hidden />
       </div>
       {bottomSheet === "event" && <EventTypeBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} />}
       {bottomSheet === "starGroup" && <StarBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} />}

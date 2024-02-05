@@ -46,9 +46,10 @@ const StarBottomSheet = ({ closeBottomSheet, refs }: BottomSheetBaseType) => {
     enabled: !!groupId,
   });
 
-  const handleGroupClick = (id: string) => {
-    if (!id) {
+  const handleFirstDepthClick = (type: string, id: string) => {
+    if (type === "solo") {
       //솔로인 경우, 그냥 솔로 선택 후 바텀시트 close
+      // setValue()
       return;
     }
     setgroupId(id);
@@ -81,11 +82,11 @@ const StarBottomSheet = ({ closeBottomSheet, refs }: BottomSheetBaseType) => {
         ) : (
           <>
             <SearchInput setKeyword={setKeyword} />
-            <div className="scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-gray-100 grid h-[34rem] grid-cols-3 overflow-y-scroll">
+            <div className="scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-gray-100 grid h-[34rem] grid-cols-3 justify-items-center overflow-y-scroll">
               {isLoading && <div>데이터 로딩중 ~~</div>}
               {isSuccess &&
                 groupData.groupAndSoloList.map(({ id, image, name, type }: any) => (
-                  <ArtistCard key={id} profileImage={image}>
+                  <ArtistCard key={id} profileImage={image} onClick={() => handleFirstDepthClick(type, id)}>
                     {name}
                   </ArtistCard>
                 ))}
