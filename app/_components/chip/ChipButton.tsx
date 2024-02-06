@@ -3,7 +3,7 @@
 import { MouseEvent, useState } from "react";
 import CloseIcon from "@/public/icon/close.svg";
 
-type Handler = "onClick" | "onDelete";
+type Handler = "onDelete";
 type MappedHandler = {
   [key in Handler]?: (e?: MouseEvent) => void;
 };
@@ -13,14 +13,8 @@ interface Props extends MappedHandler {
   selected?: boolean;
 }
 
-const ChipButton = ({ label, selected: initial = false, onClick, onDelete }: Props) => {
+const ChipButton = ({ label, selected: initial = false, onDelete }: Props) => {
   const [isDelete, setIsDelete] = useState(false);
-  const handleClick = (e: MouseEvent) => {
-    e.preventDefault();
-    if (onClick) {
-      onClick(e);
-    }
-  };
 
   const handleDelete = (e: MouseEvent) => {
     setIsDelete(true);
@@ -34,9 +28,9 @@ const ChipButton = ({ label, selected: initial = false, onClick, onDelete }: Pro
   }
 
   return (
-    <button onClick={handleClick} className="flex-center w-max flex-shrink-0 gap-4 rounded-lg bg-gray-50 px-12 py-4 text-gray-700">
+    <button onClick={handleDelete} className="flex-center border-main-pink-300 text-main-pink-white w-max flex-shrink-0 gap-4 rounded-lg border bg-sub-pink-bg px-12 py-4">
       <p className="text-14 font-500">{label}</p>
-      {!!onDelete && <CloseIcon onClick={handleDelete} alt="태그 삭제" width={16} height={16} stroke="#A0A5B1" />}
+      {!!onDelete && <CloseIcon alt="태그 삭제" width={16} height={16} stroke="#FF50AA" />}
     </button>
   );
 };
