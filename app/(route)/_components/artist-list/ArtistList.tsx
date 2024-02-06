@@ -37,15 +37,17 @@ const ArtistList = () => {
             Loading ...
           </div>
         }
-        className="w-320"
+        className="flex flex-col items-center"
       >
-        <ul className="grid w-320 grid-cols-3 gap-12 px-8">
-          {artists.map((artist, index) => (
-            <li key={index}>
-              <ArtistCard profileImage={artist.profileImage}>{artist.name}</ArtistCard>
-            </li>
-          ))}
-        </ul>
+        <div className="flex w-full max-w-[52rem] flex-col items-center">
+          <ul className="flex flex-wrap justify-center gap-20">
+            {artists.map((artist, index) => (
+              <li key={index}>
+                <ArtistCard profileImage={artist.profileImage}>{artist.name}</ArtistCard>
+              </li>
+            ))}
+          </ul>
+        </div>
       </InfiniteScroll>
     </div>
   );
