@@ -9,7 +9,7 @@ import NextIcon from "@/public/icon/arrow-left_lg.svg";
 import PrevIcon from "@/public/icon/arrow-right_lg.svg";
 import { ScheduleDataProps } from "../../page";
 
-const EventTab = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) => {
+const MyCalendarTab = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) => {
   const [data, setData] = useState(scheduleData);
   const [calendarStyle, setCalendarStyle] = useState("");
 
@@ -98,7 +98,7 @@ const EventTab = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) => {
 
   return (
     <>
-      <div className="flex flex-col gap-16 px-20 py-16">
+      <div className="flex flex-col items-center justify-stretch gap-20 px-20 pb-16 pt-72">
         <style>{calendarStyle}</style>
         {calendarStyle !== "" && (
           <Calendar
@@ -117,8 +117,8 @@ const EventTab = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) => {
             }}
           />
         )}
-        <div>
-          <div className="flex gap-12">
+        <div className="w-full">
+          <div className="flex w-full gap-12">
             <ChipButton label="예정" onClick={() => handleChipClick("예정")} selected={currentLabel === "예정"} />
             <ChipButton label="진행중" onClick={() => handleChipClick("진행중")} selected={currentLabel === "진행중"} />
             <ChipButton label="종료" onClick={() => handleChipClick("종료")} selected={currentLabel === "종료"} />
@@ -136,7 +136,7 @@ const EventTab = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) => {
   );
 };
 
-export default EventTab;
+export default MyCalendarTab;
 
 const COLOR_TYPE: Record<number, string> = {
   1: `bg-sub-pink`,
