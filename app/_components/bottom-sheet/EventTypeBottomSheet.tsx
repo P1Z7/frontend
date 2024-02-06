@@ -5,7 +5,7 @@ import BottomSheet from "./BottomSheetMaterial";
 
 const EVENT_TYPE_LIST = ["카페", "나눔", "팬광고", "팝업스토어", "상영회", "기타"];
 
-const EventTypeBottomSheet = ({ closeBottomSheet }: BottomSheetBaseType) => {
+const EventTypeBottomSheet = ({ closeBottomSheet, refs }: BottomSheetBaseType) => {
   const { setValue } = useFormContext<PostType>();
 
   const handleEventClick = (type: string) => {
@@ -14,9 +14,9 @@ const EventTypeBottomSheet = ({ closeBottomSheet }: BottomSheetBaseType) => {
   };
 
   return (
-    <BottomSheet.Frame closeBottomSheet={closeBottomSheet}>
+    <BottomSheet.Frame closeBottomSheet={closeBottomSheet} ref={refs.sheet}>
       <BottomSheet.Title>행사 유형 선택</BottomSheet.Title>
-      <ul className="pb-40">
+      <ul className="pb-40" ref={refs.content}>
         {EVENT_TYPE_LIST.map((event) => (
           <li
             key={event}

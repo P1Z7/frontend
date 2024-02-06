@@ -27,7 +27,7 @@ const BOTTOM_SHEET = {
 };
 
 const SearchPage = () => {
-  const { bottomSheet, openBottomSheet, closeBottomSheet } = useBottomSheet();
+  const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
   const [filter, setFilter] = useState<FilterType>({
     bigRegion: "",
     smallRegion: "전지역",
@@ -89,14 +89,19 @@ const SearchPage = () => {
           ))}
         </section>
       </main>
-      {bottomSheet === BOTTOM_SHEET.bigRegion && <BigRegionBottomSheet closeBottomSheet={closeBottomSheet} setBigRegionFilter={setBigRegionFilter} />}
+      {bottomSheet === BOTTOM_SHEET.bigRegion && <BigRegionBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} setBigRegionFilter={setBigRegionFilter} />}
       {bottomSheet === BOTTOM_SHEET.smallRegion && (
-        <SmallRegionBottomSheet closeBottomSheet={closeBottomSheet} bigRegion={filter.bigRegion as (typeof BIG_REGIONS)[number]} setSmallRegionFilter={setSmallRegionFilter} />
+        <SmallRegionBottomSheet
+          closeBottomSheet={closeBottomSheet}
+          refs={refs}
+          bigRegion={filter.bigRegion as (typeof BIG_REGIONS)[number]}
+          setSmallRegionFilter={setSmallRegionFilter}
+        />
       )}
       {bottomSheet === BOTTOM_SHEET.calender && (
-        <CalenderBottomSheet closeBottomSheet={closeBottomSheet} setStartDateFilter={setStartDateFilter} setEndDateFilter={setEndDateFilter} />
+        <CalenderBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} setStartDateFilter={setStartDateFilter} setEndDateFilter={setEndDateFilter} />
       )}
-      {bottomSheet === BOTTOM_SHEET.gift && <GiftBottomSheet closeBottomSheet={closeBottomSheet} setGiftsFilter={setGiftsFilter} />}
+      {bottomSheet === BOTTOM_SHEET.gift && <GiftBottomSheet refs={refs} closeBottomSheet={closeBottomSheet} setGiftsFilter={setGiftsFilter} />}
     </>
   );
 };

@@ -1,9 +1,6 @@
 import { useRouter } from "next/navigation";
+import { BottomSheetBaseType } from "@/types/index";
 import BottomSheet from "./BottomSheetMaterial";
-
-interface Props {
-  closeBottomSheet: () => void;
-}
 
 const EditUserInfo = {
   profile: "프로필수정",
@@ -12,11 +9,11 @@ const EditUserInfo = {
   withdrawal: "회원탈퇴",
 };
 
-const MyPageBottomSheet = ({ closeBottomSheet }: Props) => {
+const MyPageBottomSheet = ({ closeBottomSheet, refs }: BottomSheetBaseType) => {
   const router = useRouter();
 
   return (
-    <BottomSheet.Frame closeBottomSheet={closeBottomSheet}>
+    <BottomSheet.Frame closeBottomSheet={closeBottomSheet} ref={refs.sheet}>
       <div className="flex flex-col gap-20 p-20 text-16" onClick={(event) => event.stopPropagation()}>
         <button onClick={() => router.push("/setting/profile")}>{EditUserInfo.profile}</button>
         <button onClick={() => router.push("/setting/password")}>{EditUserInfo.password}</button>
