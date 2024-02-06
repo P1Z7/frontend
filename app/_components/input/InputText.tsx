@@ -91,7 +91,7 @@ const InputText: Function = ({
         {(maxLength || fieldState.error || hint) && (
           <div className="flex gap-8">
             {maxLength ? <span className={classNames("mt-4 h-8", { "text-red": field.value.length > maxLength })}>{`(${field.value.length}/${maxLength})`}</span> : null}
-            <p className={`font-normal mt-4 h-12 text-12 ${fieldState.error ? "text-red" : "text-gray-400"}`}>{fieldState?.error?.message || hint}</p>
+            <p className={`font-normal h-18 mt-4 text-12 ${fieldState.error ? "text-red" : "text-gray-500"}`}>{fieldState?.error?.message || hint}</p>
           </div>
         )}
       </div>
