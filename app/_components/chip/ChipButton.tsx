@@ -14,11 +14,9 @@ interface Props extends MappedHandler {
 }
 
 const ChipButton = ({ label, selected: initial = false, onClick, onDelete }: Props) => {
-  const [selected, setSelected] = useState(initial);
   const [isDelete, setIsDelete] = useState(false);
   const handleClick = (e: MouseEvent) => {
     e.preventDefault();
-    setSelected((prev) => !prev);
     if (onClick) {
       onClick(e);
     }
@@ -36,12 +34,9 @@ const ChipButton = ({ label, selected: initial = false, onClick, onDelete }: Pro
   }
 
   return (
-    <button
-      onClick={handleClick}
-      className={`flex-center w-max flex-shrink-0 gap-4 rounded-lg px-12 py-4 ${selected ? "bg-gray-900 text-white-black" : "bg-gray-50 text-gray-700"}`}
-    >
+    <button onClick={handleClick} className="flex-center w-max flex-shrink-0 gap-4 rounded-lg bg-gray-50 px-12 py-4 text-gray-700">
       <p className="text-14 font-500">{label}</p>
-      {!!onDelete && <CloseIcon onClick={handleDelete} alt="태그 삭제" width={16} height={16} stroke={selected ? "#FFF" : "#A0A5B1"} />}
+      {!!onDelete && <CloseIcon onClick={handleDelete} alt="태그 삭제" width={16} height={16} stroke="#A0A5B1" />}
     </button>
   );
 };
