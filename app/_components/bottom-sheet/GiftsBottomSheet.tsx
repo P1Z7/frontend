@@ -16,7 +16,7 @@ const GiftsBottomSheet = ({ closeBottomSheet, refs, setGiftsFilter, selected }: 
       <div ref={refs.content}>
         <div className="flex flex-wrap gap-x-8 gap-y-12 px-24 py-20">
           {GIFTS.map((gift) => (
-            <ChipButton label={gift} onClick={() => setGiftsFilter(gift)} selected={selected.includes(gift)} />
+            <ChipButton key={gift} label={gift} onClick={() => setGiftsFilter(gift)} selected={selected.includes(gift)} />
           ))}
         </div>
         <BottomSheet.Button onClick={closeBottomSheet} />
