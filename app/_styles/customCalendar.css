@@ -1,5 +1,5 @@
 .rdp {
-  --rdp-cell-size: 36px; /* Size of the day cells. */
+  --rdp-cell-size: 36px; /* Size of the day cells. 36px*/
   --rdp-caption-font-size: 18px; /* Font size for the caption labels. */
   --rdp-accent-color: #ff50aa; /* Accent color for the background of selected days. */
   --rdp-background-color: #ffeaf4; /* Background color for the hovered/focused elements. */
@@ -10,6 +10,7 @@
   --rdp-selected-color: #fff; /* Color of selected day text */
 
   margin: 1em;
+  font-size: 1.6rem;
 }
 
 /* Hide elements for devices that are not screen readers */
@@ -251,6 +252,10 @@
   height: var(--rdp-cell-size);
   padding: 0;
   text-align: center;
+}
+
+.rdp-cell:nth-child(7n) {
+  color: #f63d3d;
 }
 
 .rdp-weeknumber {

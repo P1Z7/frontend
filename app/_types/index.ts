@@ -1,7 +1,16 @@
-import { ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode, RefObject } from "react";
 
 export interface ModalBaseType {
   closeModal: () => void;
+}
+
+type BottomSheetRefs = {
+  sheet: (node: HTMLElement | null) => void;
+  content: (node: HTMLElement | null) => void;
+};
+export interface BottomSheetBaseType {
+  closeBottomSheet: () => void;
+  refs: BottomSheetRefs;
 }
 export interface MapType {
   name: string;
@@ -63,7 +72,14 @@ export interface ReviewType {
   userId: string;
   eventId: string;
   isPublic?: boolean;
-  rating: true;
+  rating: boolean;
   description: string;
   reviewImages?: string[];
+  like: number;
 }
+
+export type ArtistType = {
+  name: string;
+  group?: string[];
+  profileImage: string;
+};

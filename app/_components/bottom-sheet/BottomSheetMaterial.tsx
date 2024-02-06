@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, SyntheticEvent } from "react";
+import { ReactNode, SyntheticEvent, forwardRef } from "react";
 import Button from "@/components/button";
 import CloseIcon from "@/public/icon/close.svg";
 import BottomSheetPortal from "./BottomSheetPortal";
@@ -10,23 +10,25 @@ interface BottomSheetFrameProps {
   closeBottomSheet: () => void;
 }
 
-const BottomSheetFrame = ({ children, closeBottomSheet }: BottomSheetFrameProps) => {
+const BottomSheetFrame = forwardRef<HTMLDivElement, BottomSheetFrameProps>(({ children, closeBottomSheet }, ref) => {
   return (
     <BottomSheetPortal>
       <div onClick={closeBottomSheet} className="fixed bottom-0 left-0 z-popup flex h-screen w-full items-end justify-center bg-gray-900 bg-opacity-70">
         <div
+          ref={ref}
           onClick={(e: SyntheticEvent) => e.stopPropagation()}
-          className="relative flex max-h-[55.6rem] w-full animate-slideUp flex-col overflow-y-auto rounded-t-md bg-white-black pt-16"
+          className="relative flex max-h-[55.6rem] w-full transform animate-slideUp flex-col overflow-y-auto rounded-t-md bg-white-black pt-16 transition duration-150 ease-out"
         >
           <button onClick={closeBottomSheet} className="absolute right-20 top-16">
-            <CloseIcon stroke="#C1C5CC" />
+            <CloseIcon stroke="#C1C5CC" width="24" height="24" />
           </button>
           {children}
         </div>
       </div>
     </BottomSheetPortal>
   );
-};
+});
+BottomSheetFrame.displayName = "BottomSheetFrame";
 
 interface BottomSheetTitleProps {
   children: ReactNode;

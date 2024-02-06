@@ -31,7 +31,13 @@ const DetailInput = () => {
   return (
     <>
       <ImageSection imgList={imgList} setImgList={setImgList} />
-      <InputArea name="detailText" placeholder="이벤트 설명을 입력하세요." rules={{ maxLength: 100 }} isEdit={validateEdit(defaultValues?.detailText !== getValues("detailText"))}>
+      <InputArea
+        name="detailText"
+        placeholder="이벤트 설명을 입력하세요."
+        hasLimit
+        rules={{ maxLength: 100 }}
+        isEdit={validateEdit(defaultValues?.detailText !== getValues("detailText"))}
+      >
         상세 내용
       </InputArea>
       <WarningCheck />

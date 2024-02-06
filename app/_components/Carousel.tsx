@@ -18,12 +18,11 @@ const Carousel = ({ customSettings, title, children }: CarouselProps) => {
     speed: 500,
     ...customSettings,
   };
+
   return (
-    <div className="w-400">
-      <h2>{title}</h2>
-      <Slider {...settings} className="w-[600px]">
-        {children}
-      </Slider>
+    <div className="flex w-[480px] flex-col gap-16">
+      {title && <h2 className="text-20 font-700 text-gray-900">{title}</h2>}
+      <Slider {...settings}>{children}</Slider>
     </div>
   );
 };

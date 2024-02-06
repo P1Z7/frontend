@@ -4,7 +4,7 @@ import BottomButton from "@/components/button/BottomButton";
 import { useStore } from "@/store/index";
 import { PostType } from "../page";
 import FunnelTitle from "./FunnelTitle";
-import PostFooter from "./PostFooter";
+import PostFrame from "./PostFrame";
 import DetailInput from "./_inputs/DetailInput";
 
 const DetailInfo = () => {
@@ -12,13 +12,14 @@ const DetailInfo = () => {
   const { getValues } = useFormContext<PostType>();
 
   return (
-    <div className="flex flex-col gap-24">
-      <ProgressBar ratio="full" />
-      <FunnelTitle step="상세 설명" />
+    <PostFrame>
+      <div className="flex flex-col gap-28">
+        <ProgressBar ratio="full" />
+        <FunnelTitle step="상세 설명" />
+      </div>
       <DetailInput />
-      {/* <PostFooter isDisabled={!isCheck || getValues("detailText").length > 100} /> */}
       <BottomButton isDisabled={!isCheck || getValues("detailText").length > 100}>작성 완료</BottomButton>
-    </div>
+    </PostFrame>
   );
 };
 

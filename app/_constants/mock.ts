@@ -1,10 +1,4 @@
-import { EventInfoType } from "../_types";
-
-export type ArtistType = {
-  name: string;
-  group?: string[];
-  profileImage: string;
-};
+import { ArtistType, EventInfoType } from "../_types";
 
 export const MOCK: ArtistType[] = [
   {
@@ -120,7 +114,7 @@ export const MOCK_EVENTS: EventInfoType[] = [
     artists: ["민지"],
     startDate: "2024-01-29",
     endDate: "2024-01-30",
-    address: "서울특별시 마포구 와우산로 00-00 1층",
+    address: "서울 중구 삼일대로 343",
     addressDetail: "",
     userId: "test-user",
     eventImages: ["https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize"],
@@ -393,5 +387,68 @@ export const MOCK_EVENTS: EventInfoType[] = [
     organizerSns: "minji_2024",
     snsType: "인스타그램",
     tags: ["컵홀더", "포토카드", "엽서", "스티커"],
+  },
+];
+
+export const MOCK_REVIEWS = [
+  {
+    userId: "test",
+    eventId: "test",
+    isPublic: true,
+    rating: true,
+    description: "메뉴도 진짜 맛있고 특전도 너무 예뻐요. KTX타고 3시간 걸려서 갔는데 후회 없습니다. 3일차 오후라서 포카 없을까봐 걱정했는데 다행히 수량 넉넉해서 다 받았어요.",
+    reviewImages: [
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+    ],
+    like: 1,
+  },
+  {
+    userId: "test",
+    eventId: "test",
+    isPublic: false,
+    rating: false,
+    description: "사람 너무 많아요 특전 다나갔습니다 가실분들 참고",
+    reviewImages: [
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+    ],
+    like: 0,
+  },
+  {
+    userId: "test",
+    eventId: "test",
+    isPublic: true,
+    rating: true,
+    description: "메뉴도 진짜 맛있고 특전도 너무 예뻐요. KTX타고 3시간 걸려서 갔는데 후회 없습니다. 3일차 오후라서 포카 없을까봐 걱정했는데 다행히 수량 넉넉해서 다 받았어요.",
+    reviewImages: [
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+    ],
+    like: 2,
+  },
+
+  {
+    userId: "test",
+    eventId: "test",
+    public: false,
+    rating: false,
+    description: "사람 너무 많아요 특전 다나갔습니다 가실분들 참고",
+    reviewImages: [
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+      "https://thumb.mtstarnews.com/06/2023/09/2023090715013844673_1.jpg/dims/optimize",
+    ],
+    like: 0,
   },
 ];

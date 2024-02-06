@@ -3,7 +3,7 @@
 import ProgressBar from "@/components/ProgressBar";
 import BottomButton from "@/components/button/BottomButton";
 import FunnelTitle from "./FunnelTitle";
-import PostFooter from "./PostFooter";
+import PostFrame from "./PostFrame";
 import SubInput from "./_inputs/SubInput";
 
 interface Props {
@@ -12,13 +12,14 @@ interface Props {
 
 const SubInfo = ({ onNextStep }: Props) => {
   return (
-    <div className="flex flex-col gap-24">
-      <ProgressBar ratio="3/4" />
-      <FunnelTitle step="특전 정보" />
+    <PostFrame>
+      <div className="flex flex-col gap-28">
+        <ProgressBar ratio="3/4" />
+        <FunnelTitle step="특전 정보" />
+      </div>
       <SubInput />
-      {/* <PostFooter onNextStep={onNextStep} /> */}
       <BottomButton onClick={onNextStep}>다음으로</BottomButton>
-    </div>
+    </PostFrame>
   );
 };
 

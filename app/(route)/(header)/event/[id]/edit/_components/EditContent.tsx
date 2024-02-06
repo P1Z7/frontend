@@ -1,11 +1,13 @@
-import DetailInput from "@/(route)/(header)/post/_components/_inputs/DetailInput";
-import MainInput from "@/(route)/(header)/post/_components/_inputs/MainInput";
-import StarInput from "@/(route)/(header)/post/_components/_inputs/StarInput";
-import SubInput from "@/(route)/(header)/post/_components/_inputs/SubInput";
-import { PostType } from "@/(route)/(header)/post/page";
+import DetailInput from "@/(route)/post/_components/_inputs/DetailInput";
+import MainInput from "@/(route)/post/_components/_inputs/MainInput";
+import StarInput from "@/(route)/post/_components/_inputs/StarInput";
+import SubInput from "@/(route)/post/_components/_inputs/SubInput";
+import { PostType } from "@/(route)/post/page";
 import classNames from "classnames";
 import { useFormContext } from "react-hook-form";
+import Alert from "@/components/Alert";
 import BottomButton from "@/components/button/BottomButton";
+import AlertModal from "@/components/modal/AlertModal";
 import TextModal from "@/components/modal/TextModal";
 import { useModal } from "@/hooks/useModal";
 import { useStore } from "@/store/index";
@@ -67,16 +69,19 @@ const EditContent = () => {
   const isValid = checkUpdated() && isCheck;
 
   return (
-    <div className="text-16">
-      <MainInput />
+    <div className="flex flex-col gap-20 pb-120">
       <StarInput />
+      <MainInput />
       <SubInput />
       <DetailInput />
       <BottomButton isDisabled={!isValid} onClick={() => openModal("endEdit")}>
         수정사항 등록
       </BottomButton>
       {modal === "endEdit" && (
-        <TextModal title="텍스트 모달 타이틀" btnText="오케이" textareaId="text" closeModal={closeModal} {...{ control: control, placeholder: "텍스트 모달입니다." }} />
+        <AlertModal closeModal={closeModal}>
+          수정사항은 사용자 3인 이상의
+          <br /> 승인 후에 반영됩니다.
+        </AlertModal>
       )}
     </div>
   );

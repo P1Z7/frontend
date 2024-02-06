@@ -17,6 +17,7 @@ const ChipButton = ({ label, selected: initial = false, onClick, onDelete }: Pro
   const [selected, setSelected] = useState(initial);
   const [isDelete, setIsDelete] = useState(false);
   const handleClick = (e: MouseEvent) => {
+    e.preventDefault();
     setSelected((prev) => !prev);
     if (onClick) {
       onClick(e);
