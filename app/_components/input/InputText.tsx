@@ -10,7 +10,6 @@ interface Prop {
   placeholder?: string;
   autoComplete?: string;
   hint?: string;
-  maxLength?: number;
   hidden?: boolean;
   readOnly?: boolean;
   required?: boolean;
@@ -31,7 +30,6 @@ const InputText: Function = ({
   placeholder,
   autoComplete,
   hint,
-  maxLength,
   hidden,
   required,
   readOnly,
@@ -88,9 +86,8 @@ const InputText: Function = ({
             <Image src="/icon/x_gray.svg" alt="초기화 버튼" width={16} height={16} />
           </button>
         )}
-        {(maxLength || fieldState.error || hint) && (
+        {(fieldState.error || hint) && (
           <div className="flex gap-8">
-            {maxLength ? <span className={classNames("mt-4 h-8", { "text-red": field.value.length > maxLength })}>{`(${field.value.length}/${maxLength})`}</span> : null}
             <p className={`font-normal h-18 mt-4 text-12 ${fieldState.error ? "text-red" : "text-gray-500"}`}>{fieldState?.error?.message || hint}</p>
           </div>
         )}
