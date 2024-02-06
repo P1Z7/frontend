@@ -29,7 +29,7 @@ const MainInfo = ({ onNextStep }: Props) => {
         <FunnelTitle step="행사 정보" isRequired />
       </div>
       <MainInput />
-      <BottomButton onClick={onNextStep} isDisabled={true}>
+      <BottomButton onClick={onNextStep} isDisabled={false}>
         다음으로
       </BottomButton>
     </PostFrame>

@@ -24,40 +24,51 @@ const GenericForm = <T extends FieldValues>({ children, formOptions }: GenericFo
     return res;
   };
 
-  const handlePostSubmit = async () => {
-    const userInput = methods.getValues();
-    const { placeName, eventType, groupId, artists, startDate, endDate, address, addressDetail, eventImages, description, eventUrl, organizerSns, snsType, tags } = userInput;
+  const matchTagIdList = (tags: GiftType[]) => {
+    let tagList: string[] = [];
+    tags.map((goods: GiftType) => {
+      tagList.push(TAG[goods]);
+    });
+    return tagList;
+  };
+
+  const makeImgUrlList = async (eventImages: (string | File)[]) => {
     let imageUrlList: string[] = [];
-    eventImages.map(async (image: File | string) => {
+    for (const image of eventImages) {
       if (typeof image !== "string") {
         const res = await uploadImg(image);
         imageUrlList.push(res);
       } else {
         imageUrlList.push(image);
       }
+    }
+
+    return imageUrlList;
+  };
+
+  const handlePostSubmit = async () => {
+    const userInput = methods.getValues();
+    const { placeName, eventType, groupId, artists, startDate, endDate, address, addressDetail, eventImages, description, eventUrl, organizerSns, snsType, tags } = userInput;
+    const imgUrlList = await makeImgUrlList(eventImages);
+    const tagList = matchTagIdList(tags);
+    const response = await instance.post<Req_Post_Type["event"]>("/event", {
+      placeName,
+      eventType,
+      groupId,
+      artists,
+      startDate,
+      endDate,
+      address,
+      addressDetail,
+      description,
+      eventUrl,
+      organizerSns,
+      snsType,
+      eventImages: imgUrlList,
+      tags: tagList,
+      isAgreed: true,
+      userId: "post-api",
     });
-    let tagList: string[] = [];
-    tags.map((goods: GiftType) => {
-      tagList.push(TAG[goods]);
-    });
-    // const response = await instance.post<Req_Post_Type["event"]>("/event", {
-    //   placeName,
-    //   eventType,
-    //   groupId,
-    //   artists,
-    //   startDate,
-    //   endDate,
-    //   address,
-    //   addressDetail,
-    //   description,
-    //   eventUrl,
-    //   organizerSns,
-    //   snsType,
-    //   eventImages: imageUrlList,
-    //   tags: tagList,
-    //   isAgreed: true,
-    //   userId: "post-api",
-    // });
   };
 
   const onSubmit = async () => {
