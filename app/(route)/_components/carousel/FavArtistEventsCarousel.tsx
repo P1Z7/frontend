@@ -10,7 +10,7 @@ import Hero from "@/public/icon/hero.svg";
 
 const FavArtistEventsCarousel = () => {
   // 추후 next auth로 변경 예정
-  const [status, setStatus] = useState(true);
+  const [status, setStatus] = useState(false);
 
   // 목업의 길이를 기반으로 좋아요한 이벤트의 수 확인
   // 추후 수정 예정
@@ -39,7 +39,7 @@ const FavArtistEventsCarousel = () => {
   return (
     <div className="flex flex-col gap-16">
       <div className="flex items-center justify-between self-stretch">
-        <h2 className="text-20 font-700 text-gray-900">좋아요한 아티스트의 새 행사</h2>
+        <h2 className="text-20 font-700 text-gray-900">내 아티스트의 새 행사</h2>
         {hasFavoriteEvents && (
           <Link href="/my-artist-event" className="text-12 font-600 text-blue">
             전체보기
@@ -60,14 +60,9 @@ const NoFavCard = ({ href, buttonName }: NoFavCardProps) => {
   const router = useRouter();
 
   return (
-    <div className="relative w-320">
-      <Hero className="shadow-hero" />
-      <div className="flex-center absolute top-32 w-full flex-col gap-16">
-        <p className="text-center text-16 font-500 text-white-black">
-          좋아하는 아티스트의 행사를
-          <br />
-          가장 먼저 축하해보세요!
-        </p>
+    <div className="flex-center relative h-160 overflow-hidden rounded-lg">
+      <Hero className="absolute left-1/2 top-0 -translate-x-1/2" />
+      <div className="flex-center absolute top-96 w-full flex-col gap-16">
         <div onClick={() => router.push(href)} className="h-32 cursor-pointer rounded-full bg-gray-900 px-16 text-14 font-600 leading-loose text-white-white ">
           {buttonName}
         </div>
