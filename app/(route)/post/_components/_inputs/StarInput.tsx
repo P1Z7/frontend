@@ -14,6 +14,7 @@ const StarInput = () => {
     watch,
   } = useFormContext<PostType>();
   const { eventType, groupName, groupId, artistNames, artists } = watch();
+  const isNotMember = groupId && artistNames.length === 0;
 
   return (
     <>
@@ -22,8 +23,9 @@ const StarInput = () => {
           아티스트
           <div className="grid grid-cols-2 gap-8">
             <InputText name="groupName" placeholder="아티스트 선택" readOnly onClick={() => openBottomSheet("firstArtist")} />
-            <InputText name="artistNames" placeholder="" readOnly onClick={() => openBottomSheet("secondArtist")} />
+            <InputText name="artistNames" placeholder="멤버 선택" readOnly onClick={() => openBottomSheet("secondArtist")} />
           </div>
+          {isNotMember && <div className="pt-4 text-12 font-500 text-red">그룹 선택 시, 멤버 선택이 필수입니다.</div>}
         </div>
         <InputText
           name="eventType"
