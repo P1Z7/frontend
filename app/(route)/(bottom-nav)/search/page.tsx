@@ -1,6 +1,5 @@
 "use client";
 
-import classNames from "classnames";
 import { ButtonHTMLAttributes, ReactNode, useState } from "react";
 import BigRegionBottomSheet from "@/components/bottom-sheet/BigRegionBottomSheet";
 import CalenderBottomSheet from "@/components/bottom-sheet/CalendarBottomSheet";
@@ -9,6 +8,7 @@ import SmallRegionBottomSheet from "@/components/bottom-sheet/SmallRegionBottomS
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
 import SearchInput from "@/components/input/SearchInput";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
+import { GiftType } from "@/types/index";
 import { MOCK_EVENTS } from "@/constants/mock";
 import { BIG_REGIONS } from "@/constants/regions";
 import DownArrowIcon from "@/public/icon/arrow-down_sm.svg";
@@ -19,7 +19,7 @@ interface FilterType {
   smallRegion: string;
   startDate: string | null;
   endDate: string | null;
-  gifts: string[];
+  gifts: GiftType[];
 }
 
 const BOTTOM_SHEET = {
@@ -54,7 +54,7 @@ const SearchPage = () => {
   const setEndDateFilter = (endDate: string) => {
     setFilter((prev) => ({ ...prev, endDate }));
   };
-  const setGiftsFilter = (gift: string) => {
+  const setGiftsFilter = (gift: GiftType) => {
     setFilter((prev) => ({ ...prev, gifts: [...prev.gifts, gift] }));
   };
 
@@ -109,7 +109,7 @@ const SearchPage = () => {
       {bottomSheet === BOTTOM_SHEET.calender && (
         <CalenderBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} setStartDateFilter={setStartDateFilter} setEndDateFilter={setEndDateFilter} />
       )}
-      {bottomSheet === BOTTOM_SHEET.gift && <GiftBottomSheet refs={refs} closeBottomSheet={closeBottomSheet} setGiftsFilter={setGiftsFilter} />}
+      {bottomSheet === BOTTOM_SHEET.gift && <GiftBottomSheet refs={refs} closeBottomSheet={closeBottomSheet} setGiftsFilter={setGiftsFilter} selected={filter.gifts} />}
     </>
   );
 };
