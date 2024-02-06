@@ -16,7 +16,7 @@ const useHeaderTitle = () => {
       title = "팔로우 아티스트 수정";
       break;
     case "/my-artist-event":
-      title = "좋아요한 아티스트의 새 행사";
+      title = "내 아티스트의 새 행사";
       break;
     case "/signup":
       title = "회원가입";

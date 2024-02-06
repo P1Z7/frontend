@@ -7,7 +7,8 @@ import { validateEdit } from "@/utils/editValidate";
 import { PostType } from "../../page";
 
 const StarInput = () => {
-  const { bottomSheet, openBottomSheet, closeBottomSheet } = useBottomSheet();
+  const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
+
   const {
     formState: { defaultValues },
     watch,
@@ -34,8 +35,8 @@ const StarInput = () => {
           행사 유형
         </InputText>
       </div>
-      {bottomSheet === "event" && <EventTypeBottomSheet closeBottomSheet={closeBottomSheet} />}
-      {bottomSheet === "starGroup" && <StarBottomSheet closeBottomSheet={closeBottomSheet} />}
+      {bottomSheet === "event" && <EventTypeBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} />}
+      {bottomSheet === "starGroup" && <StarBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} />}
     </>
   );
 };

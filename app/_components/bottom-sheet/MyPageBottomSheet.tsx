@@ -1,9 +1,6 @@
 import { useRouter } from "next/navigation";
+import { BottomSheetBaseType } from "@/types/index";
 import BottomSheet from "./BottomSheetMaterial";
-
-interface Props {
-  closeBottomSheet: () => void;
-}
 
 const EditUserInfo = {
   profile: "프로필수정",
@@ -14,11 +11,11 @@ const EditUserInfo = {
 
 const ButtonStyle = "w-full cursor-pointer border-b border-gray-50 px-24 py-20";
 
-const MyPageBottomSheet = ({ closeBottomSheet }: Props) => {
+const MyPageBottomSheet = ({ closeBottomSheet, refs }: any) => {
   const router = useRouter();
 
   return (
-    <BottomSheet.Frame closeBottomSheet={closeBottomSheet}>
+    <BottomSheet.Frame closeBottomSheet={closeBottomSheet} ref={refs.sheet}>
       <ul className="flex h-fit w-full flex-col items-start text-16" onClick={(event) => event.stopPropagation()}>
         <li className={`mt-20 ${ButtonStyle}`} onClick={() => router.push("/setting/profile")}>
           {EditUserInfo.profile}
