@@ -19,7 +19,7 @@ const ModalFrame = ({ children, closeModal, hasNotCloseBtn = false }: ModalFrame
         <div className="relative w-[308px] rounded-md bg-white-black px-20 pb-20 pt-40 text-16">
           {hasNotCloseBtn || (
             <button onClick={closeModal} className="absolute right-12 top-12">
-              <CloseIcon stroke="#C1C5CC" />
+              <CloseIcon stroke="#C1C5CC" width={24} height={24} />
             </button>
           )}
           <div className="flex flex-col gap-20" onClick={(event) => event.stopPropagation()}>

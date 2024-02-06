@@ -1,49 +1,39 @@
 "use client";
 
 import { MOCK } from "app/_constants/mock";
-import classNames from "classnames";
-import { useEffect, useState } from "react";
-import BottomButton from "@/components/button/BottomButton";
-import useInfScroll from "@/hooks/useInfScroll";
-
-const INITIAL = ["정우"];
+import { useForm } from "react-hook-form";
+import MyArtistList from "@/components/MyArtistList";
+import AlertModal from "@/components/modal/AlertModal";
+import InputModal from "@/components/modal/InputModal";
+import { useModal } from "@/hooks/useModal";
 
 const FavoritePage = () => {
-  const [favorite, setFavorite] = useState<string[]>(INITIAL);
-  const handleClick = (name: string) => () => {
-    if (favorite.includes(name)) {
-      setFavorite((prev) => prev.filter((item) => item !== name));
-      return;
-    }
-    setFavorite((prev) => [...prev, name]);
-  };
-
-  const { isVisible, infRef } = useInfScroll();
-  const [cursorId, setCursorId] = useState(12);
-
-  useEffect(() => {
-    if (cursorId > MOCK.length) return;
-    if (isVisible) {
-      setCursorId((prev) => prev + 6);
-    }
-  }, [isVisible]);
+  const { modal, openModal, closeModal } = useModal();
+  const { control } = useForm({ defaultValues: { search: "" } });
 
   return (
-    <div className="flex flex-col gap-24 overflow-auto py-24">
-      <button className="w-max text-14 font-600 text-gray-500 underline underline-offset-2">{"찾으시는 아티스트가 없나요? >"}</button>
-      <div className="grid h-5/6 snap-y snap-mandatory grid-cols-3 gap-20 self-start overflow-auto px-16">
-        {MOCK.slice(0, cursorId).map((entity) => (
-          <button onClick={handleClick(entity.name)} key={entity.name} className="flex w-max snap-start flex-col items-center gap-8">
-            <div className={classNames("h-80 w-80 rounded-full bg-gray-300", { "border-[1px] border-solid border-black": favorite.includes(entity.name) })} />
-            {/* <Image src={entity.profileImage} alt={`${entity.name} 사진`} /> */}
-            <p className="text-16 font-600">{entity.name}</p>
+    <>
+      <div className="flex flex-col gap-24 px-20 py-36">
+        <section className="flex flex-col gap-12">
+          <h2 className="text-20 font-700 text-gray-900">좋아하는 아티스트를 알려주세요!</h2>
+          <button onClick={() => openModal("noArtist")} className="w-188 text-14 text-gray-500 underline underline-offset-2">
+            찾으시는 아티스트가 없으신가요?
           </button>
-        ))}
-        <div ref={infRef} />
+        </section>
+        <MyArtistList data={MOCK} />
       </div>
-      {/* <button className={classNames("rounded-sm px-16 py-12 text-16", { "bg-black text-white": favorite.length }, { "bg-gray-300 text-black": !favorite.length })}>변경하기</button> */}
-      <BottomButton isDisabled={!favorite.length}>변경 내용 저장</BottomButton>
-    </div>
+      {modal === "noArtist" && (
+        <InputModal
+          title="아티스트 등록 요청"
+          label=""
+          btnText="요청하기"
+          handleBtnClick={() => openModal("confirm")}
+          closeModal={closeModal}
+          {...{ placeholder: "찾으시는 아티스트를 알려주세요.", rules: { required: "내용을 입력하세요." }, control: control }}
+        />
+      )}
+      {modal === "confirm" && <AlertModal closeModal={closeModal}>등록 요청이 제출되었습니다.</AlertModal>}
+    </>
   );
 };
 export default FavoritePage;

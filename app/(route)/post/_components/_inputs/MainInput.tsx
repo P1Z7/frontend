@@ -9,7 +9,7 @@ import { PostType } from "../../page";
 
 const MainInput = () => {
   const { modal, openModal, closeModal } = useModal();
-  const { bottomSheet, openBottomSheet, closeBottomSheet } = useBottomSheet();
+  const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
   const {
     formState: { defaultValues },
     watch,
@@ -40,12 +40,14 @@ const MainInput = () => {
           </div>
         </div>
       </div>
-      {bottomSheet === "address" && <AddressBottomSheet closeBottomSheet={closeBottomSheet} />}
+
+      {bottomSheet === "address" && <AddressBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} />}
       {bottomSheet === "date" && (
         <CalenderBottomSheet
           closeBottomSheet={closeBottomSheet}
           setEndDateFilter={(date: string) => setValue("endDate", date)}
           setStartDateFilter={(date: string) => setValue("startDate", date)}
+          refs={refs}
         />
       )}
     </>

@@ -4,7 +4,7 @@ import { MOCK_EVENTS } from "@/constants/mock";
 
 const PopularEventsCarousel = () => {
   return (
-    <Carousel title="실시간 인기 행사" customSettings={{ autoplay: true }}>
+    <Carousel title="지금 가장 인기 있는 행사" customSettings={{ autoplay: true }}>
       <PopularEvents />
     </Carousel>
   );
