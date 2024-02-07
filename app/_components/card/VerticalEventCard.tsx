@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Fragment } from "react";
 import { formatAddress, formatDate } from "@/utils/formatString";
 import { EventCardType } from "@/types/index";
 import HeartButton from "../button/HeartButton";
@@ -43,10 +44,10 @@ const VerticalEventCard = ({ data }: Props) => {
         <div className="flex-center gap-8">
           <p className="truncate text-16 font-600 text-gray-900">
             {data.targetArtists?.map((artist, index) => (
-              <>
+              <Fragment key={artist.artistId}>
                 {index > 0 && ", "}
                 {artist.artistName}
-              </>
+              </Fragment>
             ))}
           </p>
           <Chip label={data.eventType} kind="event" />
