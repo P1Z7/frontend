@@ -1,5 +1,5 @@
 import { MOCK } from "app/_constants/mock";
-import { Ref, forwardRef, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import ArtistCard from "@/components/ArtistCard";
@@ -16,17 +16,17 @@ interface Props {
 }
 
 const SearchArtist = ({ data, onClick, myArtists }: Props) => {
-  const [artistList, setArtistList] = useState("");
+  const [keyword, setKeyword] = useState("");
   const [searchedData, setSearchedData] = useState(data);
 
   useEffect(() => {
     // 검색 API 들어갈 자리
     setSearchedData(
       MOCK.filter((item) => {
-        return item.name.toLowerCase().includes(artistList.toLowerCase()) || (item.group && item.group.some((group) => group.toLowerCase().includes(artistList.toLowerCase())));
+        return item.name.toLowerCase().includes(keyword.toLowerCase()) || (item.group && item.group.some((group) => group.toLowerCase().includes(keyword.toLowerCase())));
       }),
     );
-  }, [artistList]);
+  }, [keyword]);
 
   const [selected, setSelected] = useState<string[]>(myArtists);
   const lastButton = useRef<HTMLButtonElement>(null);
@@ -73,18 +73,12 @@ const SearchArtist = ({ data, onClick, myArtists }: Props) => {
         찾으시는 아티스트가 없으신가요?
       </button>
       <section className="pt-24">
-        <SearchInput placeholder="입력해주세요." setKeyword={setArtistList} />
+        <SearchInput placeholder="입력해주세요." setKeyword={setKeyword} />
       </section>
-      <div className="sticky top-72 z-nav flex w-full gap-12 overflow-hidden pb-8 pt-16">
+      <div className="sticky top-72 z-nav mb-16 mt-8 flex w-full gap-12 overflow-hidden bg-white-black">
         {selected.map((name, idx) => (
-          <div className="mb-16 rounded-full bg-white-black">
-            <ChipButton
-              key={name}
-              label={name}
-              onClick={() => handleArtistClick(name, !myArtists.includes(name))}
-              ref={idx === selected.length - 1 ? lastButton : undefined}
-              canDelete
-            />
+          <div className="mb-8 mt-8 rounded-full bg-white-black" key={name}>
+            <ChipButton label={name} onClick={() => handleArtistClick(name, !myArtists.includes(name))} ref={idx === selected.length - 1 ? lastButton : undefined} canDelete />
           </div>
         ))}
       </div>

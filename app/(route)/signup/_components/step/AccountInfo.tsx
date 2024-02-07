@@ -6,8 +6,8 @@ import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 import { SignUpFormType } from "@/types/index";
 
 const AccountInfo = ({ onNext }: { onNext: () => void }) => {
-  const { formState, control, getValues, handleSubmit } = useFormContext<SignUpFormType>();
-  const { email, password, passwordCh } = getValues();
+  const { formState, control, getValues, handleSubmit, watch } = useFormContext<SignUpFormType>();
+  const { email, password, passwordCh } = watch();
 
   const isButtonDisabled = !!(formState.errors.email || formState.errors.password || formState.errors.passwordCh) || !(email && password && passwordCh);
 
