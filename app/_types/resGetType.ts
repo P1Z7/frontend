@@ -1,18 +1,18 @@
-import { EventImagesType, EventTagType } from ".";
+import { EventImagesType, EventTagType, EventType, SnsType } from ".";
 
 interface Res_Get_Event {
   id: string;
   sequence: string;
   placeName: string;
   description: string;
-  eventType: string;
+  eventType: EventType;
   startDate: string;
   endDate: string;
   eventUrl: string;
   user: string;
   userId: string;
-  organizerSns: String;
-  snsType: string;
+  organizerSns: string;
+  snsType: SnsType;
   address: string;
   addressDetail: string;
   isAgreed: boolean;

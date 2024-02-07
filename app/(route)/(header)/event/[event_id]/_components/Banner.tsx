@@ -3,7 +3,8 @@ import Link from "next/link";
 import { ReactNode } from "react";
 import Chip from "@/components/chip/Chip";
 import { formatDate } from "@/utils/formatString";
-import { EventInfoType } from "@/types/index";
+import { EventType } from "@/types/index";
+import { Res_Get_Type } from "@/types/resGetType";
 import CalendarIcon from "@/public/icon/calendar.svg";
 import GiftIcon from "@/public/icon/gift.svg";
 import HeartIcon from "@/public/icon/heart.svg";
@@ -29,23 +30,24 @@ const SnsIcon = {
 };
 
 interface Props {
-  data: EventInfoType;
+  data: Res_Get_Type["event"];
 }
 
 const Banner = ({ data }: Props) => {
   const formattedDate = formatDate(data.startDate, data.endDate, true);
+  const bannerImage = data.eventImages.find((images) => images.isMain);
 
   return (
     <section className="w-full">
       <div className="relative h-[48rem] w-full">
-        <Image src={data.eventImages?.[0] ?? ""} alt={"행사 포스터 썸네일"} priority fill className="object-cover" />
+        <Image src={bannerImage?.imageUrl ?? ""} alt={"행사 포스터 썸네일"} priority fill className="object-cover" />
       </div>
       <div className="relative bottom-24 rounded-t-lg bg-white-black p-24 pb-0">
         <button className="absolute right-20 top-24 text-center text-12 font-600">
           <HeartIcon stroke="#1C1E22" />
           {100}
         </button>
-        <MainDescription />
+        <MainDescription placeName={data.placeName} artists={data.targetArtists} eventType={data.eventType} />
         <div className="flex flex-col gap-8 pt-16 text-14 font-500">
           <SubDescription>
             <CalendarIcon {...IconStyleProps} />
@@ -53,11 +55,13 @@ const Banner = ({ data }: Props) => {
           </SubDescription>
           <SubDescription>
             <MapIcon {...IconStyleProps} />
-            {data.address}
+            {`${data.address} ${data.addressDetail}`}
           </SubDescription>
           <SubDescription>
             <GiftIcon {...IconStyleProps} />
-            {data.tags?.map((tag) => <Chip key={tag} kind="goods" label={tag} />)}
+            {data.eventTags.map((tag) => (
+              <Chip key={tag.tagId} kind="goods" label={tag.tagName} />
+            ))}
           </SubDescription>
           <SubDescription isVisible={Boolean(data?.eventUrl)}>
             <LinkIcon {...IconStyleProps} />
@@ -80,13 +84,31 @@ const Banner = ({ data }: Props) => {
 
 export default Banner;
 
-const MainDescription = () => {
+interface MainDescriptionProps {
+  placeName: string;
+  // TODO: ArtistType으로 통일
+  artists: {
+    eventId: string;
+    artistId: string;
+    artistName: string;
+    groupId: string;
+    groupName: string;
+  }[];
+  eventType: EventType;
+}
+
+const MainDescription = ({ placeName, artists, eventType }: MainDescriptionProps) => {
+  const formatArtist = (artists: { artistName: string; groupName: string }[]) => {
+    return artists.map((artist) => `${artist.artistName} (${artist.groupName})`).join(", ");
+  };
+  const formattedArtist = formatArtist(artists);
+
   return (
     <div className="flex flex-col gap-8 border-b border-gray-100 pb-16">
-      <h1 className="h-24 text-20 font-600">파이키</h1>
+      <h1 className="h-24 text-20 font-600">{placeName}</h1>
       <div className="flex items-center gap-8">
-        <span className="text-16 font-600">민지 (NewJeans)</span>
-        <Chip kind="event" label="팝업스토어" />
+        <span className="text-16 font-600">{formattedArtist}</span>
+        <Chip kind="event" label={eventType} />
       </div>
     </div>
   );

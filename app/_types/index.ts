@@ -97,5 +97,5 @@ export interface EventImagesType {
 export interface EventTagType {
   eventId: string;
   tagId: string;
-  tagName: string;
+  tagName: GiftType;
 }

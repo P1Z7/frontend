@@ -20,11 +20,10 @@ const EventInfoPage = async ({ params }: Props) => {
   const eventData = MOCK_EVENTS[0];
 
   const eventInfo = await getEventInfo(params.event_id);
-  const bannerImage = eventInfo.eventImages.find((images) => images.isMain);
 
   return (
     <>
-      <Banner data={eventData} />
+      <Banner data={eventInfo} />
       <Tabs names={["행사정보", "위치", "후기"]}>
         <DescriptionTab images={eventInfo.eventImages} description={eventInfo.description} />
         <LocationTab name={eventData.placeName} address={eventData.address} />
