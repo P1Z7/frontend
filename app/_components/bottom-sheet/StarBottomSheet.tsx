@@ -1,8 +1,8 @@
 import { PostType } from "@/(route)/post/page";
 import { useQuery } from "@tanstack/react-query";
+import { Api } from "app/_api/api";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { Api } from "@/api/api";
 import { BottomSheetBaseType } from "@/types/index";
 import ArtistCard from "../ArtistCard";
 import SearchInput from "../input/SearchInput";
@@ -81,7 +81,7 @@ const StarBottomSheet = ({ closeBottomSheet, refs }: BottomSheetBaseType) => {
         ) : (
           <>
             <SearchInput setKeyword={setKeyword} />
-            <div className="scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-gray-100 grid h-[34rem] grid-cols-3 overflow-y-scroll">
+            <div className="grid h-[34rem] grid-cols-3 overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-100 scrollbar-track-rounded-full scrollbar-thumb-rounded-full">
               {isLoading && <div>데이터 로딩중 ~~</div>}
               {isSuccess &&
                 groupData.groupAndSoloList.map(({ id, image, name, type }: any) => (
