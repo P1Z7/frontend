@@ -49,12 +49,14 @@ const InputText: Function = ({
   const Label = useCallback(() => {
     if (children) {
       return (
-        <label htmlFor={field.name} className={`text-16 ${horizontal && "mt-20"}`}>
+        <label htmlFor={field.name} className={`flex items-center text-16 ${horizontal && "mt-20"}`}>
           {children}
-          <span className="ml-4 text-red">{required && "*"}</span>
+          {required && <span className="ml-4 text-sub-red">*</span>}
+          {isEdit && <span className="ml-4 text-12 font-600 text-sub-skyblue">수정됨</span>}
         </label>
       );
     }
+    return null;
   }, []);
 
   const Button = useCallback(() => {
