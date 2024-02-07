@@ -17,10 +17,10 @@ const ArtistCard = ({ children, onClick, profileImage, isChecked = false, isSmal
           alt="아티스트 이미지"
           fill
           sizes="8.8rem"
-          className={`rounded-full object-cover ${isChecked ? "border-main-pink-500 border-2" : "border border-gray-100"}`}
+          className={`rounded-full object-cover ${isChecked ? "border-2 border-main-pink-500" : "border border-gray-100"}`}
         />
       </div>
-      <p className={isSmall ? "h-20 text-14 font-600 text-gray-700" : "h-20 text-16 font-600 text-gray-900"}>{children}</p>
+      <p className={`w-88 break-all text-center ${isSmall ? "h-20 text-14 font-600 text-gray-700" : "text-16 font-600 text-gray-900"}`}>{children}</p>
     </div>
   );
 };
