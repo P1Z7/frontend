@@ -4,12 +4,11 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Api } from "@/api/api";
 import { BottomSheetBaseType } from "@/types/index";
-import { Req_Post_Type } from "@/types/reqType";
 import ArtistCard from "../ArtistCard";
 import SearchInput from "../input/SearchInput";
 import BottomSheet from "./BottomSheetMaterial";
 
-const StarBottomSheet = ({ closeBottomSheet }: BottomSheetBaseType) => {
+const StarBottomSheet = ({ closeBottomSheet, refs }: BottomSheetBaseType) => {
   const [groupId, setgroupId] = useState(""); //선택한 그룹 아이디
   const [keyword, setKeyword] = useState("");
   const { setValue } = useFormContext<PostType>();
@@ -22,8 +21,8 @@ const StarBottomSheet = ({ closeBottomSheet }: BottomSheetBaseType) => {
   } = useQuery({
     queryKey: ["group"],
     queryFn: async () => {
-      return instance.get("/group/solo", { size: 12, page: 1 });
-      // return instance.post<Req_Post_Type["signup"]>("/users", {
+      return instance.get("/group/solo", { page: 1, size: 12 });
+      // return instance.post("/users", {
       //   userName: "",
       //   signupMethod: "opener",
       //   email: "post@test.com",
@@ -68,9 +67,9 @@ const StarBottomSheet = ({ closeBottomSheet }: BottomSheetBaseType) => {
   // console.log(groupData);
 
   return (
-    <BottomSheet.Frame closeBottomSheet={closeBottomSheet}>
+    <BottomSheet.Frame closeBottomSheet={closeBottomSheet} ref={refs.sheet}>
       <BottomSheet.Title>아티스트 선택</BottomSheet.Title>
-      <div className="flex flex-col gap-20 px-24 pt-16 text-16" onClick={(event) => event.stopPropagation()}>
+      <div className="flex flex-col gap-20 px-24 pt-16 text-16" onClick={(event) => event.stopPropagation()} ref={refs.content}>
         {groupId ? (
           <>
             {/* {isMemberLoading && <div>멤버 로딩중</div>}

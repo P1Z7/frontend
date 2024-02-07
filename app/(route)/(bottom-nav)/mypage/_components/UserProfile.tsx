@@ -11,7 +11,7 @@ interface Props {
 }
 
 const UserProfile = ({ data }: Props) => {
-  const { bottomSheet, openBottomSheet, closeBottomSheet } = useBottomSheet();
+  const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
 
   return (
     <div className="flex items-center justify-between px-20 pt-48">
@@ -25,7 +25,7 @@ const UserProfile = ({ data }: Props) => {
       <button onClick={() => openBottomSheet("mypage")}>
         <Image src="/icon/kebab-black.svg" width={24} height={25} alt="계정 정보 수정" />
       </button>
-      {bottomSheet === "mypage" && <MyPageBottomSheet closeBottomSheet={closeBottomSheet} />}
+      {bottomSheet === "mypage" && <MyPageBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} />}
     </div>
   );
 };
