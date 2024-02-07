@@ -1,6 +1,5 @@
 "use client";
 
-import classNames from "classnames";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import BottomSheet from "@/components/bottom-sheet/BottomSheetMaterial";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
