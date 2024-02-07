@@ -49,13 +49,15 @@ const InputText: Function = ({
   const Label = useCallback(() => {
     if (children) {
       return (
-        <label htmlFor={field.name} className={`text-16 ${horizontal && "mt-20"}`}>
+        <label htmlFor={field.name} className={`flex items-center text-16 ${horizontal && "mt-20"}`}>
           {children}
-          <span className="ml-4 text-red">{required && "*"}</span>
+          {required && <span className="ml-4 text-sub-red">*</span>}
+          {isEdit && <span className="ml-4 text-12 font-600 text-sub-skyblue">수정됨</span>}
         </label>
       );
     }
-  }, []);
+    return null;
+  }, [children, required, isEdit]);
 
   const Button = useCallback(() => {
     if (noButton || hidden) {
@@ -101,7 +103,6 @@ const InputText: Function = ({
           className={classNames(
             "focus:border-1 mt-8 h-48 w-full rounded-sm bg-gray-50 px-16 py-12 pr-36 text-16 text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-1 focus:outline-blue",
             { "outline outline-1 outline-red": fieldState.error },
-            { "outline outline-1 outline-blue": isEdit },
           )}
         />
         <Button />
