@@ -10,7 +10,7 @@ interface GenericFormProps<T extends FieldValues> {
   formOptions?: UseFormProps<T>;
 }
 
-const GenericForm = <T extends FieldValues>({ children, formOptions }: GenericFormProps<T>) => {
+const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: GenericFormProps<T>) => {
   const methods = useForm<T>(formOptions);
   const path = usePathname();
   const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
@@ -83,4 +83,4 @@ const GenericForm = <T extends FieldValues>({ children, formOptions }: GenericFo
   );
 };
 
-export default GenericForm;
+export default GenericFormProvider;

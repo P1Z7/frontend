@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { KeyboardEvent } from "react";
 import { useForm } from "react-hook-form";
 import CloseIcon from "@/public/icon/close.svg";
@@ -23,6 +23,12 @@ const SearchInput = ({ setKeyword, placeholder = "검색어를 입력하세요."
     setKeyword("");
     setValue("search", "");
   };
+
+  useEffect(() => {
+    if (!search) {
+      handleCloseClick();
+    }
+  }, [search]);
 
   return (
     <div className="relative">

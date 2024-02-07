@@ -1,9 +1,11 @@
 "use client";
 
+import Image from "next/image";
+import GenericFormProvider from "@/components/GenericFormProvider";
 import Header from "@/components/Header";
 import { useFunnel } from "@/hooks/useFunnel";
 import { PostStepNameType } from "@/types/index";
-import GenericForm from "../(header)/signup/_components/GenericForm";
+import BackIcon from "@/public/icon/arrow-left_lg.svg";
 import DetailInfo from "./_components/DetailInfo";
 import MainInfo from "./_components/MainInfo";
 import StarInfo from "./_components/StarInfo";
@@ -49,7 +51,7 @@ const Post = () => {
     <>
       <Header handleClick={handlePrevClick} />
       <div className="p-20 pb-92 pt-36 text-16">
-        <GenericForm formOptions={{ mode: "onBlur", defaultValues: DEFAULT_INPUT_VALUES, shouldFocusError: true }}>
+        <GenericFormProvider formOptions={{ mode: "onBlur", defaultValues: DEFAULT_INPUT_VALUES, shouldFocusError: true }}>
           <Funnel>
             <Step name={POST_STEPS[0]}>
               <StarInfo onNextStep={() => setStep(POST_STEPS[1])} />
@@ -64,7 +66,7 @@ const Post = () => {
               <DetailInfo />
             </Step>
           </Funnel>
-        </GenericForm>
+        </GenericFormProvider>
       </div>
     </>
   );
