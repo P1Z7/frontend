@@ -12,6 +12,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 const ChipButton = forwardRef(({ label, selected, canDelete, ...rest }: Props, ref: Ref<HTMLButtonElement>) => {
   return (
     <button
+      type="button"
       ref={ref}
       {...rest}
       className={`flex-center w-max flex-shrink-0 gap-4 rounded-lg px-12 py-4  ${canDelete && "border border-main-pink-300 bg-sub-pink-bg text-main-pink-white"} ${selected ? "bg-gray-900 text-white-black" : "bg-gray-50 text-gray-700"}`}

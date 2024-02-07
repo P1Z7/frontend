@@ -1,10 +1,10 @@
-import Carousel from "@/components/Carousel";
 import VerticalEventCard from "@/components/card/VerticalEventCard";
 import { MOCK_EVENTS } from "@/constants/mock";
+import Carousel from "./Carousel";
 
 const NewestEventsCarousel = () => {
   return (
-    <Carousel title="새로 올라온 행사" customSettings={{ autoplay: true }}>
+    <Carousel title="새로 올라온 행사">
       <NewestEvents />
     </Carousel>
   );
