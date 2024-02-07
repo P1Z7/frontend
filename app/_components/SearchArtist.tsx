@@ -1,11 +1,14 @@
 import { MOCK } from "app/_constants/mock";
 import { useEffect, useRef, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import ArtistCard from "@/components/ArtistCard";
 import ChipButton from "@/components/chip/ChipButton";
 import SearchInput from "@/components/input/SearchInput";
-import ReqNewArtistModal from "@/components/modal/ReqNewArtistModal";
 import { useModal } from "@/hooks/useModal";
 import { ArtistType } from "@/types/index";
+import AlertModal from "./modal/AlertModal";
+import InputModal from "./modal/InputModal";
 
 interface Props {
   data: ArtistType[];
@@ -15,18 +18,39 @@ interface Props {
 
 const SearchArtist = ({ data, onClick, myArtists }: Props) => {
   const { modal, openModal, closeModal } = useModal();
-  const [value, setValue] = useState("");
+  const [artistList, setArtistList] = useState("");
   const [checked, setChecked] = useState<string[]>([]);
   const [searchedData, setSearchedData] = useState(data);
   const lastButton = useRef<HTMLButtonElement>(null);
+  const { control, handleSubmit, setValue } = useForm({ defaultValues: { request: "" } });
+
+  const notify = () =>
+    toast.success("등록 요청이 제출되었습니다.", {
+      position: "bottom-center",
+      style: {
+        padding: "16px 28px",
+        fontFamily: "Pretendard",
+        fontWeight: "600",
+        fontSize: "16px",
+      },
+    });
+
+  const onSubmit: SubmitHandler<{ request: string }> = ({ request }) => {
+    if (request) {
+      setValue("request", "");
+      closeModal();
+      notify();
+    }
+  };
 
   useEffect(() => {
+    // 검색 API 들어갈 자리
     setSearchedData(
       MOCK.filter((item) => {
-        return item.name.toLowerCase().includes(value.toLowerCase()) || (item.group && item.group.some((group) => group.toLowerCase().includes(value.toLowerCase())));
+        return item.name.toLowerCase().includes(artistList.toLowerCase()) || (item.group && item.group.some((group) => group.toLowerCase().includes(artistList.toLowerCase())));
       }),
     );
-  }, [value]);
+  }, [artistList]);
 
   useEffect(() => {
     lastButton.current?.scrollIntoView({ behavior: "smooth" });
@@ -34,10 +58,10 @@ const SearchArtist = ({ data, onClick, myArtists }: Props) => {
 
   return (
     <div className="flex flex-col gap-24 pt-8">
-      <button className="w-fit text-14 font-500 text-gray-400 underline" onClick={() => openModal("req_artist")} type="button">
+      <button className="w-fit text-14 font-500 text-gray-400 underline" onClick={() => openModal("reqArtist")} type="button">
         찾으시는 아티스트가 없으신가요?
       </button>
-      <SearchInput placeholder="입력해주세요." setKeyword={setValue} />
+      <SearchInput placeholder="입력해주세요." setKeyword={setArtistList} />
       <ul className="flex w-full gap-12 overflow-hidden">
         {data.map((cardList) => (
           <Chip name={cardList.name} onClick={onClick} myArtists={myArtists} key={cardList.name} />
@@ -48,7 +72,15 @@ const SearchArtist = ({ data, onClick, myArtists }: Props) => {
           <Card data={cardList} onClick={onClick} myArtists={myArtists} key={cardList.name} setChecked={setChecked} />
         ))}
       </ul>
-      {modal === "req_artist" && <ReqNewArtistModal closeModal={closeModal} />}
+      {modal === "reqArtist" && (
+        <InputModal
+          title="아티스트 등록 요청"
+          btnText="요청하기"
+          handleBtnClick={handleSubmit(onSubmit)}
+          closeModal={closeModal}
+          {...{ name: "request", placeholder: "찾으시는 아티스트를 알려주세요.", rules: { required: "내용을 입력하세요." }, control, noButton: true }}
+        />
+      )}
     </div>
   );
 };
@@ -76,7 +108,7 @@ const Chip = ({ name, onClick, myArtists }: ChipProps) => {
 
   return (
     <li>
-      <ChipButton key={name} label={name} onDelete={handleDelete} />
+      <ChipButton key={name} label={name} onClick={handleDelete} canDelete />
     </li>
   );
 };
