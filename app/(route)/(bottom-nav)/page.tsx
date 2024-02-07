@@ -11,7 +11,7 @@ const Home = () => {
       <header className="fixed left-0 top-0 z-nav h-88 w-full bg-white-black px-20 pb-16 pt-48">
         <Logo />
       </header>
-      <main className="flex flex-col gap-40 overflow-hidden px-20">
+      <main className="flex flex-col gap-40 overflow-hidden">
         <FavArtistEventsCarousel />
         <PopularEventsCarousel />
         <NewestEventsCarousel />
