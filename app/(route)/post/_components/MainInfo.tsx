@@ -19,8 +19,8 @@ const MainInfo = ({ onNextStep }: Props) => {
     formState: { isValid },
   } = useFormContext<PostType>();
 
-  const { title, address, startDate, endDate } = watch();
-  const isDisabled = !title || !address || !startDate || !endDate || !isValid;
+  const { placeName, address, startDate, endDate } = watch();
+  const isDisabled = !placeName || !address || !startDate || !endDate || !isValid;
 
   return (
     <PostFrame>
