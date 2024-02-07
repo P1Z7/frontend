@@ -17,12 +17,12 @@ const BottomSheetFrame = forwardRef<HTMLDivElement, BottomSheetFrameProps>(({ ch
         <div
           ref={ref}
           onClick={(e: SyntheticEvent) => e.stopPropagation()}
-          className="relative flex max-h-[55.6rem] w-full transform animate-slideUp flex-col overflow-y-auto rounded-t-md bg-white-black pt-16 transition duration-150 ease-out"
+          className="relative flex max-h-[55.6rem] w-full transform animate-slideUp flex-col overflow-hidden rounded-t-md bg-white-black pt-16 transition duration-150 ease-out"
         >
-          <button onClick={closeBottomSheet} className="absolute right-20 top-16">
+          <button onClick={closeBottomSheet} className="fixed right-20 top-16 z-nav">
             <CloseIcon stroke="#C1C5CC" width="24" height="24" />
           </button>
-          {children}
+          <div className="overflow-y-auto">{children}</div>
         </div>
       </div>
     </BottomSheetPortal>
@@ -35,7 +35,7 @@ interface BottomSheetTitleProps {
 }
 
 const BottomSheetTitle = ({ children }: BottomSheetTitleProps) => {
-  return <div className="px-20 text-14 font-500">{children}</div>;
+  return <div className="sticky top-0 bg-white-black px-20 text-14 font-500">{children}</div>;
 };
 
 interface BottomSheetButtonProps {

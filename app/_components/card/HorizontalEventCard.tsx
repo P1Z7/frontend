@@ -25,7 +25,7 @@ const HorizontalEventCard = ({ data, hasHeart = false, onHeartClick }: Props) =>
         <div className="absolute right-0 top-0">
           <HeartButton isSmall isSelected={hasHeart} onClick={onHeartClick} />
         </div>
-        <h3 className="w-200 truncate text-16 font-600">{data.placeName}</h3>
+        <h3 className="w-full truncate pr-20 text-16 font-600">{data.placeName}</h3>
         <div className="flex w-full gap-8">
           <span className="text-16 font-600">{data.artists[0]}</span>
           <Chip kind="event" label={data.eventType} />

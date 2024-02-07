@@ -13,20 +13,23 @@ import { useModal } from "@/hooks/useModal";
 import { useStore } from "@/store/index";
 
 type PostValueType =
-  | "title"
-  | "group"
-  | "member"
+  | "placeName"
   | "eventType"
-  | "address"
-  | "detailAddress"
+  | "groupId"
+  | "artists"
+  | "groupName"
+  | "artistNames"
   | "startDate"
   | "endDate"
-  | "snsId"
-  | "snsType"
+  | "address"
+  | "addressDetail"
+  | "userId"
+  | "eventImages"
+  | "description"
   | "eventUrl"
-  | "gift"
-  | "images"
-  | "detailText";
+  | "organizerSns"
+  | "snsType"
+  | "tags";
 
 const EditContent = () => {
   const { modal, openModal, closeModal } = useModal();
@@ -49,9 +52,10 @@ const EditContent = () => {
         const prev = defaultValues[key];
         const cur = watchedValue[key];
         switch (key) {
-          case "member":
-          case "gift":
-          case "images":
+          case "artists":
+          case "artistNames":
+          case "tags":
+          case "eventImages":
             if (typeof prev === "string") return false;
             isUpdated = cur.length !== prev?.length || !prev?.every((c, i) => c === cur[i]);
             break;
