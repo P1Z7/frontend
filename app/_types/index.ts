@@ -83,3 +83,19 @@ export type ArtistType = {
   group?: string[];
   profileImage: string;
 };
+
+export interface EventImagesType {
+  id: string;
+  eventId: string;
+  imageUrl: string;
+  isMain: boolean;
+  createdAt: string;
+  updatedAt: string | null;
+  deletedAt: string | null;
+}
+
+export interface EventTagType {
+  eventId: string;
+  tagId: string;
+  tagName: string;
+}
