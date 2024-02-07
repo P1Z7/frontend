@@ -3,7 +3,6 @@
 import Header from "@/components/Header";
 import { useFunnel } from "@/hooks/useFunnel";
 import { PostStepNameType } from "@/types/index";
-import { Req_Post_Type } from "@/types/reqType";
 import GenericForm from "../(header)/signup/_components/GenericForm";
 import DetailInfo from "./_components/DetailInfo";
 import MainInfo from "./_components/MainInfo";
