@@ -40,7 +40,7 @@ const VerticalEventCard = ({ data }: Props) => {
           <p className="border-r border-gray-400 pr-8">{formattedDate}</p>
           <p>{formattedAddress}</p>
         </div>
-        <div className="flex gap-8">
+        <div className="flex-center gap-8">
           <p className="truncate text-16 font-600 text-gray-900">
             {data.targetArtists?.map((artist, index) => (
               <>
