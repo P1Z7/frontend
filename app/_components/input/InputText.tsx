@@ -1,23 +1,17 @@
 import classNames from "classnames";
 import Image from "next/image";
-import { KeyboardEvent, ReactNode, useState } from "react";
+import { InputHTMLAttributes, KeyboardEvent, ReactNode, useCallback, useMemo, useState } from "react";
 import { FieldPath, FieldValues, UseControllerProps, useController } from "react-hook-form";
 
-interface Prop {
+interface Prop extends InputHTMLAttributes<HTMLInputElement> {
   children?: ReactNode;
   type?: "text" | "password";
   horizontal?: boolean;
-  placeholder?: string;
-  autoComplete?: string;
   hint?: string;
-  maxLength?: number;
-  hidden?: boolean;
-  readOnly?: boolean;
-  required?: boolean;
-  disabled?: boolean;
   onKeyDown?: (e: KeyboardEvent) => void;
   onClick?: () => void;
   isEdit?: boolean;
+  noButton?: boolean;
 }
 
 type Function = <TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>>(
@@ -31,7 +25,6 @@ const InputText: Function = ({
   placeholder,
   autoComplete,
   hint,
-  maxLength,
   hidden,
   required,
   readOnly,
@@ -39,6 +32,7 @@ const InputText: Function = ({
   onClick,
   onKeyDown,
   isEdit,
+  noButton,
   ...control
 }) => {
   const { field, fieldState } = useController(control);
@@ -52,20 +46,55 @@ const InputText: Function = ({
     field.onChange("");
   };
 
+  const Label = useCallback(() => {
+    if (children) {
+      return (
+        <label htmlFor={field.name} className={`flex items-center text-16 ${horizontal && "mt-20"}`}>
+          {children}
+          {required && <span className="ml-4 text-sub-red">*</span>}
+          {isEdit && <span className="ml-4 text-12 font-600 text-sub-skyblue">수정됨</span>}
+        </label>
+      );
+    }
+    return null;
+  }, [children, required, isEdit]);
+
+  const Button = useCallback(() => {
+    if (noButton || hidden) {
+      return null;
+    }
+    if (initialType === "password") {
+      return (
+        <button onClick={handlePasswordShow} onKeyDown={onKeyDown} type="button" className="flex-center absolute right-16 top-20 h-24 w-24">
+          {<Image src={type === "password" ? "/icon/closed-eyes_black.svg" : "/icon/opened-eyes_black.svg"} alt="비밀번호 아이콘" width={16} height={16} />}
+        </button>
+      );
+    }
+    return (
+      <button onClick={handleDelete} onKeyDown={onKeyDown} type="button" className="absolute right-16 top-24 h-16 w-16">
+        <Image src="/icon/x_gray.svg" alt="초기화 버튼" width={16} height={16} />
+      </button>
+    );
+  }, []);
+
+  const ErrorField = useCallback(() => {
+    return (
+      <div className="mt-4 flex h-12">
+        {(!!fieldState.error || hint) && <p className={`font-normal text-12 ${fieldState.error ? "text-red" : "text-gray-500"}`}>{fieldState?.error?.message || hint}</p>}
+      </div>
+    );
+  }, [fieldState.error]);
+
   return (
     <div className={`${horizontal && "flex gap-28"}`}>
-      {children && (
-        <label htmlFor={field.name} className={`text-16 ${horizontal && "mt-20"}`}>
-          {children}
-          <span className="ml-4 text-red">{required && "*"}</span>
-        </label>
-      )}
+      <Label />
       <div className={`relative ${horizontal && "flex-1"}`}>
         <input
           id={field.name}
           type={type}
           placeholder={placeholder ?? "입력해주세요."}
           autoComplete={autoComplete ?? "off"}
+          hidden={hidden ?? false}
           readOnly={readOnly ?? false}
           disabled={disabled ?? false}
           onClick={onClick}
@@ -74,26 +103,10 @@ const InputText: Function = ({
           className={classNames(
             "focus:border-1 mt-8 h-48 w-full rounded-sm bg-gray-50 px-16 py-12 pr-36 text-16 text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-1 focus:outline-blue",
             { "outline outline-1 outline-red": fieldState.error },
-            { hidden: hidden ?? false },
-            { "outline outline-1 outline-blue": isEdit },
           )}
         />
-        {initialType === "password" && (
-          <button onClick={handlePasswordShow} onKeyDown={onKeyDown} type="button" className="flex-center absolute right-16 top-20 h-24 w-24">
-            {<Image src={type === "password" ? "/icon/closed-eyes_black.svg" : "/icon/opened-eyes_black.svg"} alt="비밀번호 아이콘" width={16} height={16} />}
-          </button>
-        )}
-        {initialType !== "password" && !hidden && (
-          <button onClick={handleDelete} onKeyDown={onKeyDown} type="button" className="absolute right-16 top-24 h-16 w-16">
-            <Image src="/icon/x_gray.svg" alt="초기화 버튼" width={16} height={16} />
-          </button>
-        )}
-        {(maxLength || fieldState.error || hint) && (
-          <div className="flex gap-8">
-            {maxLength ? <span className={classNames("mt-4 h-8", { "text-red": field.value.length > maxLength })}>{`(${field.value.length}/${maxLength})`}</span> : null}
-            <p className={`font-normal mt-4 h-12 text-12 ${fieldState.error ? "text-red" : "text-gray-400"}`}>{fieldState?.error?.message || hint}</p>
-          </div>
-        )}
+        <Button />
+        <ErrorField />
       </div>
     </div>
   );

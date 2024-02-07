@@ -22,6 +22,7 @@ const InputArea: Function = ({ children, placeholder, onKeyDown, isEdit, hasLimi
     <div className="flex flex-col">
       <label htmlFor={field.name} className="pb-8 text-16 text-gray-900">
         {children}
+        {isEdit && <span className="ml-4 text-12 font-600 text-sub-skyblue">수정됨</span>}
       </label>
       <textarea
         id={field.name}

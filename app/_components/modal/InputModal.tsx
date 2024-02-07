@@ -4,9 +4,10 @@ import Modal from "./ModalMaterial";
 
 interface Props extends ModalBaseType {
   title: string;
-  label: string;
+  label?: string;
   btnText: string;
   handleBtnClick?: () => void;
+  name: string;
 }
 
 /**
@@ -18,9 +19,7 @@ const InputModal = ({ title, label, closeModal, handleBtnClick, btnText, ...prop
   return (
     <Modal.Frame closeModal={closeModal}>
       <Modal.Title>{title}</Modal.Title>
-      <InputText name={label} {...props}>
-        {label}
-      </InputText>
+      <InputText {...props}>{label}</InputText>
       <Modal.Button handleYesClick={handleBtnClick || closeModal}>{btnText}</Modal.Button>
     </Modal.Frame>
   );

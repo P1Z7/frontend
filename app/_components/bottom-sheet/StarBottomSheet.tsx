@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Api } from "@/api/api";
 import { BottomSheetBaseType } from "@/types/index";
-import { Req_Post_Type } from "@/types/reqType";
 import ArtistCard from "../ArtistCard";
 import SearchInput from "../input/SearchInput";
 import BottomSheet from "./BottomSheetMaterial";
@@ -22,8 +21,8 @@ const StarBottomSheet = ({ closeBottomSheet, refs }: BottomSheetBaseType) => {
   } = useQuery({
     queryKey: ["group"],
     queryFn: async () => {
-      return instance.get("/group/solo", { size: 12, page: 1 });
-      // return instance.post<Req_Post_Type["signup"]>("/users", {
+      return instance.get("/group/solo", { page: 1, size: 12 });
+      // return instance.post("/users", {
       //   userName: "",
       //   signupMethod: "opener",
       //   email: "post@test.com",

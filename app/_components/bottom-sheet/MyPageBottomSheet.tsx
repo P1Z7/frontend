@@ -9,17 +9,24 @@ const EditUserInfo = {
   withdrawal: "회원탈퇴",
 };
 
-const MyPageBottomSheet = ({ closeBottomSheet, refs }: BottomSheetBaseType) => {
+const ButtonStyle = "w-full cursor-pointer border-b border-gray-50 px-24 py-20";
+
+const MyPageBottomSheet = ({ closeBottomSheet, refs }: any) => {
   const router = useRouter();
 
   return (
     <BottomSheet.Frame closeBottomSheet={closeBottomSheet} ref={refs.sheet}>
-      <div className="flex flex-col gap-20 p-20 text-16" onClick={(event) => event.stopPropagation()}>
-        <button onClick={() => router.push("/setting/profile")}>{EditUserInfo.profile}</button>
-        <button onClick={() => router.push("/setting/password")}>{EditUserInfo.password}</button>
-        <p>{EditUserInfo.logOut}</p>
-        <p>{EditUserInfo.withdrawal}</p>
-      </div>
+      <ul className="flex h-fit w-full flex-col items-start text-16" onClick={(event) => event.stopPropagation()}>
+        <li className={`mt-20 ${ButtonStyle}`} onClick={() => router.push("/setting/profile")}>
+          {EditUserInfo.profile}
+        </li>
+        <li className={ButtonStyle} onClick={() => router.push("/setting/password")}>
+          {EditUserInfo.password}
+        </li>
+        <li className={ButtonStyle}>{EditUserInfo.logOut}</li>
+        <li className={ButtonStyle}>{EditUserInfo.withdrawal}</li>
+        <li className={ButtonStyle} />
+      </ul>
     </BottomSheet.Frame>
   );
 };

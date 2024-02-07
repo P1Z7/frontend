@@ -62,6 +62,12 @@ type Req_Post_Review = {
   isAgree?: boolean;
 };
 
+type Req_Post_Review_Like = {
+  reviewId: string;
+  userId: string;
+  isLike: boolean;
+};
+
 export type Req_Post_Type = {
   event: Req_Post_Event;
   signup: Req_Post_Signup;
@@ -70,4 +76,5 @@ export type Req_Post_Type = {
   artist: Req_Post_Artist;
   group: Req_Post_Group;
   review: Req_Post_Review;
+  reviewLike: Req_Post_Review_Like;
 };

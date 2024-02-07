@@ -12,16 +12,37 @@ import { ScheduleDataProps } from "../../page";
 const EventTab = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) => {
   const [data, setData] = useState(scheduleData);
   const [calendarStyle, setCalendarStyle] = useState("");
+  let lastDay: (ScheduleDataProps | "blank")[] = [];
 
   const tileContent = ({ date }: { date: Date }) => {
     const eventsForDate = data.filter((event) => new Date(event.startDate).getTime() <= date.getTime() && new Date(event.endDate).getTime() >= date.getTime());
-
     if (eventsForDate.length > 0) {
-      const sortedEvents: ScheduleDataProps[] = sortEvents(eventsForDate);
+      let today: (ScheduleDataProps | "blank")[] = sortEvents(eventsForDate);
+
+      for (const idx in today) {
+        const lastDayItem = lastDay[idx];
+        const todayItem = today[idx];
+        if (!lastDayItem) {
+          lastDay[idx] = todayItem;
+          continue;
+        }
+        if (lastDayItem === todayItem) {
+          continue;
+        }
+        today.splice(Number(idx), 0, "blank");
+      }
+
+      if (date.getDay() === 1) {
+        today = today.filter((item) => item !== "blank");
+      }
+      lastDay = today;
 
       return (
         <div>
-          {sortedEvents.map((event) => {
+          {today.map((event, idx) => {
+            if (event === "blank") {
+              return <span key={idx + event} className={`h-4 rounded-sm`} />;
+            }
             let type;
             if (event.startDate === event.endDate) {
               type = SHAPE_TYPE.oneDay;
@@ -32,7 +53,7 @@ const EventTab = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) => {
             } else {
               type = SHAPE_TYPE.middleDay;
             }
-            return <span key={event.id} className={`h-4 rounded-sm ${type} ${COLOR_TYPE[(event.id + 1) % 6]}`} />;
+            return <span key={event.id} className={`h-4 rounded-sm ${type} ${COLOR_TYPE[event.id % 6]}`} />;
           })}
         </div>
       );
@@ -97,54 +118,52 @@ const EventTab = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) => {
   };
 
   return (
-    <>
-      <div className="flex flex-col gap-16 px-20 py-16">
-        <style>{calendarStyle}</style>
-        {calendarStyle !== "" && (
-          <Calendar
-            locale="ko"
-            onChange={handleClickToday}
-            value={selectedDate}
-            tileContent={tileContent}
-            nextLabel={<PrevIcon width={16} height={16} viewBox="0 0 24 24" stroke="#A2A5AA" />}
-            prevLabel={<NextIcon width={16} height={16} viewBox="0 0 24 24" stroke="#A2A5AA" />}
-            next2Label={null}
-            prev2Label={null}
-            formatDay={(locale, date) => date.getDate().toString()}
-            formatShortWeekday={(locale, date) => {
-              const shortWeekdays = ["S", "M", "T", "W", "T", "F", "S"];
-              return shortWeekdays[date.getDay()];
-            }}
-          />
-        )}
-        <div>
-          <div className="flex gap-12">
-            <ChipButton label="예정" onClick={() => handleChipClick("예정")} selected={currentLabel === "예정"} />
-            <ChipButton label="진행중" onClick={() => handleChipClick("진행중")} selected={currentLabel === "진행중"} />
-            <ChipButton label="종료" onClick={() => handleChipClick("종료")} selected={currentLabel === "종료"} />
-          </div>
-          <ul>
-            {data
-              .filter((event) => !selectedDate || (new Date(event.startDate).getTime() <= selectedDate.getTime() && new Date(event.endDate).getTime() >= selectedDate.getTime()))
-              .map((event) => (
-                <HorizontalEventCard key={event.id} data={event} hasHeart onHeartClick={handleHeartClick} />
-              ))}
-          </ul>
+    <div className="flex flex-col gap-16 px-20 py-16">
+      <style>{calendarStyle}</style>
+      {calendarStyle !== "" && (
+        <Calendar
+          locale="ko"
+          onChange={handleClickToday}
+          value={selectedDate}
+          tileContent={tileContent}
+          nextLabel={<PrevIcon onClick={() => (lastDay = [])} width={64} height={16} viewBox="0 0 24 24" stroke="#A2A5AA" />}
+          prevLabel={<NextIcon onClick={() => (lastDay = [])} width={64} height={16} viewBox="0 0 24 24" stroke="#A2A5AA" />}
+          next2Label={null}
+          prev2Label={null}
+          formatDay={(locale, date) => date.getDate().toString()}
+          formatShortWeekday={(locale, date) => {
+            const shortWeekdays = ["S", "M", "T", "W", "T", "F", "S"];
+            return shortWeekdays[date.getDay()];
+          }}
+        />
+      )}
+      <div>
+        <div className="flex gap-12">
+          <ChipButton label="예정" onClick={() => handleChipClick("예정")} selected={currentLabel === "예정"} />
+          <ChipButton label="진행중" onClick={() => handleChipClick("진행중")} selected={currentLabel === "진행중"} />
+          <ChipButton label="종료" onClick={() => handleChipClick("종료")} selected={currentLabel === "종료"} />
         </div>
+        <ul>
+          {data
+            .filter((event) => !selectedDate || (new Date(event.startDate).getTime() <= selectedDate.getTime() && new Date(event.endDate).getTime() >= selectedDate.getTime()))
+            .map((event) => (
+              <HorizontalEventCard key={event.id} data={event} hasHeart onHeartClick={handleHeartClick} />
+            ))}
+        </ul>
       </div>
-    </>
+    </div>
   );
 };
 
 export default EventTab;
 
 const COLOR_TYPE: Record<number, string> = {
-  1: `bg-sub-pink`,
-  2: `bg-sub-yellow`,
-  3: `bg-sub-skyblue`,
-  4: `bg-sub-blue`,
-  5: `bg-sub-purple`,
-  6: `bg-sub-red`,
+  0: `bg-sub-pink`,
+  1: `bg-sub-yellow`,
+  2: `bg-sub-skyblue`,
+  3: `bg-sub-blue`,
+  4: `bg-sub-purple`,
+  5: `bg-sub-red`,
 };
 
 const SHAPE_TYPE = {
