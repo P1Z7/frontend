@@ -4,7 +4,7 @@ import Modal from "./ModalMaterial";
 
 interface Props extends ModalBaseType {
   title: string;
-  label: string;
+  label?: string;
   btnText: string;
   handleBtnClick?: () => void;
   name: string;

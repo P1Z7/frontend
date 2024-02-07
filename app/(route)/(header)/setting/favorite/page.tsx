@@ -31,7 +31,6 @@ const FavoritePage = () => {
       {modal === "noArtist" && (
         <InputModal
           title="아티스트 등록 요청"
-          label=""
           btnText="요청하기"
           handleBtnClick={handleSubmit(onSubmit)}
           closeModal={closeModal}
