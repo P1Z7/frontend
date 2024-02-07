@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, RefObject } from "react";
+import { ReactElement, ReactNode } from "react";
 
 export interface ModalBaseType {
   closeModal: () => void;
@@ -118,7 +118,7 @@ type eventTagsType = {
   tagName: GiftType;
 };
 
-export type PopularEventType = {
+export type EventCardType = {
   id: string;
   sequence: number;
   placeName: string;

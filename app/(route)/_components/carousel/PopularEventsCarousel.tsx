@@ -3,8 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import VerticalEventCard from "@/components/card/VerticalEventCard";
 import { Api } from "@/api/api";
-import { PopularEventType } from "@/types/index";
-import { MOCK_EVENTS } from "@/constants/mock";
+import { EventCardType } from "@/types/index";
 import Carousel from "./Carousel";
 
 const PopularEventsCarousel = () => {
@@ -18,7 +17,7 @@ const PopularEventsCarousel = () => {
 const PopularEvents = () => {
   const instance = new Api("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MDcxMjgwNDF9.AR8YcpB9rBxRpk8DcWM-JvSbU9oPkLjPRXL7g5GwG8w");
 
-  const { data: popularEvents } = useQuery<PopularEventType[]>({
+  const { data: popularEvents } = useQuery<EventCardType[]>({
     queryKey: ["event"],
     queryFn: async () => {
       return await instance.get("/event/popularity");

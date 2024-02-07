@@ -1,11 +1,11 @@
 import Image from "next/image";
 import { formatAddress, formatDate } from "@/utils/formatString";
-import { EventInfoType, PopularEventType } from "@/types/index";
+import { EventCardType } from "@/types/index";
 import HeartButton from "../button/HeartButton";
 import Chip from "../chip/Chip";
 
 interface Props {
-  data: PopularEventType;
+  data: EventCardType;
 }
 
 const VerticalEventCard = ({ data }: Props) => {
