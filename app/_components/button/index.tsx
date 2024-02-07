@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, cloneElement } from "react";
+import React, { ButtonHTMLAttributes, ReactNode, cloneElement } from "react";
 
 interface IconProps {
   width: string;
@@ -9,9 +9,9 @@ interface IconProps {
 
 interface Props {
   children: ReactNode;
-  type?: "filled" | "lined";
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  type?: "filled" | "lined" | "linedGray";
   size?: "sm" | "md" | "lg" | "xl";
-  onClick?: () => void;
   isDisabled?: boolean;
 }
 
@@ -44,9 +44,12 @@ const Button = ({ children, type = "filled", size = "lg", onClick, isDisabled = 
 
 export default Button;
 
+const BUTTON_DISABLED = "disabled:text-white-white disabled:bg-gray-200 disabled:border-gray-200";
+
 const BUTTON_TYPE = {
-  filled: "bg-main-purple-500 text-white-white border-main-purple-500 disabled:bg-gray-200 disabled:border-gray-200",
-  lined: "bg-main-purple-50 text-main-purple-700 border-main-purple-300 disabled:bg-gray-50 disabled:text-gray-700 disabled:border-gray-400",
+  filled: `bg-main-pink-500 text-white-white border-main-pink-500 disabled:bg-gray-200 disabled:border-gray-200 ${BUTTON_DISABLED}`,
+  lined: `bg-main-pink-50 text-main-pink-white border-main-pink-300 ${BUTTON_DISABLED}`,
+  linedGray: `bg-gray-50 text-gray-700 border-gray-400 disabled:bg-gray-200 disabled:border-gray-200 ${BUTTON_DISABLED}`,
 };
 
 const BUTTON_SIZE = {
@@ -63,6 +66,10 @@ const ICON_COLOR = {
   },
   lined: {
     stroke: "#5c48b0",
-    disabled: "#494F5A",
+    disabled: "white",
+  },
+  linedGray: {
+    stroke: "#494F5A",
+    disabled: "white",
   },
 };

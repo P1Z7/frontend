@@ -12,9 +12,9 @@ interface Props {
 
 const SignupFunnelTitle = ({ name }: Props) => {
   return (
-    <div className="flex-col gap-8">
-      <div className="text-16 font-900">{SIGNUP_FUNNEL_TITLE[name]}</div>
-    </div>
+    // <div className="flex flex-col gap-8">
+    <div className="pt-36 text-20 font-700 text-gray-900">{SIGNUP_FUNNEL_TITLE[name]}</div>
+    // </div>
   );
 };
 

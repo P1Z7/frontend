@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import GiftTag from "@/components/GiftTag";
+import ChipButton from "@/components/chip/ChipButton";
 import InputText from "@/components/input/InputText";
+import { validateEdit } from "@/utils/editValidate";
 import { PostType } from "../../page";
 
 const SNS_TYPE_LIST = ["트위터", "인스타그램", "유튜브", "기타"];
-const GIFT_LIST = ["컵홀더", "포토카드", "엽서", "티켓", "포스터", "스티커", "굿즈", "기타"];
+const GIFT_LIST = ["컵홀더", "포스터", "포토카드", "굿즈", "엽서", "스티커", "티켓", "기타"];
 
 const SubInput = () => {
   const {
@@ -15,8 +16,8 @@ const SubInput = () => {
     setValue,
   } = useFormContext<PostType>();
   const [snsType, setSnsType] = useState(getValues("snsType"));
-  const [giftList, setGiftList] = useState<string[]>(getValues("gift"));
-  const { snsId, eventUrl } = watch();
+  const [giftList, setGiftList] = useState<string[]>(getValues("tags") || []);
+  const { organizerSns, eventUrl } = watch();
 
   const handleRadioChange = (event: any) => {
     setSnsType(event.target.value);
@@ -28,7 +29,7 @@ const SubInput = () => {
   };
 
   useEffect(() => {
-    setValue("gift", giftList);
+    setValue("tags", giftList);
   }, [giftList]);
 
   useEffect(() => {
@@ -36,32 +37,45 @@ const SubInput = () => {
   }, [snsType]);
 
   return (
-    <>
-      <div>
-        <InputText name="snsId" placeholder="SNS 아이디 입력" isEdit={defaultValues?.snsId !== snsId}>
-          주최자
+    <div>
+      <div className="flex flex-col gap-20">
+        <div className="flex flex-col gap-16">
+          <InputText name="organizerSns" placeholder="sns 계정을 입력해주세요." isEdit={validateEdit(defaultValues?.organizerSns !== organizerSns)}>
+            주최자
+          </InputText>
+          <div className="flex gap-16">
+            {SNS_TYPE_LIST.map((type) => (
+              <label key={type} className="flex cursor-pointer items-center gap-4">
+                <input
+                  className="checked:border-main-pink-500 hover:bg-main-pink-50 h-16 w-16 cursor-pointer appearance-none rounded-full border-2 border-gray-200 checked:border-[0.5rem]"
+                  name="sns"
+                  value={type}
+                  type="radio"
+                  onChange={handleRadioChange}
+                  checked={snsType === type}
+                />
+                {type}
+              </label>
+            ))}
+          </div>
+        </div>
+        <InputText name="eventUrl" placeholder="URL을 입력해주세요." isEdit={validateEdit(defaultValues?.eventUrl !== eventUrl)}>
+          링크
         </InputText>
-        {SNS_TYPE_LIST.map((type) => (
-          <label key={type}>
-            <input name="sns" value={type} type="radio" onChange={handleRadioChange} checked={snsType === type} />
-            {type}
-          </label>
-        ))}
-        <InputText name="eventUrl" placeholder="URL 입력" isEdit={defaultValues?.eventUrl !== eventUrl}>
-          행사 링크
-        </InputText>
-        <label>
+        <div className="flex flex-col gap-8">
           특전
-          {GIFT_LIST.map((gift) => (
-            <GiftTag key={gift} handleClick={handleGiftClick} initialChecked={giftList.includes(gift)}>
-              {gift}
-            </GiftTag>
-          ))}
-        </label>
+          <ul className="flex flex-wrap gap-8 gap-y-12">
+            {GIFT_LIST.map((gift) => (
+              <li key={gift}>
+                <ChipButton label={gift} onClick={() => handleGiftClick(gift)} selected={giftList.includes(gift)} />
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-      <InputText name="gift" hidden />
+      <InputText name="tags" hidden />
       <InputText name="snsType" hidden />
-    </>
+    </div>
   );
 };
 

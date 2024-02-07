@@ -1,9 +1,6 @@
 import { useRouter } from "next/navigation";
-import BottomSheetFrame from "./BottomSheetFrame";
-
-interface Props {
-  closeBottomSheet: () => void;
-}
+import { BottomSheetBaseType } from "@/types/index";
+import BottomSheet from "./BottomSheetMaterial";
 
 const EditUserInfo = {
   profile: "프로필수정",
@@ -12,18 +9,25 @@ const EditUserInfo = {
   withdrawal: "회원탈퇴",
 };
 
-const MyPageBottomSheet = ({ closeBottomSheet }: Props) => {
+const ButtonStyle = "w-full cursor-pointer border-b border-gray-50 px-24 py-20";
+
+const MyPageBottomSheet = ({ closeBottomSheet, refs }: any) => {
   const router = useRouter();
 
   return (
-    <BottomSheetFrame closeBottomSheet={closeBottomSheet}>
-      <div className="flex flex-col gap-20 p-20 text-16" onClick={(event) => event.stopPropagation()}>
-        <button onClick={() => router.push("/setting/profile")}>{EditUserInfo.profile}</button>
-        <button onClick={() => router.push("/setting/password")}>{EditUserInfo.password}</button>
-        <p>{EditUserInfo.logOut}</p>
-        <p>{EditUserInfo.withdrawal}</p>
-      </div>
-    </BottomSheetFrame>
+    <BottomSheet.Frame closeBottomSheet={closeBottomSheet} ref={refs.sheet}>
+      <ul className="flex h-fit w-full flex-col items-start text-16" onClick={(event) => event.stopPropagation()}>
+        <li className={`mt-20 ${ButtonStyle}`} onClick={() => router.push("/setting/profile")}>
+          {EditUserInfo.profile}
+        </li>
+        <li className={ButtonStyle} onClick={() => router.push("/setting/password")}>
+          {EditUserInfo.password}
+        </li>
+        <li className={ButtonStyle}>{EditUserInfo.logOut}</li>
+        <li className={ButtonStyle}>{EditUserInfo.withdrawal}</li>
+        <li className={ButtonStyle} />
+      </ul>
+    </BottomSheet.Frame>
   );
 };
 

@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import Heart from "@/public/icon/heart.svg";
 
@@ -8,14 +10,21 @@ interface Props {
 }
 
 const HeartButton = ({ isSmall = false, isSelected = false, onClick, ...props }: Props) => {
+  const [selected, setSelected] = useState(isSelected);
+
+  const handleClick = () => {
+    setSelected((prev) => !prev);
+    onClick?.();
+  };
+
   return (
-    <button className="w-fit" onClick={onClick} {...props}>
+    <button className="w-fit" onClick={handleClick} {...props}>
       <Heart
-        width={isSmall ? "20" : "24"}
-        height={isSmall ? "20" : "24"}
+        width={isSmall ? "24" : "28"}
+        height={isSmall ? "24" : "28"}
         viewBox="0 0 24 24"
-        stroke={isSelected ? "#FF50AA" : isSmall ? "#A0A5B1" : "white"}
-        fill={isSelected ? "#FF50AA" : "none"}
+        stroke={selected ? "#FF50AA" : isSmall ? "#A0A5B1" : "white"}
+        fill={selected ? "#FF50AA" : "none"}
       />
     </button>
   );

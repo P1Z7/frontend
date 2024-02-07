@@ -1,20 +1,24 @@
+import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
+import BottomButton from "@/components/button/BottomButton";
 import InputText from "@/components/input/InputText";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 import { SignUpFormType } from "@/types/index";
 
 const AccountInfo = ({ onNext }: { onNext: () => void }) => {
-  const { formState, control, getValues } = useFormContext<SignUpFormType>();
+  const { formState, control, getValues, handleSubmit, watch } = useFormContext<SignUpFormType>();
+  const { email, password, passwordCh } = watch();
 
-  const isButtonDisabled = !!formState.errors.email || !!formState.errors.password || !!formState.errors.passwordCh || !formState.isDirty;
+  const isButtonDisabled = !!(formState.errors.email || formState.errors.password || formState.errors.passwordCh) || !(email && password && passwordCh);
 
   return (
-    <>
+    <div className="flex flex-col gap-20 pt-36">
       <InputText
         control={control}
         name="email"
         autoComplete="email"
         placeholder="이메일을 입력해 주세요"
+        hint="이메일 형식으로 입력하여 주세요."
         rules={{ required: ERROR_MESSAGES.email.emailField, pattern: { value: REG_EXP.CHECK_EMAIL, message: ERROR_MESSAGES.email.emailPattern } }}
       >
         이메일
@@ -24,7 +28,7 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
         name="password"
         type="password"
         placeholder="비밀번호를 입력해주세요"
-        hint="영어, 숫자, 특수문자 포함 필수 & 8자리 이상"
+        hint="영문과 숫자를 조합하여 8자리 이상"
         autoComplete="new-password"
         rules={{ required: ERROR_MESSAGES.password.passwordField, pattern: { value: REG_EXP.CHECK_PASSWORD, message: ERROR_MESSAGES.password.passwordPattern } }}
       >
@@ -48,10 +52,10 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
       >
         비밀번호 확인
       </InputText>
-      <button type="button" onClick={onNext} disabled={isButtonDisabled} className="h-40 bg-slate-200 text-12">
-        다음
-      </button>
-    </>
+      <BottomButton onClick={handleSubmit(onNext)} isDisabled={isButtonDisabled}>
+        다음으로
+      </BottomButton>
+    </div>
   );
 };
 

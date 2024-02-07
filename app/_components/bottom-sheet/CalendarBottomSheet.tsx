@@ -4,35 +4,50 @@ import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import { useEffect, useState } from "react";
 import { DateRange, DayPicker } from "react-day-picker";
-import "react-day-picker/dist/style.css";
-import BottomSheetFrame from "./BottomSheetFrame";
+import { BottomSheetBaseType } from "@/types/index";
+import { CALENDAR_STYLE } from "@/constants/calendarStyle";
+import "@/styles/customCalendar.css";
+import BottomSheet from "./BottomSheetMaterial";
 
-interface Props {
-  closeBottomSheet: () => void;
+interface Props extends BottomSheetBaseType {
   setStartDateFilter: (data: string) => void;
   setEndDateFilter: (date: string) => void;
 }
 
-const CalenderBottomSheet = ({ closeBottomSheet, setStartDateFilter, setEndDateFilter }: Props) => {
+// TODO: 값 설정을 버튼이 눌렸을 때로 수정 필요
+
+const CalenderBottomSheet = ({ closeBottomSheet, refs, setStartDateFilter, setEndDateFilter }: Props) => {
   const [range, setRange] = useState<DateRange | undefined>();
 
   useEffect(() => {
     if (range?.from) {
       if (!range.to) {
-        setStartDateFilter(format(range.from, "PPP EE", { locale: ko }));
+        setStartDateFilter(format(range.from, "yyyy.MM.dd", { locale: ko }));
       } else if (range.to) {
-        setStartDateFilter(format(range.from, "PPP EE", { locale: ko }));
-        setEndDateFilter(format(range.to, "PPP EE", { locale: ko }));
-        closeBottomSheet();
+        setStartDateFilter(format(range.from, "yyyy.MM.dd", { locale: ko }));
+        setEndDateFilter(format(range.to, "yyyy.MM.dd", { locale: ko }));
       }
     }
   }, [range]);
 
   return (
-    <BottomSheetFrame closeBottomSheet={closeBottomSheet}>
-      <h1 className="px-20 text-start text-14">시/도 선택</h1>
-      <DayPicker id="test" mode="range" selected={range} onSelect={setRange} />
-    </BottomSheetFrame>
+    <>
+      <style>{CALENDAR_STYLE}</style>
+      <BottomSheet.Frame closeBottomSheet={closeBottomSheet} ref={refs.sheet}>
+        <BottomSheet.Title>날짜 선택</BottomSheet.Title>
+        <div className="flex w-full justify-center" ref={refs.content}>
+          <DayPicker
+            weekStartsOn={1}
+            id="test"
+            mode="range"
+            selected={range}
+            onSelect={setRange}
+            modifiersClassNames={{ selected: "my-selected", range_end: "my-day_range_end", range_start: "my-day_range_start" }}
+          />
+        </div>
+        <BottomSheet.Button onClick={closeBottomSheet} />
+      </BottomSheet.Frame>
+    </>
   );
 };
 

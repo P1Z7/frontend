@@ -1,37 +1,47 @@
-import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import Dropdown from "@/components/Dropdown";
+import EventTypeBottomSheet from "@/components/bottom-sheet/EventTypeBottomSheet";
 import StarBottomSheet from "@/components/bottom-sheet/StarBottomSheet";
 import InputText from "@/components/input/InputText";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
+import { validateEdit } from "@/utils/editValidate";
 import { PostType } from "../../page";
 
-const EVENT_TYPE_LIST = ["생일카페", "상영회", "팬싸", "또뭐하ㅏ지", "모르겠다", "배고프다", "붕어빵", "피자붕어빵"];
-
 const StarInput = () => {
-  const { getValues, setValue } = useFormContext<PostType>();
-  const { bottomSheet, openBottomSheet, closeBottomSheet } = useBottomSheet();
-  const [eventType, setEventType] = useState(getValues("eventType"));
+  const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
 
-  useEffect(() => {
-    setValue("eventType", eventType);
-  }, [eventType]);
+  const {
+    formState: { defaultValues },
+    watch,
+  } = useFormContext<PostType>();
+  const { eventType, groupName, groupId, artistNames, artists } = watch();
+  const isNotMember = groupId && artistNames.length === 0;
 
   return (
     <>
       <div className="flex-item flex flex-col gap-20">
-        <div>
-          연예인
-          <InputText name="group" placeholder="그룹선택" readOnly onClick={() => openBottomSheet("starGroup")} />
-          <InputText name="member" placeholder="멤버선택" readOnly />
+        <div className="flex flex-col">
+          아티스트
+          <div className="grid grid-cols-2 gap-8">
+            <InputText name="groupName" placeholder="아티스트 선택" readOnly onClick={() => openBottomSheet("firstArtist")} />
+            <InputText name="artistNames" placeholder="멤버 선택" readOnly onClick={() => openBottomSheet("secondArtist")} />
+          </div>
+          {isNotMember && <div className="pt-4 text-12 font-500 text-red">그룹 선택 시, 멤버 선택이 필수입니다.</div>}
         </div>
-        <div>
-          <div>행사 유형</div>
-          <Dropdown itemList={EVENT_TYPE_LIST} selected={eventType} setSelected={setEventType} />
-        </div>
+        <InputText
+          name="eventType"
+          readOnly
+          placeholder="행사 유형을 선택하세요."
+          onClick={() => openBottomSheet("event")}
+          isEdit={validateEdit(defaultValues?.eventType !== eventType)}
+        >
+          행사 유형
+        </InputText>
+        <InputText name="groupId" hidden />
+        <InputText name="artists" hidden />
       </div>
-      <InputText name="eventType" hidden />
-      {bottomSheet === "starGroup" && <StarBottomSheet closeBottomSheet={closeBottomSheet} />}
+      {bottomSheet === "event" && <EventTypeBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} />}
+      {bottomSheet === "firstArtist" && <StarBottomSheet closeBottomSheet={closeBottomSheet} isFirst refs={refs} />}
+      {bottomSheet === "secondArtist" && <StarBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} />}
     </>
   );
 };

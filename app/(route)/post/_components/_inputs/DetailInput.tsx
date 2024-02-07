@@ -13,25 +13,31 @@ const DetailInput = () => {
     setValue,
     watch,
   } = useFormContext<PostType>();
-  const [imgList, setImgList] = useState<(File | string)[]>(getValues("images"));
-  const { images } = watch();
+  const [imgList, setImgList] = useState<(File | string)[]>(getValues("eventImages"));
+  const { eventImages } = watch();
 
   useEffect(() => {
-    if (Array.from(images).filter((image) => !imgList.includes(image)).length === 0) {
+    if (Array.from(eventImages).filter((image) => !imgList.includes(image)).length === 0) {
       return;
     }
-    const newList = imgList.length > 0 ? Array.from(images).filter((file) => !imgList?.includes(file)) : images;
+    const newList = imgList.length > 0 ? Array.from(eventImages).filter((file) => !imgList?.includes(file)) : eventImages;
     setImgList((prev) => [...prev, ...newList]);
-  }, [images]);
+  }, [eventImages]);
 
   useEffect(() => {
-    setValue("images", imgList);
+    setValue("eventImages", imgList);
   }, [imgList]);
 
   return (
     <>
       <ImageSection imgList={imgList} setImgList={setImgList} />
-      <InputArea name="detailText" placeholder="이벤트 설명을 입력하세요." rules={{ maxLength: 100 }} isEdit={validateEdit(defaultValues?.detailText !== getValues("detailText"))}>
+      <InputArea
+        name="description"
+        placeholder="이벤트 설명을 입력하세요."
+        hasLimit
+        rules={{ maxLength: 100 }}
+        isEdit={validateEdit(defaultValues?.description !== getValues("description"))}
+      >
         상세 내용
       </InputArea>
       <WarningCheck />

@@ -1,15 +1,16 @@
 import { useFormContext } from "react-hook-form";
+import BottomButton from "@/components/button/BottomButton";
 import InputText from "@/components/input/InputText";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 import { SignUpFormType } from "@/types/index";
 
 const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
-  const { formState, control } = useFormContext<SignUpFormType>();
+  const { formState, control, handleSubmit } = useFormContext<SignUpFormType>();
 
   const isButtonDisabled = !!formState.errors.nickName || !formState.isValid;
 
   return (
-    <>
+    <div className="pt-36">
       <InputText
         control={control}
         name="nickName"
@@ -19,10 +20,10 @@ const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
       >
         닉네임
       </InputText>
-      <button type="button" onClick={onNext} className="h-40 bg-slate-200 text-12" disabled={isButtonDisabled}>
-        다음
-      </button>
-    </>
+      <BottomButton onClick={handleSubmit(onNext)} isDisabled={isButtonDisabled}>
+        다음으로
+      </BottomButton>
+    </div>
   );
 };
 

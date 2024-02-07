@@ -2,8 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { ArtistNGroupListType, ArtistNGroupType } from "app/_constants/mock";
 import { GetData } from "app/api/useQuery";
 import { useFormContext, useWatch } from "react-hook-form";
+import BottomButton from "@/components/button/BottomButton";
 import { SignUpFormType } from "@/types/index";
-import SearchArtist from "../SearchArtist";
+import SearchArtist from "../../../../_components/SearchArtist";
 
 const MyArtistsInfo = () => {
   const { setValue } = useFormContext<SignUpFormType>();
@@ -27,11 +28,10 @@ const MyArtistsInfo = () => {
 
   return (
     <>
-      <SearchArtist data={data.artistAndGroupList} onClick={handleClick} myArtists={myArtists} />
-      <button disabled={isButtonDisabled} className="bg-slate-200 h-40 text-12">
-        가입하기
-      </button>
-      <button className="bg-slate-200 h-40 text-12">다음에 할게요.</button>
+      <SearchArtist data={MOCK} onClick={handleClick} myArtists={myArtists} />
+      <BottomButton isDisabled={isButtonDisabled} isSkip>
+        오프너 시작하기
+      </BottomButton>
     </>
   );
 };
