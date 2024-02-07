@@ -13,7 +13,7 @@ interface GenericFormProps<T extends FieldValues> {
 const GenericForm = <T extends FieldValues>({ children, formOptions }: GenericFormProps<T>) => {
   const methods = useForm<T>(formOptions);
   const path = usePathname();
-  const instance = new Api("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MDcxMjgwNDF9.AR8YcpB9rBxRpk8DcWM-JvSbU9oPkLjPRXL7g5GwG8w");
+  const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
 
   const uploadImg = async (image: File) => {
     const formData = new FormData();
