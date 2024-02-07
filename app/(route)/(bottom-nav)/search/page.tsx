@@ -1,22 +1,25 @@
 "use client";
 
-import classNames from "classnames";
-import { useState } from "react";
+import { ButtonHTMLAttributes, ReactNode, useState } from "react";
 import BigRegionBottomSheet from "@/components/bottom-sheet/BigRegionBottomSheet";
 import CalenderBottomSheet from "@/components/bottom-sheet/CalendarBottomSheet";
 import GiftBottomSheet from "@/components/bottom-sheet/GiftsBottomSheet";
 import SmallRegionBottomSheet from "@/components/bottom-sheet/SmallRegionBottomSheet";
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
+import SearchInput from "@/components/input/SearchInput";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
+import { GiftType } from "@/types/index";
 import { MOCK_EVENTS } from "@/constants/mock";
 import { BIG_REGIONS } from "@/constants/regions";
+import DownArrowIcon from "@/public/icon/arrow-down_sm.svg";
+import SortIcon from "@/public/icon/sort.svg";
 
 interface FilterType {
   bigRegion: (typeof BIG_REGIONS)[number] | "";
   smallRegion: string;
   startDate: string | null;
   endDate: string | null;
-  gifts: string[];
+  gifts: GiftType[];
 }
 
 const BOTTOM_SHEET = {
@@ -27,6 +30,8 @@ const BOTTOM_SHEET = {
 };
 
 const SearchPage = () => {
+  const [keyword, setKeyword] = useState("");
+
   const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
   const [filter, setFilter] = useState<FilterType>({
     bigRegion: "",
@@ -49,7 +54,7 @@ const SearchPage = () => {
   const setEndDateFilter = (endDate: string) => {
     setFilter((prev) => ({ ...prev, endDate }));
   };
-  const setGiftsFilter = (gift: string) => {
+  const setGiftsFilter = (gift: GiftType) => {
     setFilter((prev) => ({ ...prev, gifts: [...prev.gifts, gift] }));
   };
 
@@ -57,30 +62,33 @@ const SearchPage = () => {
 
   return (
     <>
-      <main className="w-full px-20 pt-40">
-        <div className="relative">
-          <input placeholder="최애의 행사를 찾아보세요!" className="h-44 w-full rounded-full bg-gray-200 px-12 text-16 font-400 outline-none" />
-        </div>
-        <section className="flex flex-col gap-20 text-14 text-gray-500">
-          <div className={"flex gap-8"}>
-            <button onClick={() => openBottomSheet(BOTTOM_SHEET.bigRegion)} className={filter.bigRegion && "text-black"}>
+      <main className="w-full px-20 pb-100 pt-40">
+        <SearchInput setKeyword={setKeyword} placeholder="최애의 행사를 찾아보세요!" />
+        <section className="flex flex-col gap-20 pt-8 text-14 text-gray-500">
+          <div className="flex gap-4">
+            <FilterButton onClick={() => openBottomSheet(BOTTOM_SHEET.bigRegion)} selected={Boolean(filter.bigRegion)}>
               {filter.bigRegion || "시/도"}
-            </button>
+            </FilterButton>
             {filter.bigRegion && (
-              <button onClick={() => openBottomSheet(BOTTOM_SHEET.smallRegion)} className={filter.smallRegion && "text-black"}>
+              <FilterButton onClick={() => openBottomSheet(BOTTOM_SHEET.smallRegion)} selected={Boolean(filter.smallRegion)}>
                 {filter.smallRegion}
-              </button>
+              </FilterButton>
             )}
-            <button onClick={() => openBottomSheet(BOTTOM_SHEET.calender)}>기간</button>
-            <button onClick={() => openBottomSheet(BOTTOM_SHEET.gift)}>특전</button>
+            <FilterButton onClick={() => openBottomSheet(BOTTOM_SHEET.calender)} selected={Boolean(filter.startDate)}>
+              기간
+            </FilterButton>
+            <FilterButton onClick={() => openBottomSheet(BOTTOM_SHEET.gift)} selected={Boolean(filter.gifts.length)}>
+              특전
+            </FilterButton>
           </div>
           <div className="flex gap-8">
-            <button onClick={() => setSort("최신순")} className={classNames({ "text-black": sort === "최신순" })}>
+            <SortIcon />
+            <SortButton onClick={() => setSort("최신순")} selected={sort === "최신순"}>
               최신순
-            </button>
-            <button onClick={() => setSort("인기순")} className={classNames({ "text-black": sort === "인기순" })}>
+            </SortButton>
+            <SortButton onClick={() => setSort("인기순")} selected={sort === "인기순"}>
               인기순
-            </button>
+            </SortButton>
           </div>
         </section>
         <section className="flex flex-col items-center">
@@ -101,9 +109,31 @@ const SearchPage = () => {
       {bottomSheet === BOTTOM_SHEET.calender && (
         <CalenderBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} setStartDateFilter={setStartDateFilter} setEndDateFilter={setEndDateFilter} />
       )}
-      {bottomSheet === BOTTOM_SHEET.gift && <GiftBottomSheet refs={refs} closeBottomSheet={closeBottomSheet} setGiftsFilter={setGiftsFilter} />}
+      {bottomSheet === BOTTOM_SHEET.gift && <GiftBottomSheet refs={refs} closeBottomSheet={closeBottomSheet} setGiftsFilter={setGiftsFilter} selected={filter.gifts} />}
     </>
   );
 };
 
 export default SearchPage;
+
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children: ReactNode;
+  selected: boolean;
+}
+
+const FilterButton = ({ children, onClick, selected }: ButtonProps) => {
+  return (
+    <button onClick={onClick} className={`flex-center h-28 shrink-0 gap-4 px-8 text-14 font-500 ${selected ? "text-gray-700" : "text-gray-400"}`}>
+      {children}
+      <DownArrowIcon stroke={selected ? "#494F5A" : "#A0A5B1"} width="20" height="20" viewBox="0 0 24 24" />
+    </button>
+  );
+};
+
+const SortButton = ({ children, onClick, selected }: ButtonProps) => {
+  return (
+    <button onClick={onClick} className={`h-20 shrink-0 text-14 font-500 ${selected ? "text-gray-900" : "text-gray-400"}`}>
+      {children}
+    </button>
+  );
+};
