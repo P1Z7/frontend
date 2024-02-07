@@ -6,7 +6,7 @@ interface GenericFormProps<T extends FieldValues> {
   formOptions?: UseFormProps<T>;
 }
 
-const GenericForm = <T extends FieldValues>({ children, formOptions }: GenericFormProps<T>) => {
+const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: GenericFormProps<T>) => {
   const methods = useForm<T>(formOptions);
 
   const onSubmit = () => {
@@ -21,4 +21,4 @@ const GenericForm = <T extends FieldValues>({ children, formOptions }: GenericFo
   );
 };
 
-export default GenericForm;
+export default GenericFormProvider;

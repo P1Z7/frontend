@@ -1,6 +1,6 @@
 "use client";
 
-import GenericForm from "@/(route)/(header)/signup/_components/GenericForm";
+import GenericFormProvider from "@/components/GenericFormProvider";
 import EditContent from "./_components/EditContent";
 
 const EDIT_MOCKUP_DATA = {
@@ -31,9 +31,9 @@ const Edit = () => {
 
   return (
     <div className="flex flex-col gap-24 p-20 text-16">
-      <GenericForm formOptions={{ mode: "onBlur", defaultValues: EDIT_MOCKUP_DATA, shouldFocusError: true }}>
+      <GenericFormProvider formOptions={{ mode: "onBlur", defaultValues: EDIT_MOCKUP_DATA, shouldFocusError: true }}>
         <EditContent />
-      </GenericForm>
+      </GenericFormProvider>
     </div>
   );
 };

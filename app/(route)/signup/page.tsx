@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useFunnel } from "@/hooks/useFunnel";
 import { SignUpFormType, SignupStepNameType } from "@/types/index";
 import ArrowLeft from "@/public/icon/arrow-left_lg.svg";
-import GenericForm from "./_components/GenericForm";
+import GenericFormProvider from "../../_components/GenericFormProvider";
 import ProfileSetup from "./_components/ProfileSetup";
 
 const STEPS: SignupStepNameType[] = ["계정 정보", "프로필 정보", "아티스트 선택"];
@@ -36,11 +36,11 @@ const SignUp = () => {
   return (
     <>
       <Header onClick={handlePrevClick} />
-      <GenericForm<SignUpFormType> formOptions={{ mode: "onBlur", defaultValues: DEFAULT_VALUES }}>
+      <GenericFormProvider<SignUpFormType> formOptions={{ mode: "onBlur", defaultValues: DEFAULT_VALUES }}>
         <div className="flex flex-col px-20">
           <ProfileSetup steps={STEPS} handleNextClick={handleNextClick} Funnel={Funnel} Step={Step} />
         </div>
-      </GenericForm>
+      </GenericFormProvider>
     </>
   );
 };
