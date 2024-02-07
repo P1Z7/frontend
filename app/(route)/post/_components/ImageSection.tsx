@@ -13,7 +13,7 @@ const ImageSection = ({ imgList, setImgList }: Props) => {
     <div className="flex flex-col gap-8">
       <div>이미지</div>
       <div className="flex gap-8">
-        {imgList.length < 5 && <InputFile name="images" />}
+        {imgList.length < 5 && <InputFile name="eventImages" />}
         <div className="flex w-[400px] gap-8 overflow-x-scroll scrollbar-hide">
           {Array.from(imgList).map((file, idx) => (
             <div key={idx} className="relative flex h-120 w-120 shrink-0" onClick={() => setImgList((prev) => prev.filter((item) => item !== file))}>

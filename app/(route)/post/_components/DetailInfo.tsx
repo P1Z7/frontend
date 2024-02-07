@@ -9,7 +9,8 @@ import DetailInput from "./_inputs/DetailInput";
 
 const DetailInfo = () => {
   const { isCheck } = useStore((state) => ({ isCheck: state.isWarningCheck }));
-  const { getValues } = useFormContext<PostType>();
+  const { watch } = useFormContext<PostType>();
+  const { description } = watch();
 
   return (
     <PostFrame>
@@ -18,7 +19,7 @@ const DetailInfo = () => {
         <FunnelTitle step="상세 설명" />
       </div>
       <DetailInput />
-      <BottomButton isDisabled={!isCheck || getValues("detailText").length > 100}>작성 완료</BottomButton>
+      <BottomButton isDisabled={!isCheck || description.length > 100}>작성 완료</BottomButton>
     </PostFrame>
   );
 };

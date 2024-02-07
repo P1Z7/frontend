@@ -13,7 +13,8 @@ const StarInput = () => {
     formState: { defaultValues },
     watch,
   } = useFormContext<PostType>();
-  const { eventType, group, member } = watch();
+  const { eventType, groupName, groupId, artistNames, artists } = watch();
+  const isNotMember = groupId && artistNames.length === 0;
 
   return (
     <>
@@ -21,9 +22,10 @@ const StarInput = () => {
         <div className="flex flex-col">
           아티스트
           <div className="grid grid-cols-2 gap-8">
-            <InputText name="group" placeholder="그룹 선택" readOnly onClick={() => openBottomSheet("starGroup")} />
-            <InputText name="member" placeholder="멤버 선택" readOnly />
+            <InputText name="groupName" placeholder="아티스트 선택" readOnly onClick={() => openBottomSheet("firstArtist")} />
+            <InputText name="artistNames" placeholder="멤버 선택" readOnly onClick={() => openBottomSheet("secondArtist")} />
           </div>
+          {isNotMember && <div className="pt-4 text-12 font-500 text-red">그룹 선택 시, 멤버 선택이 필수입니다.</div>}
         </div>
         <InputText
           name="eventType"
@@ -34,9 +36,12 @@ const StarInput = () => {
         >
           행사 유형
         </InputText>
+        <InputText name="groupId" hidden />
+        <InputText name="artists" hidden />
       </div>
       {bottomSheet === "event" && <EventTypeBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} />}
-      {bottomSheet === "starGroup" && <StarBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} />}
+      {bottomSheet === "firstArtist" && <StarBottomSheet closeBottomSheet={closeBottomSheet} isFirst refs={refs} />}
+      {bottomSheet === "secondArtist" && <StarBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} />}
     </>
   );
 };
