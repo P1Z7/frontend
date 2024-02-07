@@ -26,7 +26,7 @@ const MyArtistList = ({ data }: Props) => {
         <SearchInput setKeyword={setKeyword} placeholder="최애의 행사를 찾아보세요!" />
         <div className="flex w-full gap-12 overflow-auto">
           {selected.map((artist) => (
-            <ChipButton label={artist} key={artist} onDelete={() => handleArtistClick(artist)} />
+            <ChipButton label={artist} key={artist} onClick={() => handleArtistClick(artist)} canDelete />
           ))}
         </div>
       </section>
