@@ -1,4 +1,9 @@
+"use client";
+
+import { useQuery } from "@tanstack/react-query";
 import VerticalEventCard from "@/components/card/VerticalEventCard";
+import { Api } from "@/api/api";
+import { PopularEventType } from "@/types/index";
 import { MOCK_EVENTS } from "@/constants/mock";
 import Carousel from "./Carousel";
 
@@ -11,13 +16,19 @@ const PopularEventsCarousel = () => {
 };
 
 const PopularEvents = () => {
-  // 추후 인기순으로 10개 잘라낼 예정
-  const popularEvents = MOCK_EVENTS.slice(0, 10);
+  const instance = new Api("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MDcxMjgwNDF9.AR8YcpB9rBxRpk8DcWM-JvSbU9oPkLjPRXL7g5GwG8w");
+
+  const { data: popularEvents } = useQuery<PopularEventType[]>({
+    queryKey: ["event"],
+    queryFn: async () => {
+      return await instance.get("/event/popularity");
+    },
+  });
 
   return (
     <>
-      {popularEvents.map((event, index) => (
-        <div key={index}>
+      {popularEvents?.map((event) => (
+        <div key={event.id}>
           <VerticalEventCard data={event} />
         </div>
       ))}

@@ -1,11 +1,11 @@
 import Image from "next/image";
 import { formatAddress, formatDate } from "@/utils/formatString";
-import { EventInfoType } from "@/types/index";
+import { EventInfoType, PopularEventType } from "@/types/index";
 import HeartButton from "../button/HeartButton";
 import Chip from "../chip/Chip";
 
 interface Props {
-  data: EventInfoType;
+  data: PopularEventType;
 }
 
 const VerticalEventCard = ({ data }: Props) => {
@@ -18,15 +18,21 @@ const VerticalEventCard = ({ data }: Props) => {
         <div className="absolute right-8 top-8 z-nav">
           <HeartButton />
         </div>
-        <Image
-          src={data.eventImages?.[0] || ""}
-          fill
-          style={{
-            objectFit: "cover",
-          }}
-          alt="행사 포스터"
-          className="rounded-sm bg-gray-400"
-        />
+        {data.eventImages.map(
+          (image) =>
+            image.isMain && (
+              <Image
+                src={image.imageUrl}
+                fill
+                style={{
+                  objectFit: "cover",
+                }}
+                alt="행사 포스터"
+                className="rounded-sm bg-gray-400"
+                key={image.id}
+              />
+            ),
+        )}
       </div>
       <div className="flex flex-col gap-4">
         <p className="truncate text-16 font-600 text-gray-900">{data.placeName}</p>
@@ -35,7 +41,11 @@ const VerticalEventCard = ({ data }: Props) => {
           <p>{formattedAddress}</p>
         </div>
         <div className="flex gap-8">
-          <p className="text-16 font-600 text-gray-900">{data.artists[0]}</p>
+          {data.targetArtists?.map((artist) => (
+            <p className="text-16 font-600 text-gray-900" key={artist.artistId}>
+              {artist.artistName}
+            </p>
+          ))}
           <Chip label={data.eventType} kind="event" />
         </div>
       </div>
