@@ -1,3 +1,6 @@
+import { Req_Query_Type } from "@/types/queryType";
+import { Req_Post_Type } from "@/types/reqPostType";
+
 export class Api {
   private baseUrl;
   private queryString;
@@ -9,12 +12,12 @@ export class Api {
     this.accessToken = token;
   }
 
-  private makeQueryString(queryObj: QueryType) {
+  private makeQueryString<T>(queryObj: GetQueryType<T>) {
     this.queryString = "?";
     if (queryObj) {
       const queryKeyList = Object.keys(queryObj);
       queryKeyList.forEach((query, idx) => {
-        this.queryString += `${query}=${queryObj[query as keyof QueryType]}`;
+        this.queryString += `${query}=${queryObj[query as keyof GetQueryType<T>]}`;
         if (idx !== queryKeyList.length - 1) {
           this.queryString += "&";
         }
@@ -22,10 +25,10 @@ export class Api {
     }
   }
 
-  async get(endPoint: GetEndPoint, queryObj?: QueryType) {
+  async get<T extends GetEndPoint>(endPoint: T, queryObj?: GetQueryType<T>) {
     this.baseUrl = "/api" + endPoint;
     if (queryObj) {
-      this.makeQueryString(queryObj);
+      this.makeQueryString<T>(queryObj);
     }
     const res = await fetch(queryObj ? this.baseUrl + this.queryString : this.baseUrl, {
       headers: {
@@ -35,12 +38,10 @@ export class Api {
     return await res.json();
   }
 
-  async post<T>(endPoint: PostEndPoint, body: T, queryObj?: QueryType) {
+  async post<T extends PostEndPoint>(endPoint: T, body: PostBodyType<T>) {
     this.baseUrl = "/api" + endPoint;
-    if (queryObj) {
-      this.makeQueryString(queryObj);
-    }
-    const res = await fetch(queryObj ? this.baseUrl + this.queryString : this.baseUrl, {
+
+    const res = await fetch(this.baseUrl, {
       method: "POST",
       body: endPoint === "/file/upload" ? (body as FormData) : JSON.stringify(body),
       headers: {
@@ -82,8 +83,8 @@ export class Api {
   }
 }
 
-type GetEndPoint = "/artist/group" | `/artist/${string}` | "/group/solo" | "/reviews";
-type PostEndPoint = "/event" | "/users" | "/authentication" | "/authentication/token" | "/artist" | "/group" | "/file/upload" | "/reviews";
+type GetEndPoint = "/event" | `/event/${string}` | "/artist/group" | `/artist/${string}` | "/group/solo" | `/reviews/${string}`;
+type PostEndPoint = "/event" | "/users" | "/authentication" | "/authentication/token" | "/artist" | "/group" | "/file/upload" | "/reviews" | `/reviews/${string}/like`;
 
 interface QueryType {
   page?: number;
@@ -91,3 +92,37 @@ interface QueryType {
   keyword?: string;
   category?: string;
 }
+
+type PostBodyType<T> = T extends "/event"
+  ? Req_Post_Type["event"]
+  : T extends "/users"
+    ? Req_Post_Type["signup"]
+    : T extends "/authentication"
+      ? Req_Post_Type["login"]
+      : T extends "/authentication/token"
+        ? Req_Post_Type["token"]
+        : T extends "/artist"
+          ? Req_Post_Type["artist"]
+          : T extends "/group"
+            ? Req_Post_Type["group"]
+            : T extends "/file/upload"
+              ? FormData
+              : T extends "/reviews"
+                ? Req_Post_Type["review"]
+                : T extends `/reviews/${string}/like`
+                  ? Req_Post_Type["reviewLike"]
+                  : unknown;
+
+type GetQueryType<T> = T extends "/event"
+  ? Req_Query_Type["행사목록"]
+  : T extends `/event/${string}`
+    ? Req_Query_Type["행사상세"]
+    : T extends "/artist/group"
+      ? Req_Query_Type["아티스트"]
+      : T extends `/artist/${string}`
+        ? Req_Query_Type["멤버"]
+        : T extends "/group/solo"
+          ? Req_Query_Type["그룹솔로"]
+          : T extends `/reviews/${string}`
+            ? Req_Query_Type["리뷰"]
+            : unknown;
