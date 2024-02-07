@@ -41,11 +41,14 @@ const VerticalEventCard = ({ data }: Props) => {
           <p>{formattedAddress}</p>
         </div>
         <div className="flex gap-8">
-          {data.targetArtists?.map((artist) => (
-            <p className="text-16 font-600 text-gray-900" key={artist.artistId}>
-              {artist.artistName}
-            </p>
-          ))}
+          <p className="truncate text-16 font-600 text-gray-900">
+            {data.targetArtists?.map((artist, index) => (
+              <>
+                {index > 0 && ", "}
+                {artist.artistName}
+              </>
+            ))}
+          </p>
           <Chip label={data.eventType} kind="event" />
         </div>
       </div>
