@@ -26,7 +26,7 @@ const EventInfoPage = async ({ params }: Props) => {
       <Banner data={eventInfo} />
       <Tabs names={["행사정보", "위치", "후기"]}>
         <DescriptionTab images={eventInfo.eventImages} description={eventInfo.description} />
-        <LocationTab name={eventData.placeName} address={eventData.address} />
+        <LocationTab name={eventInfo.placeName} address={eventInfo.address} addressDetail={eventInfo.addressDetail} />
         <ReviewTab />
       </Tabs>
     </>

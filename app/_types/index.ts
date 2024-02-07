@@ -15,6 +15,7 @@ export interface BottomSheetBaseType {
 export interface MapType {
   name: string;
   address: string;
+  addressDetail?: string;
 }
 
 export type SignupStepNameType = "계정 정보" | "프로필 정보" | "아티스트 선택";

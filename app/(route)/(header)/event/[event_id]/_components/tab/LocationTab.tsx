@@ -4,19 +4,19 @@ import { useRouter } from "next/navigation";
 import { MapType } from "@/types/index";
 import KakaoMap from "../KakaoMap";
 
-const getPlaceId = async (address: string) => {
-  const data = await fetch(`https://dapi.kakao.com/v2/local/search/keyword.json?query=${address}`, {
+const getPlaceId = async (name: string, address: string, addressDetail?: string) => {
+  const data = await fetch(`https://dapi.kakao.com/v2/local/search/keyword.json?query=${address}${addressDetail}${name}`, {
     headers: { Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}` },
   });
   const ret = await data.json();
   return ret.documents?.[0].id;
 };
 
-const LocationTab = ({ name, address }: MapType) => {
+const LocationTab = ({ name, address, addressDetail }: MapType) => {
   const router = useRouter();
 
   const handleRedirectToMap = async () => {
-    const placeId = await getPlaceId(address);
+    const placeId = await getPlaceId(name, address, addressDetail);
     router.push(`https://map.kakao.com/link/map/${placeId}`);
   };
 
