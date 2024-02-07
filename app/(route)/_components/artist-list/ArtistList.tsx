@@ -26,7 +26,7 @@ const ArtistList = () => {
   };
 
   return (
-    <div className="flex flex-col gap-16">
+    <div className="flex flex-col gap-16 px-20">
       <h2 className="text-20 font-700 text-gray-900">아티스트로 찾아보기</h2>
       <InfiniteScroll
         pageStart={0}
