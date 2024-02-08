@@ -34,7 +34,7 @@ const EditCard = <T extends LabelType>({ id, type, editContent, count }: Props<T
         <div className="flex gap-8 overflow-x-scroll scrollbar-hide">
           {(editContent as string[]).map((url: string) => (
             <div key={url} className="relative h-120 w-120 flex-shrink-0">
-              <Image alt="수정된 행사 이미지" src={url} fill className="object-cover" />
+              <Image alt="수정된 행사 이미지" src={url} fill sizes="12rem, 12rem" className="object-cover" />
             </div>
           ))}
         </div>
