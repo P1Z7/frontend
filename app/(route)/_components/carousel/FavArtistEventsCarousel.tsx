@@ -12,7 +12,7 @@ import Carousel from "./Carousel";
 
 const FavArtistEventsCarousel = () => {
   // 추후 next auth로 변경 예정
-  const [status, setStatus] = useState(true);
+  const [status, setStatus] = useState(false);
 
   const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
 
