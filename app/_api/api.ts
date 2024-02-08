@@ -1,5 +1,5 @@
+import { Req_Post_Type } from "@/types/postBodyType";
 import { Req_Query_Type } from "@/types/queryType";
-import { Req_Post_Type } from "@/types/reqPostType";
 
 export class Api {
   private baseUrl;
@@ -12,12 +12,12 @@ export class Api {
     this.accessToken = token;
   }
 
-  private makeQueryString<T>(queryObj: GetQueryType<T>) {
+  private makeQueryString<T>(queryObj: GetQueryType<T> | PostQueryType<T>) {
     this.queryString = "?";
     if (queryObj) {
       const queryKeyList = Object.keys(queryObj);
       queryKeyList.forEach((query, idx) => {
-        this.queryString += `${query}=${queryObj[query as keyof GetQueryType<T>]}`;
+        this.queryString += `${query}=${queryObj[query as keyof (GetQueryType<T> | PostQueryType<T>)]}`;
         if (idx !== queryKeyList.length - 1) {
           this.queryString += "&";
         }
@@ -38,26 +38,25 @@ export class Api {
     return await res.json();
   }
 
-  async post<T extends PostEndPoint>(endPoint: T, body: PostBodyType<T>) {
+  async post<T extends PostEndPoint>(endPoint: T, body: PostBodyType<T>, queryObj?: PostQueryType<T>) {
     this.baseUrl = "/api" + endPoint;
-
-    const res = await fetch(this.baseUrl, {
+    if (queryObj) {
+      this.makeQueryString<T>(queryObj);
+    }
+    const res = await fetch(queryObj ? this.baseUrl + this.queryString : this.baseUrl, {
       method: "POST",
-      body: endPoint === "/file/upload" ? (body as FormData) : JSON.stringify(body),
+      body: endPoint === "/file/upload" ? (body as any) : JSON.stringify(body),
       headers: {
         ...(endPoint === "/file/upload" ? {} : { "Content-Type": "application/json" }),
         Authorization: `Bearer ${this.accessToken}`,
       },
     });
-    return await res.json();
+    return endPoint === "/file/upload" ? await res.text() : await res.json();
   }
 
-  async put<T>(endPoint: string, body: T, queryObj?: QueryType) {
+  async put<T>(endPoint: string, body: T) {
     this.baseUrl = "/api" + endPoint;
-    if (queryObj) {
-      this.makeQueryString(queryObj);
-    }
-    const res = await fetch(queryObj ? this.baseUrl + this.queryString : this.baseUrl, {
+    const res = await fetch(this.baseUrl, {
       method: "PUT",
       body: JSON.stringify(body),
       headers: {
@@ -68,12 +67,9 @@ export class Api {
     return await res.json();
   }
 
-  async delete(endPoint: string, queryObj?: QueryType) {
+  async delete(endPoint: string) {
     this.baseUrl = "/api" + endPoint;
-    if (queryObj) {
-      this.makeQueryString(queryObj);
-    }
-    const res = await fetch(queryObj ? this.baseUrl + this.queryString : this.baseUrl, {
+    const res = await fetch(this.baseUrl, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${this.accessToken}`,
@@ -85,13 +81,7 @@ export class Api {
 
 type GetEndPoint = "/event" | `/event/${string}` | "/artist/group" | `/artist/${string}` | "/group/solo" | `/reviews/${string}`;
 type PostEndPoint = "/event" | "/users" | "/auth" | "/auth/token" | "/artist" | "/group" | "/file/upload" | "/reviews" | `/reviews/${string}/like`;
-
-interface QueryType {
-  page?: number;
-  size?: number;
-  keyword?: string;
-  category?: string;
-}
+type PostQueryType<T> = T extends "/file/upload" ? { category: "event" | "artist" | "user" } : unknown;
 
 type PostBodyType<T> = T extends "/event"
   ? Req_Post_Type["event"]

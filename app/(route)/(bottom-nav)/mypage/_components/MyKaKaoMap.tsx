@@ -22,7 +22,7 @@ const MyKakaoMap = ({ scheduleData, setLocationInfo, openBottomSheet }: Props) =
         const mapContainer = document.getElementById("map");
         const mapOption = {
           center: new window.kakao.maps.LatLng(37.566826, 126.9786567),
-          level: 10,
+          level: 9,
         };
         const map = new window.kakao.maps.Map(mapContainer, mapOption);
         const geocoder = new window.kakao.maps.services.Geocoder();

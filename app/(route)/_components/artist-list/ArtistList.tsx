@@ -26,7 +26,7 @@ const ArtistList = () => {
   };
 
   return (
-    <div className="flex flex-col gap-16">
+    <div className="flex flex-col gap-16 px-20">
       <h2 className="text-20 font-700 text-gray-900">아티스트로 찾아보기</h2>
       <InfiniteScroll
         pageStart={0}
@@ -37,15 +37,17 @@ const ArtistList = () => {
             Loading ...
           </div>
         }
-        className="w-320"
+        className="flex flex-col items-center"
       >
-        <ul className="grid w-320 grid-cols-3 gap-12 px-8">
-          {artists.map((artist, index) => (
-            <li key={index}>
-              <ArtistCard profileImage={artist.profileImage}>{artist.name}</ArtistCard>
-            </li>
-          ))}
-        </ul>
+        <div className="flex w-full max-w-[52rem] flex-col items-center">
+          <ul className="flex flex-wrap justify-center gap-20">
+            {artists.map((artist, index) => (
+              <li key={index}>
+                <ArtistCard profileImage={artist.profileImage}>{artist.name}</ArtistCard>
+              </li>
+            ))}
+          </ul>
+        </div>
       </InfiniteScroll>
     </div>
   );

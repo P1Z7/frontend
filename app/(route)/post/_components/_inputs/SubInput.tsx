@@ -16,8 +16,8 @@ const SubInput = () => {
     setValue,
   } = useFormContext<PostType>();
   const [snsType, setSnsType] = useState(getValues("snsType"));
-  const [giftList, setGiftList] = useState<string[]>(getValues("gift"));
-  const { snsId, eventUrl } = watch();
+  const [giftList, setGiftList] = useState<string[]>(getValues("tags") || []);
+  const { organizerSns, eventUrl } = watch();
 
   const handleRadioChange = (event: any) => {
     setSnsType(event.target.value);
@@ -29,7 +29,7 @@ const SubInput = () => {
   };
 
   useEffect(() => {
-    setValue("gift", giftList);
+    setValue("tags", giftList);
   }, [giftList]);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const SubInput = () => {
     <div>
       <div className="flex flex-col gap-20">
         <div className="flex flex-col gap-16">
-          <InputText name="snsId" placeholder="sns 계정을 입력해주세요." isEdit={validateEdit(defaultValues?.snsId !== snsId)}>
+          <InputText name="organizerSns" placeholder="sns 계정을 입력해주세요." isEdit={validateEdit(defaultValues?.organizerSns !== organizerSns)}>
             주최자
           </InputText>
           <div className="flex gap-16">
@@ -66,14 +66,14 @@ const SubInput = () => {
           특전
           <ul className="flex flex-wrap gap-8 gap-y-12">
             {GIFT_LIST.map((gift) => (
-              <li>
-                <ChipButton key={gift} label={gift} onClick={() => handleGiftClick(gift)} selected={giftList.includes(gift)} />
+              <li key={gift}>
+                <ChipButton label={gift} onClick={() => handleGiftClick(gift)} selected={giftList.includes(gift)} />
               </li>
             ))}
           </ul>
         </div>
       </div>
-      <InputText name="gift" hidden />
+      <InputText name="tags" hidden />
       <InputText name="snsType" hidden />
     </div>
   );
