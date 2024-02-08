@@ -5,6 +5,7 @@ import InputText from "@/components/input/InputText";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
 import { useModal } from "@/hooks/useModal";
 import { validateEdit } from "@/utils/editValidate";
+import { handleEnterDown } from "@/utils/handleEnterDown";
 import { PostType } from "../../page";
 
 const MainInput = () => {
@@ -27,7 +28,7 @@ const MainInput = () => {
           name="address"
           placeholder="도로명주소 검색"
           readOnly
-          onKeyDown={(event) => (event.key === "Enter" ? openBottomSheet("address") : null)}
+          onKeyDown={(event) => handleEnterDown(event, () => openBottomSheet("address"))}
           onClick={() => openBottomSheet("address")}
           isEdit={validateEdit(defaultValues?.address !== address)}
         >
@@ -43,7 +44,7 @@ const MainInput = () => {
               name="startDate"
               placeholder="날짜 선택"
               readOnly
-              onKeyDown={(event) => (event.key === "Enter" ? openBottomSheet("date") : null)}
+              onKeyDown={(event) => handleEnterDown(event, () => openBottomSheet("date"))}
               onClick={() => openBottomSheet("date")}
               isEdit={validateEdit(defaultValues?.startDate !== startDate)}
             />
@@ -54,7 +55,7 @@ const MainInput = () => {
               name="endDate"
               placeholder="날짜 선택"
               readOnly
-              onKeyDown={(event) => (event.key === "Enter" ? openBottomSheet("date") : null)}
+              onKeyDown={(event) => handleEnterDown(event, () => openBottomSheet("date"))}
               onClick={() => openBottomSheet("date")}
               isEdit={validateEdit(defaultValues?.endDate !== endDate)}
             />

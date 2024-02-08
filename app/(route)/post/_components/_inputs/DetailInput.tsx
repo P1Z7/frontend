@@ -43,6 +43,7 @@ const DetailInput = () => {
         name="description"
         placeholder="이벤트 설명을 입력하세요."
         rules={{ maxLength: 100 }}
+        hasLimit
         isEdit={validateEdit(defaultValues?.description !== getValues("description"))}
       >
         상세 내용
