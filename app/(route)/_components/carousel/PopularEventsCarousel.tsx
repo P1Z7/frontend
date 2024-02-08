@@ -15,7 +15,7 @@ const PopularEventsCarousel = () => {
 };
 
 const PopularEvents = () => {
-  const instance = new Api("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MDcxMjgwNDF9.AR8YcpB9rBxRpk8DcWM-JvSbU9oPkLjPRXL7g5GwG8w");
+  const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
 
   const { data: popularEvents } = useQuery<EventCardType[]>({
     queryKey: ["event"],
