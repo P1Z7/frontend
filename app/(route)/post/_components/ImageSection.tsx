@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 import InputFile from "@/components/input/InputFile";
-import LeftIcon from "@/public/icon/arrow-left_sm.svg";
 import CloseIcon from "@/public/icon/close.svg";
 
 interface Props {
