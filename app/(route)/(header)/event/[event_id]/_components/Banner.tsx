@@ -3,8 +3,7 @@ import Link from "next/link";
 import { ReactNode } from "react";
 import Chip from "@/components/chip/Chip";
 import { formatDate } from "@/utils/formatString";
-import { EventType } from "@/types/index";
-import { Res_Get_Type } from "@/types/resGetType";
+import { EventCardType, EventType, TargetArtistType } from "@/types/index";
 import CalendarIcon from "@/public/icon/calendar.svg";
 import GiftIcon from "@/public/icon/gift.svg";
 import HeartIcon from "@/public/icon/heart.svg";
@@ -30,7 +29,7 @@ const SnsIcon = {
 };
 
 interface Props {
-  data: Res_Get_Type["event"];
+  data: EventCardType;
 }
 
 const Banner = ({ data }: Props) => {
@@ -86,14 +85,7 @@ export default Banner;
 
 interface MainDescriptionProps {
   placeName: string;
-  // TODO: ArtistType으로 통일
-  artists: {
-    eventId: string;
-    artistId: string;
-    artistName: string;
-    groupId: string;
-    groupName: string;
-  }[];
+  artists: TargetArtistType[];
   eventType: EventType;
 }
 
