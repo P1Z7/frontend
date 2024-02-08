@@ -47,6 +47,12 @@ export interface SignUpFormType {
   myArtists: string[] | [];
 }
 
+export interface UserType {
+  id: string;
+  nickName: string;
+  profileImage: string;
+}
+
 export type EventType = "카페" | "나눔" | "팬광고" | "팝업스토어" | "상영회" | "기타";
 export type GiftType = "컵홀더" | "포스터" | "스티커" | "티켓" | "포토카드" | "엽서" | "굿즈" | "기타";
 export type SnsType = "트위터" | "인스타그램" | "유튜브" | "기타";
@@ -76,16 +82,6 @@ export type ArtistType = {
   group?: string[];
   profileImage: string;
 };
-
-export interface ReviewType {
-  userId: string;
-  eventId: string;
-  isPublic?: boolean;
-  rating: boolean;
-  description: string;
-  reviewImages?: string[];
-  like: number;
-}
 
 export interface EventImageType {
   id: string;
@@ -135,3 +131,25 @@ export interface EventCardType {
   targetArtists: TargetArtistType[];
   eventTags: EventTagType[];
 }
+
+export interface ReviewType {
+  userId: string;
+  eventId: string;
+  isPublic?: boolean;
+  rating: boolean;
+  description: string;
+  reviewImages?: string[];
+  like: number;
+}
+
+// export interface ReviewType {
+//   id: string;
+//   cursorId: number;
+//   isPublic: boolean;
+//   rating: boolean;
+//   description: string;
+//   createdAt: string;
+//   likeCount: number;
+//   user: UserType;
+//   reviewImages: { url: string; createdAt: string }[];
+// }
