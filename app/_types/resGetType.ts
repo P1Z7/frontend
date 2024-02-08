@@ -1,4 +1,4 @@
-import { EventImagesType, EventTagType, EventType, SnsType } from ".";
+import { EventImageType, EventTagType, EventType, SnsType } from ".";
 
 interface Res_Get_Event {
   id: string;
@@ -20,7 +20,7 @@ interface Res_Get_Event {
   updatedAt: string | null;
   deletedAt: string | null;
   likeCount: number;
-  eventImages: EventImagesType[];
+  eventImages: EventImageType[];
   // TODO: ArtistType으로 통일
   targetArtists: {
     eventId: string;

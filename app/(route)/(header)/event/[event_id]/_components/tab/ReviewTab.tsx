@@ -4,7 +4,7 @@ import { MOCK_REVIEWS } from "@/constants/mock";
 
 const ReviewTab = () => {
   return (
-    <div className="h-400 w-full">
+    <div className="w-full">
       <BottomButton>후기 작성하기</BottomButton>
       <ul className="w-full">
         {MOCK_REVIEWS.map((data, index) => (

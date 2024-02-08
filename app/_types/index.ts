@@ -85,7 +85,7 @@ export type ArtistType = {
   profileImage: string;
 };
 
-export interface EventImagesType {
+export interface EventImageType {
   id: string;
   eventId: string;
   imageUrl: string;

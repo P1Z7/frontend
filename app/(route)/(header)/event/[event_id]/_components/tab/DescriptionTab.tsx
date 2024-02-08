@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { EventImagesType } from "@/types/index";
+import { EventImageType } from "@/types/index";
 
 interface Props {
-  images: EventImagesType[];
+  images: EventImageType[];
   description: string | undefined;
 }
 
