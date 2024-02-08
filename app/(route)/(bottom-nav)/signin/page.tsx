@@ -1,6 +1,7 @@
 "use client";
 
 import { Api } from "app/_api/api";
+import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Button from "@/components/button";
 import InputText from "@/components/input/InputText";
@@ -20,6 +21,7 @@ const SIGNIN_DEFAULT = {
 type DefaultValues = (typeof SIGNIN_DEFAULT)["defaultValues"];
 
 const SignInPage = () => {
+  const router = useRouter();
   const { formSection, handleEnterNext } = useEnterNext();
 
   const { control, handleSubmit, formState } = useForm(SIGNIN_DEFAULT);
@@ -32,7 +34,9 @@ const SignInPage = () => {
       signinMethod: "opener",
     };
     const res = await instance.post("/auth", signinData);
-    console.log(res);
+    if (res.accessToken) {
+      router.push("/");
+    }
   };
 
   const handleOAuth = (provider: string) => () => {};
@@ -59,7 +63,7 @@ const SignInPage = () => {
         >
           비밀번호
         </InputText>
-        <Button isDisabled={!formState.isValid || formState.isSubmitting}>로그인</Button>
+        <Button isDisabled={!formState.isValid || formState.isLoading}>로그인</Button>
       </form>
       <div className="flex flex-col gap-20">
         <button onClick={handleOAuth("kakao")} className="flex-center w-full gap-8 rounded-sm bg-[#FEE500] py-16 text-16 font-500">
