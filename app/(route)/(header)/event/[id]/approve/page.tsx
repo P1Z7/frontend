@@ -10,6 +10,7 @@ const MOCK = [
       approve: 2,
       decline: 2,
     },
+    createdAt: "2024-02-02T17:10:14.000Z",
   },
   {
     id: 2,
@@ -19,6 +20,7 @@ const MOCK = [
       approve: 2,
       decline: 2,
     },
+    createdAt: "2024-02-02T17:10:14.000Z",
   },
   {
     id: 3,
@@ -28,6 +30,7 @@ const MOCK = [
       approve: 2,
       decline: 2,
     },
+    createdAt: "2024-02-02T17:10:14.000Z",
   },
   {
     id: 4,
@@ -43,14 +46,45 @@ const MOCK = [
       approve: 2,
       decline: 2,
     },
+    createdAt: "2024-02-02T17:10:14.000Z",
+  },
+  {
+    id: 5,
+    type: "아티스트",
+    editContent: [
+      {
+        eventId: "be14e489-1b39-422e-aef2-f9041ef9e375",
+        artistId: "454d54d7-a6c8-4c",
+        artistName: "카리나",
+        groupId: "e073b452-9edd-41",
+        groupName: "에스파",
+      },
+      {
+        eventId: "be14e489-1b39-422e-aef2-f9041ef9e375",
+        artistId: "1fab0958-dafc-48",
+        artistName: "윈터",
+        groupId: "e073b452-9edd-41",
+        groupName: "에스파",
+      },
+    ],
+    count: {
+      approve: 2,
+      decline: 2,
+    },
+    createdAt: "2024-02-02T17:10:14.000Z",
   },
 ];
 
 const EditApprove = () => {
   return (
     <div className="px-20 py-16">
-      {MOCK.map(({ id, type, editContent, count }) => (
-        <EditCard key={id} id={id} type={type as LabelType} editContent={editContent} count={count} />
+      <section className="rounded-sm bg-gray-50 px-12 py-8 text-center text-14 text-gray-700">
+        수정사항은 사용자 3인 이상의 승인 후에 반영됩니다.
+        <br />
+        거절이 3회 누적된 수정사항은 자동으로 삭제됩니다.
+      </section>
+      {MOCK.map(({ id, type, editContent, count, createdAt }) => (
+        <EditCard key={id} id={id} type={type as LabelType} editContent={editContent} count={count} createdAt={createdAt} />
       ))}
     </div>
   );
