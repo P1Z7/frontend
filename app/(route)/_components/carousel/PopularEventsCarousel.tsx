@@ -17,20 +17,29 @@ const PopularEventsCarousel = () => {
 const PopularEvents = () => {
   const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
 
-  const { data: popularEvents } = useQuery<EventCardType[]>({
-    queryKey: ["event"],
+  const {
+    data: popularEvents,
+    isSuccess,
+    isLoading,
+  } = useQuery<EventCardType[]>({
+    queryKey: ["event", "popular"],
     queryFn: async () => {
-      return await instance.get("/event/popularity");
+      return instance.get("/event/popularity");
     },
   });
 
   return (
     <>
-      {popularEvents?.map((event) => (
-        <div key={event.id}>
-          <VerticalEventCard data={event} />
-        </div>
-      ))}
+      {isLoading && <div>로딩중</div>}
+      {isSuccess && (
+        <>
+          {popularEvents?.map((event) => (
+            <div key={event.id}>
+              <VerticalEventCard data={event} />
+            </div>
+          ))}
+        </>
+      )}
     </>
   );
 };

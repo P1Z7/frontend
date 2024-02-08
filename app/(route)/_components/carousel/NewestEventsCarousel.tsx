@@ -17,20 +17,29 @@ const NewestEventsCarousel = () => {
 const NewestEvents = () => {
   const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
 
-  const { data: newestEvents } = useQuery<EventCardType[]>({
-    queryKey: ["event"],
+  const {
+    data: newestEvents,
+    isSuccess,
+    isLoading,
+  } = useQuery<EventCardType[]>({
+    queryKey: ["event", "new"],
     queryFn: async () => {
-      return await instance.get("/event/new");
+      return instance.get("/event/new");
     },
   });
 
   return (
     <>
-      {newestEvents?.map((event) => (
-        <div key={event.id}>
-          <VerticalEventCard data={event} />
-        </div>
-      ))}
+      {isLoading && <div>로딩중</div>}
+      {isSuccess && (
+        <>
+          {newestEvents?.map((event) => (
+            <div key={event.id}>
+              <VerticalEventCard data={event} />
+            </div>
+          ))}
+        </>
+      )}
     </>
   );
 };

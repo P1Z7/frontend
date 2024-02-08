@@ -1,20 +1,35 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import VerticalEventCard from "@/components/card/VerticalEventCard";
-import { MOCK_EVENTS } from "@/constants/mock";
+import { Api } from "@/api/api";
+import { EventCardType } from "@/types/index";
 import Hero from "@/public/icon/hero.svg";
 import Carousel from "./Carousel";
 
 const FavArtistEventsCarousel = () => {
   // 추후 next auth로 변경 예정
-  const [status, setStatus] = useState(false);
+  const [status, setStatus] = useState(true);
 
-  // 목업의 길이를 기반으로 좋아요한 이벤트의 수 확인
-  // 추후 수정 예정
-  const hasFavoriteEvents = MOCK_EVENTS.length > 0;
+  const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
+
+  const {
+    data: favArtistEvent,
+    isSuccess,
+    isLoading,
+  } = useQuery<EventCardType[]>({
+    queryKey: ["event", "favoriteArtist"],
+    queryFn: async () => {
+      return instance.get("/event/new");
+    },
+  });
+
+  // 데이터 길이를 기반으로 좋아요한 이벤트의 수 확인
+  // 추후 좋아요한 아티스트의 유무로 수정 예정
+  const hasFavoriteEvents = !!favArtistEvent?.length;
 
   const renderContent = () => {
     if (!status) {
@@ -26,13 +41,18 @@ const FavArtistEventsCarousel = () => {
     }
 
     return (
-      <Carousel>
-        {MOCK_EVENTS.map((event, index) => (
-          <div key={index}>
-            <VerticalEventCard data={event} />
-          </div>
-        ))}
-      </Carousel>
+      <>
+        {isLoading && <div>로딩중</div>}
+        {isSuccess && (
+          <Carousel>
+            {favArtistEvent.map((event) => (
+              <div key={event.id}>
+                <VerticalEventCard data={event} />
+              </div>
+            ))}
+          </Carousel>
+        )}
+      </>
     );
   };
 
