@@ -81,9 +81,13 @@ const InputText: Function = ({
 
   const ErrorField = useCallback(() => {
     return (
-      <div className="mt-4 flex h-12">
-        {(!!fieldState.error || hint) && <p className={`font-normal text-12 ${fieldState.error ? "text-red" : "text-gray-500"}`}>{fieldState?.error?.message || hint}</p>}
-      </div>
+      <>
+        {(!!fieldState.error || hint) && (
+          <div className="mt-4 flex h-12">
+            <p className={`font-normal text-12 ${fieldState.error ? "text-red" : "text-gray-500"}`}>{fieldState?.error?.message || hint}</p>
+          </div>
+        )}
+      </>
     );
   }, [fieldState.error]);
 

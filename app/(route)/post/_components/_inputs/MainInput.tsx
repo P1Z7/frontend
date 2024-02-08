@@ -23,7 +23,14 @@ const MainInput = () => {
         장소 이름
       </InputText>
       <div className="flex flex-col">
-        <InputText name="address" placeholder="도로명주소 검색" readOnly onClick={() => openBottomSheet("address")} isEdit={validateEdit(defaultValues?.address !== address)}>
+        <InputText
+          name="address"
+          placeholder="도로명주소 검색"
+          readOnly
+          onKeyDown={(event) => (event.key === "Enter" ? openBottomSheet("address") : null)}
+          onClick={() => openBottomSheet("address")}
+          isEdit={validateEdit(defaultValues?.address !== address)}
+        >
           주소
         </InputText>
         <InputText name="addressDetail" placeholder="상세 주소 입력" isEdit={validateEdit(defaultValues?.addressDetail !== addressDetail)} />
@@ -32,11 +39,25 @@ const MainInput = () => {
         기간
         <div className="flex">
           <div className="w-1/2">
-            <InputText name="startDate" placeholder="날짜 선택" readOnly onClick={() => openBottomSheet("date")} isEdit={validateEdit(defaultValues?.startDate !== startDate)} />
+            <InputText
+              name="startDate"
+              placeholder="날짜 선택"
+              readOnly
+              onKeyDown={(event) => (event.key === "Enter" ? openBottomSheet("date") : null)}
+              onClick={() => openBottomSheet("date")}
+              isEdit={validateEdit(defaultValues?.startDate !== startDate)}
+            />
           </div>
           <div className="flex items-center px-4">~</div>
           <div className="w-1/2">
-            <InputText name="endDate" placeholder="날짜 선택" readOnly onClick={() => openBottomSheet("date")} isEdit={validateEdit(defaultValues?.endDate !== endDate)} />
+            <InputText
+              name="endDate"
+              placeholder="날짜 선택"
+              readOnly
+              onKeyDown={(event) => (event.key === "Enter" ? openBottomSheet("date") : null)}
+              onClick={() => openBottomSheet("date")}
+              isEdit={validateEdit(defaultValues?.endDate !== endDate)}
+            />
           </div>
         </div>
       </div>
