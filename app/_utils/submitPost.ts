@@ -15,7 +15,7 @@ export const handlePostSubmit = async (userInput: any, instance: Api) => {
   const { placeName, eventType, groupId, artists, startDate, endDate, address, addressDetail, eventImages, description, eventUrl, organizerSns, snsType, tags } = userInput;
   const imgUrlList = await makeImgUrlList(eventImages, instance);
   const tagList = matchTagIdList(tags);
-  const response = await instance.post("/event", {
+  return await instance.post("/event", {
     placeName,
     eventType,
     groupId,
