@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import VerticalEventCard from "@/components/card/VerticalEventCard";
 import { Api } from "@/api/api";
-import { EventCardType } from "@/types/index";
+import { EventCardType } from "@/types/getBodyType";
 import Carousel from "./Carousel";
 
 const NewestEventsCarousel = () => {

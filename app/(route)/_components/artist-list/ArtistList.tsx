@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import InfiniteScroll from "react-infinite-scroller";
 import ArtistCard from "@/components/ArtistCard";
 import { Api } from "@/api/api";
-import { ArtistAndGroupListType } from "@/types/index";
+import { ArtistAndGroupListType } from "@/types/getBodyType";
 
 const ArtistList = () => {
   const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);

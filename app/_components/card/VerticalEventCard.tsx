@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Fragment } from "react";
 import { formatAddress, formatDate } from "@/utils/formatString";
-import { EventCardType } from "@/types/index";
+import { EventCardType } from "@/types/getBodyType";
 import HeartButton from "../button/HeartButton";
 import Chip from "../chip/Chip";
 

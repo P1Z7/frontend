@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import VerticalEventCard from "@/components/card/VerticalEventCard";
 import { Api } from "@/api/api";
-import { EventCardType } from "@/types/index";
+import { EventCardType } from "@/types/getBodyType";
 import Hero from "@/public/icon/hero.svg";
 import Carousel from "./Carousel";
 
