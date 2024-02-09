@@ -86,7 +86,7 @@ const InputText: Function = ({
   }, [fieldState.error]);
 
   return (
-    <div className={`${horizontal && "flex gap-28"}`}>
+    <div className={`w-full ${horizontal && "flex gap-28"}`}>
       <Label />
       <div className={`relative ${horizontal && "flex-1"}`}>
         <input
