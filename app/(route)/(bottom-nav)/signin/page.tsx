@@ -1,6 +1,7 @@
 "use client";
 
 import FeelMyRhythm from "@/(route)/(bottom-nav)/signin/_components/Confetti";
+import LoadingDot from "@/(route)/(bottom-nav)/signin/_components/LoadingDot";
 import { Api } from "app/_api/api";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -42,7 +43,9 @@ const SignInPage = () => {
       const res = await instance.post("/auth", signinData);
       if (res) {
         setIsLoading(false);
-        toast.custom(<FeelMyRhythm />);
+        toast.custom(<FeelMyRhythm />, {
+          className: "z-popup",
+        });
         toast("어서오세요! 김하늘님", {
           className: "text-16 font-600",
         });
@@ -79,11 +82,7 @@ const SignInPage = () => {
             <div className="relative h-full w-full">
               <span className={`before absolute w-max transition-all ${formState.isSubmitted ? "top-48" : "absolute-center"}`}>로그인</span>
               <span className={`loading absolute w-max transition-all ${isLoading ? "absolute-center" : "-top-48"}`}>
-                <svg width={25} viewBox="0 0 20 20">
-                  <circle className="animate-[bounce_1s_infinite]" color="#ffffff" cx="2.2" cy="12" r="1.6" />
-                  <circle className="animate-[bounce_1s_infinite_100ms]" color="#ffffff" cx="9.5" cy="12" r="1.6" />
-                  <circle className="animate-[bounce_1s_infinite_200ms]" color="#ffffff" cx="16.8" cy="12" r="1.6" />
-                </svg>
+                <LoadingDot />
               </span>
               <span className={`success absolute w-max transition-all ${isLoading ? "top-48" : formState.isSubmitSuccessful ? "absolute-center" : "top-48"}`}>성공!</span>
             </div>

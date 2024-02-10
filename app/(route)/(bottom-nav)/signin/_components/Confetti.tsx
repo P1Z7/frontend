@@ -15,6 +15,7 @@ const FeelMyRhythm = () => {
       fireFn({
         ...opts,
         origin: { y: 0.35 },
+        zIndex: 9999,
         particleCount: Math.floor(200 * particleRatio),
       });
     }
@@ -22,18 +23,18 @@ const FeelMyRhythm = () => {
 
   const fire = () => {
     makeShot(0.3, {
-      spread: 80,
-      startVelocity: 25,
-      colors: ["#EB278C", "#FF50AA80", "#FF50AA1F"],
+      spread: 100,
+      scalar: 1.3,
+      colors: ["#EB278C", "#ff008480", "#e11e831f"],
     });
-    // makeShot(0.2, {
-    //   spread: 60,
-    // });
-    // makeShot(0.35, {
-    //   spread: 100,
-    //   decay: 0.91,
-    //   scalar: 0.8,
-    // });
+    makeShot(0.2, {
+      spread: 60,
+    });
+    makeShot(0.35, {
+      spread: 100,
+      decay: 0.9,
+      scalar: 0.8,
+    });
     // makeShot(0.1, {
     //   spread: 120,
     //   startVelocity: 25,
