@@ -31,7 +31,7 @@ const SignInPage = () => {
   const router = useRouter();
   const { formSection, handleEnterNext } = useEnterNext();
 
-  const { control, handleSubmit, formState, setError } = useForm(SIGNIN_DEFAULT);
+  const { control, handleSubmit, formState, setError, watch } = useForm(SIGNIN_DEFAULT);
   const [submitState, setSubmitState] = useState({ isLoading: false, isError: false });
 
   const handleSignin: SubmitHandler<DefaultValues> = ({ email, password }) => {
@@ -60,7 +60,16 @@ const SignInPage = () => {
       } catch (e: any) {
         setSubmitState((prev) => ({ ...prev, isError: true }));
         if (e.message === "Not Founded") {
-          setError("email", { message: "가입 이력이 없는 이메일입니다." });
+          setError("email", {
+            message: (
+              <>
+                가입 이력이 없는 이메일입니다.
+                <Link href={`/signup?email=${watch("email")}`} scroll={false} className="ml-4 underline">
+                  회원가입하기
+                </Link>
+              </>
+            ) as unknown as string,
+          });
         }
         if (e.message === "password not valid") {
           setError("password", { message: "비밀번호가 일치하지 않습니다." });
@@ -80,7 +89,9 @@ const SignInPage = () => {
         </button>
       </header>
       <div className="flex-center flex-col px-20 pt-80">
-        <Logo />
+        <Link href="/">
+          <Logo />
+        </Link>
         <form ref={formSection} onSubmit={handleSubmit(handleSignin)} className="flex-center mt-40 w-full flex-col pb-16">
           <InputText
             name="email"
@@ -113,7 +124,9 @@ const SignInPage = () => {
           </div>
         </form>
         <div className="flex-center mb-56 gap-20 text-14 font-500 text-gray-500">
-          <Link href="/signup">회원가입</Link>
+          <Link href={`/signup?email=${watch("email")}`} scroll={false}>
+            회원가입
+          </Link>
           <div className="h-16 border" />
           <Link href="">비밀번호 찾기</Link>
         </div>
