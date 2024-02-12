@@ -1,7 +1,11 @@
+"use client";
+
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
-import { ReactNode } from "react";
+import { ButtonHTMLAttributes, ReactNode, useState } from "react";
 import Chip from "@/components/chip/Chip";
+import { Api } from "@/api/api";
 import { formatDate } from "@/utils/formatString";
 import { EventCardType, EventType, TargetArtistType } from "@/types/index";
 import CalendarIcon from "@/public/icon/calendar.svg";
@@ -28,13 +32,44 @@ const SnsIcon = {
   기타: null,
 };
 
+const USER_ID = "4a256531-6f40-41de-aba2-d37d7507e5d7";
+
 interface Props {
   data: EventCardType;
+  eventId: string;
 }
 
-const Banner = ({ data }: Props) => {
+const Banner = ({ data, eventId }: Props) => {
   const formattedDate = formatDate(data.startDate, data.endDate, true);
   const bannerImage = data.eventImages.find((images) => images.isMain);
+
+  const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
+  const queryClient = useQueryClient();
+
+  const getEventLiked = async (userId: string, eventId: string) => {
+    const data: boolean = await instance.get("/event/like", { userId, eventId });
+    return data;
+  };
+
+  const likeEvent = async (userId: string, eventId: string) => {
+    const data = await instance.post("/event/like", { userId, eventId });
+  };
+
+  const { data: isLiked } = useQuery({
+    queryKey: ["eventLiked", eventId],
+    queryFn: () => getEventLiked(USER_ID, eventId),
+  });
+
+  const likeMutation = useMutation({
+    mutationFn: ({ userId, eventId }: { userId: string; eventId: string }) => likeEvent(userId, eventId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["eventLiked", eventId] });
+    },
+  });
+
+  const handleLikeEvent = () => {
+    likeMutation.mutate({ userId: USER_ID, eventId });
+  };
 
   return (
     <section className="w-full">
@@ -42,10 +77,7 @@ const Banner = ({ data }: Props) => {
         <Image src={bannerImage?.imageUrl ?? ""} alt={"행사 포스터 썸네일"} priority fill className="object-cover" />
       </div>
       <div className="relative bottom-24 rounded-t-lg bg-white-black p-24 pb-0">
-        <button className="absolute right-20 top-24 text-center text-12 font-600">
-          <HeartIcon stroke="#1C1E22" />
-          {100}
-        </button>
+        <HeartButton isLiked={isLiked ?? false} likeCount={data.likeCount} onClick={handleLikeEvent} />
         <MainDescription placeName={data.placeName} artists={data.targetArtists} eventType={data.eventType} />
         <div className="flex flex-col gap-8 pt-16 text-14 font-500">
           <SubDescription>
@@ -58,9 +90,11 @@ const Banner = ({ data }: Props) => {
           </SubDescription>
           <SubDescription>
             <GiftIcon {...IconStyleProps} />
-            {data.eventTags.map((tag) => (
-              <Chip key={tag.tagId} kind="goods" label={tag.tagName} />
-            ))}
+            <div className="flex items-center gap-4">
+              {data.eventTags.map((tag) => (
+                <Chip key={tag.tagId} kind="goods" label={tag.tagName} />
+              ))}
+            </div>
           </SubDescription>
           <SubDescription isVisible={Boolean(data?.eventUrl)}>
             <LinkIcon {...IconStyleProps} />
@@ -113,4 +147,20 @@ interface SubDescriptionProps {
 
 const SubDescription = ({ isVisible = true, children }: SubDescriptionProps) => {
   return <>{isVisible && <div className="flex h-20 items-center gap-12">{children}</div>}</>;
+};
+
+interface HeartButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  isLiked: boolean;
+  likeCount: number;
+}
+
+const HeartButton = ({ isLiked, likeCount, onClick }: HeartButtonProps) => {
+  const [liked, setLiked] = useState(isLiked);
+
+  return (
+    <button onClick={onClick} className="absolute right-20 top-24 text-center text-12 font-600">
+      <HeartIcon stroke={liked ? "#FF50AA" : "#1C1E22"} fill={liked ? "#FF50AA" : "none"} />
+      {likeCount}
+    </button>
+  );
 };
