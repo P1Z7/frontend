@@ -3,6 +3,8 @@ import Evaluation from "@/components/Evaluation";
 import { EventReviewType } from "@/types/index";
 import HeartIcon from "@/public/icon/heart.svg";
 
+const DEFAULT_PROFILE_IMAGE = "/image/no-profile.png";
+
 interface Props {
   data: EventReviewType;
 }
@@ -12,7 +14,7 @@ const EventReview = ({ data }: Props) => {
     <div className="flex flex-col gap-16 border-b border-gray-50 px-20 py-16">
       <div className="flex items-center gap-8">
         <div className="relative h-32 w-32">
-          <Image src={data.user.profileImage ?? ""} alt="프로필 이미지" fill className="rounded-full object-cover" sizes="3.2rem" />
+          <Image src={data.user.profileImage ?? DEFAULT_PROFILE_IMAGE} alt="프로필 이미지" fill className="rounded-full object-cover" sizes="3.2rem" />
         </div>
         <div className="text-16 font-500">{data.user.nickName}</div>
         <button className="ml-auto text-12 font-500 text-gray-400">신고하기</button>
@@ -22,7 +24,7 @@ const EventReview = ({ data }: Props) => {
       <ul className="flex gap-8 overflow-auto">
         {data.reviewImages?.map((image, index) => (
           <li key={index} className="relative h-120 w-120 shrink-0">
-            <Image src={image.url} alt="후기 사진" fill className="object-cover" />
+            <Image src={image.url} alt="후기 사진" fill className="object-cover" sizes="12rem" />
           </li>
         ))}
       </ul>

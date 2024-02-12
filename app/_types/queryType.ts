@@ -32,7 +32,6 @@ type Req_Query_Group_And_Solo = {
 type Req_Query_Review = {
   size: number;
   cursorId: number;
-  eventId: string;
 };
 
 export type Req_Query_Type = {
