@@ -11,10 +11,13 @@ import EventReview from "../EventReview";
 const SIZE = 10;
 const INITIAL_CURSOR_ID = 100000;
 
-const ReviewTab = () => {
+interface Props {
+  eventId: string;
+}
+
+const ReviewTab = ({ eventId }: Props) => {
   const instance = new Api();
   const pathname = usePathname();
-  const eventId = pathname.split("/").at(-1);
 
   const getReviews = async ({ pageParam = 1 }) => {
     const data: Res_Get_Type["eventReviews"] = await instance.get(`/reviews/${eventId}`, { size: SIZE, cursorId: pageParam == 1 ? INITIAL_CURSOR_ID : pageParam });
@@ -27,7 +30,7 @@ const ReviewTab = () => {
     isFetching,
   } = useInfiniteQuery({
     initialPageParam: 1,
-    queryKey: ["eventReviews"],
+    queryKey: ["eventReviews", eventId],
     queryFn: getReviews,
     getNextPageParam: (lastPage) => (lastPage.length < SIZE ? null : lastPage.at(-1)?.cursorId),
   });
