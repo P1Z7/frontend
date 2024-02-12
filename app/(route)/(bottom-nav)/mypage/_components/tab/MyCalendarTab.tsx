@@ -16,10 +16,11 @@ const EventTab = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) => {
 
   const tileContent = ({ date }: { date: Date }) => {
     const eventsForDate = data.filter((event) => new Date(event.startDate).getTime() <= date.getTime() && new Date(event.endDate).getTime() >= date.getTime());
+
     if (eventsForDate.length > 0) {
       let today: (ScheduleDataProps | "blank")[] = sortEvents(eventsForDate);
 
-      for (const idx in today) {
+      for (let idx in today) {
         const lastDayItem = lastDay[idx];
         const todayItem = today[idx];
         if (!lastDayItem) {
@@ -29,7 +30,12 @@ const EventTab = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) => {
         if (lastDayItem === todayItem) {
           continue;
         }
-        today.splice(Number(idx), 0, "blank");
+        let rpt = 0;
+        while (lastDay[Number(idx) + rpt] !== today[Number(idx) + rpt]) {
+          if (Number(idx) + rpt > lastDay.length) break;
+          today.splice(Number(idx) + rpt, 0, "blank");
+          rpt++;
+        }
       }
 
       if (date.getDay() === 1) {
@@ -118,7 +124,7 @@ const EventTab = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) => {
   };
 
   return (
-    <div className="flex flex-col gap-16 px-20 py-16">
+    <div className="flex flex-col items-center justify-stretch gap-16 px-20 pb-16 pt-72">
       <style>{calendarStyle}</style>
       {calendarStyle !== "" && (
         <Calendar
@@ -126,8 +132,8 @@ const EventTab = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) => {
           onChange={handleClickToday}
           value={selectedDate}
           tileContent={tileContent}
-          nextLabel={<PrevIcon onClick={() => (lastDay = [])} width={64} height={16} viewBox="0 0 24 24" stroke="#A2A5AA" />}
-          prevLabel={<NextIcon onClick={() => (lastDay = [])} width={64} height={16} viewBox="0 0 24 24" stroke="#A2A5AA" />}
+          nextLabel={<PrevIcon onClick={() => (lastDay = [])} width={32} height={16} viewBox="0 0 24 24" stroke="#A2A5AA" />}
+          prevLabel={<NextIcon onClick={() => (lastDay = [])} width={32} height={16} viewBox="0 0 24 24" stroke="#A2A5AA" />}
           next2Label={null}
           prev2Label={null}
           formatDay={(locale, date) => date.getDate().toString()}
@@ -137,8 +143,8 @@ const EventTab = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) => {
           }}
         />
       )}
-      <div>
-        <div className="flex gap-12">
+      <div className="w-full">
+        <div className="flex w-full gap-12">
           <ChipButton label="예정" onClick={() => handleChipClick("예정")} selected={currentLabel === "예정"} />
           <ChipButton label="진행중" onClick={() => handleChipClick("진행중")} selected={currentLabel === "진행중"} />
           <ChipButton label="종료" onClick={() => handleChipClick("종료")} selected={currentLabel === "종료"} />
