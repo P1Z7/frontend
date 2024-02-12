@@ -1,18 +1,25 @@
-import Review from "@/components/Review";
-import BottomButton from "@/components/button/BottomButton";
-import { MOCK_REVIEWS } from "@/constants/mock";
+// "use client"
+import { EventReviewType } from "@/types/index";
+import BottomButton from "../BottomButton";
+import EventReview from "../EventReview";
 
-const ReviewTab = () => {
+const getEventInfo = async () => {
+  const data = await fetch(`http://${process.env.NEXT_PUBLIC_BASE_URL}/reviews/f6c28285-c4b3-4af6-b27e-2faf4294e8ad?size=10&cursorId=100`);
+  const res: EventReviewType[] = await data.json();
+  return res;
+};
+
+const ReviewTab = async () => {
+  const data = await getEventInfo();
+
   return (
     <div className="w-full">
-      <BottomButton>후기 작성하기</BottomButton>
-      <ul className="w-full">
-        {MOCK_REVIEWS.map((data, index) => (
-          <li key={index}>
-            <Review data={data} />
-          </li>
+      <div className="w-full py-16">
+        {data.map((data) => (
+          <EventReview key={data.id} data={data} />
         ))}
-      </ul>
+      </div>
+      <BottomButton />
     </div>
   );
 };

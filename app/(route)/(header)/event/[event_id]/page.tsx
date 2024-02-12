@@ -1,6 +1,5 @@
 import Tabs from "@/components/Tabs";
 import { EventCardType } from "@/types/index";
-import { MOCK_EVENTS } from "@/constants/mock";
 import Banner from "./_components/Banner";
 import DescriptionTab from "./_components/tab/DescriptionTab";
 import LocationTab from "./_components/tab/LocationTab";
@@ -11,14 +10,12 @@ interface Props {
 }
 
 const getEventInfo = async (eventId: string) => {
-  const data = await fetch(`http://ec2-3-37-149-204.ap-northeast-2.compute.amazonaws.com:3000/event/${eventId}`);
+  const data = await fetch(`http://${process.env.NEXT_PUBLIC_BASE_URL}/event/${eventId}`);
   const res: EventCardType = await data.json();
   return res;
 };
 
 const EventInfoPage = async ({ params }: Props) => {
-  const eventData = MOCK_EVENTS[0];
-
   const eventInfo = await getEventInfo(params.event_id);
 
   return (

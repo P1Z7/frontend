@@ -50,7 +50,7 @@ export interface SignUpFormType {
 export interface UserType {
   id: string;
   nickName: string;
-  profileImage: string;
+  profileImage?: string;
 }
 
 export type EventType = "카페" | "나눔" | "팬광고" | "팝업스토어" | "상영회" | "기타";
@@ -82,6 +82,17 @@ export type ArtistType = {
   group?: string[];
   profileImage: string;
 };
+
+// 삭제 예정
+export interface ReviewType {
+  userId: string;
+  eventId: string;
+  isPublic?: boolean;
+  rating: boolean;
+  description: string;
+  reviewImages?: string[];
+  like: number;
+}
 
 export interface EventImageType {
   id: string;
@@ -132,24 +143,15 @@ export interface EventCardType {
   eventTags: EventTagType[];
 }
 
-export interface ReviewType {
-  userId: string;
-  eventId: string;
-  isPublic?: boolean;
+export interface EventReviewType {
+  id: string;
+  cursorId: number;
+  isPublic: boolean;
   rating: boolean;
   description: string;
-  reviewImages?: string[];
-  like: number;
+  createdAt: string;
+  likeCount: number;
+  isLike: boolean;
+  user: UserType;
+  reviewImages: { url: string; createdAt: string }[];
 }
-
-// export interface ReviewType {
-//   id: string;
-//   cursorId: number;
-//   isPublic: boolean;
-//   rating: boolean;
-//   description: string;
-//   createdAt: string;
-//   likeCount: number;
-//   user: UserType;
-//   reviewImages: { url: string; createdAt: string }[];
-// }
