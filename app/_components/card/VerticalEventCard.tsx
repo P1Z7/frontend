@@ -25,6 +25,7 @@ const VerticalEventCard = ({ data }: Props) => {
               <Image
                 src={image.imageUrl}
                 fill
+                sizes="14.8rem"
                 style={{
                   objectFit: "cover",
                 }}
@@ -42,14 +43,7 @@ const VerticalEventCard = ({ data }: Props) => {
           <p>{formattedAddress}</p>
         </div>
         <div className="flex items-center gap-8">
-          <p className="truncate text-16 font-600 text-gray-900">
-            {data.targetArtists?.map((artist, index) => (
-              <Fragment key={artist.artistId}>
-                {index > 0 && ", "}
-                {artist.artistName}
-              </Fragment>
-            ))}
-          </p>
+          <p className="truncate text-16 font-600 text-gray-900">{data.targetArtists?.map((artist) => artist.artistName).join(", ")}</p>
           <Chip label={data.eventType} kind="event" />
         </div>
       </div>
