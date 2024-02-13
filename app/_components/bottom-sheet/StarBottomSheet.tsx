@@ -1,9 +1,8 @@
 import { PostType } from "@/(route)/post/page";
 import { useQuery } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
+import { Api } from "app/_api/api";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
-import { Api } from "@/api/api";
 import { useFetchMember } from "@/hooks/useFetchMember";
 import { useSearch } from "@/hooks/useSearch";
 import { BottomSheetBaseType } from "@/types/index";
@@ -98,25 +97,15 @@ const StarBottomSheet = ({ closeBottomSheet, refs, isFirst = false }: Props) => 
         ) : (
           <>
             <SearchInput setKeyword={setKeyword} />
-            {isLoading && <div>데이터 로딩중 ~~</div>}
-            {isSuccess && (
-              <ArtistList
-                render={() => (
-                  <>
-                    {groupData.groupAndSoloList.map(({ id, image, name, type }: any) => (
-                      <ArtistCard
-                        key={id}
-                        profileImage={image}
-                        isChecked={getValues("groupId") === id || getValues("artists").includes(id)}
-                        onClick={() => handleFirstDepthClick(type, id, name)}
-                      >
-                        {name}
-                      </ArtistCard>
-                    ))}
-                  </>
-                )}
-              />
-            )}
+            <div className="grid h-[34rem] grid-cols-3 overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-100 scrollbar-track-rounded-full scrollbar-thumb-rounded-full">
+              {isLoading && <div>데이터 로딩중 ~~</div>}
+              {isSuccess &&
+                groupData.groupAndSoloList.map(({ id, image, name, type }: any) => (
+                  <ArtistCard key={id} profileImage={image}>
+                    {name}
+                  </ArtistCard>
+                ))}
+            </div>
           </>
         )}
       </div>

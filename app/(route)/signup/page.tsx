@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useFunnel } from "@/hooks/useFunnel";
 import { SignUpFormType, SignupStepNameType } from "@/types/index";
 import ArrowLeft from "@/public/icon/arrow-left_lg.svg";
@@ -19,6 +19,8 @@ const DEFAULT_VALUES = {
 };
 
 const SignUp = () => {
+  const searchParams = useSearchParams();
+  const defaultEmail = searchParams.get("email");
   const router = useRouter();
   const { Funnel, Step, setStep, currentStep } = useFunnel(STEPS);
 
@@ -36,7 +38,7 @@ const SignUp = () => {
   return (
     <>
       <Header onClick={handlePrevClick} />
-      <GenericFormProvider<SignUpFormType> formOptions={{ mode: "onBlur", defaultValues: DEFAULT_VALUES }}>
+      <GenericFormProvider<SignUpFormType> formOptions={{ mode: "onBlur", defaultValues: { ...DEFAULT_VALUES, email: defaultEmail ?? "" } }}>
         <div className="flex flex-col px-20">
           <ProfileSetup steps={STEPS} handleNextClick={handleNextClick} Funnel={Funnel} Step={Step} />
         </div>
