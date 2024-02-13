@@ -68,6 +68,10 @@ type Req_Post_Review_Like = {
   isLike: boolean;
 };
 
+type Req_Post_Email = {
+  email: string;
+};
+
 export type Req_Post_Type = {
   event: Req_Post_Event;
   signup: Req_Post_Signup;
@@ -77,4 +81,5 @@ export type Req_Post_Type = {
   group: Req_Post_Group;
   review: Req_Post_Review;
   reviewLike: Req_Post_Review_Like;
+  email: Req_Post_Email;
 };

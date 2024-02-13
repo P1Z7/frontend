@@ -1,6 +1,6 @@
 import { ArtistType, EventInfoType } from "../_types";
 
-export const MOCK: MockArtistType[] = [
+export const MOCK = [
   {
     name: "마크",
     group: ["NCT", "NCT127", "NCT DREAM"],

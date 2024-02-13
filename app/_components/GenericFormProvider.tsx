@@ -1,9 +1,9 @@
-import { Api } from "app/_api/api";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { FieldValues, FormProvider, UseFormProps, useForm } from "react-hook-form";
 import { GiftType } from "@/types/index";
 import { TAG } from "@/constants/data";
+import { Api } from "@/api/api";
 
 interface GenericFormProps<T extends FieldValues> {
   children: React.ReactNode;

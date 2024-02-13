@@ -1,32 +1,32 @@
-import { MOCK } from "app/_constants/mock";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import ArtistCard from "@/components/ArtistCard";
 import ChipButton from "@/components/chip/ChipButton";
 import SearchInput from "@/components/input/SearchInput";
+import { Api } from "@/api/api";
 import { useModal } from "@/hooks/useModal";
 import { ArtistType } from "@/types/index";
 import InputModal from "./modal/InputModal";
 
 interface Props {
-  data: ArtistType[];
   onClick: (id: string, isChecked: boolean) => void;
   myArtists: string[];
 }
 
-const SearchArtist = ({ data, onClick, myArtists }: Props) => {
+const SearchArtist = ({ onClick, myArtists }: Props) => {
   const [keyword, setKeyword] = useState("");
-  const [searchedData, setSearchedData] = useState(data);
+  const instance = new Api();
 
-  useEffect(() => {
-    // 검색 API 들어갈 자리
-    setSearchedData(
-      MOCK.filter((item) => {
-        return item.name.toLowerCase().includes(keyword.toLowerCase()) || (item.group && item.group.some((group) => group.toLowerCase().includes(keyword.toLowerCase())));
-      }),
-    );
-  }, [keyword]);
+  const { data } = useQuery({
+    queryKey: ["group", keyword],
+    queryFn: async () => {
+      return instance.get("/artist/group", { keyword: keyword, size: 12, page: 1 });
+    },
+  });
+
+  console.log(data);
 
   const [selected, setSelected] = useState<string[]>(myArtists);
   const lastButton = useRef<HTMLButtonElement>(null);
@@ -51,12 +51,7 @@ const SearchArtist = ({ data, onClick, myArtists }: Props) => {
   const notify = () =>
     toast.success("등록 요청이 제출되었습니다.", {
       position: "bottom-center",
-      style: {
-        padding: "16px 28px",
-        fontFamily: "Pretendard",
-        fontWeight: "600",
-        fontSize: "16px",
-      },
+      className: "text-16 font-600 px-28 py-16",
     });
 
   const onModalSubmit: SubmitHandler<{ request: string }> = ({ request }) => {
@@ -66,6 +61,10 @@ const SearchArtist = ({ data, onClick, myArtists }: Props) => {
       notify();
     }
   };
+
+  if (!data?.artistAndGroupList) return;
+
+  const searchedData: ArtistType[] = data.artistAndGroupList;
 
   return (
     <div className="flex w-full flex-col pt-8">
@@ -77,14 +76,14 @@ const SearchArtist = ({ data, onClick, myArtists }: Props) => {
       </section>
       <div className="sticky top-72 z-nav mb-16 mt-8 flex w-full gap-12 overflow-hidden bg-white-black">
         {selected.map((name, idx) => (
-          <div className="mb-8 mt-8 rounded-full bg-white-black" key={name}>
+          <div className="mb-8 mt-8 rounded-full bg-white-black" key={idx}>
             <ChipButton label={name} onClick={() => handleArtistClick(name, !myArtists.includes(name))} ref={idx === selected.length - 1 ? lastButton : undefined} canDelete />
           </div>
         ))}
       </div>
       <ul className="flex w-full flex-wrap justify-center gap-x-16 gap-y-20 overflow-hidden px-8">
         {searchedData.map((cardList) => (
-          <Card data={cardList} onClick={handleArtistClick} myArtists={myArtists} key={cardList.name} />
+          <Card data={cardList} onClick={handleArtistClick} myArtists={myArtists} key={cardList.id} />
         ))}
       </ul>
       {modal === "reqArtist" && (
@@ -103,13 +102,13 @@ const SearchArtist = ({ data, onClick, myArtists }: Props) => {
 export default SearchArtist;
 
 interface CardProps {
-  data: { name: string; profileImage: string };
+  data: { name: string; image: string };
   onClick: (id: string, isChecked: boolean) => void;
   myArtists: string[];
 }
 
 const Card = ({ data, onClick, myArtists }: CardProps) => {
-  const { name, profileImage } = data;
+  const { name, image } = data;
 
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
@@ -120,7 +119,7 @@ const Card = ({ data, onClick, myArtists }: CardProps) => {
   return (
     <li>
       <label htmlFor={name}>
-        <ArtistCard isChecked={isChecked} profileImage={profileImage} isSmall>
+        <ArtistCard isChecked={isChecked} profileImage={image === "http://image.co.kr" ? undefined : image} isSmall>
           {name}
         </ArtistCard>
       </label>

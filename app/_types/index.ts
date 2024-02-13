@@ -79,7 +79,8 @@ export interface ReviewType {
 }
 
 export type ArtistType = {
+  id: string;
   name: string;
-  group?: string[];
-  profileImage: string;
+  type: string;
+  image: string;
 };

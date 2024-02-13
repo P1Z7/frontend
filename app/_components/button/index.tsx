@@ -11,11 +11,12 @@ interface Props {
   children: ReactNode;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   type?: "filled" | "lined" | "linedGray";
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: "sm" | "md" | "lg" | "xl" | "free";
   isDisabled?: boolean;
+  style?: string;
 }
 
-const Button = ({ children, type = "filled", size = "lg", onClick, isDisabled = false, ...props }: Props) => {
+const Button = ({ children, type = "filled", size = "lg", onClick, isDisabled = false, style = "", ...props }: Props) => {
   const Children =
     React.Children.count(children) === 1
       ? children
@@ -36,7 +37,13 @@ const Button = ({ children, type = "filled", size = "lg", onClick, isDisabled = 
         });
 
   return (
-    <button className={`flex-center w-full shrink-0 gap-4 border px-16 font-600 ${BUTTON_SIZE[size]} ${BUTTON_TYPE[type]}`} onClick={onClick} disabled={isDisabled} {...props}>
+    <button
+      type="button"
+      className={`flex-center w-full shrink-0 gap-4 border px-16 font-600 ${size === "free" ? style : BUTTON_SIZE[size]} ${BUTTON_TYPE[type]}`}
+      onClick={onClick}
+      disabled={isDisabled}
+      {...props}
+    >
       {Children}
     </button>
   );

@@ -80,7 +80,7 @@ export class Api {
 }
 
 type GetEndPoint = "/event" | `/event/${string}` | "/artist/group" | `/artist/${string}` | "/group/solo" | `/reviews/${string}`;
-type PostEndPoint = "/event" | "/users" | "/auth" | "/auth/token" | "/artist" | "/group" | "/file/upload" | "/reviews" | `/reviews/${string}/like`;
+type PostEndPoint = "/event" | "/users" | "/auth" | "/auth/token" | "/artist" | "/group" | "/file/upload" | "/reviews" | `/reviews/${string}/like` | "/email";
 type PostQueryType<T> = T extends "/file/upload" ? { category: "event" | "artist" | "user" } : unknown;
 
 type PostBodyType<T> = T extends "/event"
@@ -101,7 +101,9 @@ type PostBodyType<T> = T extends "/event"
                 ? Req_Post_Type["review"]
                 : T extends `/reviews/${string}/like`
                   ? Req_Post_Type["reviewLike"]
-                  : unknown;
+                  : T extends `/email`
+                    ? Req_Post_Type["email"]
+                    : unknown;
 
 type GetQueryType<T> = T extends "/event"
   ? Req_Query_Type["행사목록"]
