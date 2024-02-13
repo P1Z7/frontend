@@ -1,12 +1,15 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import InfiniteScroll from "react-infinite-scroller";
 import ArtistCard from "@/components/ArtistCard";
 import { Api } from "@/api/api";
 import { Res_Get_Type } from "@/types/getResType";
 
 const ArtistList = () => {
+  const router = useRouter();
+
   const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
 
   const {
@@ -41,7 +44,9 @@ const ArtistList = () => {
             <ul className="flex flex-wrap justify-center gap-20">
               {artistData?.artistAndGroupList.map((artist) => (
                 <li key={artist.id} className="w-88">
-                  <ArtistCard profileImage={artist.image}>{artist.name}</ArtistCard>
+                  <ArtistCard profileImage={artist.image} onClick={() => router.push(`/search?keyword=${artist.name}`)}>
+                    {artist.name}
+                  </ArtistCard>
                 </li>
               ))}
             </ul>
