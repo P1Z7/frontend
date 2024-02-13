@@ -28,7 +28,7 @@ const MyArtistsInfo = () => {
   return (
     <>
       <SearchArtist onClick={handleClick} myArtists={myArtists} myArtistsInfo={myArtistsInfo} />
-      <BottomButton isDisabled={isButtonDisabled} isSkip>
+      <BottomButton isDisabled={isButtonDisabled} isSkip isSubmit>
         오프너 시작하기
       </BottomButton>
     </>

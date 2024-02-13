@@ -10,9 +10,9 @@ import { SignUpFormType } from "@/types/index";
 
 const AccountInfo = ({ onNext }: { onNext: () => void }) => {
   const { formState, control, getValues, handleSubmit, watch } = useFormContext<SignUpFormType>();
-  const { email, password, passwordCh } = watch();
+  const { email, password, passwordCheck } = watch();
 
-  const isButtonDisabled = !!(formState.errors.email || formState.errors.password || formState.errors.passwordCh) || !(email && password && passwordCh);
+  const isButtonDisabled = !!(formState.errors.email || formState.errors.password || formState.errors.passwordCheck) || !(email && password && passwordCheck);
 
   const handleSendingClick = async () => {
     // const instance = new Api();
@@ -55,7 +55,7 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
       </InputText>
       <InputText
         control={control}
-        name="passwordCh"
+        name="passwordCheck"
         type="password"
         autoComplete="new-password"
         placeholder="비밀번호를 입력해주세요"

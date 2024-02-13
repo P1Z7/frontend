@@ -40,8 +40,7 @@ export interface ProfileSetupType<T> {
 export interface SignUpFormType {
   email: string;
   password: string;
-  passwordCh: string;
-  profileImg: string;
+  passwordCheck: string;
   nickName: string;
   myArtists: string[] | [];
   myArtistsInfo: { name: string; id: string }[];
