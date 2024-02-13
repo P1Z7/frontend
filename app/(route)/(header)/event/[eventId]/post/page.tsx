@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { ButtonHTMLAttributes, ChangeEvent, InputHTMLAttributes, ReactNode, useCallback, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import WarningCheck from "@/components/WarningCheck";
@@ -26,6 +26,7 @@ const ReviewPostPage = () => {
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjZjExMzc3My0wZTg5LTQwNWEtOGQyYy1jODgzZjVlMGY0ZDEiLCJ1c2VybmFtZSI6Iu2FjOyKpO2KuCIsImlhdCI6MTcwNzg0MTUxNywiZXhwIjoxNzA3ODQ1MTE3fQ.rkEXwMRmR2D_RqZLLoFXJW91D8Bx_RIP4HW605cQAKs",
   );
   const { eventId } = useParams();
+  const router = useRouter();
   const [evaluation, setEvaluation] = useState<boolean | null>(null);
   const [isPublic, setIsPublic] = useState<boolean | null>(null);
   const { isCheck, setIsCheck } = useStore((state) => ({ isCheck: state.isWarningCheck, setIsCheck: state.setIsWarningCheck }));
@@ -88,6 +89,7 @@ const ReviewPostPage = () => {
     } catch (e) {
       console.log("ERROR: ", e);
     }
+    router.push(`/event/${eventId}`);
   };
 
   return (
