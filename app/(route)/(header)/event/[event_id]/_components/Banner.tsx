@@ -74,7 +74,7 @@ const Banner = ({ data, eventId }: Props) => {
   return (
     <section className="w-full">
       <div className="relative h-[48rem] w-full">
-        <Image src={bannerImage?.imageUrl ?? ""} alt={"행사 포스터 썸네일"} priority fill className="object-cover" />
+        <Image src={bannerImage?.imageUrl ?? ""} alt={"행사 포스터 썸네일"} priority fill sizes="100vw" className="object-cover" />
       </div>
       <div className="relative bottom-24 rounded-t-lg bg-white-black p-24 pb-0">
         <HeartButton isLiked={isLiked ?? false} likeCount={data.likeCount} onClick={handleLikeEvent} />
