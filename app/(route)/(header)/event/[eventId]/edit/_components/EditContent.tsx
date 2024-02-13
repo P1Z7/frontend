@@ -3,14 +3,12 @@ import MainInput from "@/(route)/post/_components/_inputs/MainInput";
 import StarInput from "@/(route)/post/_components/_inputs/StarInput";
 import SubInput from "@/(route)/post/_components/_inputs/SubInput";
 import { PostType } from "@/(route)/post/page";
-import classNames from "classnames";
 import { useFormContext } from "react-hook-form";
-import Alert from "@/components/Alert";
 import BottomButton from "@/components/button/BottomButton";
 import AlertModal from "@/components/modal/AlertModal";
-import TextModal from "@/components/modal/TextModal";
 import { useModal } from "@/hooks/useModal";
 import { useStore } from "@/store/index";
+import { checkArrUpdate } from "@/utils/checkArrUpdate";
 
 type PostValueType =
   | "placeName"
@@ -34,7 +32,6 @@ type PostValueType =
 const EditContent = () => {
   const { modal, openModal, closeModal } = useModal();
   const {
-    control,
     watch,
     formState: { defaultValues },
   } = useFormContext<PostType>();
@@ -51,13 +48,14 @@ const EditContent = () => {
       if (postTypeGuard(defaultValues, key)) {
         const prev = defaultValues[key];
         const cur = watchedValue[key];
+        if (typeof prev === "undefined" || typeof cur === "undefined") return false;
         switch (key) {
           case "artists":
           case "artistNames":
           case "tags":
           case "eventImages":
-            if (typeof prev === "string") return false;
-            isUpdated = cur.length !== prev?.length || !prev?.every((c, i) => c === cur[i]);
+            if (typeof prev === "string" || typeof cur === "string") return false;
+            isUpdated = checkArrUpdate(prev, cur);
             break;
           default:
             isUpdated = prev !== cur;

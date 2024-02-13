@@ -54,7 +54,7 @@ const InputText: Function = ({
         <label htmlFor={field.name} className={`flex items-center text-16 ${horizontal && "mt-20"}`}>
           {children}
           {required && <span className="ml-4 text-sub-red">*</span>}
-          {isEdit && <span className="ml-4 text-12 font-600 text-sub-skyblue">수정됨</span>}
+          {isEdit && <span className="ml-4 text-12 font-600 text-blue">수정됨</span>}
         </label>
       );
     }
@@ -92,29 +92,33 @@ const InputText: Function = ({
   }, [fieldState.error]);
 
   return (
-    <div className={`w-full ${horizontal && "flex gap-28"}`}>
-      <Label />
-      <div className={`relative ${horizontal && "flex-1"}`}>
-        <input
-          id={field.name}
-          type={type}
-          placeholder={placeholder ?? "입력해주세요."}
-          autoComplete={autoComplete ?? "off"}
-          hidden={hidden ?? false}
-          readOnly={readOnly ?? false}
-          disabled={disabled ?? false}
-          onClick={onClick}
-          onKeyDown={onKeyDown}
-          {...field}
-          className={classNames(
-            "focus:border-1 mt-8 h-48 w-full rounded-sm bg-gray-50 px-16 py-12 pr-36 text-16 text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-1 focus:outline-blue",
-            { "outline outline-1 outline-red": fieldState.error },
-          )}
-        />
-        <Button />
-        <ErrorField />
-      </div>
-    </div>
+    <>
+      {!hidden && (
+        <div className={`w-full ${horizontal && "flex gap-28"}`}>
+          <Label />
+          <div className={`relative ${horizontal && "flex-1"}`}>
+            <input
+              id={field.name}
+              type={type}
+              placeholder={placeholder ?? "입력해주세요."}
+              autoComplete={autoComplete ?? "off"}
+              hidden={hidden ?? false}
+              readOnly={readOnly ?? false}
+              disabled={disabled ?? false}
+              onClick={onClick}
+              onKeyDown={onKeyDown}
+              {...field}
+              className={classNames(
+                "focus:border-1 mt-8 h-48 w-full rounded-sm bg-gray-50 px-16 py-12 pr-36 text-16 text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-1 focus:outline-blue",
+                { "outline outline-1 outline-red": fieldState.error },
+              )}
+            />
+            <Button />
+            <ErrorField />
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

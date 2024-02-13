@@ -3,6 +3,7 @@ import EventTypeBottomSheet from "@/components/bottom-sheet/EventTypeBottomSheet
 import StarBottomSheet from "@/components/bottom-sheet/StarBottomSheet";
 import InputText from "@/components/input/InputText";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
+import { checkArrUpdate } from "@/utils/checkArrUpdate";
 import { validateEdit } from "@/utils/editValidate";
 import { handleEnterDown } from "@/utils/handleEnterDown";
 import { PostType } from "../../page";
@@ -14,14 +15,19 @@ const StarInput = () => {
     formState: { defaultValues },
     watch,
   } = useFormContext<PostType>();
-  const { eventType, groupName, groupId, artistNames, artists } = watch();
+  const { eventType, groupId, artistNames, artists } = watch();
   const isNotMember = groupId && artistNames.length === 0;
 
   return (
     <>
       <div className="flex-item flex flex-col gap-20">
         <div className="flex flex-col">
-          아티스트
+          <label className="flex items-center gap-4">
+            아티스트
+            {validateEdit(typeof defaultValues?.artists !== "undefined" && (checkArrUpdate(defaultValues?.artists, artists) || defaultValues?.groupId !== groupId)) && (
+              <p className="text-12 font-600 text-blue">수정됨</p>
+            )}
+          </label>
           <div className="grid grid-cols-2 gap-8">
             <InputText
               name="groupName"
