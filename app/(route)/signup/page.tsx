@@ -21,7 +21,6 @@ const DEFAULT_VALUES = {
 const SignUp = () => {
   const searchParams = useSearchParams();
   const defaultEmail = searchParams.get("email");
-  console.log(defaultEmail);
   const router = useRouter();
   const { Funnel, Step, setStep, currentStep } = useFunnel(STEPS);
 
