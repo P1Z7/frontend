@@ -3,6 +3,7 @@ import MainInput from "@/(route)/post/_components/_inputs/MainInput";
 import StarInput from "@/(route)/post/_components/_inputs/StarInput";
 import SubInput from "@/(route)/post/_components/_inputs/SubInput";
 import { PostType } from "@/(route)/post/page";
+import { useParams, useRouter } from "next/navigation";
 import { useFormContext } from "react-hook-form";
 import BottomButton from "@/components/button/BottomButton";
 import AlertModal from "@/components/modal/AlertModal";
@@ -36,7 +37,8 @@ const EditContent = () => {
     formState: { defaultValues },
   } = useFormContext<PostType>();
   const { isCheck } = useStore((state) => ({ isCheck: state.isWarningCheck }));
-
+  const { id } = useParams();
+  const router = useRouter();
   const watchedValue = watch();
 
   const checkUpdated = () => {
@@ -80,7 +82,7 @@ const EditContent = () => {
         수정사항 등록
       </BottomButton>
       {modal === "endEdit" && (
-        <AlertModal closeModal={closeModal}>
+        <AlertModal closeModal={closeModal} handleBtnClick={() => router.push(`/event/${id}`)}>
           수정사항은 사용자 3인 이상의
           <br /> 승인 후에 반영됩니다.
         </AlertModal>

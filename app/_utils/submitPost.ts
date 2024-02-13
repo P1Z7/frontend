@@ -34,3 +34,28 @@ export const handlePostSubmit = async (userInput: any, instance: Api) => {
     userId: "post-api",
   });
 };
+
+export const handleEditSubmit = async (userInput: any, instance: Api, id?: string | string[]) => {
+  //작성한 유저일 때
+  const { placeName, eventType, groupId, artists, startDate, endDate, address, addressDetail, eventImages, description, eventUrl, organizerSns, snsType, tags } = userInput;
+  const imgUrlList = await makeImgUrlList(eventImages, instance);
+  const tagList = matchTagIdList(tags);
+  return await instance.put(`/event/${id}`, {
+    placeName,
+    eventType,
+    groupId,
+    artists,
+    startDate,
+    endDate,
+    address,
+    addressDetail,
+    description,
+    eventUrl,
+    organizerSns,
+    snsType,
+    eventImages: imgUrlList,
+    tags: tagList,
+    isAgreed: true,
+    userId: "post-api",
+  });
+};

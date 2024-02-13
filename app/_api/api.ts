@@ -54,7 +54,7 @@ export class Api {
     return endPoint === "/file/upload" ? await res.text() : await res.json();
   }
 
-  async put<T>(endPoint: string, body: T) {
+  async put<T extends PutEndPoint>(endPoint: T, body: PutBodyType<T>) {
     this.baseUrl = "/api" + endPoint;
     const res = await fetch(this.baseUrl, {
       method: "PUT",
@@ -67,10 +67,11 @@ export class Api {
     return await res.json();
   }
 
-  async delete(endPoint: string) {
+  async delete<T extends DeleteEndPoint>(endPoint: T, body: DeleteBodyType<T>) {
     this.baseUrl = "/api" + endPoint;
     const res = await fetch(this.baseUrl, {
       method: "DELETE",
+      body: JSON.stringify(body),
       headers: {
         Authorization: `Bearer ${this.accessToken}`,
       },
@@ -81,7 +82,8 @@ export class Api {
 
 type GetEndPoint = "/event" | "/event/like" | `/event/${string}` | "/artist/group" | `/artist/${string}` | "/group/solo" | `/reviews/${string}`;
 type PostEndPoint = "/event" | "/event/like" | "/users" | "/auth" | "/auth/token" | "/artist" | "/group" | "/file/upload" | "/reviews" | `/reviews/${string}/like`;
-
+type PutEndPoint = `/event/${string}`;
+type DeleteEndPoint = `/users/${string}/artists` | `/reviews/${string}/images`;
 type PostQueryType<T> = T extends "/file/upload" ? { category: "event" | "artist" | "user" } : unknown;
 
 type PostBodyType<T> = T extends "/event"
@@ -121,3 +123,6 @@ type GetQueryType<T> = T extends "/event"
             : T extends `/reviews/${string}`
               ? Req_Query_Type["리뷰"]
               : unknown;
+// 사용하실 때 직접 추가 부탁드립니다!
+type PutBodyType<T> = T extends `/event/${string}` ? Req_Post_Type["event"] : any;
+type DeleteBodyType<T> = any;
