@@ -22,9 +22,7 @@ interface FormValues {
 }
 
 const ReviewPostPage = () => {
-  const instance = new Api(
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjZjExMzc3My0wZTg5LTQwNWEtOGQyYy1jODgzZjVlMGY0ZDEiLCJ1c2VybmFtZSI6Iu2FjOyKpO2KuCIsImlhdCI6MTcwNzg0MTUxNywiZXhwIjoxNzA3ODQ1MTE3fQ.rkEXwMRmR2D_RqZLLoFXJW91D8Bx_RIP4HW605cQAKs",
-  );
+  const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
   const { eventId } = useParams();
   const router = useRouter();
   const [evaluation, setEvaluation] = useState<boolean | null>(null);
@@ -75,7 +73,6 @@ const ReviewPostPage = () => {
   const postReview: SubmitHandler<FormValues> = async (form) => {
     const imagesUrl = await makeImgUrlList(imageList, instance);
     try {
-      // api post의 헤더에 application/json 이 들어가 있지만 post 요청으로 빈 값이 들어와서 항상 에러 발생
       await instance.post("/reviews", {
         userId: USER_ID,
         eventId: Array.isArray(eventId) ? eventId[0] : eventId,
@@ -85,11 +82,10 @@ const ReviewPostPage = () => {
         description: form.description,
         isAgree: isCheck,
       });
-      console.log("POST");
+      router.push(`/event/${eventId}`);
     } catch (e) {
-      console.log("ERROR: ", e);
+      console.error(e);
     }
-    router.push(`/event/${eventId}`);
   };
 
   return (
