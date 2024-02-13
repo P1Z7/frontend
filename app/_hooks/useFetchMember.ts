@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
+import { Api } from "app/_api/api";
 import { useEffect, useState } from "react";
-import { Api } from "@/api/api";
 
 export const useFetchMember = (instance: Api, getValues: (name: string) => string, isFirst: boolean) => {
   const [groupId, setGroupId] = useState(getValues("groupId"));

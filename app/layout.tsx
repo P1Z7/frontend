@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <Toaster />
+        <Toaster containerClassName="toast" />
         <ReactQueryProvider>
           {children}
           <div id="bottom-sheet" />

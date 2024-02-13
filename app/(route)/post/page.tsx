@@ -1,11 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import GenericFormProvider from "@/components/GenericFormProvider";
 import Header from "@/components/Header";
 import { useFunnel } from "@/hooks/useFunnel";
 import { PostStepNameType } from "@/types/index";
-import BackIcon from "@/public/icon/arrow-left_lg.svg";
 import DetailInfo from "./_components/DetailInfo";
 import MainInfo from "./_components/MainInfo";
 import StarInfo from "./_components/StarInfo";

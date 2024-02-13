@@ -1,7 +1,9 @@
 import classNames from "classnames";
-import Image from "next/image";
 import { InputHTMLAttributes, KeyboardEvent, ReactNode, useCallback, useMemo, useState } from "react";
 import { FieldPath, FieldValues, UseControllerProps, useController } from "react-hook-form";
+import ClosedEye from "@/public/icon/closed-eyes_gray.svg";
+import OpenedEye from "@/public/icon/opened-eyes_gray.svg";
+import ClearIcon from "@/public/icon/x_gray.svg";
 
 interface Prop extends InputHTMLAttributes<HTMLInputElement> {
   children?: ReactNode;
@@ -66,27 +68,31 @@ const InputText: Function = ({
     if (initialType === "password") {
       return (
         <button onClick={handlePasswordShow} onKeyDown={onKeyDown} type="button" className="flex-center absolute right-16 top-20 h-24 w-24">
-          {<Image src={type === "password" ? "/icon/closed-eyes_black.svg" : "/icon/opened-eyes_black.svg"} alt="비밀번호 아이콘" width={16} height={16} />}
+          {type === "password" ? <ClosedEye /> : <OpenedEye />}
         </button>
       );
     }
     return (
-      <button onClick={handleDelete} onKeyDown={onKeyDown} type="button" className="absolute right-16 top-24 h-16 w-16">
-        <Image src="/icon/x_gray.svg" alt="초기화 버튼" width={16} height={16} />
+      <button onClick={handleDelete} onKeyDown={onKeyDown} type="button" className="flex-center absolute right-16 top-20 h-24 w-24">
+        <ClearIcon />
       </button>
     );
-  }, []);
+  }, [type]);
 
   const ErrorField = useCallback(() => {
     return (
-      <div className="mt-4 flex h-12">
-        {(!!fieldState.error || hint) && <p className={`font-normal text-12 ${fieldState.error ? "text-red" : "text-gray-500"}`}>{fieldState?.error?.message || hint}</p>}
-      </div>
+      <>
+        {(!!fieldState.error || hint) && (
+          <div className="mt-4 flex h-12">
+            <p className={`font-normal text-12 ${fieldState.error ? "text-red" : "text-gray-500"}`}>{fieldState?.error?.message || hint}</p>
+          </div>
+        )}
+      </>
     );
   }, [fieldState.error]);
 
   return (
-    <div className={`${horizontal && "flex gap-28"}`}>
+    <div className={`w-full ${horizontal && "flex gap-28"}`}>
       <Label />
       <div className={`relative ${horizontal && "flex-1"}`}>
         <input
