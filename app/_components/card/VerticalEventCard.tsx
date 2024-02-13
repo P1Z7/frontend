@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { MouseEvent } from "react";
 import { formatAddress, formatDate } from "@/utils/formatString";
 import { Res_Get_Type } from "@/types/getResType";
@@ -15,17 +15,15 @@ const VerticalEventCard = ({ data }: Props) => {
   const formattedAddress = formatAddress(data.address);
   const bannerImage = data.eventImages.find((images) => images.isMain);
 
-  const router = useRouter();
-
   const handleHeartClick = (event: MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
+    event.preventDefault();
 
     // 추가 동작 나중에 구현
     console.log("하트 눌렀습니당");
   };
 
   return (
-    <div className="border-black flex w-148 cursor-pointer flex-col gap-12" onClick={() => router.push(`/event/${data.id}`)}>
+    <Link href={`/event/${data.id}`} className="border-black flex w-148 cursor-pointer flex-col gap-12">
       <div className="relative h-196 w-148">
         <div className="absolute right-8 top-8 z-nav">
           <HeartButton isSelected={!!data.likeCount} onClick={handleHeartClick} />
@@ -53,7 +51,7 @@ const VerticalEventCard = ({ data }: Props) => {
           <Chip label={data.eventType} kind="event" />
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
