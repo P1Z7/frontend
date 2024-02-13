@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { MouseEvent } from "react";
 import { formatAddress, formatDate } from "@/utils/formatString";
 import { Res_Get_Type } from "@/types/getResType";
 import HeartButton from "../button/HeartButton";
@@ -11,29 +13,34 @@ interface Props {
 const VerticalEventCard = ({ data }: Props) => {
   const formattedDate = formatDate(data.startDate, data.endDate);
   const formattedAddress = formatAddress(data.address);
+  const bannerImage = data.eventImages.find((images) => images.isMain);
+
+  const router = useRouter();
+
+  const handleHeartClick = (event: MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+
+    // 추가 동작 나중에 구현
+    console.log("하트 눌렀습니당");
+  };
 
   return (
-    <div className="border-black flex w-148 flex-col gap-12">
+    <div className="border-black flex w-148 cursor-pointer flex-col gap-12" onClick={() => router.push(`/event/${data.id}`)}>
       <div className="relative h-196 w-148">
         <div className="absolute right-8 top-8 z-nav">
-          <HeartButton />
+          <HeartButton isSelected={!!data.likeCount} onClick={handleHeartClick} />
         </div>
-        {data.eventImages.map(
-          (image) =>
-            image.isMain && (
-              <Image
-                src={image.imageUrl}
-                fill
-                sizes="14.8rem"
-                style={{
-                  objectFit: "cover",
-                }}
-                alt="행사 포스터"
-                className="rounded-sm bg-gray-400"
-                key={image.id}
-              />
-            ),
-        )}
+        <Image
+          src={bannerImage?.imageUrl ?? "/image/no-profile.png"}
+          fill
+          sizes="14.8rem"
+          style={{
+            objectFit: "cover",
+          }}
+          alt="행사 포스터"
+          className="rounded-sm bg-gray-400"
+          priority
+        />
       </div>
       <div className="flex flex-col gap-4">
         <p className="truncate text-16 font-600 text-gray-900">{data.placeName}</p>

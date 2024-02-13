@@ -1,20 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 import Heart from "@/public/icon/heart.svg";
 
 interface Props {
   isSmall?: boolean;
   isSelected?: boolean;
-  onClick?: () => void;
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
 const HeartButton = ({ isSmall = false, isSelected = false, onClick, ...props }: Props) => {
   const [selected, setSelected] = useState(isSelected);
 
-  const handleClick = () => {
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setSelected((prev) => !prev);
-    onClick?.();
+    onClick?.(event);
   };
 
   return (
