@@ -37,7 +37,7 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
           이메일
         </InputText>
         <div className="w-88 shrink-0 pb-16">
-          <Button type="lined" size="free" style="h-48 text-14 rounded-sm" isDisabled={!!formState.errors.email} onClick={handleSendingClick}>
+          <Button type="lined" size="free" style="h-48 text-14 rounded-sm" isDisabled={!!formState.errors.email || !email} onClick={handleSendingClick}>
             인증하기
           </Button>
         </div>

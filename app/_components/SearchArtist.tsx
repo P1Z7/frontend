@@ -11,11 +11,12 @@ import { ArtistType } from "@/types/index";
 import InputModal from "./modal/InputModal";
 
 interface Props {
-  onClick: (id: string, isChecked: boolean) => void;
+  onClick: (name: string, id: string, isChecked: boolean) => void;
   myArtists: string[];
+  myArtistsInfo: { name: string; id: string }[];
 }
 
-const SearchArtist = ({ onClick, myArtists }: Props) => {
+const SearchArtist = ({ onClick, myArtists, myArtistsInfo }: Props) => {
   const [keyword, setKeyword] = useState("");
   const instance = new Api();
 
@@ -28,17 +29,20 @@ const SearchArtist = ({ onClick, myArtists }: Props) => {
 
   console.log(data);
 
-  const [selected, setSelected] = useState<string[]>(myArtists);
+  const [selected, setSelected] = useState(myArtistsInfo);
   const lastButton = useRef<HTMLButtonElement>(null);
 
-  const handleArtistClick = (name: string, isChecked: boolean) => {
-    onClick(name, isChecked);
+  const handleArtistClick = (name: string, isChecked: boolean, id: string) => {
+    onClick(name, id, isChecked);
 
-    if (selected.includes(name)) {
-      setSelected((prevSelected) => prevSelected.filter((item) => item !== name));
-    } else {
-      setSelected((prevSelected) => [...prevSelected, name]);
-    }
+    setSelected((prevSelected) => {
+      const isSelected = prevSelected.some((item) => item.id === id);
+      if (isSelected) {
+        return prevSelected.filter((item) => item.id !== id);
+      } else {
+        return [...prevSelected, { name, id }];
+      }
+    });
   };
 
   useEffect(() => {
@@ -75,9 +79,14 @@ const SearchArtist = ({ onClick, myArtists }: Props) => {
         <SearchInput placeholder="입력해주세요." setKeyword={setKeyword} />
       </section>
       <div className="sticky top-72 z-nav mb-16 mt-8 flex w-full gap-12 overflow-hidden bg-white-black">
-        {selected.map((name, idx) => (
+        {selected.map((item, idx) => (
           <div className="mb-8 mt-8 rounded-full bg-white-black" key={idx}>
-            <ChipButton label={name} onClick={() => handleArtistClick(name, !myArtists.includes(name))} ref={idx === selected.length - 1 ? lastButton : undefined} canDelete />
+            <ChipButton
+              label={item.name}
+              onClick={() => handleArtistClick(item.name, !myArtists.includes(item.id), item.id)}
+              ref={idx === selected.length - 1 ? lastButton : undefined}
+              canDelete
+            />
           </div>
         ))}
       </div>
@@ -102,29 +111,29 @@ const SearchArtist = ({ onClick, myArtists }: Props) => {
 export default SearchArtist;
 
 interface CardProps {
-  data: { name: string; image: string };
-  onClick: (id: string, isChecked: boolean) => void;
+  data: ArtistType;
+  onClick: (name: string, isChecked: boolean, id: string) => void;
   myArtists: string[];
 }
 
 const Card = ({ data, onClick, myArtists }: CardProps) => {
-  const { name, image } = data;
+  const { name, image, id } = data;
 
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
   useEffect(() => {
-    setIsChecked(myArtists.includes(name));
+    setIsChecked(myArtists.includes(id));
   }, [myArtists]);
 
   return (
     <li>
-      <label htmlFor={name}>
+      <label htmlFor={id}>
         <ArtistCard isChecked={isChecked} profileImage={image === "http://image.co.kr" ? undefined : image} isSmall>
           {name}
         </ArtistCard>
       </label>
 
-      <input name="myArtists" type="checkbox" id={name} onChange={() => onClick(name, !isChecked)} checked={isChecked} hidden />
+      <input name="myArtists" type="checkbox" id={id} onChange={() => onClick(name, !isChecked, id)} checked={isChecked} hidden />
     </li>
   );
 };

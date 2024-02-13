@@ -44,6 +44,7 @@ export interface SignUpFormType {
   profileImg: string;
   nickName: string;
   myArtists: string[] | [];
+  myArtistsInfo: { name: string; id: string }[];
 }
 
 export type EventType = "카페" | "나눔" | "팬광고" | "팝업스토어" | "상영회" | "기타";

@@ -16,6 +16,7 @@ const DEFAULT_VALUES = {
   profileImg: "",
   nickName: "",
   myArtists: [],
+  myArtistsInfo: [],
 };
 
 const SignUp = () => {
