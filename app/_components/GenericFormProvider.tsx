@@ -1,7 +1,7 @@
+import { Api } from "app/_api/api";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { FieldValues, FormProvider, UseFormProps, useForm } from "react-hook-form";
-import { Api } from "@/api/api";
 import { GiftType } from "@/types/index";
 import { TAG } from "@/constants/data";
 
