@@ -17,6 +17,11 @@ type Req_Post_Event = {
   isAgreed: boolean;
 };
 
+type Req_Post_Event_Like = {
+  userId: string;
+  eventId: string;
+};
+
 type Req_Post_Signup = {
   userName?: string;
   signupMethod?: string;
@@ -74,6 +79,7 @@ type Req_Post_Email = {
 
 export type Req_Post_Type = {
   event: Req_Post_Event;
+  eventLike: Req_Post_Event_Like;
   signup: Req_Post_Signup;
   login: Req_Post_Login;
   token: Req_Post_Token;

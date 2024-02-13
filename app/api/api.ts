@@ -79,42 +79,46 @@ export class Api {
   }
 }
 
-type GetEndPoint = "/event" | `/event/${string}` | "/artist/group" | `/artist/${string}` | "/group/solo" | `/reviews/${string}` | "/users/nickname";
-type PostEndPoint = "/event" | "/users" | "/auth" | "/auth/token" | "/artist" | "/group" | "/file/upload" | "/reviews" | `/reviews/${string}/like` | "/email";
+type GetEndPoint = "/event" | "/event/like" | `/event/${string}` | "/artist/group" | `/artist/${string}` | "/group/solo" | `/reviews/${string}` | "/users/nickname";
+type PostEndPoint = "/event" | "/event/like" | "/users" | "/auth" | "/auth/token" | "/artist" | "/group" | "/file/upload" | "/reviews" | `/reviews/${string}/like` | "/email";
 type PostQueryType<T> = T extends "/file/upload" ? { category: "event" | "artist" | "user" } : unknown;
 
 type PostBodyType<T> = T extends "/event"
   ? Req_Post_Type["event"]
-  : T extends "/users"
-    ? Req_Post_Type["signup"]
-    : T extends "/auth"
-      ? Req_Post_Type["login"]
-      : T extends "/auth/token"
-        ? Req_Post_Type["token"]
-        : T extends "/artist"
-          ? Req_Post_Type["artist"]
-          : T extends "/group"
-            ? Req_Post_Type["group"]
-            : T extends "/file/upload"
-              ? FormData
-              : T extends "/reviews"
-                ? Req_Post_Type["review"]
-                : T extends `/reviews/${string}/like`
-                  ? Req_Post_Type["reviewLike"]
-                  : T extends `/email`
-                    ? Req_Post_Type["email"]
-                    : unknown;
+  : T extends "/event/like"
+    ? Req_Post_Type["eventLike"]
+    : T extends "/users"
+      ? Req_Post_Type["signup"]
+      : T extends "/auth"
+        ? Req_Post_Type["login"]
+        : T extends "/auth/token"
+          ? Req_Post_Type["token"]
+          : T extends "/artist"
+            ? Req_Post_Type["artist"]
+            : T extends "/group"
+              ? Req_Post_Type["group"]
+              : T extends "/file/upload"
+                ? FormData
+                : T extends "/reviews"
+                  ? Req_Post_Type["review"]
+                  : T extends `/reviews/${string}/like`
+                    ? Req_Post_Type["reviewLike"]
+                    : T extends `/email`
+                      ? Req_Post_Type["email"]
+                      : unknown;
 
 type GetQueryType<T> = T extends "/event"
   ? Req_Query_Type["행사목록"]
-  : T extends `/event/${string}`
-    ? Req_Query_Type["행사상세"]
-    : T extends "/artist/group"
-      ? Req_Query_Type["아티스트"]
-      : T extends `/artist/${string}`
-        ? Req_Query_Type["멤버"]
-        : T extends "/group/solo"
-          ? Req_Query_Type["그룹솔로"]
-          : T extends `/reviews/${string}`
-            ? Req_Query_Type["리뷰"]
-            : unknown;
+  : T extends "/event/like"
+    ? Req_Query_Type["행사좋아요"]
+    : T extends `/event/${string}`
+      ? Req_Query_Type["행사상세"]
+      : T extends "/artist/group"
+        ? Req_Query_Type["아티스트"]
+        : T extends `/artist/${string}`
+          ? Req_Query_Type["멤버"]
+          : T extends "/group/solo"
+            ? Req_Query_Type["그룹솔로"]
+            : T extends `/reviews/${string}`
+              ? Req_Query_Type["리뷰"]
+              : unknown;

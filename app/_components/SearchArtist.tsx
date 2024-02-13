@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
+import { Api } from "app/api/api";
 import { useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import ArtistCard from "@/components/ArtistCard";
 import ChipButton from "@/components/chip/ChipButton";
 import SearchInput from "@/components/input/SearchInput";
-import { Api } from "@/api/api";
 import { useModal } from "@/hooks/useModal";
 import { ArtistType } from "@/types/index";
 import InputModal from "./modal/InputModal";
@@ -26,8 +26,6 @@ const SearchArtist = ({ onClick, myArtists, myArtistsInfo }: Props) => {
       return instance.get("/artist/group", { keyword: keyword, size: 12, page: 1 });
     },
   });
-
-  console.log(data);
 
   const [selected, setSelected] = useState(myArtistsInfo);
   const lastButton = useRef<HTMLButtonElement>(null);

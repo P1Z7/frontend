@@ -1,15 +1,12 @@
-import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
-import toast from "react-hot-toast";
 import Button from "@/components/button";
 import BottomButton from "@/components/button/BottomButton";
 import InputText from "@/components/input/InputText";
-import { Api } from "@/api/api";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 import { SignUpFormType } from "@/types/index";
 
 const AccountInfo = ({ onNext }: { onNext: () => void }) => {
-  const { formState, control, getValues, handleSubmit, watch } = useFormContext<SignUpFormType>();
+  const { formState, control, getValues, watch } = useFormContext<SignUpFormType>();
   const { email, password, passwordCheck } = watch();
 
   const isButtonDisabled = !!(formState.errors.email || formState.errors.password || formState.errors.passwordCheck) || !(email && password && passwordCheck);
@@ -48,7 +45,7 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
         type="password"
         placeholder="비밀번호를 입력해주세요"
         hint="영문과 숫자를 조합하여 8자리 이상"
-        autoComplete="new-password"
+        autoComplete="password"
         rules={{ required: ERROR_MESSAGES.password.passwordField, pattern: { value: REG_EXP.CHECK_PASSWORD, message: ERROR_MESSAGES.password.passwordPattern } }}
       >
         비밀번호
@@ -57,7 +54,7 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
         control={control}
         name="passwordCheck"
         type="password"
-        autoComplete="new-password"
+        autoComplete="password"
         placeholder="비밀번호를 입력해주세요"
         rules={{
           required: ERROR_MESSAGES.password.passwordField,

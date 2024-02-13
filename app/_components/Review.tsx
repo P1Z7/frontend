@@ -98,8 +98,8 @@ const Description = ({ rating, description, reviewImages }: DescriptionProps) =>
       <Evaluation rating={rating} />
       <div className="text-14 font-400">{description}</div>
       <ul className="flex gap-8 overflow-auto">
-        {reviewImages?.map((image) => (
-          <li key={image} className="relative h-120 w-120 shrink-0">
+        {reviewImages?.map((image, index) => (
+          <li key={index} className="relative h-120 w-120 shrink-0">
             <Image src={image} alt="후기 사진" fill className=" object-cover" />
           </li>
         ))}

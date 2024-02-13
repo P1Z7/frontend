@@ -1,8 +1,11 @@
 "use client";
 
-import classNames from "classnames";
 import { ButtonHTMLAttributes, ReactNode, useState } from "react";
 
+const TOP_OFFSET = {
+  mypage: "top-112",
+  event: "top-72",
+};
 interface Tab {
   name: string;
   index: number;
@@ -11,14 +14,15 @@ interface Tab {
 interface Props {
   children: ReactNode[];
   names: readonly string[];
+  topOffset?: "mypage" | "event";
 }
 
-const Tabs = ({ children, names }: Props) => {
+const Tabs = ({ children, names, topOffset = "mypage" }: Props) => {
   const [selectedTab, setSelectedTab] = useState<Tab>({ name: names[0], index: 0 });
 
   return (
     <section className="w-full">
-      <div className="flex h-44 w-full items-center border-b border-gray-50 px-20">
+      <div className={`sticky z-nav flex h-44 w-full items-center border-b border-gray-50 bg-white-black px-20 ${TOP_OFFSET[topOffset]}`}>
         {names.map((name, index) => (
           <TabButton key={name} onClick={() => setSelectedTab({ name, index })} selected={name === selectedTab.name}>
             {name}

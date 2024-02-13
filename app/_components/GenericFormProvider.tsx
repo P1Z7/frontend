@@ -1,10 +1,9 @@
+import { Api } from "app/api/api";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import { FieldValues, FormProvider, UseFormProps, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { Api } from "@/api/api";
-import { GiftType } from "@/types/index";
-import { TAG } from "@/constants/data";
+import { handlePostSubmit } from "@/utils/submitPost";
 
 interface GenericFormProps<T extends FieldValues> {
   children: React.ReactNode;
@@ -16,35 +15,6 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
   const methods = useForm<T>(formOptions);
   const path = usePathname();
   const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
-
-  const uploadImg = async (image: File) => {
-    const formData = new FormData();
-    formData.append("file", image);
-    const res = await instance.post("/file/upload", formData, { category: "event" });
-    return res;
-  };
-
-  const matchTagIdList = (tags: GiftType[]) => {
-    let tagList: string[] = [];
-    tags.map((goods: GiftType) => {
-      tagList.push(TAG[goods]);
-    });
-    return tagList;
-  };
-
-  const makeImgUrlList = async (eventImages: (string | File)[]) => {
-    let imageUrlList: string[] = [];
-    for (const image of eventImages) {
-      if (typeof image !== "string") {
-        const res = await uploadImg(image);
-        imageUrlList.push(res);
-      } else {
-        imageUrlList.push(image);
-      }
-    }
-
-    return imageUrlList;
-  };
 
   const handleSignupSubmit = async () => {
     const userInput = methods.getValues();
@@ -90,37 +60,13 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
     }
   };
 
-  const handlePostSubmit = async () => {
-    const userInput = methods.getValues();
-    const { placeName, eventType, groupId, artists, startDate, endDate, address, addressDetail, eventImages, description, eventUrl, organizerSns, snsType, tags } = userInput;
-    const imgUrlList = await makeImgUrlList(eventImages);
-    const tagList = matchTagIdList(tags);
-    const response = await instance.post("/event", {
-      placeName,
-      eventType,
-      groupId,
-      artists,
-      startDate,
-      endDate,
-      address,
-      addressDetail,
-      description,
-      eventUrl,
-      organizerSns,
-      snsType,
-      eventImages: imgUrlList,
-      tags: tagList,
-      isAgreed: true,
-      userId: "post-api",
-    });
-  };
-
   const onSubmit = async () => {
     if (path === "/post") {
-      handlePostSubmit();
+      const res = await handlePostSubmit(methods.getValues(), instance);
+      router.push(`/event/${res.eventId}`);
     }
     if (path === "/signup") {
-      handleSignupSubmit();
+      const res = await handleSignupSubmit();
     }
   };
 

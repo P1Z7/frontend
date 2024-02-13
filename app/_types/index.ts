@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, RefObject } from "react";
+import { ReactElement, ReactNode } from "react";
 
 export interface ModalBaseType {
   closeModal: () => void;
@@ -15,6 +15,7 @@ export interface BottomSheetBaseType {
 export interface MapType {
   name: string;
   address: string;
+  addressDetail?: string;
 }
 
 export type SignupStepNameType = "계정 정보" | "프로필 정보" | "아티스트 선택";
@@ -46,10 +47,17 @@ export interface SignUpFormType {
   myArtistsInfo: { name: string; id: string }[];
 }
 
+export interface UserType {
+  id: string;
+  nickName: string;
+  profileImage?: string;
+}
+
 export type EventType = "카페" | "나눔" | "팬광고" | "팝업스토어" | "상영회" | "기타";
 export type GiftType = "컵홀더" | "포스터" | "스티커" | "티켓" | "포토카드" | "엽서" | "굿즈" | "기타";
 export type SnsType = "트위터" | "인스타그램" | "유튜브" | "기타";
 
+// 삭제 예정
 export interface EventInfoType {
   placeName: string;
   eventType: EventType;
@@ -68,6 +76,7 @@ export interface EventInfoType {
   tags?: GiftType[];
 }
 
+// 삭제 예정
 export interface ReviewType {
   userId: string;
   eventId: string;
@@ -78,9 +87,84 @@ export interface ReviewType {
   like: number;
 }
 
+// 삭제 예정
 export type ArtistType = {
   id: string;
   name: string;
   type: string;
   image: string;
 };
+
+type ArtistAndGroupType = {
+  id: string;
+  name: string;
+  image: string;
+  type: "solo" | "member" | "group";
+};
+
+export interface ArtistAndGroupListType {
+  page: number;
+  size: number;
+  artistAndGroupList: ArtistAndGroupType[];
+}
+
+export interface EventImageType {
+  id: string;
+  eventId: string;
+  imageUrl: string;
+  isMain: boolean;
+  createdAt: string;
+  updatedAt: string | null;
+  deletedAt: string | null;
+}
+
+export interface TargetArtistType {
+  eventId: string;
+  artistId: string;
+  artistName: string;
+  groupId: string;
+  groupName: string;
+}
+
+export interface EventTagType {
+  eventId: string;
+  tagId: string;
+  tagName: GiftType;
+}
+
+export interface EventCardType {
+  id: string;
+  sequence: string;
+  placeName: string;
+  description: string;
+  eventType: EventType;
+  startDate: string;
+  endDate: string;
+  eventUrl: string;
+  userId: string;
+  organizerSns: string;
+  snsType: SnsType;
+  address: string;
+  addressDetail: string;
+  isAgreed: boolean;
+  createdAt: string;
+  updatedAt?: string | null;
+  deletedAt?: string | null;
+  likeCount: number;
+  eventImages: EventImageType[];
+  targetArtists: TargetArtistType[];
+  eventTags: EventTagType[];
+}
+
+export interface EventReviewType {
+  id: string;
+  cursorId: number;
+  isPublic: boolean;
+  rating: boolean;
+  description: string;
+  createdAt: string;
+  likeCount: number;
+  isLike: boolean;
+  user: UserType;
+  reviewImages: { url: string; createdAt: string }[];
+}
