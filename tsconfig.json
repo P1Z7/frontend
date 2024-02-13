@@ -23,7 +23,7 @@
       "@/components/*": ["app/_components/*"],
       "@/(route)/*": ["app/(route)/*"],
       "@/providers/*": ["app/_providers/*"],
-      "@/api/*": ["app/api/*"],
+      "@/api/*": ["app/_api/*"],
       "@/hooks/*": ["app/_hooks/*"],
       "@/service/*": ["app/_service/*"],
       "@/store/*": ["app/_store/*"],
