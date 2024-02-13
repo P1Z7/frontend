@@ -1,15 +1,20 @@
 "use client";
 
-import Image from "next/image";
+import { useParams } from "next/navigation";
 import { ButtonHTMLAttributes, ChangeEvent, InputHTMLAttributes, ReactNode, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import WarningCheck from "@/components/WarningCheck";
 import Button from "@/components/button";
 import InputArea from "@/components/input/InputArea";
 import InputFile from "@/components/input/InputFile";
+import { Api } from "@/api/api";
 import { useStore } from "@/store/index";
+import { makeImgUrlList } from "@/utils/changeImgUrl";
 import PartyIcon from "@/public/icon/party.svg";
 import SadIcon from "@/public/icon/sad.svg";
+import { MemoizedImageList } from "./_components/MemoizedImageList";
+
+const USER_ID = "4a256531-6f40-41de-aba2-d37d7507e5d7";
 
 interface FormValues {
   description: string;
@@ -17,6 +22,10 @@ interface FormValues {
 }
 
 const ReviewPostPage = () => {
+  const instance = new Api(
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjZjExMzc3My0wZTg5LTQwNWEtOGQyYy1jODgzZjVlMGY0ZDEiLCJ1c2VybmFtZSI6Iu2FjOyKpO2KuCIsImlhdCI6MTcwNzg0MTUxNywiZXhwIjoxNzA3ODQ1MTE3fQ.rkEXwMRmR2D_RqZLLoFXJW91D8Bx_RIP4HW605cQAKs",
+  );
+  const { eventId } = useParams();
   const [evaluation, setEvaluation] = useState<boolean | null>(null);
   const [isPublic, setIsPublic] = useState<boolean | null>(null);
   const { isCheck, setIsCheck } = useStore((state) => ({ isCheck: state.isWarningCheck, setIsCheck: state.setIsWarningCheck }));
@@ -46,7 +55,7 @@ const ReviewPostPage = () => {
   const { images } = watch();
   const [imageList, setImageList] = useState<File[]>([]);
 
-  const removeImage = (removingImage: File) => {
+  const handleRemoveImage = (removingImage: File) => {
     setImageList((prev) => prev.filter((image) => image !== removingImage));
   };
 
@@ -56,13 +65,29 @@ const ReviewPostPage = () => {
   }, [images]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     setIsCheck(false);
   }, []);
 
   const isDisabled = !(isDirty && isValid && isEvaluated && isCheck && isPublic !== null);
 
-  const postReview: SubmitHandler<FormValues> = (form) => {
-    console.log({ evaluation, ...form, images: imageList, isCheck, isPublic });
+  const postReview: SubmitHandler<FormValues> = async (form) => {
+    const imagesUrl = await makeImgUrlList(imageList, instance);
+    try {
+      // api post의 헤더에 application/json 이 들어가 있지만 post 요청으로 빈 값이 들어와서 항상 에러 발생
+      await instance.post("/reviews", {
+        userId: USER_ID,
+        eventId: Array.isArray(eventId) ? eventId[0] : eventId,
+        isPublic: Boolean(isPublic),
+        rating: Boolean(evaluation),
+        reviewImages: imagesUrl,
+        description: form.description,
+        isAgree: isCheck,
+      });
+      console.log("POST");
+    } catch (e) {
+      console.log("ERROR: ", e);
+    }
   };
 
   return (
@@ -104,13 +129,7 @@ const ReviewPostPage = () => {
             <li className="shrink-0">
               <InputFile control={control} name="images" />
             </li>
-            {imageList.map((image, index) => (
-              <li key={index}>
-                <button type="button" onClick={() => removeImage(image)} className="relative h-120 w-120 shrink-0">
-                  <Image src={URL.createObjectURL(image)} alt="선택한 사진 미리보기" fill className="object-cover" />
-                </button>
-              </li>
-            ))}
+            <MemoizedImageList imageList={imageList} handleRemoveImage={handleRemoveImage} />
           </ul>
         </section>
         <InputArea control={control} name="description" hasLimit>
@@ -137,7 +156,7 @@ const RadioButton = ({ children, value, onChange }: RadioButtonProps) => {
   return (
     <label className="flex w-1/2 cursor-pointer items-center gap-4 text-14 font-400">
       <input
-        className="checked:border-main-pink-500 hover:bg-main-pink-50 h-16 w-16 cursor-pointer appearance-none rounded-full border-2 border-gray-200 checked:border-[0.5rem]"
+        className="h-16 w-16 cursor-pointer appearance-none rounded-full border-2 border-gray-200 checked:border-[0.5rem] checked:border-main-pink-500 hover:bg-main-pink-50"
         name="public"
         type="radio"
         value={value}
