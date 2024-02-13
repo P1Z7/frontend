@@ -1,5 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
-import { Api } from "app/api/api";
 import { useFormContext, useWatch } from "react-hook-form";
 import BottomButton from "@/components/button/BottomButton";
 import { SignUpFormType } from "@/types/index";

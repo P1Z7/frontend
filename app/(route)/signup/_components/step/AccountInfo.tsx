@@ -15,13 +15,12 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
   const isButtonDisabled = !!(formState.errors.email || formState.errors.password || formState.errors.passwordCh) || !(email && password && passwordCh);
 
   const handleSendingClick = async () => {
-    const instance = new Api();
-    const data = {
-      email: email,
-    };
-    const res = await instance.post("/email", data);
-    console.log(res);
-    toast.success("이메일이 발송되었습니다", { className: "text-16 font-600" });
+    // const instance = new Api();
+    // const data = {
+    //   email: email,
+    // };
+    // const res = await instance.post("/email", data);
+    // toast.success("이메일이 발송되었습니다", { className: "text-16 font-600" });
   };
 
   return (
@@ -72,7 +71,7 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
       >
         비밀번호 확인
       </InputText>
-      <BottomButton onClick={handleSubmit(onNext)} isDisabled={isButtonDisabled}>
+      <BottomButton onClick={onNext} isDisabled={isButtonDisabled}>
         다음으로
       </BottomButton>
     </div>

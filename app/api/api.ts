@@ -79,7 +79,7 @@ export class Api {
   }
 }
 
-type GetEndPoint = "/event" | `/event/${string}` | "/artist/group" | `/artist/${string}` | "/group/solo" | `/reviews/${string}`;
+type GetEndPoint = "/event" | `/event/${string}` | "/artist/group" | `/artist/${string}` | "/group/solo" | `/reviews/${string}` | "/users/nickname";
 type PostEndPoint = "/event" | "/users" | "/auth" | "/auth/token" | "/artist" | "/group" | "/file/upload" | "/reviews" | `/reviews/${string}/like` | "/email";
 type PostQueryType<T> = T extends "/file/upload" ? { category: "event" | "artist" | "user" } : unknown;
 
