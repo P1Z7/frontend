@@ -13,11 +13,11 @@ let INITIAL_DATA: PostType;
 
 const Edit = () => {
   const instance = new Api();
-  const { id } = useParams();
+  const { eventId } = useParams();
   const { data, isSuccess } = useQuery({
-    queryKey: ["event"],
+    queryKey: ["event", eventId],
     queryFn: async () => {
-      return instance.get(`/event/${id}`);
+      return instance.get(`/event/${eventId}`);
     },
   });
   const [loading, setLoading] = useState(false);

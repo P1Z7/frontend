@@ -31,14 +31,11 @@ type PostValueType =
   | "tags";
 
 const EditContent = () => {
-  const { modal, openModal, closeModal } = useModal();
   const {
     watch,
     formState: { defaultValues },
   } = useFormContext<PostType>();
   const { isCheck } = useStore((state) => ({ isCheck: state.isWarningCheck }));
-  const { id } = useParams();
-  const router = useRouter();
   const watchedValue = watch();
 
   const checkUpdated = () => {
@@ -78,15 +75,7 @@ const EditContent = () => {
       <MainInput />
       <SubInput />
       <DetailInput />
-      <BottomButton isDisabled={!isValid} onClick={() => openModal("endEdit")}>
-        수정사항 등록
-      </BottomButton>
-      {modal === "endEdit" && (
-        <AlertModal closeModal={closeModal} handleBtnClick={() => router.push(`/event/${id}`)}>
-          수정사항은 사용자 3인 이상의
-          <br /> 승인 후에 반영됩니다.
-        </AlertModal>
-      )}
+      <BottomButton isDisabled={!isValid}>수정사항 등록</BottomButton>
     </div>
   );
 };
