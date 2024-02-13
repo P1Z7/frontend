@@ -3,32 +3,11 @@ import MainInput from "@/(route)/post/_components/_inputs/MainInput";
 import StarInput from "@/(route)/post/_components/_inputs/StarInput";
 import SubInput from "@/(route)/post/_components/_inputs/SubInput";
 import { PostType } from "@/(route)/post/page";
-import { useParams, useRouter } from "next/navigation";
 import { useFormContext } from "react-hook-form";
 import BottomButton from "@/components/button/BottomButton";
-import AlertModal from "@/components/modal/AlertModal";
-import { useModal } from "@/hooks/useModal";
 import { useStore } from "@/store/index";
 import { checkArrUpdate } from "@/utils/checkArrUpdate";
-
-type PostValueType =
-  | "placeName"
-  | "eventType"
-  | "groupId"
-  | "artists"
-  | "groupName"
-  | "artistNames"
-  | "startDate"
-  | "endDate"
-  | "address"
-  | "addressDetail"
-  | "userId"
-  | "eventImages"
-  | "description"
-  | "eventUrl"
-  | "organizerSns"
-  | "snsType"
-  | "tags";
+import { PostValueType } from "@/types/index";
 
 const EditContent = () => {
   const {

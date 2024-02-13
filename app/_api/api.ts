@@ -1,6 +1,8 @@
 import { Req_Post_Type } from "@/types/postBodyType";
 import { Req_Query_Type } from "@/types/queryType";
 
+const STR_RES_ENDPOINT = ["/file/upload", "/event/update/application"];
+
 export class Api {
   private baseUrl;
   private queryString;
@@ -51,7 +53,7 @@ export class Api {
         Authorization: `Bearer ${this.accessToken}`,
       },
     });
-    return endPoint === "/file/upload" ? await res.text() : await res.json();
+    return STR_RES_ENDPOINT.includes(endPoint) ? await res.text() : await res.json();
   }
 
   async put<T extends PutEndPoint>(endPoint: T, body: PutBodyType<T>) {
@@ -81,7 +83,18 @@ export class Api {
 }
 
 type GetEndPoint = "/event" | "/event/like" | `/event/${string}` | "/artist/group" | `/artist/${string}` | "/group/solo" | `/reviews/${string}`;
-type PostEndPoint = "/event" | "/event/like" | "/users" | "/auth" | "/auth/token" | "/artist" | "/group" | "/file/upload" | "/reviews" | `/reviews/${string}/like`;
+type PostEndPoint =
+  | "/event"
+  | "/event/like"
+  | "/users"
+  | "/auth"
+  | "/auth/token"
+  | "/artist"
+  | "/group"
+  | "/file/upload"
+  | "/reviews"
+  | `/reviews/${string}/like`
+  | "/event/update/application";
 type PutEndPoint = `/event/${string}`;
 type DeleteEndPoint = `/users/${string}/artists` | `/reviews/${string}/images`;
 type PostQueryType<T> = T extends "/file/upload" ? { category: "event" | "artist" | "user" } : unknown;
@@ -106,7 +119,9 @@ type PostBodyType<T> = T extends "/event"
                   ? Req_Post_Type["review"]
                   : T extends `/reviews/${string}/like`
                     ? Req_Post_Type["reviewLike"]
-                    : unknown;
+                    : T extends "/event/update/application"
+                      ? Req_Post_Type["edit"]
+                      : unknown;
 
 type GetQueryType<T> = T extends "/event"
   ? Req_Query_Type["행사목록"]

@@ -3,7 +3,7 @@ import { useParams, usePathname, useRouter } from "next/navigation";
 import React from "react";
 import { FieldValues, FormProvider, UseFormProps, useForm } from "react-hook-form";
 import { useModal } from "@/hooks/useModal";
-import { handlePostSubmit, submitEditWriter } from "@/utils/submitPost";
+import { handlePostSubmit, submitEditApplication, submitEditWriter } from "@/utils/submitPost";
 import AlertModal from "./modal/AlertModal";
 
 interface GenericFormProps<T extends FieldValues> {
@@ -21,14 +21,17 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
 
   const onSubmit = async () => {
     console.log(methods.getValues()); // 회원가입 POST할 정보
+    const userInputValue = methods.getValues();
+    const defaultValue = methods.formState.defaultValues;
     if (path === "/post") {
-      const res = await handlePostSubmit(methods.getValues(), instance);
+      const res = await handlePostSubmit(userInputValue, instance);
       router.push(`/event/${res.eventId}`);
     }
     if (path === `/event/${eventId}/edit`) {
       //작성 유저
       const res = await submitEditWriter(methods.getValues(), instance, eventId);
-
+      //신청 유저
+      // await submitEditApplication(instance, defaultValue, userInputValue, eventId);
       openModal("endEdit");
     }
   };
