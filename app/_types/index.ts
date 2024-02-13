@@ -140,7 +140,6 @@ export interface EventCardType {
   startDate: string;
   endDate: string;
   eventUrl: string;
-  user: UserType;
   userId: string;
   organizerSns: string;
   snsType: SnsType;
