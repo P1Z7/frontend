@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React from "react";
+import { memo } from "react";
 import CloseIcon from "@/public/icon/close.svg";
 
 interface Props {
@@ -26,4 +26,4 @@ const ImageList = ({ imageList, handleRemoveImage }: Props) => {
   );
 };
 
-export const MemoizedImageList = React.memo(ImageList);
+export const MemoizedImageList = memo(ImageList);
