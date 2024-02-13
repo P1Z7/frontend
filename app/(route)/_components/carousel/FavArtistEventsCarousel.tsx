@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import VerticalEventCard from "@/components/card/VerticalEventCard";
 import { Api } from "@/api/api";
-import { EventCardType } from "@/types/getBodyType";
+import { Res_Get_Type } from "@/types/getResType";
 import Hero from "@/public/icon/hero.svg";
 import Carousel from "./Carousel";
 
@@ -20,7 +20,7 @@ const FavArtistEventsCarousel = () => {
     data: favArtistEvent,
     isSuccess,
     isLoading,
-  } = useQuery<EventCardType[]>({
+  } = useQuery<Res_Get_Type["eventList"]>({
     queryKey: ["event", "favoriteArtist"],
     queryFn: async () => {
       return instance.get("/event/new");

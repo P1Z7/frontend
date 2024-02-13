@@ -1,12 +1,11 @@
 import Image from "next/image";
-import { Fragment } from "react";
 import { formatAddress, formatDate } from "@/utils/formatString";
-import { EventCardType } from "@/types/getBodyType";
+import { Res_Get_Type } from "@/types/getResType";
 import HeartButton from "../button/HeartButton";
 import Chip from "../chip/Chip";
 
 interface Props {
-  data: EventCardType;
+  data: Res_Get_Type["event"];
 }
 
 const VerticalEventCard = ({ data }: Props) => {

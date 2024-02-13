@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import InfiniteScroll from "react-infinite-scroller";
 import ArtistCard from "@/components/ArtistCard";
 import { Api } from "@/api/api";
-import { ArtistAndGroupListType } from "@/types/getBodyType";
+import { Res_Get_Type } from "@/types/getResType";
 
 const ArtistList = () => {
   const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
@@ -13,7 +13,7 @@ const ArtistList = () => {
     data: artistData,
     isSuccess,
     isLoading,
-  } = useQuery<ArtistAndGroupListType>({
+  } = useQuery<Res_Get_Type["artistGroup"]>({
     queryKey: ["artist"],
     queryFn: async () => {
       return instance.get("/artist/group", { size: 12, page: 1 });

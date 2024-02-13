@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import VerticalEventCard from "@/components/card/VerticalEventCard";
 import { Api } from "@/api/api";
-import { EventCardType } from "@/types/getBodyType";
+import { Res_Get_Type } from "@/types/getResType";
 import Carousel from "./Carousel";
 
 const PopularEventsCarousel = () => {
@@ -21,7 +21,7 @@ const PopularEvents = () => {
     data: popularEvents,
     isSuccess,
     isLoading,
-  } = useQuery<EventCardType[]>({
+  } = useQuery<Res_Get_Type["eventList"]>({
     queryKey: ["event", "popular"],
     queryFn: async () => {
       return instance.get("/event/popularity");
