@@ -1,9 +1,8 @@
 import { PostType } from "@/(route)/post/page";
 import { useQuery } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
+import { Api } from "app/_api/api";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
-import { Api } from "@/api/api";
 import { useFetchMember } from "@/hooks/useFetchMember";
 import { useSearch } from "@/hooks/useSearch";
 import { BottomSheetBaseType } from "@/types/index";

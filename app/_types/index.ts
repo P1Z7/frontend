@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, RefObject } from "react";
+import { ReactElement, ReactNode } from "react";
 
 export interface ModalBaseType {
   closeModal: () => void;
@@ -77,13 +77,6 @@ export interface EventInfoType {
 }
 
 // 삭제 예정
-export type ArtistType = {
-  name: string;
-  group?: string[];
-  profileImage: string;
-};
-
-// 삭제 예정
 export interface ReviewType {
   userId: string;
   eventId: string;
@@ -92,6 +85,26 @@ export interface ReviewType {
   description: string;
   reviewImages?: string[];
   like: number;
+}
+
+// 삭제 예정
+export type ArtistType = {
+  name: string;
+  group?: string[];
+  profileImage: string;
+};
+
+type ArtistAndGroupType = {
+  id: string;
+  name: string;
+  image: string;
+  type: "solo" | "member" | "group";
+};
+
+export interface ArtistAndGroupListType {
+  page: number;
+  size: number;
+  artistAndGroupList: ArtistAndGroupType[];
 }
 
 export interface EventImageType {
@@ -127,7 +140,7 @@ export interface EventCardType {
   startDate: string;
   endDate: string;
   eventUrl: string;
-  user: string;
+  user: UserType;
   userId: string;
   organizerSns: string;
   snsType: SnsType;

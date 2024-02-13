@@ -79,18 +79,9 @@ export class Api {
   }
 }
 
-type GetEndPoint = "/event" | `/event/${string}` | "/artist/group" | `/artist/${string}` | "/group/solo" | `/reviews/${string}` | "/event/like";
-type PostEndPoint =
-  | "/event"
-  | "/event/like"
-  | "/users"
-  | "/authentication"
-  | "/authentication/token"
-  | "/artist"
-  | "/group"
-  | "/file/upload"
-  | "/reviews"
-  | `/reviews/${string}/like`;
+type GetEndPoint = "/event" | "/event/like" | `/event/${string}` | "/artist/group" | `/artist/${string}` | "/group/solo" | `/reviews/${string}`;
+type PostEndPoint = "/event" | "/event/like" | "/users" | "/auth" | "/auth/token" | "/artist" | "/group" | "/file/upload" | "/reviews" | `/reviews/${string}/like`;
+
 type PostQueryType<T> = T extends "/file/upload" ? { category: "event" | "artist" | "user" } : unknown;
 
 type PostBodyType<T> = T extends "/event"
@@ -99,9 +90,9 @@ type PostBodyType<T> = T extends "/event"
     ? Req_Post_Type["eventLike"]
     : T extends "/users"
       ? Req_Post_Type["signup"]
-      : T extends "/authentication"
+      : T extends "/auth"
         ? Req_Post_Type["login"]
-        : T extends "/authentication/token"
+        : T extends "/auth/token"
           ? Req_Post_Type["token"]
           : T extends "/artist"
             ? Req_Post_Type["artist"]
