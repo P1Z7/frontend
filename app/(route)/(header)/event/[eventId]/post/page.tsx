@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { ButtonHTMLAttributes, ChangeEvent, InputHTMLAttributes, ReactNode, useEffect, useState } from "react";
+import { ButtonHTMLAttributes, ChangeEvent, InputHTMLAttributes, ReactNode, useCallback, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import WarningCheck from "@/components/WarningCheck";
 import Button from "@/components/button";
@@ -55,9 +55,9 @@ const ReviewPostPage = () => {
   const { images } = watch();
   const [imageList, setImageList] = useState<File[]>([]);
 
-  const handleRemoveImage = (removingImage: File) => {
+  const handleRemoveImage = useCallback((removingImage: File) => {
     setImageList((prev) => prev.filter((image) => image !== removingImage));
-  };
+  }, []);
 
   useEffect(() => {
     const nextImageList = Array.from(images).filter((image) => !imageList.includes(image));

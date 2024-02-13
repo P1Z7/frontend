@@ -8,7 +8,6 @@ interface Props {
 }
 
 const ImageList = ({ imageList, handleRemoveImage }: Props) => {
-  console.log("RUN");
   return (
     <>
       {imageList.map((image, index) => (
