@@ -12,10 +12,11 @@ import Button from "@/components/button";
 import InputText from "@/components/input/InputText";
 import useEnterNext from "@/hooks/useEnterNext";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
+import { OAUTH } from "@/constants/oauth";
 import ArrowLeft from "@/public/icon/arrow-left_lg.svg";
 import Logo from "@/public/icon/logo.svg";
-import GoogleLogo from "@/public/icon/logo_google.svg";
 import KakaoLogo from "@/public/icon/logo_kakao.svg";
+import NaverLogo from "@/public/icon/logo_naver.svg";
 
 const SIGNIN_DEFAULT = {
   mode: "onBlur",
@@ -131,14 +132,14 @@ const SignInPage = () => {
           <Link href="">비밀번호 찾기</Link>
         </div>
         <div className="flex w-full flex-col gap-20">
-          <button onClick={handleOAuth("kakao")} className="flex-center w-full gap-8 rounded-sm bg-[#FEE500] py-16 text-16 font-500">
+          <Link href={OAUTH.kakao()} className="flex-center w-full gap-8 rounded-sm bg-[#FEE500] py-16 text-16 font-500">
             <KakaoLogo />
             <p>카카오 계정으로 로그인</p>
-          </button>
-          <button onClick={handleOAuth("google")} className="flex-center w-full gap-8 rounded-sm bg-gray-50 py-16 text-16 font-500">
-            <GoogleLogo />
-            <p>Google 계정으로 로그인</p>
-          </button>
+          </Link>
+          <Link href={OAUTH.naver()} className="flex-center w-full gap-8 rounded-sm bg-[#03CF5D] py-16 text-16 font-500 text-white-white">
+            <NaverLogo />
+            <p>네이버 계정으로 로그인</p>
+          </Link>
         </div>
       </div>
     </>
