@@ -47,7 +47,9 @@ const EditContent = () => {
       if (postTypeGuard(defaultValues, key)) {
         const prev = defaultValues[key];
         const cur = watchedValue[key];
-        if (typeof prev === "undefined" || typeof cur === "undefined") return false;
+        if (typeof prev === "undefined" || typeof cur === "undefined") {
+          return false;
+        }
         switch (key) {
           case "artists":
           case "artistNames":

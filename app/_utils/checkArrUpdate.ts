@@ -1,3 +1,4 @@
 export const checkArrUpdate = (prev: any[], cur: any[]) => {
-  return cur.length !== prev?.length || !prev?.every((item) => cur.includes(item));
+  const curArr = Array.from(cur);
+  return curArr.length !== prev?.length || !prev?.every((item) => curArr.includes(item));
 };

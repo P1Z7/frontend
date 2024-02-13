@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import GenericFormProvider from "@/components/GenericFormProvider";
+import { useStore } from "@/store/index";
 import EditContent from "./_components/EditContent";
 
 let INITIAL_DATA: PostType;
@@ -20,7 +21,7 @@ const Edit = () => {
       return instance.get(`/event/${eventId}`);
     },
   });
-  const [loading, setLoading] = useState(false);
+  const [isInit, setIsInit] = useState(false);
 
   useEffect(() => {
     if (isSuccess) {
@@ -48,13 +49,17 @@ const Edit = () => {
         snsType,
         tags,
       } as PostType;
-      setLoading(true);
+      setIsInit(true);
     }
   }, [data]);
 
+  useEffect(() => {
+    setIsInit(false);
+  }, []);
+
   return (
     <div className="flex flex-col gap-24 p-20 text-16">
-      {loading && (
+      {isInit && (
         <GenericFormProvider formOptions={{ mode: "onBlur", defaultValues: INITIAL_DATA, shouldFocusError: true }}>
           <EditContent />
         </GenericFormProvider>
