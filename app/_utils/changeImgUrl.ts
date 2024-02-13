@@ -1,4 +1,4 @@
-import { Api } from "@/api/api";
+import { Api } from "app/_api/api";
 
 export const uploadImg = async (image: File, instance: Api) => {
   const formData = new FormData();
