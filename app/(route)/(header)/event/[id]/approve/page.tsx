@@ -43,7 +43,7 @@ const MOCK = [
       "https://i.namu.wiki/i/9BZconeaF4xyV6saVQ1H6-JwvgbVPAvMfgblsfYv8MX8xkyQFoIeGEvFo3ZLtQN6QAvJYCFSTtZiks5EZAIbPc-vRPpDwhzYpxVHs01XEhCKybm__aSMHOEywnWuiOueTgOi3eCiaEacTh1a-vtFtw.webp",
     ],
     count: {
-      approve: 2,
+      approve: 1,
       decline: 2,
     },
     createdAt: "2024-02-02T17:10:14.000Z",
@@ -69,7 +69,7 @@ const MOCK = [
     ],
     count: {
       approve: 2,
-      decline: 2,
+      decline: 1,
     },
     createdAt: "2024-02-02T17:10:14.000Z",
   },
