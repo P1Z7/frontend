@@ -4,6 +4,7 @@ import StarBottomSheet from "@/components/bottom-sheet/StarBottomSheet";
 import InputText from "@/components/input/InputText";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
 import { validateEdit } from "@/utils/editValidate";
+import { handleEnterDown } from "@/utils/handleEnterDown";
 import { PostType } from "../../page";
 
 const StarInput = () => {
@@ -22,8 +23,20 @@ const StarInput = () => {
         <div className="flex flex-col">
           아티스트
           <div className="grid grid-cols-2 gap-8">
-            <InputText name="groupName" placeholder="아티스트 선택" readOnly onClick={() => openBottomSheet("firstArtist")} />
-            <InputText name="artistNames" placeholder="멤버 선택" readOnly onClick={() => openBottomSheet("secondArtist")} />
+            <InputText
+              name="groupName"
+              placeholder="아티스트 선택"
+              readOnly
+              onClick={() => openBottomSheet("firstArtist")}
+              onKeyDown={(event) => handleEnterDown(event, () => openBottomSheet("firstArtist"))}
+            />
+            <InputText
+              name="artistNames"
+              placeholder="멤버 선택"
+              readOnly
+              onClick={() => openBottomSheet("secondArtist")}
+              onKeyDown={(event) => handleEnterDown(event, () => openBottomSheet("secondArtist"))}
+            />
           </div>
           {isNotMember && <div className="pt-4 text-12 font-500 text-red">그룹 선택 시, 멤버 선택이 필수입니다.</div>}
         </div>
@@ -31,7 +44,9 @@ const StarInput = () => {
           name="eventType"
           readOnly
           placeholder="행사 유형을 선택하세요."
+          tabIndex={0}
           onClick={() => openBottomSheet("event")}
+          onKeyDown={(event) => handleEnterDown(event, () => openBottomSheet("event"))}
           isEdit={validateEdit(defaultValues?.eventType !== eventType)}
         >
           행사 유형

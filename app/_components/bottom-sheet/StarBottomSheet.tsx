@@ -97,15 +97,25 @@ const StarBottomSheet = ({ closeBottomSheet, refs, isFirst = false }: Props) => 
         ) : (
           <>
             <SearchInput setKeyword={setKeyword} />
-            <div className="grid h-[34rem] grid-cols-3 overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-100 scrollbar-track-rounded-full scrollbar-thumb-rounded-full">
-              {isLoading && <div>데이터 로딩중 ~~</div>}
-              {isSuccess &&
-                groupData.groupAndSoloList.map(({ id, image, name, type }: any) => (
-                  <ArtistCard key={id} profileImage={image}>
-                    {name}
-                  </ArtistCard>
-                ))}
-            </div>
+            {isLoading && <div>데이터 로딩중 ~~</div>}
+            {isSuccess && (
+              <ArtistList
+                render={() => (
+                  <>
+                    {groupData.groupAndSoloList.map(({ id, image, name, type }: any) => (
+                      <ArtistCard
+                        key={id}
+                        profileImage={image}
+                        isChecked={getValues("groupId") === id || getValues("artists").includes(id)}
+                        onClick={() => handleFirstDepthClick(type, id, name)}
+                      >
+                        {name}
+                      </ArtistCard>
+                    ))}
+                  </>
+                )}
+              />
+            )}
           </>
         )}
       </div>
