@@ -1,6 +1,7 @@
 "use client";
 
-import { ButtonHTMLAttributes, ReactNode, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { ButtonHTMLAttributes, ReactNode, useEffect, useState } from "react";
 import BigRegionBottomSheet from "@/components/bottom-sheet/BigRegionBottomSheet";
 import CalenderBottomSheet from "@/components/bottom-sheet/CalendarBottomSheet";
 import GiftBottomSheet from "@/components/bottom-sheet/GiftsBottomSheet";
@@ -8,6 +9,7 @@ import SmallRegionBottomSheet from "@/components/bottom-sheet/SmallRegionBottomS
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
 import SearchInput from "@/components/input/SearchInput";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
+import { createQueryString } from "@/utils/handleQueryString";
 import { GiftType } from "@/types/index";
 import { MOCK_EVENTS } from "@/constants/mock";
 import { BIG_REGIONS } from "@/constants/regions";
@@ -30,18 +32,24 @@ const BOTTOM_SHEET = {
 };
 
 const SearchPage = () => {
-  const [keyword, setKeyword] = useState("");
-
   const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
+
+  const [keyword, setKeyword] = useState("");
+  const [sort, setSort] = useState<"최신순" | "인기순">("최신순");
   const [filter, setFilter] = useState<FilterType>({
     bigRegion: "",
-    smallRegion: "전지역",
+    smallRegion: "",
     startDate: null,
     endDate: null,
     gifts: [],
   });
 
   const setBigRegionFilter = (bigRegion: (typeof BIG_REGIONS)[number] | "") => {
+    if (bigRegion === "") {
+      setFilter((prev) => ({ ...prev, bigRegion }));
+      setFilter((prev) => ({ ...prev, smallRegion: "" }));
+      return;
+    }
     setFilter((prev) => ({ ...prev, bigRegion }));
     setFilter((prev) => ({ ...prev, smallRegion: "전지역" }));
   };
@@ -58,7 +66,13 @@ const SearchPage = () => {
     setFilter((prev) => ({ ...prev, gifts: [...prev.gifts, gift] }));
   };
 
-  const [sort, setSort] = useState<"최신순" | "인기순">("최신순");
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    const newQuery = createQueryString({ keyword, sort, ...filter }, searchParams);
+    router.push(pathname + "?" + newQuery);
+  }, [keyword, sort, filter]);
 
   return (
     <>

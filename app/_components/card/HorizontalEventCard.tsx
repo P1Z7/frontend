@@ -19,7 +19,7 @@ const HorizontalEventCard = ({ data, hasHeart = false, onHeartClick }: Props) =>
   return (
     <div className="flex w-full items-center gap-12 border-b border-gray-50 bg-transparent py-12">
       <div className="relative h-112 w-84 shrink-0">
-        <Image src={data.eventImages?.[0] || NoImage} className="rounded-[0.4rem] object-cover" fill alt="행사 포스터" />
+        <Image src={data.eventImages?.[0] || NoImage} className="rounded-[0.4rem] object-cover" fill alt="행사 포스터" sizes="82px" />
       </div>
       <div className="relative flex w-full min-w-160 flex-col justify-center gap-4">
         <div className="absolute right-0 top-0">
