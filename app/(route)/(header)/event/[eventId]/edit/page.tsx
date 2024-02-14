@@ -1,13 +1,11 @@
 "use client";
 
 import { PostType } from "@/(route)/post/page";
-import { useQuery } from "@tanstack/react-query";
 import { Api } from "app/_api/api";
 import { format } from "date-fns";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import GenericFormProvider from "@/components/GenericFormProvider";
-import { useStore } from "@/store/index";
 import EditContent from "./_components/EditContent";
 
 let INITIAL_DATA: PostType;
@@ -15,16 +13,11 @@ let INITIAL_DATA: PostType;
 const Edit = () => {
   const instance = new Api();
   const { eventId } = useParams();
-  const { data, isSuccess } = useQuery({
-    queryKey: ["event", eventId],
-    queryFn: async () => {
-      return instance.get(`/event/${eventId}`);
-    },
-  });
-  const [isInit, setIsInit] = useState(false);
+  const [init, setInit] = useState(false);
 
   useEffect(() => {
-    if (isSuccess) {
+    const fetchData = async () => {
+      const data = await instance.get(`/event/${eventId}`);
       const { address, addressDetail, description, endDate, startDate, eventImages, eventTags, eventUrl, eventType, organizerSns, placeName, snsType, targetArtists } = data;
       const artistNames: string[] = targetArtists.map(({ artistName }: { artistName: string }) => artistName);
       const artists = targetArtists.map(({ artistId }: { artistId: string }) => artistId);
@@ -49,17 +42,14 @@ const Edit = () => {
         snsType,
         tags,
       } as PostType;
-      setIsInit(true);
-    }
-  }, [data]);
-
-  useEffect(() => {
-    setIsInit(false);
+      setInit(true);
+    };
+    fetchData();
   }, []);
 
   return (
     <div className="flex flex-col gap-24 p-20 text-16">
-      {isInit && (
+      {init && (
         <GenericFormProvider formOptions={{ mode: "onBlur", defaultValues: INITIAL_DATA, shouldFocusError: true }}>
           <EditContent />
         </GenericFormProvider>

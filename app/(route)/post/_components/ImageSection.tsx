@@ -23,7 +23,7 @@ const ImageSection = ({ imgList, setImgList }: Props) => {
               <CloseIcon width="20" height="20" stroke="#FFFFFF" />
             </button>
             {idx === 0 && <span className="absolute left-4 top-4 z-nav rounded-[0.8rem] bg-[#000000]/[.72] px-8 py-4 text-12 text-white-white">대표이미지</span>}
-            <Image src={typeof file === "string" ? file : URL.createObjectURL(file)} alt="선택한 이미지 미리보기" fill className="object-cover" />
+            <Image src={typeof file === "string" ? file : URL.createObjectURL(file)} alt="선택한 이미지 미리보기" fill sizes="120, 120" className="object-cover" />
           </div>
         ))}
       </div>
