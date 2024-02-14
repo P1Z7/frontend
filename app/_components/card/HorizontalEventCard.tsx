@@ -1,4 +1,3 @@
-import { ScheduleDataProps } from "@/(route)/(bottom-nav)/mypage/page";
 import Image from "next/image";
 import Link from "next/link";
 import { SyntheticEvent } from "react";
@@ -6,6 +5,7 @@ import HeartButton from "@/components/button/HeartButton";
 import Chip from "@/components/chip/Chip";
 import { formatAddress, formatDate } from "@/utils/formatString";
 import { EventCardType } from "@/types/index";
+import { TAG_ORDER } from "@/constants/data";
 import NoImage from "@/public/image/no-profile.png";
 
 interface Props {
@@ -37,9 +37,11 @@ const HorizontalEventCard = ({ data, hasHeart = false, onHeartClick }: Props) =>
           <span>{formattedAddress}</span>
         </p>
         <ul className="flex flex-wrap gap-4">
-          {data.eventTags.map((tag) => (
-            <Chip key={tag.tagId} kind="goods" label={tag.tagName} />
-          ))}
+          {data.eventTags
+            .sort((a, b) => TAG_ORDER[a.tagId].order - TAG_ORDER[b.tagId].order)
+            .map((tag) => (
+              <Chip key={tag.tagId} kind="goods" label={tag.tagName} />
+            ))}
         </ul>
       </div>
     </Link>
