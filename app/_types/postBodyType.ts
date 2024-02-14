@@ -60,11 +60,11 @@ type Req_Post_Group = {
 type Req_Post_Review = {
   userId: string;
   eventId: string;
-  isPublic?: boolean;
+  isPublic: boolean;
   rating: boolean;
   description: string;
   reviewImages: string[];
-  isAgree?: boolean;
+  isAgree: boolean;
 };
 
 type Req_Post_Review_Like = {

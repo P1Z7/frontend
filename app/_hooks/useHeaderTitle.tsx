@@ -2,7 +2,7 @@ import { useParams, usePathname } from "next/navigation";
 
 const useHeaderTitle = () => {
   const pathname = usePathname();
-  const { eventId } = useParams();
+  const { eventId, editId } = useParams();
   let title = "";
 
   switch (pathname) {
@@ -34,6 +34,9 @@ const useHeaderTitle = () => {
       title = "수정 등록하기";
       break;
     case `/event/${eventId}/approve`:
+      title = "수정요청";
+      break;
+    case `/event/${eventId}/approve/${editId}`:
       title = "수정 승인하기";
       break;
     default:
