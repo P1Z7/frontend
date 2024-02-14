@@ -52,6 +52,12 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
           <br /> 승인 후에 반영됩니다.
         </AlertModal>
       )}
+      {modal === "endEdit" && (
+        <AlertModal closeModal={closeModal} handleBtnClick={() => router.push(`/event/${eventId}`)}>
+          수정사항은 사용자 3인 이상의
+          <br /> 승인 후에 반영됩니다.
+        </AlertModal>
+      )}
     </FormProvider>
   );
 };

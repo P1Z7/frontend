@@ -54,6 +54,7 @@ export class Api {
       },
     });
     return STR_RES_ENDPOINT.includes(endPoint) ? await res.text() : await res.json();
+    return STR_RES_ENDPOINT.includes(endPoint) ? await res.text() : await res.json();
   }
 
   async put<T extends PutEndPoint>(endPoint: T, body: PutBodyType<T>) {
