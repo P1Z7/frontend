@@ -1,15 +1,22 @@
 "use client";
 
-import Image from "next/image";
-import { ButtonHTMLAttributes, ChangeEvent, InputHTMLAttributes, ReactNode, useEffect, useState } from "react";
+import LoadingDot from "@/(route)/(bottom-nav)/signin/_components/LoadingDot";
+import { useParams, useRouter } from "next/navigation";
+import { ButtonHTMLAttributes, ChangeEvent, InputHTMLAttributes, ReactNode, useCallback, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import WarningCheck from "@/components/WarningCheck";
 import Button from "@/components/button";
 import InputArea from "@/components/input/InputArea";
 import InputFile from "@/components/input/InputFile";
+import { Api } from "@/api/api";
 import { useStore } from "@/store/index";
+import { makeImgUrlList } from "@/utils/changeImgUrl";
 import PartyIcon from "@/public/icon/party.svg";
 import SadIcon from "@/public/icon/sad.svg";
+import { MemoizedImageList } from "./_components/MemoizedImageList";
+
+const USER_ID = "4a256531-6f40-41de-aba2-d37d7507e5d7";
 
 interface FormValues {
   description: string;
@@ -46,24 +53,57 @@ const ReviewPostPage = () => {
   const { images } = watch();
   const [imageList, setImageList] = useState<File[]>([]);
 
-  const removeImage = (removingImage: File) => {
+  const handleRemoveImage = useCallback((removingImage: File) => {
     setImageList((prev) => prev.filter((image) => image !== removingImage));
-  };
+  }, []);
 
   useEffect(() => {
     const nextImageList = Array.from(images).filter((image) => !imageList.includes(image));
     setImageList((prev) => [...prev, ...nextImageList]);
   }, [images]);
 
-  useEffect(() => {
-    setIsCheck(false);
-  }, []);
-
   const isDisabled = !(isDirty && isValid && isEvaluated && isCheck && isPublic !== null);
 
-  const postReview: SubmitHandler<FormValues> = (form) => {
-    console.log({ evaluation, ...form, images: imageList, isCheck, isPublic });
+  const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
+  const { eventId } = useParams();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const postReview: SubmitHandler<FormValues> = async (form) => {
+    setIsLoading(true);
+    const imagesUrl = await makeImgUrlList(imageList, instance);
+    try {
+      await instance.post("/reviews", {
+        userId: USER_ID,
+        eventId: Array.isArray(eventId) ? eventId[0] : eventId,
+        isPublic: Boolean(isPublic),
+        rating: Boolean(evaluation),
+        reviewImages: imagesUrl,
+        description: form.description,
+        isAgree: isCheck,
+      });
+      router.push(`/event/${eventId}`);
+    } catch (e) {
+      console.error(e);
+      toast.error("후기 등록에 실패하였습니다", {
+        position: "bottom-center",
+        style: {
+          padding: "16px 28px",
+          fontFamily: "Pretendard",
+          fontWeight: "600",
+          fontSize: "16px",
+          marginBottom: "90px",
+        },
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setIsCheck(false);
+  }, []);
 
   return (
     <form noValidate onSubmit={handleSubmit(postReview)} className="relative w-full">
@@ -104,13 +144,7 @@ const ReviewPostPage = () => {
             <li className="shrink-0">
               <InputFile control={control} name="images" />
             </li>
-            {imageList.map((image, index) => (
-              <li key={index}>
-                <button type="button" onClick={() => removeImage(image)} className="relative h-120 w-120 shrink-0">
-                  <Image src={URL.createObjectURL(image)} alt="선택한 사진 미리보기" fill className="object-cover" />
-                </button>
-              </li>
-            ))}
+            <MemoizedImageList imageList={imageList} handleRemoveImage={handleRemoveImage} />
           </ul>
         </section>
         <InputArea control={control} name="description" hasLimit>
@@ -118,9 +152,9 @@ const ReviewPostPage = () => {
         </InputArea>
         <WarningCheck />
       </div>
-      <div className="sticky bottom-0 h-92 w-full border-t border-gray-50 bg-white-black px-20 pb-24 pt-12">
-        <Button type="lined" size="xl" isDisabled={isDisabled}>
-          후기 작성하기
+      <div className={`sticky bottom-0 h-92 w-full border-t border-gray-50 bg-white-black pb-24 pt-12 transition-all ${isLoading ? "px-72" : "px-20"}`}>
+        <Button type="lined" size="xl" isDisabled={isDisabled || isLoading}>
+          {isLoading ? <LoadingDot /> : "후기 작성하기"}
         </Button>
       </div>
     </form>
@@ -137,7 +171,7 @@ const RadioButton = ({ children, value, onChange }: RadioButtonProps) => {
   return (
     <label className="flex w-1/2 cursor-pointer items-center gap-4 text-14 font-400">
       <input
-        className="checked:border-main-pink-500 hover:bg-main-pink-50 h-16 w-16 cursor-pointer appearance-none rounded-full border-2 border-gray-200 checked:border-[0.5rem]"
+        className="h-16 w-16 cursor-pointer appearance-none rounded-full border-2 border-gray-200 checked:border-[0.5rem] checked:border-main-pink-500 hover:bg-main-pink-50"
         name="public"
         type="radio"
         value={value}
