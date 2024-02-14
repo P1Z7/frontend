@@ -13,10 +13,14 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
   const { email, password, passwordCheck, code } = watch();
   const instance = new Api();
   const [canWrite, setCanWrite] = useState(false);
+  const [isVerification, setIsVerification] = useState(false);
 
-  const isButtonDisabled = !!(formState.errors.email || formState.errors.password || formState.errors.passwordCheck) || !(email && password && passwordCheck);
+  const isButtonDisabled = !!(formState.errors.password || formState.errors.passwordCheck) || !(password && passwordCheck) || !isVerification;
 
   const handleEmailClick = async () => {
+    setIsVerification(false);
+    setCanWrite(false);
+
     const data = {
       email: email,
     };
@@ -26,7 +30,6 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
       if (res.error) {
         throw new Error(res.error);
       }
-      toast.success("이메일이 발송되었습니다", { className: "text-16 font-600" });
       setCanWrite(true);
     } catch (error) {
       setError("email", { message: ERROR_MESSAGES.email.emailDuplication });
@@ -44,8 +47,7 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
       if (res.error) {
         throw new Error(res.error);
       }
-      toast.success("인증되었습니다", { className: "text-16 font-600" });
-      setCanWrite(true);
+      setIsVerification(true);
     } catch (error) {
       setError("code", { message: ERROR_MESSAGES.code.emailToVerify });
     }
@@ -55,12 +57,13 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
     <div className="flex flex-col gap-20 pt-36">
       <div className="flex items-end gap-8">
         <InputText
+          isSuccess={canWrite}
           noButton
           control={control}
           name="email"
           autoComplete="email"
           placeholder="이메일을 입력해 주세요"
-          hint="이메일 형식으로 입력하여 주세요."
+          hint={canWrite ? "이메일이 발송되었습니다" : "이메일 형식으로 입력하여 주세요."}
           rules={{
             required: ERROR_MESSAGES.email.emailField,
             pattern: { value: REG_EXP.CHECK_EMAIL, message: ERROR_MESSAGES.email.emailPattern },
@@ -69,19 +72,20 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
           이메일
         </InputText>
         <div className="w-88 shrink-0 pb-16">
-          <Button type="lined" size="free" style="h-48 text-14 rounded-sm" isDisabled={!!formState.errors.email || !email} onClick={handleEmailClick}>
-            인증하기
+          <Button type={canWrite ? "linedGray" : "lined"} size="free" style="h-48 text-14 rounded-sm" isDisabled={!!formState.errors.email || !email} onClick={handleEmailClick}>
+            {canWrite ? "재인증" : "인증하기"}
           </Button>
         </div>
       </div>
       <div className="flex items-end gap-8">
         <InputText
+          isSuccess={isVerification}
           noButton
           control={control}
           name="code"
           autoComplete="none"
           placeholder="인증코드를 입력해 주세요"
-          hint="이메일로 발송된 인증 코드를 입력하여 주세요."
+          hint={isVerification ? "인증되었습니다" : "이메일로 발송된 인증 코드를 입력하여 주세요."}
           rules={{
             required: ERROR_MESSAGES.code.codeField,
           }}
@@ -90,8 +94,8 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
           인증코드 입력
         </InputText>
         <div className="w-88 shrink-0 pb-16">
-          <Button type="lined" size="free" style="h-48 text-14 rounded-sm" isDisabled={!canWrite || !code} onClick={handleCodeClick}>
-            확인
+          <Button type="lined" size="free" style="h-48 text-14 rounded-sm" isDisabled={!canWrite || !code || isVerification} onClick={handleCodeClick}>
+            {isVerification ? "인증완료" : "확인"}
           </Button>
         </div>
       </div>

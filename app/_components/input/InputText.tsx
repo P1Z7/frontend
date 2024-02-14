@@ -13,6 +13,7 @@ interface Prop extends InputHTMLAttributes<HTMLInputElement> {
   onKeyDown?: (e: KeyboardEvent) => void;
   onClick?: () => void;
   isEdit?: boolean;
+  isSuccess?: boolean;
   noButton?: boolean;
 }
 
@@ -34,6 +35,7 @@ const InputText: Function = ({
   onClick,
   onKeyDown,
   isEdit,
+  isSuccess,
   noButton,
   ...control
 }) => {
@@ -84,12 +86,12 @@ const InputText: Function = ({
       <>
         {(!!fieldState.error || hint) && (
           <div className="mt-4 flex h-12">
-            <p className={`font-normal text-12 ${fieldState.error ? "text-red" : "text-gray-500"}`}>{fieldState?.error?.message || hint}</p>
+            <p className={`font-normal text-12 ${fieldState.error ? "text-red" : isSuccess ? "text-sub-skyblue" : "text-gray-500"}`}>{fieldState?.error?.message || hint}</p>
           </div>
         )}
       </>
     );
-  }, [fieldState.error]);
+  }, [fieldState.error, hint]);
 
   return (
     <div className={`w-full ${horizontal && "flex gap-28"}`}>
