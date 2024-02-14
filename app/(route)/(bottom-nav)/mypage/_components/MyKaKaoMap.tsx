@@ -72,7 +72,7 @@ const MyKakaoMap = ({ scheduleData, setLocationInfo, openBottomSheet }: Props) =
         }
       });
     }
-  }, []);
+  }, [scheduleData]);
 
   return <div id="map" className="h-full w-full" />;
 };
