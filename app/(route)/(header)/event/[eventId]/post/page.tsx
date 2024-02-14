@@ -4,6 +4,7 @@ import LoadingDot from "@/(route)/(bottom-nav)/signin/_components/LoadingDot";
 import { useParams, useRouter } from "next/navigation";
 import { ButtonHTMLAttributes, ChangeEvent, InputHTMLAttributes, ReactNode, useCallback, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import WarningCheck from "@/components/WarningCheck";
 import Button from "@/components/button";
 import InputArea from "@/components/input/InputArea";
@@ -84,6 +85,16 @@ const ReviewPostPage = () => {
       router.push(`/event/${eventId}`);
     } catch (e) {
       console.error(e);
+      toast.error("후기 등록에 실패하였습니다", {
+        position: "bottom-center",
+        style: {
+          padding: "16px 28px",
+          fontFamily: "Pretendard",
+          fontWeight: "600",
+          fontSize: "16px",
+          marginBottom: "90px",
+        },
+      });
     } finally {
       setIsLoading(false);
     }
