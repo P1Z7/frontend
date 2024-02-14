@@ -8,7 +8,7 @@ import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 import { SignUpFormType } from "@/types/index";
 
 const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
-  const { formState, control, handleSubmit } = useFormContext<SignUpFormType>();
+  const { formState, control } = useFormContext<SignUpFormType>();
   const [current, setCurrent] = useState("");
   const instance = new Api();
 
@@ -31,7 +31,7 @@ const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
           required: ERROR_MESSAGES.nickname.nicknameField,
           pattern: { value: REG_EXP.CHECK_NICKNAME, message: ERROR_MESSAGES.nickname.nicknamePattern },
           validate: {
-            isDuplicated: async (value) => {
+            isDuplicated: (value) => {
               setCurrent(value);
               return data?.isDuplicated ? "이미 사용중인 닉네임입니다." : true;
             },
