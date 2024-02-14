@@ -1,0 +1,33 @@
+import Tabs from "@/components/Tabs";
+import { Res_Get_Type } from "@/types/getResType";
+import Banner from "./_components/Banner";
+import DescriptionTab from "./_components/tab/DescriptionTab";
+import LocationTab from "./_components/tab/LocationTab";
+import ReviewTab from "./_components/tab/ReviewTab";
+
+interface Props {
+  params: { eventId: string };
+}
+
+const getEventInfo = async (eventId: string) => {
+  const data = await fetch(`http://${process.env.NEXT_PUBLIC_BASE_URL}/event/${eventId}`, { cache: "no-store" });
+  const res: Res_Get_Type["event"] = await data.json();
+  return res;
+};
+
+const EventInfoPage = async ({ params }: Props) => {
+  const eventInfo = await getEventInfo(params.eventId);
+
+  return (
+    <>
+      <Banner data={eventInfo} eventId={params.eventId} />
+      <Tabs names={["행사정보", "위치", "후기"]} topOffset="event">
+        <DescriptionTab images={eventInfo.eventImages} description={eventInfo.description} />
+        <LocationTab name={eventInfo.placeName} address={eventInfo.address} addressDetail={eventInfo.addressDetail} />
+        <ReviewTab eventId={params.eventId} />
+      </Tabs>
+    </>
+  );
+};
+
+export default EventInfoPage;

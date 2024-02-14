@@ -25,7 +25,6 @@
       "@/providers/*": ["app/_providers/*"],
       "@/api/*": ["app/_api/*"],
       "@/hooks/*": ["app/_hooks/*"],
-      "@/service/*": ["app/_service/*"],
       "@/store/*": ["app/_store/*"],
       "@/utils/*": ["app/_utils/*"],
       "@/types/*": ["app/_types/*"],

@@ -19,8 +19,6 @@ const DEFAULT_VALUES = {
 };
 
 const SignUp = () => {
-  const searchParams = useSearchParams();
-  const defaultEmail = searchParams.get("email");
   const router = useRouter();
   const { Funnel, Step, setStep, currentStep } = useFunnel(STEPS);
 
@@ -38,7 +36,7 @@ const SignUp = () => {
   return (
     <>
       <Header onClick={handlePrevClick} />
-      <GenericFormProvider<SignUpFormType> formOptions={{ mode: "onBlur", defaultValues: { ...DEFAULT_VALUES, email: defaultEmail ?? "" } }}>
+      <GenericFormProvider<SignUpFormType> formOptions={{ mode: "onBlur", defaultValues: DEFAULT_VALUES }}>
         <div className="flex flex-col px-20">
           <ProfileSetup steps={STEPS} handleNextClick={handleNextClick} Funnel={Funnel} Step={Step} />
         </div>

@@ -1,3 +1,4 @@
+import { Control } from "react-hook-form";
 import { ModalBaseType } from "@/types/index";
 import InputArea from "../input/InputArea";
 import Modal from "./ModalMaterial";
@@ -7,6 +8,7 @@ interface Props extends ModalBaseType {
   btnText: string;
   handleBtnClick?: () => void;
   textareaId: string;
+  control?: Control;
 }
 
 /**

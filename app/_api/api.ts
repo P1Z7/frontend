@@ -1,6 +1,8 @@
 import { Req_Post_Type } from "@/types/postBodyType";
 import { Req_Query_Type } from "@/types/queryType";
 
+const STR_RES_ENDPOINT = ["/file/upload", "/event/update/application"];
+
 export class Api {
   private baseUrl;
   private queryString;
@@ -47,14 +49,14 @@ export class Api {
       method: "POST",
       body: endPoint === "/file/upload" ? (body as any) : JSON.stringify(body),
       headers: {
-        ...(endPoint === "/file/upload" ? {} : { "Content-Type": "application/json" }),
+        ...(endPoint === "/file/upload" || endPoint === "/reviews" ? {} : { "Content-Type": "application/json" }),
         Authorization: `Bearer ${this.accessToken}`,
       },
     });
-    return endPoint === "/file/upload" ? await res.text() : await res.json();
+    return STR_RES_ENDPOINT.includes(endPoint) ? await res.text() : await res.json();
   }
 
-  async put<T>(endPoint: string, body: T) {
+  async put<T extends PutEndPoint>(endPoint: T, body: PutBodyType<T>) {
     this.baseUrl = "/api" + endPoint;
     const res = await fetch(this.baseUrl, {
       method: "PUT",
@@ -67,10 +69,11 @@ export class Api {
     return await res.json();
   }
 
-  async delete(endPoint: string) {
+  async delete<T extends DeleteEndPoint>(endPoint: T, body: DeleteBodyType<T>) {
     this.baseUrl = "/api" + endPoint;
     const res = await fetch(this.baseUrl, {
       method: "DELETE",
+      body: JSON.stringify(body),
       headers: {
         Authorization: `Bearer ${this.accessToken}`,
       },
@@ -79,40 +82,62 @@ export class Api {
   }
 }
 
-type GetEndPoint = "/event" | `/event/${string}` | "/artist/group" | `/artist/${string}` | "/group/solo" | `/reviews/${string}`;
-type PostEndPoint = "/event" | "/users" | "/auth" | "/auth/token" | "/artist" | "/group" | "/file/upload" | "/reviews" | `/reviews/${string}/like`;
+type GetEndPoint = "/event" | "/event/like" | `/event/${string}` | "/artist/group" | `/artist/${string}` | "/group/solo" | `/reviews/${string}`;
+type PostEndPoint =
+  | "/event"
+  | "/event/like"
+  | "/users"
+  | "/auth"
+  | "/auth/token"
+  | "/artist"
+  | "/group"
+  | "/file/upload"
+  | "/reviews"
+  | `/reviews/${string}/like`
+  | "/event/update/application";
+type PutEndPoint = `/event/${string}`;
+type DeleteEndPoint = `/users/${string}/artists` | `/reviews/${string}/images`;
 type PostQueryType<T> = T extends "/file/upload" ? { category: "event" | "artist" | "user" } : unknown;
 
 type PostBodyType<T> = T extends "/event"
   ? Req_Post_Type["event"]
-  : T extends "/users"
-    ? Req_Post_Type["signup"]
-    : T extends "/auth"
-      ? Req_Post_Type["login"]
-      : T extends "/auth/token"
-        ? Req_Post_Type["token"]
-        : T extends "/artist"
-          ? Req_Post_Type["artist"]
-          : T extends "/group"
-            ? Req_Post_Type["group"]
-            : T extends "/file/upload"
-              ? FormData
-              : T extends "/reviews"
-                ? Req_Post_Type["review"]
-                : T extends `/reviews/${string}/like`
-                  ? Req_Post_Type["reviewLike"]
-                  : unknown;
+  : T extends "/event/like"
+    ? Req_Post_Type["eventLike"]
+    : T extends "/users"
+      ? Req_Post_Type["signup"]
+      : T extends "/auth"
+        ? Req_Post_Type["login"]
+        : T extends "/auth/token"
+          ? Req_Post_Type["token"]
+          : T extends "/artist"
+            ? Req_Post_Type["artist"]
+            : T extends "/group"
+              ? Req_Post_Type["group"]
+              : T extends "/file/upload"
+                ? FormData
+                : T extends "/reviews"
+                  ? Req_Post_Type["review"]
+                  : T extends `/reviews/${string}/like`
+                    ? Req_Post_Type["reviewLike"]
+                    : T extends "/event/update/application"
+                      ? Req_Post_Type["edit"]
+                      : unknown;
 
 type GetQueryType<T> = T extends "/event"
   ? Req_Query_Type["행사목록"]
-  : T extends `/event/${string}`
-    ? Req_Query_Type["행사상세"]
-    : T extends "/artist/group"
-      ? Req_Query_Type["아티스트"]
-      : T extends `/artist/${string}`
-        ? Req_Query_Type["멤버"]
-        : T extends "/group/solo"
-          ? Req_Query_Type["그룹솔로"]
-          : T extends `/reviews/${string}`
-            ? Req_Query_Type["리뷰"]
-            : unknown;
+  : T extends "/event/like"
+    ? Req_Query_Type["행사좋아요"]
+    : T extends `/event/${string}`
+      ? Req_Query_Type["행사상세"]
+      : T extends "/artist/group"
+        ? Req_Query_Type["아티스트"]
+        : T extends `/artist/${string}`
+          ? Req_Query_Type["멤버"]
+          : T extends "/group/solo"
+            ? Req_Query_Type["그룹솔로"]
+            : T extends `/reviews/${string}`
+              ? Req_Query_Type["리뷰"]
+              : unknown;
+// 사용하실 때 직접 추가 부탁드립니다!
+type PutBodyType<T> = T extends `/event/${string}` ? Req_Post_Type["event"] : any;
+type DeleteBodyType<T> = any;

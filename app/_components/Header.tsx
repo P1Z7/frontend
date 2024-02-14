@@ -1,11 +1,13 @@
 "use client";
 
 import { useParams, usePathname, useRouter } from "next/navigation";
-import BottomSheet from "@/components/bottom-sheet/BottomSheetMaterial";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
 import useHeaderTitle from "@/hooks/useHeaderTitle";
+import { useModal } from "@/hooks/useModal";
 import ArrowLeft from "@/public/icon/arrow-left_lg.svg";
 import KebabButton from "@/public/icon/kebab.svg";
+import EventKebabBottomSheet from "./bottom-sheet/EventKebabBottomSheet";
+import ReportModal from "./modal/ReportModal";
 
 interface Props {
   handleClick?: () => void;
@@ -13,14 +15,19 @@ interface Props {
 
 const Header = ({ handleClick }: Props) => {
   const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
+  const { modal, openModal, closeModal } = useModal();
 
-  const openKebeb = () => {
+  const openKebabBottomSheet = () => {
     openBottomSheet("event-kebab");
+  };
+
+  const openKebabModal = () => {
+    openModal("report");
   };
 
   const router = useRouter();
   const pathname = usePathname();
-  const { id } = useParams();
+  const { eventId } = useParams();
   const title = useHeaderTitle();
 
   return (
@@ -30,20 +37,14 @@ const Header = ({ handleClick }: Props) => {
           <ArrowLeft />
         </button>
         <h1 className="absolute left-0 w-full text-center text-16 font-600 text-gray-900">{title}</h1>
-        {pathname === `/event/${id}` && (
-          <button onClick={openKebeb} className="z-nav">
+        {pathname === `/event/${eventId}` && (
+          <button onClick={openKebabBottomSheet} className="z-nav">
             <KebabButton />
           </button>
         )}
       </header>
-      {bottomSheet === "event-kebab" && (
-        <BottomSheet.Frame closeBottomSheet={closeBottomSheet} ref={refs.sheet}>
-          <div ref={refs.content}>
-            <button>수정하기</button>
-            <button>신고히기</button>
-          </div>
-        </BottomSheet.Frame>
-      )}
+      {bottomSheet === "event-kebab" && <EventKebabBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} openReportModal={openKebabModal} />}
+      {modal === "report" && <ReportModal closeModal={closeModal} />}
     </>
   );
 };

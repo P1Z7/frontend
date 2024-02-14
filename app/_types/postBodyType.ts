@@ -1,3 +1,5 @@
+import { CategoryType } from ".";
+
 type Req_Post_Event = {
   placeName: string;
   eventType: "카페" | "팝업스토어";
@@ -15,6 +17,11 @@ type Req_Post_Event = {
   snsType?: "인스타그램" | "트위터" | "유튜브" | "기타";
   tags?: string[];
   isAgreed: boolean;
+};
+
+type Req_Post_Event_Like = {
+  userId: string;
+  eventId: string;
 };
 
 type Req_Post_Signup = {
@@ -55,11 +62,11 @@ type Req_Post_Group = {
 type Req_Post_Review = {
   userId: string;
   eventId: string;
-  isPublic?: boolean;
+  isPublic: boolean;
   rating: boolean;
   description: string;
   reviewImages: string[];
-  isAgree?: boolean;
+  isAgree: boolean;
 };
 
 type Req_Post_Review_Like = {
@@ -68,8 +75,32 @@ type Req_Post_Review_Like = {
   isLike: boolean;
 };
 
+type Req_Post_Edit_Application = {
+  eventId: string;
+  updateCategory: CategoryType[];
+  userId: string;
+  placeName?: string;
+  eventType?: string;
+  groupId?: string;
+  artists?: string[];
+  startDate?: string;
+  endDate?: string;
+  address?: string;
+  addressDetail?: string;
+  eventImages?: string[];
+  description?: string;
+  eventUrl?: string;
+  organizerSns?: string;
+  snsType?: string;
+  tags?: string[];
+  isAgreed: boolean;
+  groupName?: string;
+  artistNames?: string;
+};
+
 export type Req_Post_Type = {
   event: Req_Post_Event;
+  eventLike: Req_Post_Event_Like;
   signup: Req_Post_Signup;
   login: Req_Post_Login;
   token: Req_Post_Token;
@@ -77,4 +108,5 @@ export type Req_Post_Type = {
   group: Req_Post_Group;
   review: Req_Post_Review;
   reviewLike: Req_Post_Review_Like;
+  edit: Req_Post_Edit_Application;
 };
