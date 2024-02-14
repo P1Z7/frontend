@@ -176,3 +176,23 @@ export interface EventReviewType {
   user: UserType;
   reviewImages: { url: string; createdAt: string }[];
 }
+
+export type PostValueType =
+  | "placeName"
+  | "eventType"
+  | "groupId"
+  | "artists"
+  | "groupName"
+  | "artistNames"
+  | "startDate"
+  | "endDate"
+  | "address"
+  | "addressDetail"
+  | "eventImages"
+  | "description"
+  | "eventUrl"
+  | "organizerSns"
+  | "snsType"
+  | "tags";
+
+export type CategoryType = "placeName" | "eventType" | "artist" | "address" | "period" | "tags" | "eventImages" | "organizer" | "eventUrl" | "description";

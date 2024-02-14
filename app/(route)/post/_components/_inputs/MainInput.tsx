@@ -30,14 +30,17 @@ const MainInput = () => {
           readOnly
           onKeyDown={(event) => handleEnterDown(event, () => openBottomSheet("address"))}
           onClick={() => openBottomSheet("address")}
-          isEdit={validateEdit(defaultValues?.address !== address)}
+          isEdit={validateEdit(defaultValues?.address !== address || defaultValues?.addressDetail !== addressDetail)}
         >
           주소
         </InputText>
-        <InputText name="addressDetail" placeholder="상세 주소 입력" isEdit={validateEdit(defaultValues?.addressDetail !== addressDetail)} />
+        <InputText name="addressDetail" placeholder="상세 주소 입력" />
       </div>
       <div className="flex flex-col">
-        기간
+        <div className="flex items-center gap-4">
+          기간
+          {validateEdit(defaultValues?.startDate !== startDate || defaultValues?.endDate !== endDate) && <p className="text-12 font-600 text-blue">수정됨</p>}
+        </div>
         <div className="flex">
           <div className="w-1/2">
             <InputText
@@ -46,7 +49,6 @@ const MainInput = () => {
               readOnly
               onKeyDown={(event) => handleEnterDown(event, () => openBottomSheet("date"))}
               onClick={() => openBottomSheet("date")}
-              isEdit={validateEdit(defaultValues?.startDate !== startDate)}
             />
           </div>
           <div className="flex items-center px-4">~</div>
@@ -57,7 +59,6 @@ const MainInput = () => {
               readOnly
               onKeyDown={(event) => handleEnterDown(event, () => openBottomSheet("date"))}
               onClick={() => openBottomSheet("date")}
-              isEdit={validateEdit(defaultValues?.endDate !== endDate)}
             />
           </div>
         </div>

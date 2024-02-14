@@ -1,40 +1,59 @@
 "use client";
 
+import { PostType } from "@/(route)/post/page";
+import { Api } from "app/_api/api";
+import { format } from "date-fns";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import GenericFormProvider from "@/components/GenericFormProvider";
 import EditContent from "./_components/EditContent";
 
-const EDIT_MOCKUP_DATA = {
-  placeName: "홍대 멜로우",
-  eventType: "카페",
-  groupId: "",
-  artists: [],
-  groupName: "에스파",
-  artistNames: ["카리나"],
-  startDate: "2023-04-08",
-  endDate: "2023-04-11",
-  address: "서울 마포구 잔다리로 30-11",
-  addressDetail: "1층 멜로우",
-  eventImages: [
-    "https://fandomship.com/data/file/aespa/96d7bf5b058cf52803e681345d7f7847_z8rFhK5X_93129e63980a8f3c265ee5ab64387657ef7deec3.jpg",
-    "https://fandomship.com/data/file/aespa/96d7bf5b058cf52803e681345d7f7847_1VnrpEKF_f6ffd26dbdea69f0b3b60fecc99366c4c27c542c.jpg",
-  ],
-  description: "이거 실제 포스터보고 만든거임",
-  eventUrl: "https://fandomship.com/bbs/board.php?bo_table=aespa&wr_id=26",
-  organizerSns: "@HBD_KARINA_2023",
-  snsType: "트위터",
-  tags: ["굿즈", "포토카드", "컵홀더", "엽서", "스티커", "기타"],
-} as const;
-
-export type EditPostType = typeof EDIT_MOCKUP_DATA;
+let INITIAL_DATA: PostType;
 
 const Edit = () => {
-  //여기서 get하고 이미지들 file 형식으로 변환해서 default 값 설정..?
+  const instance = new Api();
+  const { eventId } = useParams();
+  const [init, setInit] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await instance.get(`/event/${eventId}`);
+      const { address, addressDetail, description, endDate, startDate, eventImages, eventTags, eventUrl, eventType, organizerSns, placeName, snsType, targetArtists } = data;
+      const artistNames: string[] = targetArtists.map(({ artistName }: { artistName: string }) => artistName);
+      const artists = targetArtists.map(({ artistId }: { artistId: string }) => artistId);
+      const tags = eventTags.map(({ tagName }: { tagName: string }) => tagName);
+      const imgList = eventImages.map(({ imageUrl }: { imageUrl: string }) => imageUrl);
+
+      INITIAL_DATA = {
+        placeName,
+        eventType,
+        groupId: targetArtists[0].groupId,
+        groupName: targetArtists[0].groupName,
+        artists,
+        artistNames,
+        startDate: format(startDate, "yyyy.MM.dd"),
+        endDate: format(endDate, "yyyy.MM.dd"),
+        address,
+        addressDetail,
+        eventImages: imgList,
+        description,
+        eventUrl,
+        organizerSns,
+        snsType,
+        tags,
+      } as PostType;
+      setInit(true);
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="flex flex-col gap-24 p-20 text-16">
-      <GenericFormProvider formOptions={{ mode: "onBlur", defaultValues: EDIT_MOCKUP_DATA, shouldFocusError: true }}>
-        <EditContent />
-      </GenericFormProvider>
+      {init && (
+        <GenericFormProvider formOptions={{ mode: "onBlur", defaultValues: INITIAL_DATA, shouldFocusError: true }}>
+          <EditContent />
+        </GenericFormProvider>
+      )}
     </div>
   );
 };

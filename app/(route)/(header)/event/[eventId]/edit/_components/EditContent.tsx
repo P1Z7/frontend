@@ -3,43 +3,18 @@ import MainInput from "@/(route)/post/_components/_inputs/MainInput";
 import StarInput from "@/(route)/post/_components/_inputs/StarInput";
 import SubInput from "@/(route)/post/_components/_inputs/SubInput";
 import { PostType } from "@/(route)/post/page";
-import classNames from "classnames";
 import { useFormContext } from "react-hook-form";
-import Alert from "@/components/Alert";
 import BottomButton from "@/components/button/BottomButton";
-import AlertModal from "@/components/modal/AlertModal";
-import TextModal from "@/components/modal/TextModal";
-import { useModal } from "@/hooks/useModal";
 import { useStore } from "@/store/index";
-
-type PostValueType =
-  | "placeName"
-  | "eventType"
-  | "groupId"
-  | "artists"
-  | "groupName"
-  | "artistNames"
-  | "startDate"
-  | "endDate"
-  | "address"
-  | "addressDetail"
-  | "userId"
-  | "eventImages"
-  | "description"
-  | "eventUrl"
-  | "organizerSns"
-  | "snsType"
-  | "tags";
+import { checkArrUpdate } from "@/utils/checkArrUpdate";
+import { PostValueType } from "@/types/index";
 
 const EditContent = () => {
-  const { modal, openModal, closeModal } = useModal();
   const {
-    control,
     watch,
     formState: { defaultValues },
   } = useFormContext<PostType>();
   const { isCheck } = useStore((state) => ({ isCheck: state.isWarningCheck }));
-
   const watchedValue = watch();
 
   const checkUpdated = () => {
@@ -51,13 +26,16 @@ const EditContent = () => {
       if (postTypeGuard(defaultValues, key)) {
         const prev = defaultValues[key];
         const cur = watchedValue[key];
+        if (typeof prev === "undefined" || typeof cur === "undefined") {
+          return false;
+        }
         switch (key) {
           case "artists":
           case "artistNames":
           case "tags":
           case "eventImages":
-            if (typeof prev === "string") return false;
-            isUpdated = cur.length !== prev?.length || !prev?.every((c, i) => c === cur[i]);
+            if (typeof prev === "string" || typeof cur === "string") return false;
+            isUpdated = checkArrUpdate(prev, cur);
             break;
           default:
             isUpdated = prev !== cur;
@@ -78,15 +56,7 @@ const EditContent = () => {
       <MainInput />
       <SubInput />
       <DetailInput />
-      <BottomButton isDisabled={!isValid} onClick={() => openModal("endEdit")}>
-        수정사항 등록
-      </BottomButton>
-      {modal === "endEdit" && (
-        <AlertModal closeModal={closeModal}>
-          수정사항은 사용자 3인 이상의
-          <br /> 승인 후에 반영됩니다.
-        </AlertModal>
-      )}
+      <BottomButton isDisabled={!isValid}>수정사항 등록</BottomButton>
     </div>
   );
 };

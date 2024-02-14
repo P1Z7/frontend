@@ -1,3 +1,5 @@
+import { CategoryType } from ".";
+
 type Req_Post_Event = {
   placeName: string;
   eventType: "카페" | "팝업스토어";
@@ -82,6 +84,29 @@ type Req_Post_Verification = {
   verificationNumber: number | string;
 };
 
+type Req_Post_Edit_Application = {
+  eventId: string;
+  updateCategory: CategoryType[];
+  userId: string;
+  placeName?: string;
+  eventType?: string;
+  groupId?: string;
+  artists?: string[];
+  startDate?: string;
+  endDate?: string;
+  address?: string;
+  addressDetail?: string;
+  eventImages?: string[];
+  description?: string;
+  eventUrl?: string;
+  organizerSns?: string;
+  snsType?: string;
+  tags?: string[];
+  isAgreed: boolean;
+  groupName?: string;
+  artistNames?: string;
+};
+
 export type Req_Post_Type = {
   event: Req_Post_Event;
   eventLike: Req_Post_Event_Like;
@@ -94,4 +119,5 @@ export type Req_Post_Type = {
   reviewLike: Req_Post_Review_Like;
   email: Req_Post_Email;
   verification: Req_Post_Verification;
+  edit: Req_Post_Edit_Application;
 };
