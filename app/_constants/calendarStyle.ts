@@ -26,10 +26,9 @@ export const CALENDAR_STYLE = `
 export const MYPAGE_CALENDAR_STYLE = `
 .react-calendar {
   width: 320px;
-  padding: 16px 0 ;
+  padding: 0 ;
   font-family: Pretendard; 
-  border: 1px solid #F1F2F4;
-  border-radius: 12px;
+  border: 0
 }
 
 .react-calendar__navigation {
@@ -78,7 +77,7 @@ export const MYPAGE_CALENDAR_STYLE = `
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
 }
 
 .react-calendar__month-view__days__day {

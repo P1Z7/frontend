@@ -3,7 +3,7 @@
 import { ButtonHTMLAttributes, ReactNode, useState } from "react";
 
 const TOP_OFFSET = {
-  mypage: "top-112",
+  mypage: "top-0",
   event: "top-72",
 };
 interface Tab {
@@ -22,7 +22,7 @@ const Tabs = ({ children, names, topOffset = "mypage" }: Props) => {
 
   return (
     <section className="w-full">
-      <div className={`sticky z-nav flex h-44 w-full items-center border-b border-gray-50 bg-white-black px-20 ${TOP_OFFSET[topOffset]}`}>
+      <div className={`sticky z-popup flex h-44 w-full items-center border-b border-gray-50 bg-white-black px-20 ${TOP_OFFSET[topOffset]}`}>
         {names.map((name, index) => (
           <TabButton key={name} onClick={() => setSelectedTab({ name, index })} selected={name === selectedTab.name}>
             {name}

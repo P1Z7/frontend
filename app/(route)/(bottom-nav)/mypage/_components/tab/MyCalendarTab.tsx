@@ -5,8 +5,10 @@ import HorizontalEventCard from "@/components/card/HorizontalEventCard";
 import ChipButton from "@/components/chip/ChipButton";
 import { sortEvents } from "@/utils/sortEventList";
 import { MYPAGE_CALENDAR_STYLE } from "@/constants/calendarStyle";
+import ArrowDownIcon from "@/public/icon/arrow-down_sm.svg";
 import NextIcon from "@/public/icon/arrow-left_lg.svg";
 import PrevIcon from "@/public/icon/arrow-right_lg.svg";
+import ArrowUpIcon from "@/public/icon/arrow-up_sm.svg";
 import { ScheduleDataProps } from "../../page";
 
 const EventTab = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) => {
@@ -123,25 +125,37 @@ const EventTab = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) => {
     }
   };
 
+  const [isFold, setIsFold] = useState(true);
+
+  const handleClick = () => {
+    setIsFold((prev) => !prev);
+  };
+
   return (
     <div className="flex flex-col items-center justify-stretch gap-16 px-20 pb-16 pt-72">
       <style>{calendarStyle}</style>
       {calendarStyle !== "" && (
-        <Calendar
-          locale="ko"
-          onChange={handleClickToday}
-          value={selectedDate}
-          tileContent={tileContent}
-          nextLabel={<PrevIcon onClick={() => (lastDay = [])} width={32} height={16} viewBox="0 0 24 24" stroke="#A2A5AA" />}
-          prevLabel={<NextIcon onClick={() => (lastDay = [])} width={32} height={16} viewBox="0 0 24 24" stroke="#A2A5AA" />}
-          next2Label={null}
-          prev2Label={null}
-          formatDay={(locale, date) => date.getDate().toString()}
-          formatShortWeekday={(locale, date) => {
-            const shortWeekdays = ["S", "M", "T", "W", "T", "F", "S"];
-            return shortWeekdays[date.getDay()];
-          }}
-        />
+        <div className="flex-center flex-col gap-8 rounded-sm border border-gray-50 pb-8 pt-16">
+          <Calendar
+            locale="ko"
+            onChange={handleClickToday}
+            value={selectedDate}
+            tileContent={tileContent}
+            nextLabel={<PrevIcon onClick={() => (lastDay = [])} width={32} height={16} viewBox="0 0 24 24" stroke="#A2A5AA" />}
+            prevLabel={<NextIcon onClick={() => (lastDay = [])} width={32} height={16} viewBox="0 0 24 24" stroke="#A2A5AA" />}
+            next2Label={null}
+            prev2Label={null}
+            formatDay={(locale, date) => date.getDate().toString()}
+            formatShortWeekday={(locale, date) => {
+              const shortWeekdays = ["S", "M", "T", "W", "T", "F", "S"];
+              return shortWeekdays[date.getDay()];
+            }}
+          />
+          <button className="flex-center w-fit px-12" onClick={handleClick}>
+            <p>{isFold ? "펼치기" : "접기"}</p>
+            {isFold ? <ArrowDownIcon width="20" height="20" viewBox="0 0 24 24" stroke="#A0A5B1" /> : <ArrowUpIcon width="20" height="20" viewBox="0 0 24 24" stroke="#A0A5B1" />}
+          </button>
+        </div>
       )}
       <div className="w-full">
         <div className="flex w-full gap-12">
