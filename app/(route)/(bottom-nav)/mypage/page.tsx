@@ -38,6 +38,7 @@ export interface ScheduleDataProps {
   endDate: string;
   eventImages?: string[];
   tags: ["포토카드"];
+  isLike: boolean;
 }
 
 const mockScheduleData: ScheduleDataProps[] = [
@@ -50,6 +51,7 @@ const mockScheduleData: ScheduleDataProps[] = [
     startDate: "2024-01-28T00:00:00+09:00",
     endDate: "2024-02-01T00:00:00+09:00",
     tags: ["포토카드"],
+    isLike: true,
   },
   {
     id: 4,
@@ -60,6 +62,7 @@ const mockScheduleData: ScheduleDataProps[] = [
     startDate: "2024-01-25T00:00:00+09:00",
     endDate: "2024-01-29T00:00:00+09:00",
     tags: ["포토카드"],
+    isLike: true,
   },
   {
     id: 5,
@@ -70,6 +73,7 @@ const mockScheduleData: ScheduleDataProps[] = [
     startDate: "2024-02-01T00:00:00+09:00",
     endDate: "2024-02-05T00:00:00+09:00",
     tags: ["포토카드"],
+    isLike: true,
   },
   {
     id: 6,
@@ -80,6 +84,7 @@ const mockScheduleData: ScheduleDataProps[] = [
     startDate: "2024-01-24T00:00:00+09:00",
     endDate: "2024-01-26T00:00:00+09:00",
     tags: ["포토카드"],
+    isLike: true,
   },
   {
     id: 2,
@@ -90,6 +95,7 @@ const mockScheduleData: ScheduleDataProps[] = [
     startDate: "2024-01-26T00:00:00+09:00",
     endDate: "2024-01-26T00:00:00+09:00",
     tags: ["포토카드"],
+    isLike: true,
   },
   {
     id: 3,
@@ -100,5 +106,6 @@ const mockScheduleData: ScheduleDataProps[] = [
     startDate: "2024-01-26T00:00:00+09:00",
     endDate: "2024-01-28T00:00:00+09:00",
     tags: ["포토카드"],
+    isLike: true,
   },
 ];

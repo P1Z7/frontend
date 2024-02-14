@@ -1,3 +1,7 @@
+import { ScheduleDataProps } from "@/(route)/(bottom-nav)/mypage/page";
+import toast from "react-hot-toast";
+import MapIcon from "@/public/icon/map.svg";
+import HorizontalEventCard from "../card/HorizontalEventCard";
 import BottomSheet from "./BottomSheetMaterial";
 
 const getPlaceId = async (address: string, placeName: string) => {
@@ -5,33 +9,42 @@ const getPlaceId = async (address: string, placeName: string) => {
     headers: { Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}` },
   });
   const ret = await data.json();
-  console.log(ret.documents?.[0].id);
+  if (!ret.documents?.[0]) return;
   return ret.documents?.[0].id;
 };
 
 interface Props {
   closeBottomSheet: () => void;
-  locationInfo: { placeName: string; address: string };
+  locationInfo: ScheduleDataProps | undefined;
 }
 
 const LocationDetailBottomSheet = ({ closeBottomSheet, locationInfo }: Props) => {
+  if (!locationInfo) {
+    return <p>위치 정보를 찾을 수 없습니다</p>;
+  }
+
   const handleRedirectToMap = async () => {
     const placeId = await getPlaceId(locationInfo.address, locationInfo.placeName);
-    if (!placeId) return;
+    if (!placeId) {
+      toast.error("카카오 맵과 연동되지 않은 주소입니다🥹", {
+        className: "text-14 font-600",
+      });
+      return;
+    }
     window.open(`https://map.kakao.com/link/map/${placeId}`);
   };
 
   return (
     <>
-      <BottomSheet.Frame closeBottomSheet={closeBottomSheet}>
-        <div className="mb-40 flex w-full flex-col gap-4 px-20 pb-32 pt-16">
-          <h3 className="text-20 font-500">{locationInfo.placeName}</h3>
-          <h4 className="text-14 font-500 text-gray-500">{locationInfo.address}</h4>
-          <button onClick={handleRedirectToMap} className="text-left text-14 font-500 text-blue">
-            지도 앱으로 연결
+      <BottomSheet.MapFrame closeBottomSheet={closeBottomSheet}>
+        <div className="flex w-full flex-col gap-4 px-20 pt-16">
+          <button onClick={handleRedirectToMap} className="flex-center w-fit gap-4 text-14 font-500 text-gray-900 hover:underline">
+            <MapIcon width={20} height={20} viewBox="0 0 24 24" stroke="#A0A5B1" />
+            {locationInfo.address}
           </button>
+          <HorizontalEventCard data={locationInfo} hasHeart={locationInfo.isLike} />
         </div>
-      </BottomSheet.Frame>
+      </BottomSheet.MapFrame>
     </>
   );
 };
