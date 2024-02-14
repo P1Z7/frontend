@@ -82,8 +82,17 @@ export class Api {
   }
 }
 
-type GetEndPoint = "/event" | "/event/like" | `/event/${string}` | "/artist/group" | `/artist/${string}` | "/group/solo" | `/reviews/${string}` | "/users/nickname";
-
+type GetEndPoint =
+  | "/event"
+  | "/event/like"
+  | `/event/${string}`
+  | "/artist/group"
+  | `/artist/${string}`
+  | "/group/solo"
+  | `/reviews/${string}`
+  | "/group"
+  | "/artist"
+  | "/users/nickname";
 type PostEndPoint =
   | "/event"
   | "/event/like"
@@ -145,7 +154,11 @@ type GetQueryType<T> = T extends "/event"
             ? Req_Query_Type["그룹솔로"]
             : T extends `/reviews/${string}`
               ? Req_Query_Type["리뷰"]
-              : unknown;
+              : T extends "/group"
+                ? Req_Query_Type["그룹조회"]
+                : T extends "/artist"
+                  ? Req_Query_Type["멤버조회"]
+                  : unknown;
 // 사용하실 때 직접 추가 부탁드립니다!
 type PutBodyType<T> = T extends `/event/${string}` ? Req_Post_Type["event"] : any;
 type DeleteBodyType<T> = any;

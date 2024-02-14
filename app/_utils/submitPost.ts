@@ -1,41 +1,9 @@
 import { Api } from "app/_api/api";
 import { CategoryType, GiftType, PostValueType } from "@/types/index";
 import { Req_Post_Type } from "@/types/postBodyType";
-import { TAG } from "@/constants/data";
+import { EDIT_CATEGORY, EDIT_CATEGORY_VALUE, TAG } from "@/constants/post";
 import { makeImgUrlList } from "./changeImgUrl";
 import { checkArrUpdate } from "./checkArrUpdate";
-
-const EDIT_CATEGORY = {
-  placeName: "placeName",
-  eventType: "eventType",
-  groupId: "artist",
-  artists: "artist",
-  address: "address",
-  addressDetail: "address",
-  startDate: "period",
-  endDate: "period",
-  tags: "tags",
-  eventImages: "eventImages",
-  organizerSns: "organizer",
-  snsType: "organizer",
-  eventUrl: "eventUrl",
-  description: "description",
-  groupName: "null",
-  artistNames: "null",
-};
-
-const EDIT_CATEGORY_VALUE = {
-  placeName: ["placeName"],
-  eventType: ["eventType"],
-  artist: ["groupId", "artists"],
-  address: ["address", "addressDetail"],
-  period: ["startDate", "endDate"],
-  tags: ["tags"],
-  eventImages: ["eventImages"],
-  organizer: ["organizerSns", "snsType"],
-  eventUrl: ["eventUrl"],
-  description: ["description"],
-};
 
 const matchTagIdList = (tags: GiftType[]) => {
   let tagList: string[] = [];

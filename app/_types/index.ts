@@ -196,3 +196,8 @@ export type PostValueType =
   | "tags";
 
 export type CategoryType = "placeName" | "eventType" | "artist" | "address" | "period" | "tags" | "eventImages" | "organizer" | "eventUrl" | "description";
+
+export interface approveArtistType {
+  groupId: string;
+  artists: string[];
+}
