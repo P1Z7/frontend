@@ -1,6 +1,6 @@
 "use client";
 
-import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import { keepPreviousData, useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ButtonHTMLAttributes, ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import BigRegionBottomSheet from "@/components/bottom-sheet/BigRegionBottomSheet";
@@ -141,6 +141,7 @@ const SearchPage = () => {
     queryKey: ["search"],
     queryFn: getEvents,
     getNextPageParam: (lastPage) => (lastPage.page * SIZE < lastPage.totalCount ? lastPage.page + 1 : null),
+    placeholderData: keepPreviousData,
   });
 
   const containerRef = useInfiniteScroll({
