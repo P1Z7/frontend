@@ -1,7 +1,7 @@
 "use client";
 
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { Api } from "app/api/api";
+import { Api } from "app/_api/api";
 import { usePathname } from "next/navigation";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { Res_Get_Type } from "@/types/getResType";

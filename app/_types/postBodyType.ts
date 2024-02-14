@@ -79,7 +79,7 @@ type Req_Post_Email = {
 
 type Req_Post_Verification = {
   email: string;
-  verificationNumber: number;
+  verificationNumber: number | string;
 };
 
 export type Req_Post_Type = {

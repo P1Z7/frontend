@@ -1,4 +1,4 @@
-import { Api } from "app/api/api";
+import { Api } from "app/_api/api";
 import { GiftType } from "@/types/index";
 import { TAG } from "@/constants/data";
 import { makeImgUrlList } from "./changeImgUrl";

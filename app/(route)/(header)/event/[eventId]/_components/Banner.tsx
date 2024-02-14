@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Api } from "app/api/api";
+import { Api } from "app/_api/api";
 import Image from "next/image";
 import Link from "next/link";
 import { ButtonHTMLAttributes, ReactNode, useState } from "react";
