@@ -42,6 +42,7 @@ const SearchInput = ({ setKeyword, initialKeyword, placeholder = "검색어를 �
         placeholder={placeholder}
         {...register("search")}
         onKeyDown={handleSearchEnter}
+        autoComplete="off"
       />
       <button className="absolute right-12 top-12" onClick={() => setKeyword(getValues("search") ?? "")}>
         <SearchIcon width="20" height="20" stroke="#494F5A" />

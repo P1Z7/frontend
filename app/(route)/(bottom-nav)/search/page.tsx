@@ -2,7 +2,7 @@
 
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from "next/navigation";
-import { ButtonHTMLAttributes, ReactNode, useEffect, useRef, useState } from "react";
+import { ButtonHTMLAttributes, ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import BigRegionBottomSheet from "@/components/bottom-sheet/BigRegionBottomSheet";
 import CalenderBottomSheet from "@/components/bottom-sheet/CalendarBottomSheet";
 import GiftBottomSheet from "@/components/bottom-sheet/GiftsBottomSheet";
@@ -153,38 +153,58 @@ const SearchPage = () => {
     refetch();
   }, [searchParams]);
 
+  const [position, setPosition] = useState(0);
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [position]);
+
+  const handleScroll = useCallback(() => {
+    const moving = window.scrollY;
+    setVisible(position < 100 || position > moving);
+    setPosition(moving);
+  }, [position]);
+
   return (
     <>
-      <main className="w-full px-20 pb-84 pt-40">
-        <SearchInput setKeyword={setKeyword} initialKeyword={initialKeyword} placeholder="최애의 행사를 찾아보세요!" />
-        <section className="flex flex-col gap-20 pt-8 text-14 text-gray-500">
-          <div className="flex gap-4">
-            <FilterButton onClick={() => openBottomSheet(BOTTOM_SHEET.bigRegion)} selected={Boolean(filter.bigRegion)}>
-              {filter.bigRegion || "시/도"}
-            </FilterButton>
-            {filter.bigRegion && (
-              <FilterButton onClick={() => openBottomSheet(BOTTOM_SHEET.smallRegion)} selected={Boolean(filter.smallRegion)}>
-                {filter.smallRegion}
-              </FilterButton>
-            )}
-            <FilterButton onClick={() => openBottomSheet(BOTTOM_SHEET.calender)} selected={Boolean(filter.startDate)}>
-              {formattedDate ?? "기간"}
-            </FilterButton>
-            <FilterButton onClick={() => openBottomSheet(BOTTOM_SHEET.gift)} selected={Boolean(filter.gifts.length)}>
-              {formattedGift ?? "특전"}
-            </FilterButton>
+      <main className="relative w-full px-20 pb-84 pt-160">
+        <section className="fixed left-0 top-0 z-nav flex w-full flex-col bg-white-black text-14 text-gray-500 shadow-top">
+          <div className="bg-white-black px-20 pb-8 pt-40">
+            <SearchInput setKeyword={setKeyword} initialKeyword={initialKeyword} placeholder="최애의 행사를 찾아보세요!" />
           </div>
-          <div className="flex items-center gap-8">
-            <SortIcon />
-            <SortButton onClick={() => setSort("최신순")} selected={sort === "최신순"}>
-              최신순
-            </SortButton>
-            <SortButton onClick={() => setSort("인기순")} selected={sort === "인기순"}>
-              인기순
-            </SortButton>
-            <button onClick={resetFilter} type="button" className="ml-auto">
-              <ResetIcon />
-            </button>
+          <div className={`px-20 pb-8 ${visible ? "animate-fadeIn block" : "hidden"}`}>
+            <div className="flex gap-4 pb-12">
+              <FilterButton onClick={() => openBottomSheet(BOTTOM_SHEET.bigRegion)} selected={Boolean(filter.bigRegion)}>
+                {filter.bigRegion || "시/도"}
+              </FilterButton>
+              {filter.bigRegion && (
+                <FilterButton onClick={() => openBottomSheet(BOTTOM_SHEET.smallRegion)} selected={Boolean(filter.smallRegion)}>
+                  {filter.smallRegion}
+                </FilterButton>
+              )}
+              <FilterButton onClick={() => openBottomSheet(BOTTOM_SHEET.calender)} selected={Boolean(filter.startDate)}>
+                {formattedDate ?? "기간"}
+              </FilterButton>
+              <FilterButton onClick={() => openBottomSheet(BOTTOM_SHEET.gift)} selected={Boolean(filter.gifts.length)}>
+                {formattedGift ?? "특전"}
+              </FilterButton>
+            </div>
+            <div className="flex items-center gap-8">
+              <SortIcon />
+              <SortButton onClick={() => setSort("최신순")} selected={sort === "최신순"}>
+                최신순
+              </SortButton>
+              <SortButton onClick={() => setSort("인기순")} selected={sort === "인기순"}>
+                인기순
+              </SortButton>
+              <button onClick={resetFilter} type="button" className="ml-auto">
+                <ResetIcon />
+              </button>
+            </div>
           </div>
         </section>
         <section className="flex flex-col items-center">
