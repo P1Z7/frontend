@@ -40,9 +40,7 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
         signinMethod: "opener",
       });
 
-      console.log(signinRes);
-
-      toast("어서오세요! 로그인로직으로바꿔야됨님", {
+      toast(`어서오세요! ${signinRes?.nickName}님`, {
         className: "text-16 font-600",
       });
       router.push("/");

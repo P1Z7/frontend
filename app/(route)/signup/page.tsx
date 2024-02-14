@@ -17,6 +17,7 @@ const DEFAULT_VALUES = {
   nickName: "",
   myArtists: [],
   myArtistsInfo: [],
+  code: "",
 };
 
 const SignUp = () => {

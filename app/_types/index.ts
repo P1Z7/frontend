@@ -45,6 +45,7 @@ export interface SignUpFormType {
   nickName: string;
   myArtists: string[] | [];
   myArtistsInfo: { name: string; id: string }[];
+  code: number;
 }
 
 export interface UserType {

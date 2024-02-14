@@ -77,6 +77,11 @@ type Req_Post_Email = {
   email: string;
 };
 
+type Req_Post_Verification = {
+  email: string;
+  verificationNumber: number;
+};
+
 export type Req_Post_Type = {
   event: Req_Post_Event;
   eventLike: Req_Post_Event_Like;
@@ -88,4 +93,5 @@ export type Req_Post_Type = {
   review: Req_Post_Review;
   reviewLike: Req_Post_Review_Like;
   email: Req_Post_Email;
+  verification: Req_Post_Verification;
 };
