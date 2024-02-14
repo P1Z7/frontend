@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import Button from "@/components/button";
 import InputText from "@/components/input/InputText";
 import useEnterNext from "@/hooks/useEnterNext";
+import { setCookies, setSession } from "@/store/session/cookies";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 import { OAUTH } from "@/constants/oauth";
 import ArrowLeft from "@/public/icon/arrow-left_lg.svg";
@@ -51,12 +52,16 @@ const SignInPage = () => {
           throw new Error(res.error);
         }
         setSubmitState((prev) => ({ ...prev, isError: false }));
+
         toast.custom(<FeelMyRhythm />, {
           className: "z-popup",
         });
-        toast("어서오세요! 김하늘님", {
+        toast(`어서오세요! ${res.nickName}님`, {
           className: "text-16 font-600",
         });
+
+        setSession({ isAuth: true, user: res });
+
         router.push("/");
       } catch (e: any) {
         setSubmitState((prev) => ({ ...prev, isError: true }));
@@ -80,7 +85,6 @@ const SignInPage = () => {
       }
     }, 1000);
   };
-  const handleOAuth = (provider: string) => () => {};
 
   return (
     <>
