@@ -2,7 +2,7 @@
 
 import { keepPreviousData, useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from "next/navigation";
-import { ButtonHTMLAttributes, ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import { ButtonHTMLAttributes, ReactNode, Suspense, useCallback, useEffect, useRef, useState } from "react";
 import BigRegionBottomSheet from "@/components/bottom-sheet/BigRegionBottomSheet";
 import CalenderBottomSheet from "@/components/bottom-sheet/CalendarBottomSheet";
 import GiftBottomSheet from "@/components/bottom-sheet/GiftsBottomSheet";
@@ -171,7 +171,7 @@ const SearchPage = () => {
   }, [position]);
 
   return (
-    <>
+    <Suspense>
       <main className="relative w-full px-20 pb-84 pt-160">
         <section className="fixed left-0 top-0 z-nav flex w-full flex-col bg-white-black text-14 text-gray-500 shadow-top">
           <div className="bg-white-black px-20 pb-8 pt-40">
@@ -226,7 +226,7 @@ const SearchPage = () => {
         <CalenderBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} setStartDateFilter={setStartDateFilter} setEndDateFilter={setEndDateFilter} />
       )}
       {bottomSheet === BOTTOM_SHEET.gift && <GiftBottomSheet refs={refs} closeBottomSheet={closeBottomSheet} setGiftsFilter={setGiftsFilter} selected={filter.gifts} />}
-    </>
+    </Suspense>
   );
 };
 
