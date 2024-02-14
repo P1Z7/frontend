@@ -9,6 +9,7 @@ import SmallRegionBottomSheet from "@/components/bottom-sheet/SmallRegionBottomS
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
 import SearchInput from "@/components/input/SearchInput";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
+import { formatDate } from "@/utils/formatString";
 import { createQueryString } from "@/utils/handleQueryString";
 import { GiftType } from "@/types/index";
 import { MOCK_EVENTS } from "@/constants/mock";
@@ -68,8 +69,29 @@ const SearchPage = () => {
     setFilter((prev) => ({ ...prev, endDate }));
   };
   const setGiftsFilter = (gift: GiftType) => {
-    setFilter((prev) => ({ ...prev, gifts: [...prev.gifts, gift] }));
+    if (filter.gifts.includes(gift)) {
+      setFilter((prev) => {
+        const newGift = prev.gifts.filter((currGift) => currGift !== gift);
+        console.log(newGift);
+        return { ...prev, gifts: newGift };
+      });
+    } else {
+      setFilter((prev) => ({ ...prev, gifts: [...prev.gifts, gift] }));
+    }
   };
+
+  const formatGift = (gifts: string[]) => {
+    if (gifts.length === 0) {
+      return;
+    }
+    if (gifts.length === 1) {
+      return gifts[0];
+    }
+    return gifts[0] + "...";
+  };
+
+  const formattedDate = formatDate(filter.startDate, filter.endDate);
+  const formattedGift = formatGift(filter.gifts);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -94,10 +116,10 @@ const SearchPage = () => {
               </FilterButton>
             )}
             <FilterButton onClick={() => openBottomSheet(BOTTOM_SHEET.calender)} selected={Boolean(filter.startDate)}>
-              기간
+              {formattedDate ?? "기간"}
             </FilterButton>
             <FilterButton onClick={() => openBottomSheet(BOTTOM_SHEET.gift)} selected={Boolean(filter.gifts.length)}>
-              특전
+              {formattedGift ?? "특전"}
             </FilterButton>
           </div>
           <div className="flex gap-8">
