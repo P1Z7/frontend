@@ -55,10 +55,11 @@ export const MYPAGE_CALENDAR_STYLE = `
   font-size: 0.75em;
   font-weight: 500;
   padding-bottom: 4px;
-  abbr { 
-    color: #C1C5CC;
-    text-decoration: none;
-  }
+}
+
+.react-calendar__month-view__weekdays abbr {
+  color: #C1C5CC;
+  text-decoration: none;
 }
 
 .react-calendar__tile {
@@ -99,12 +100,10 @@ export const MYPAGE_CALENDAR_STYLE = `
   color: #D2D5DA; 
 }
 
-.react-calendar__tile {
-  abbr {
-    width: 36px;
-    height: 12px;
-    border-radius: 4px;
-  }
+.react-calendar__tile abbr {
+  width: 36px;
+  height: 12px;
+  border-radius: 4px;
 }
 
 .react-calendar__tile:enabled:hover,
@@ -113,19 +112,21 @@ export const MYPAGE_CALENDAR_STYLE = `
   border-radius: 4px;
 }
 
+.react-calendar__tile:enabled:focus abbr,
+.react-calendar__tile--active abbr {
+  background-color: rgba(255, 80, 170, 0.5);
+}
+
 .react-calendar__tile:enabled:focus,
 .react-calendar__tile--active {
-  abbr {
-    background-color: rgba(255, 80, 170, 0.5);
-  }
   background: none;
   color: black;
 }
 
+.react-calendar__tile--now abbr {
+  background-color: #F1F2F3;
+}
 .react-calendar__tile--now {
-  abbr {
-    background-color: #F1F2F3;
-  }
   background: none;
   color: black;
 }
