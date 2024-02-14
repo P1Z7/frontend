@@ -1,5 +1,6 @@
 "use client";
 
+import LoadingDot from "@/(route)/(bottom-nav)/signin/_components/LoadingDot";
 import { useParams, useRouter } from "next/navigation";
 import { ButtonHTMLAttributes, ChangeEvent, InputHTMLAttributes, ReactNode, useCallback, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -22,9 +23,6 @@ interface FormValues {
 }
 
 const ReviewPostPage = () => {
-  const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
-  const { eventId } = useParams();
-  const router = useRouter();
   const [evaluation, setEvaluation] = useState<boolean | null>(null);
   const [isPublic, setIsPublic] = useState<boolean | null>(null);
   const { isCheck, setIsCheck } = useStore((state) => ({ isCheck: state.isWarningCheck, setIsCheck: state.setIsWarningCheck }));
@@ -63,14 +61,15 @@ const ReviewPostPage = () => {
     setImageList((prev) => [...prev, ...nextImageList]);
   }, [images]);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    setIsCheck(false);
-  }, []);
-
   const isDisabled = !(isDirty && isValid && isEvaluated && isCheck && isPublic !== null);
 
+  const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
+  const { eventId } = useParams();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
   const postReview: SubmitHandler<FormValues> = async (form) => {
+    setIsLoading(true);
     const imagesUrl = await makeImgUrlList(imageList, instance);
     try {
       await instance.post("/reviews", {
@@ -85,8 +84,15 @@ const ReviewPostPage = () => {
       router.push(`/event/${eventId}`);
     } catch (e) {
       console.error(e);
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setIsCheck(false);
+  }, []);
 
   return (
     <form noValidate onSubmit={handleSubmit(postReview)} className="relative w-full">
@@ -135,9 +141,9 @@ const ReviewPostPage = () => {
         </InputArea>
         <WarningCheck />
       </div>
-      <div className="sticky bottom-0 h-92 w-full border-t border-gray-50 bg-white-black px-20 pb-24 pt-12">
-        <Button type="lined" size="xl" isDisabled={isDisabled}>
-          후기 작성하기
+      <div className={`sticky bottom-0 h-92 w-full border-t border-gray-50 bg-white-black pb-24 pt-12 transition-all ${isLoading ? "px-72" : "px-20"}`}>
+        <Button type="lined" size="xl" isDisabled={isDisabled || isLoading}>
+          {isLoading ? <LoadingDot /> : "후기 작성하기"}
         </Button>
       </div>
     </form>
