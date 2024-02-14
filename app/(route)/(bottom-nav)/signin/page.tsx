@@ -13,6 +13,7 @@ import InputText from "@/components/input/InputText";
 import useEnterNext from "@/hooks/useEnterNext";
 import { setCookies, setSession } from "@/store/session/cookies";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
+import { SHOT_SIGNIN } from "@/constants/confetti";
 import { OAUTH } from "@/constants/oauth";
 import ArrowLeft from "@/public/icon/arrow-left_lg.svg";
 import Logo from "@/public/icon/logo.svg";
@@ -53,7 +54,7 @@ const SignInPage = () => {
         }
         setSubmitState((prev) => ({ ...prev, isError: false }));
 
-        toast.custom(<FeelMyRhythm />, {
+        toast.custom(<FeelMyRhythm shotList={SHOT_SIGNIN} location={{ y: 0.5 }} />, {
           className: "z-popup",
         });
         toast(`어서오세요! ${res.nickName}님`, {
@@ -141,7 +142,7 @@ const SignInPage = () => {
             <p>카카오 계정으로 로그인</p>
           </Link>
           <Link href={OAUTH.naver()} className="flex-center w-full gap-8 rounded-sm bg-[#03CF5D] py-16 text-16 font-500 text-white-white">
-            <NaverLogo />
+            <NaverLogo fill="white" />
             <p>네이버 계정으로 로그인</p>
           </Link>
         </div>

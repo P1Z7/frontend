@@ -28,7 +28,7 @@ type Req_Post_Signup = {
 };
 
 type Req_Post_Login = {
-  accessToken?: string;
+  code?: string;
   email: string;
   signinMethod: string;
   password?: string;
