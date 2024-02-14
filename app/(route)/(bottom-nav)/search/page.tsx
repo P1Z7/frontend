@@ -1,6 +1,6 @@
 "use client";
 
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ButtonHTMLAttributes, ReactNode, useEffect, useRef, useState } from "react";
 import BigRegionBottomSheet from "@/components/bottom-sheet/BigRegionBottomSheet";
@@ -16,7 +16,7 @@ import { formatDate } from "@/utils/formatString";
 import { createQueryString } from "@/utils/handleQueryString";
 import { Res_Get_Type } from "@/types/getResType";
 import { GiftType } from "@/types/index";
-import { MOCK_EVENTS } from "@/constants/mock";
+import { TAG } from "@/constants/data";
 import { BIG_REGIONS } from "@/constants/regions";
 import DownArrowIcon from "@/public/icon/arrow-down_sm.svg";
 import SortIcon from "@/public/icon/sort.svg";
@@ -78,7 +78,6 @@ const SearchPage = () => {
     if (filter.gifts.includes(gift)) {
       setFilter((prev) => {
         const newGift = prev.gifts.filter((currGift) => currGift !== gift);
-        console.log(newGift);
         return { ...prev, gifts: newGift };
       });
     } else {
@@ -108,11 +107,20 @@ const SearchPage = () => {
   }, [keyword, sort, filter]);
 
   const instance = new Api();
+  const queryClient = useQueryClient();
 
   const getEvents = async ({ pageParam = 1 }) => {
-    const data: Res_Get_Type["eventSearch"] = await instance.get("/event", { size: SIZE, page: pageParam, sort, keyword });
-
-    console.log(pageParam, data);
+    const data: Res_Get_Type["eventSearch"] = await instance.get("/event", {
+      size: SIZE,
+      page: pageParam,
+      sort,
+      keyword,
+      sido: filter.bigRegion,
+      gungu: filter.smallRegion === "전지역" ? "" : filter.smallRegion,
+      ...(filter.startDate && { startDate: filter.startDate }),
+      ...(filter.endDate && { endDate: filter.endDate }),
+      tags: filter.gifts.map((gift) => TAG[gift]).join(","),
+    });
     return data;
   };
 
@@ -120,6 +128,7 @@ const SearchPage = () => {
     data: events,
     fetchNextPage,
     isFetching,
+    refetch,
   } = useInfiniteQuery({
     initialPageParam: 1,
     queryKey: ["search"],
@@ -131,6 +140,11 @@ const SearchPage = () => {
     handleScroll: fetchNextPage,
     deps: [events],
   });
+
+  useEffect(() => {
+    queryClient.removeQueries({ queryKey: ["search"] });
+    refetch();
+  }, [searchParams]);
 
   return (
     <>
