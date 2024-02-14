@@ -19,6 +19,7 @@ import { GiftType } from "@/types/index";
 import { TAG } from "@/constants/data";
 import { BIG_REGIONS } from "@/constants/regions";
 import DownArrowIcon from "@/public/icon/arrow-down_sm.svg";
+import ResetIcon from "@/public/icon/reset.svg";
 import SortIcon from "@/public/icon/sort.svg";
 
 interface FilterType {
@@ -83,6 +84,12 @@ const SearchPage = () => {
     } else {
       setFilter((prev) => ({ ...prev, gifts: [...prev.gifts, gift] }));
     }
+  };
+
+  const resetFilter = () => {
+    setKeyword("");
+    setSort("최신순");
+    setFilter({ bigRegion: "", smallRegion: "", startDate: null, endDate: null, gifts: [] });
   };
 
   const formatGift = (gifts: string[]) => {
@@ -167,7 +174,7 @@ const SearchPage = () => {
               {formattedGift ?? "특전"}
             </FilterButton>
           </div>
-          <div className="flex gap-8">
+          <div className="flex items-center gap-8">
             <SortIcon />
             <SortButton onClick={() => setSort("최신순")} selected={sort === "최신순"}>
               최신순
@@ -175,6 +182,9 @@ const SearchPage = () => {
             <SortButton onClick={() => setSort("인기순")} selected={sort === "인기순"}>
               인기순
             </SortButton>
+            <button onClick={resetFilter} type="button" className="ml-auto">
+              <ResetIcon />
+            </button>
           </div>
         </section>
         <section className="flex flex-col items-center">
