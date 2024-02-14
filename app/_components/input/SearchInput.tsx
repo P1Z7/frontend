@@ -6,16 +6,21 @@ import SearchIcon from "@/public/icon/search.svg";
 
 interface Props {
   setKeyword: Dispatch<SetStateAction<string>>;
+  initialKeyword?: string;
   placeholder?: string;
 }
 
-const SearchInput = ({ setKeyword, placeholder = "검색어를 입력하세요." }: Props) => {
-  const { register, getValues, setValue, watch } = useForm();
+const SearchInput = ({ setKeyword, initialKeyword, placeholder = "검색어를 입력하세요." }: Props) => {
+  const { register, getValues, setValue, watch } = useForm({
+    defaultValues: {
+      search: initialKeyword,
+    },
+  });
   const { search } = watch();
 
   const handleSearchEnter = (event: KeyboardEvent) => {
     if (event.keyCode === 13) {
-      setKeyword(getValues("search"));
+      setKeyword(getValues("search") ?? "");
     }
   };
 
@@ -38,7 +43,7 @@ const SearchInput = ({ setKeyword, placeholder = "검색어를 입력하세요."
         {...register("search")}
         onKeyDown={handleSearchEnter}
       />
-      <button className="absolute right-12 top-12" onClick={() => setKeyword(getValues("search"))}>
+      <button className="absolute right-12 top-12" onClick={() => setKeyword(getValues("search") ?? "")}>
         <SearchIcon width="20" height="20" stroke="#494F5A" />
       </button>
       {search && (

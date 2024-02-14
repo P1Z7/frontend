@@ -1,5 +1,6 @@
 "use client";
 
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ButtonHTMLAttributes, ReactNode, useEffect, useRef, useState } from "react";
 import BigRegionBottomSheet from "@/components/bottom-sheet/BigRegionBottomSheet";
@@ -8,9 +9,12 @@ import GiftBottomSheet from "@/components/bottom-sheet/GiftsBottomSheet";
 import SmallRegionBottomSheet from "@/components/bottom-sheet/SmallRegionBottomSheet";
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
 import SearchInput from "@/components/input/SearchInput";
+import { Api } from "@/api/api";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
+import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { formatDate } from "@/utils/formatString";
 import { createQueryString } from "@/utils/handleQueryString";
+import { Res_Get_Type } from "@/types/getResType";
 import { GiftType } from "@/types/index";
 import { MOCK_EVENTS } from "@/constants/mock";
 import { BIG_REGIONS } from "@/constants/regions";
@@ -33,6 +37,8 @@ const BOTTOM_SHEET = {
 };
 
 const SORT = ["최신순", "인기순"] as const;
+
+const SIZE = 20;
 
 const SearchPage = () => {
   const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
@@ -101,10 +107,35 @@ const SearchPage = () => {
     router.push(pathname + "?" + newQuery);
   }, [keyword, sort, filter]);
 
+  const instance = new Api();
+
+  const getEvents = async ({ pageParam = 1 }) => {
+    const data: Res_Get_Type["eventSearch"] = await instance.get("/event", { size: SIZE, page: pageParam, sort, keyword });
+
+    console.log(pageParam, data);
+    return data;
+  };
+
+  const {
+    data: events,
+    fetchNextPage,
+    isFetching,
+  } = useInfiniteQuery({
+    initialPageParam: 1,
+    queryKey: ["search"],
+    queryFn: getEvents,
+    getNextPageParam: (lastPage) => (lastPage.page * SIZE < lastPage.totalCount ? lastPage.page + 1 : null),
+  });
+
+  const containerRef = useInfiniteScroll({
+    handleScroll: fetchNextPage,
+    deps: [events],
+  });
+
   return (
     <>
-      <main className="w-full px-20 pb-100 pt-40">
-        <SearchInput setKeyword={setKeyword} placeholder="최애의 행사를 찾아보세요!" />
+      <main className="w-full px-20 pb-84 pt-40">
+        <SearchInput setKeyword={setKeyword} initialKeyword={initialKeyword} placeholder="최애의 행사를 찾아보세요!" />
         <section className="flex flex-col gap-20 pt-8 text-14 text-gray-500">
           <div className="flex gap-4">
             <FilterButton onClick={() => openBottomSheet(BOTTOM_SHEET.bigRegion)} selected={Boolean(filter.bigRegion)}>
@@ -133,9 +164,8 @@ const SearchPage = () => {
           </div>
         </section>
         <section className="flex flex-col items-center">
-          {MOCK_EVENTS.map((event, index) => (
-            <HorizontalEventCard key={index} data={event} />
-          ))}
+          {events?.pages.map((page) => page.eventList.map((event) => <HorizontalEventCard key={event.id} data={event} />))}
+          <div ref={containerRef} className="h-16 w-full" />
         </section>
       </main>
       {bottomSheet === BOTTOM_SHEET.bigRegion && <BigRegionBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} setBigRegionFilter={setBigRegionFilter} />}
@@ -166,7 +196,7 @@ const getInitialQuery = (searchParams: ReadonlyURLSearchParams) => {
   const initialSmallRegion = searchParams.get("smallRegion") ?? "";
   const initialStartDate = searchParams.get("startDate");
   const initialEndDate = searchParams.get("endDate");
-  const initialGifts = searchParams.get("gifts")?.split("|") as GiftType[];
+  const initialGifts = (searchParams.get("gifts")?.split("|") as GiftType[]) ?? [];
 
   return { initialKeyword, initialSort, initialBigRegion, initialSmallRegion, initialStartDate, initialEndDate, initialGifts };
 };
