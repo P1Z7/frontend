@@ -1,7 +1,7 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { ButtonHTMLAttributes, ReactNode, useEffect, useState } from "react";
+import { ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from "next/navigation";
+import { ButtonHTMLAttributes, ReactNode, useEffect, useRef, useState } from "react";
 import BigRegionBottomSheet from "@/components/bottom-sheet/BigRegionBottomSheet";
 import CalenderBottomSheet from "@/components/bottom-sheet/CalendarBottomSheet";
 import GiftBottomSheet from "@/components/bottom-sheet/GiftsBottomSheet";
@@ -31,17 +31,22 @@ const BOTTOM_SHEET = {
   gift: "gift_bottom-sheet",
 };
 
+const SORT = ["최신순", "인기순"] as const;
+
 const SearchPage = () => {
   const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
 
-  const [keyword, setKeyword] = useState("");
-  const [sort, setSort] = useState<"최신순" | "인기순">("최신순");
+  const searchParams = useSearchParams();
+  const { initialKeyword, initialSort, initialBigRegion, initialSmallRegion, initialStartDate, initialEndDate, initialGifts } = getInitialQuery(searchParams);
+
+  const [keyword, setKeyword] = useState(initialKeyword);
+  const [sort, setSort] = useState<(typeof SORT)[number]>(initialSort);
   const [filter, setFilter] = useState<FilterType>({
-    bigRegion: "",
-    smallRegion: "",
-    startDate: null,
-    endDate: null,
-    gifts: [],
+    bigRegion: initialBigRegion,
+    smallRegion: initialSmallRegion,
+    startDate: initialStartDate,
+    endDate: initialEndDate,
+    gifts: initialGifts,
   });
 
   const setBigRegionFilter = (bigRegion: (typeof BIG_REGIONS)[number] | "") => {
@@ -68,7 +73,7 @@ const SearchPage = () => {
 
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+
   useEffect(() => {
     const newQuery = createQueryString({ keyword, sort, ...filter }, searchParams);
     router.push(pathname + "?" + newQuery);
@@ -129,6 +134,20 @@ const SearchPage = () => {
 };
 
 export default SearchPage;
+
+const getInitialQuery = (searchParams: ReadonlyURLSearchParams) => {
+  const initialKeyword = searchParams.get("keyword") ?? "";
+  const initialSort = (SORT as ReadonlyArray<string>).includes(searchParams.get("sort") ?? "") ? (searchParams.get("sort") as (typeof SORT)[number]) : SORT[0];
+  const initialBigRegion = (BIG_REGIONS as ReadonlyArray<string>).includes(searchParams.get("bigRegion") ?? "")
+    ? (searchParams.get("bigRegion") as (typeof BIG_REGIONS)[number] | "")
+    : "";
+  const initialSmallRegion = searchParams.get("smallRegion") ?? "";
+  const initialStartDate = searchParams.get("startDate");
+  const initialEndDate = searchParams.get("endDate");
+  const initialGifts = searchParams.get("gifts")?.split("|") as GiftType[];
+
+  return { initialKeyword, initialSort, initialBigRegion, initialSmallRegion, initialStartDate, initialEndDate, initialGifts };
+};
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
