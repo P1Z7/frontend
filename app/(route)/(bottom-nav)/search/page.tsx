@@ -2,7 +2,7 @@
 
 import { keepPreviousData, useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from "next/navigation";
-import { ButtonHTMLAttributes, ReactNode, Suspense, useCallback, useEffect, useRef, useState } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
 import BigRegionBottomSheet from "@/components/bottom-sheet/BigRegionBottomSheet";
 import CalenderBottomSheet from "@/components/bottom-sheet/CalendarBottomSheet";
 import GiftBottomSheet from "@/components/bottom-sheet/GiftsBottomSheet";
@@ -18,9 +18,10 @@ import { Res_Get_Type } from "@/types/getResType";
 import { GiftType } from "@/types/index";
 import { TAG } from "@/constants/data";
 import { BIG_REGIONS } from "@/constants/regions";
-import DownArrowIcon from "@/public/icon/arrow-down_sm.svg";
 import ResetIcon from "@/public/icon/reset.svg";
 import SortIcon from "@/public/icon/sort.svg";
+import FilterButton from "./_components/FilterButton";
+import SortButton from "./_components/SortButton";
 
 interface FilterType {
   bigRegion: (typeof BIG_REGIONS)[number] | "";
@@ -171,7 +172,7 @@ const SearchPage = () => {
   }, [position]);
 
   return (
-    <Suspense>
+    <>
       <main className="relative w-full px-20 pb-84 pt-160">
         <section className="fixed left-0 top-0 z-nav flex w-full flex-col bg-white-black text-14 text-gray-500 shadow-top">
           <div className="bg-white-black px-20 pb-8 pt-40">
@@ -226,11 +227,19 @@ const SearchPage = () => {
         <CalenderBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} setStartDateFilter={setStartDateFilter} setEndDateFilter={setEndDateFilter} />
       )}
       {bottomSheet === BOTTOM_SHEET.gift && <GiftBottomSheet refs={refs} closeBottomSheet={closeBottomSheet} setGiftsFilter={setGiftsFilter} selected={filter.gifts} />}
+    </>
+  );
+};
+
+const SuspenseSearchPage = () => {
+  return (
+    <Suspense>
+      <SearchPage />
     </Suspense>
   );
 };
 
-export default SearchPage;
+export default SuspenseSearchPage;
 
 const getInitialQuery = (searchParams: ReadonlyURLSearchParams) => {
   const initialKeyword = searchParams.get("keyword") ?? "";
@@ -244,26 +253,4 @@ const getInitialQuery = (searchParams: ReadonlyURLSearchParams) => {
   const initialGifts = (searchParams.get("gifts")?.split("|") as GiftType[]) ?? [];
 
   return { initialKeyword, initialSort, initialBigRegion, initialSmallRegion, initialStartDate, initialEndDate, initialGifts };
-};
-
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children: ReactNode;
-  selected: boolean;
-}
-
-const FilterButton = ({ children, onClick, selected }: ButtonProps) => {
-  return (
-    <button onClick={onClick} className={`flex-center h-28 shrink-0 gap-4 px-8 text-14 font-500 ${selected ? "text-gray-700" : "text-gray-400"}`}>
-      {children}
-      <DownArrowIcon stroke={selected ? "#494F5A" : "#A0A5B1"} width="20" height="20" viewBox="0 0 24 24" />
-    </button>
-  );
-};
-
-const SortButton = ({ children, onClick, selected }: ButtonProps) => {
-  return (
-    <button onClick={onClick} className={`h-20 shrink-0 text-14 font-500 ${selected ? "text-gray-900" : "text-gray-400"}`}>
-      {children}
-    </button>
-  );
 };
