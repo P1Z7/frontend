@@ -75,6 +75,15 @@ type Req_Post_Review_Like = {
   isLike: boolean;
 };
 
+type Req_Post_Email = {
+  email: string;
+};
+
+type Req_Post_Verification = {
+  email: string;
+  verificationNumber: number | string;
+};
+
 type Req_Post_Edit_Application = {
   eventId: string;
   updateCategory: CategoryType[];
@@ -108,5 +117,7 @@ export type Req_Post_Type = {
   group: Req_Post_Group;
   review: Req_Post_Review;
   reviewLike: Req_Post_Review_Like;
+  email: Req_Post_Email;
+  verification: Req_Post_Verification;
   edit: Req_Post_Edit_Application;
 };

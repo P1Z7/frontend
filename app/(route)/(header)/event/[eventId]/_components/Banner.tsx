@@ -1,11 +1,11 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Api } from "app/_api/api";
 import Image from "next/image";
 import Link from "next/link";
 import { ButtonHTMLAttributes, ReactNode, useState } from "react";
 import Chip from "@/components/chip/Chip";
-import { Api } from "@/api/api";
 import { formatDate } from "@/utils/formatString";
 import { EventCardType, EventType, TargetArtistType } from "@/types/index";
 import CalendarIcon from "@/public/icon/calendar.svg";

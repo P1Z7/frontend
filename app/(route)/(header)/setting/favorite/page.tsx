@@ -26,7 +26,7 @@ const FavoritePage = () => {
             찾으시는 아티스트가 없으신가요?
           </button>
         </section>
-        <MyArtistList data={MOCK} />
+        {/* <MyArtistList data={MOCK} /> */}
       </div>
       {modal === "noArtist" && (
         <InputModal
