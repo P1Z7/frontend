@@ -8,4 +8,5 @@ export const authRedirectServer = (href: string) => {
   if (!session) {
     redirect(href);
   }
+  return session;
 };

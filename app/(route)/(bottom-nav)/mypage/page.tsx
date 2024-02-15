@@ -1,16 +1,16 @@
-"use client";
-
 import { MOCK, MOCK_REVIEWS } from "app/_constants/mock";
 import Tabs from "@/components/Tabs";
+import { authRedirectServer } from "@/utils/authRedirect";
 import UserProfile from "./_components/UserProfile";
 import MyArtistTab from "./_components/tab/MyArtistTab";
 import MyEventTab from "./_components/tab/MyEventTab";
 import MyReviewTab from "./_components/tab/MyReviewTab";
 
 const MyPage = () => {
+  const session = authRedirectServer("/signin");
   return (
     <div className="flex w-full flex-col gap-24 pb-72">
-      <UserProfile data={MOCK_USER_INFO} />
+      <UserProfile session={session} />
       <Tabs names={["행사", "아티스트", "후기"]}>
         <MyEventTab scheduleData={mockScheduleData} />
         <MyArtistTab data={MOCK} />

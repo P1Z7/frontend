@@ -38,7 +38,7 @@ const SignInPage = () => {
   const [submitState, setSubmitState] = useState({ isLoading: false, isError: false });
 
   const handleSignin: SubmitHandler<DefaultValues> = ({ email, password }) => {
-    setSubmitState((prev) => ({ ...prev, isLoading: true }));
+    setSubmitState({ isLoading: true, isError: false });
     setTimeout(async () => {
       const instance = new Api();
       const signinData = {
@@ -115,7 +115,7 @@ const SignInPage = () => {
             rules={{ required: ERROR_MESSAGES.password.passwordField, pattern: { value: REG_EXP.CHECK_PASSWORD, message: ERROR_MESSAGES.password.passwordPattern } }}
             onKeyDown={handleEnterNext}
           />
-          <div className={`mt-16 overflow-hidden transition-all ${submitState.isLoading ? "w-4/5" : "w-full"}`}>
+          <div className={`mt-16 overflow-hidden transition-all ${submitState.isLoading ? "w-4/5" : "w-full"} ${submitState.isError ? "animate-[brrr_0.2s_0.2s]" : ""}`}>
             <Button isSubmit isDisabled={!formState.isValid || !!formState.errors.email || !!formState.errors.password || submitState.isLoading}>
               <div className="relative h-full w-full">
                 <span className={`absolute w-max transition-all ${formState.isSubmitted ? "top-48" : "absolute-center"}`}>로그인</span>
