@@ -1,3 +1,5 @@
+import { LabelType } from "../_types";
+
 export const TAG = {
   엽서: "427ccba2-beb2-43",
   스티커: "484f52cb-016f-48",
@@ -53,3 +55,5 @@ export const LABEL_BY_CATEGORY = {
   eventUrl: "링크",
   description: "상세 내용",
 };
+
+export const exceptionList: LabelType[] = ["아티스트", "주소", "기간", "특전", "이미지", "주최자"];

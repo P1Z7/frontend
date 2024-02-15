@@ -216,7 +216,7 @@ export type EditContentType = {
   eventUrl?: string;
   organizerSns?: string;
   snsType?: SnsType;
-  tags?: GiftType[];
+  tags?: GiftType[] | string[];
   groupName?: string;
   artistNames?: string;
 };

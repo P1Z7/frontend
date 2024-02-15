@@ -4,13 +4,11 @@ import { formatDate } from "date-fns";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Api } from "@/api/api";
-import { findGroupName, findMemberName, findTagName } from "@/utils/findName";
 import { CategoryType, EditContentType, LabelType, PostValueType } from "@/types/index";
+import { exceptionList } from "@/constants/post";
 import LinkIcon from "@/public/icon/arrow-right_lg.svg";
 import ReactionIcon from "./ReactionIcon";
 import RenderException from "./RenderException";
-
-export const exceptionList: LabelType[] = ["아티스트", "주소", "기간", "특전", "이미지", "주최자"];
 
 interface Props {
   id: string;
