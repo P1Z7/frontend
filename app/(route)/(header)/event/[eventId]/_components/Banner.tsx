@@ -89,7 +89,7 @@ const Banner = ({ data, eventId }: Props) => {
 
   return (
     <section className="w-full tablet:flex tablet:gap-24 tablet:pb-32 tablet:pt-[7rem]">
-      <div className="relative h-[48rem] w-full tablet:w-[40.5rem]">
+      <div className="relative h-[48rem] w-full tablet:h-[55rem] tablet:w-[40.5rem]">
         <Image src={bannerImage?.imageUrl ?? DefaultImage} alt={"행사 포스터 썸네일"} priority fill sizes="100vw" className="object-cover" />
       </div>
       <div className="relative bottom-24 grow rounded-t-lg bg-white-black p-24 pb-0 tablet:bottom-0 tablet:p-0">
