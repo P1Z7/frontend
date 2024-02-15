@@ -5,7 +5,7 @@ export type Session = {
   user: {
     userId: string;
     nickName: string;
-    profileImage: string;
+    profileImage: string | null;
   };
 };
 
@@ -19,6 +19,6 @@ export const getCookies: typeof cookies.get = (name: string) => {
   return cookies.get(name);
 };
 
-export const setSession = (newSession: Session) => setCookies("session", newSession);
+export const setSession = (newSession: Session) => (cookies.remove("session"), setCookies("session", newSession));
 
-export const useSession = (): Session => getCookies("session");
+export const useSession = (): Session | undefined => getCookies("session");
