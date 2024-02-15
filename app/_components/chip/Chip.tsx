@@ -21,8 +21,8 @@ const Chip = <T extends Kind>({ label, kind, theme = "light" }: Props<T>) => {
   };
 
   return (
-    <div className={`flex-center h-[2.2rem] w-max flex-shrink-0 rounded-lg px-8 ${colorStyle()}`}>
-      <span className="text-12 font-600">{label}</span>
+    <div className={`flex-center h-[2.2rem] w-max flex-shrink-0 rounded-lg px-8 tablet:h-24 ${colorStyle()}`}>
+      <span className="text-12 font-600 tablet:text-14">{label}</span>
     </div>
   );
 };

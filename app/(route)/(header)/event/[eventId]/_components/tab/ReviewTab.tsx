@@ -41,8 +41,8 @@ const ReviewTab = ({ eventId }: Props) => {
   });
 
   return (
-    <div className="w-full">
-      <div className="w-full pt-16">{reviews?.pages.map((page) => page.map((review) => <EventReview key={review.id} data={review} />))}</div>
+    <div className="w-full bg-white-black pt-16 tablet:px-40 tablet:py-32">
+      <div className="w-full">{reviews?.pages.map((page) => page.map((review) => <EventReview key={review.id} data={review} />))}</div>
       <div ref={containerRef} className="h-16 w-full" />
       <BottomButton />
     </div>
