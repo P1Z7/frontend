@@ -7,20 +7,12 @@ import { Res_Get_Type } from "@/types/getResType";
 import Carousel from "./Carousel";
 
 const NewestEventsCarousel = () => {
-  return (
-    <Carousel title="새로 올라온 행사">
-      <NewestEvents />
-    </Carousel>
-  );
-};
-
-const NewestEvents = () => {
-  const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
+  const instance = new Api();
 
   const {
     data: newestEvents,
-    isSuccess,
     isLoading,
+    isSuccess,
   } = useQuery<Res_Get_Type["eventList"]>({
     queryKey: ["event", "new"],
     queryFn: async () => {
@@ -31,15 +23,7 @@ const NewestEvents = () => {
   return (
     <>
       {isLoading && <div>로딩중</div>}
-      {isSuccess && (
-        <>
-          {newestEvents?.map((event) => (
-            <div key={event.id}>
-              <VerticalEventCard data={event} />
-            </div>
-          ))}
-        </>
-      )}
+      {isSuccess && <Carousel title="새로 올라온 행사" cards={newestEvents} />}
     </>
   );
 };

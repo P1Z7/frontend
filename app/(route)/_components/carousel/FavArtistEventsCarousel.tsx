@@ -5,13 +5,11 @@ import { Api } from "app/_api/api";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import VerticalEventCard from "@/components/card/VerticalEventCard";
 import { Res_Get_Type } from "@/types/getResType";
 import Hero from "@/public/icon/hero.svg";
 import Carousel from "./Carousel";
 
 const FavArtistEventsCarousel = () => {
-  // 추후 next auth로 변경 예정
   const [status, setStatus] = useState(false);
 
   const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
@@ -43,15 +41,7 @@ const FavArtistEventsCarousel = () => {
     return (
       <>
         {isLoading && <div>로딩중</div>}
-        {isSuccess && (
-          <Carousel>
-            {favArtistEvent.map((event) => (
-              <div key={event.id}>
-                <VerticalEventCard data={event} />
-              </div>
-            ))}
-          </Carousel>
-        )}
+        {isSuccess && <Carousel cards={favArtistEvent} />}
       </>
     );
   };
