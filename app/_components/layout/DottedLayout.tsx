@@ -1,18 +1,18 @@
 import { ReactNode } from "react";
 
-interface Props {
-  children: ReactNode;
-  type: "narrow" | "wide";
-}
-
 const MAX_X = {
   narrow: "max-w-[83.4rem]",
   wide: "max-w-[104rem]",
 };
 
+interface Props {
+  children: ReactNode;
+  type: "narrow" | "wide";
+}
+
 const DottedLayout = ({ children, type }: Props) => {
   return (
-    <div className="w-full bg-[url('/image/dotted-background.png')] bg-contain bg-repeat-y">
+    <div className="w-full bg-contain bg-repeat-y tablet:bg-[url('/image/dotted-background.png')]">
       <div className={`mx-auto ${MAX_X[type]}`}>{children}</div>
       <div />
     </div>
