@@ -132,7 +132,7 @@ interface MainDescriptionProps {
 
 const MainDescription = ({ placeName, artists, eventType }: MainDescriptionProps) => {
   const formatArtist = (artists: { artistName: string; groupName: string }[]) => {
-    return artists.map((artist) => `${artist.artistName}${artist.groupName && ` (${artist.groupName})`}`).join(", ");
+    return artists.map((artist) => `${artist.artistName}${artist.groupName ? ` (${artist.groupName})` : ""}`).join(", ");
   };
   const formattedArtist = formatArtist(artists);
 
