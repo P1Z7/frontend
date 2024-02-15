@@ -3,9 +3,9 @@
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Api } from "@/api/api";
-import { CategoryType, LabelType } from "@/types/index";
+import { CategoryType, EditContentType, LabelType, PostValueType } from "@/types/index";
 import { LABEL_BY_CATEGORY } from "@/constants/post";
 import LinkIcon from "@/public/icon/link.svg";
 import IdIcon from "@/public/icon/user.svg";
@@ -17,6 +17,7 @@ import RenderException from "../_components/RenderException";
 import EditBox from "./_components/EditBox";
 
 const EditDetailApprove = () => {
+  const [originData, setOriginData] = useState<EditContentType>();
   const { editId } = useParams();
   const instance = new Api();
   const { data, isSuccess } = useQuery({
@@ -27,9 +28,17 @@ const EditDetailApprove = () => {
   });
 
   useEffect(() => {
-    console.log(data);
-    // console.log(data.applicationDetail.updateCategory);
-    // console.log(data.originEvent[data.applicationDetail.updateCategory]);
+    if (isSuccess) {
+      const { eventImages, eventTags, targetArtists } = data.originEvent;
+      const artists = targetArtists.map(({ artistId }: { artistId: string }) => artistId);
+      const tags = eventTags.map(({ tagId }: { tagId: string }) => tagId);
+      const imgList = eventImages.map(({ imageUrl }: { imageUrl: string }) => imageUrl);
+      data.originEvent.groupId = targetArtists[0].groupId;
+      data.originEvent.artists = artists;
+      data.originEvent.tags = tags;
+      data.originEvent.eventImages = imgList;
+      setOriginData(data.originEvent);
+    }
   }, [data]);
 
   return (
@@ -39,15 +48,12 @@ const EditDetailApprove = () => {
           <section className="flex flex-col gap-4">
             {LABEL_BY_CATEGORY[data.applicationDetail.updateCategory as CategoryType]}
             <EditBox>
-              {exceptionList.includes(LABEL_BY_CATEGORY[data.applicationDetail.updateCategory as CategoryType] as LabelType) ? (
-                <RenderException
-                  editContent={JSON.parse(data.applicationDetail.updateData)}
-                  instance={instance}
-                  type={LABEL_BY_CATEGORY[data.applicationDetail.updateCategory as CategoryType] as LabelType}
-                />
-              ) : (
-                <>{data.originEvent[data.applicationDetail.updateCategory] || "기존 내용 없음"}</>
-              )}
+              {originData &&
+                (exceptionList.includes(LABEL_BY_CATEGORY[data.applicationDetail.updateCategory as CategoryType] as LabelType) ? (
+                  <RenderException editContent={originData} instance={instance} type={LABEL_BY_CATEGORY[data.applicationDetail.updateCategory as CategoryType] as LabelType} />
+                ) : (
+                  <>{originData[data.applicationDetail.updateCategory as PostValueType]}</>
+                ))}
             </EditBox>
             <EditBox isEdited>
               {exceptionList.includes(LABEL_BY_CATEGORY[data.applicationDetail.updateCategory as CategoryType] as LabelType) ? (
@@ -74,19 +80,19 @@ const EditDetailApprove = () => {
               </div>
             </div>
           </section>
-          {(data.originEvent.eventUrl || data.originEvent.organizerSns) && (
+          {originData && (originData.eventUrl || originData.organizerSns) && (
             <section className="flex flex-col gap-8 rounded-sm bg-gray-50 px-12 py-8 text-14">
               행사 링크를 통해 위 편집내용이 맞는지 확인해주세요!
-              {data.originEvent.eventUrl && (
+              {originData.eventUrl && (
                 <div className="flex gap-12 text-blue">
                   <LinkIcon stroke="#A0A5B1" width="20" height="20" />
-                  <Link href={data.originEvent.eventUrl}>{data.originEvent.eventUrl}</Link>
+                  <Link href={originData.eventUrl}>{originData.eventUrl}</Link>
                 </div>
               )}
-              {data.originEvent.organizerSns && (
+              {originData.organizerSns && (
                 <div className="flex gap-12">
                   <IdIcon stroke="#A0A5B1" width="20" height="20" />
-                  <OrganizerEdit snsType={data.originEvent.snsType} snsId={data.originEvent.organizerSns} />
+                  <OrganizerEdit snsType={originData.snsType || "기타"} snsId={originData.organizerSns} />
                 </div>
               )}
             </section>

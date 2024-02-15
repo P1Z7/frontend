@@ -1,4 +1,6 @@
+import classNames from "classnames";
 import Image from "next/image";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import Chip from "@/components/chip/Chip";
 import { GiftType } from "@/types/index";
 import { SnsIcon } from "@/constants/snsIcon";
@@ -8,13 +10,19 @@ interface ImageEditProps {
 }
 
 export const ImageEdit = ({ imgList }: ImageEditProps) => {
+  const router = useRouter();
+  const { eventId, editId } = useParams();
+  const curPath = usePathname();
+  const isPreview = curPath === `/event/${eventId}/approve/${editId}`;
+
   return (
     <div className="flex gap-8 overflow-x-scroll scrollbar-hide">
-      {imgList.map((url: string) => (
-        <div key={url} className="relative h-120 w-120 flex-shrink-0">
-          <Image alt="수정된 행사 이미지" src={url} fill sizes="12rem, 12rem" className="object-cover" />
-        </div>
-      ))}
+      {imgList.length > 0 &&
+        imgList.map((url: string) => (
+          <div key={url} className={classNames("relative h-120 w-120 flex-shrink-0", { "cursor-pointer": isPreview })} onClick={() => (isPreview ? router.push(url) : null)}>
+            <Image alt="수정된 행사 이미지" src={url} fill sizes="12rem, 12rem" className="object-cover" />
+          </div>
+        ))}
     </div>
   );
 };
@@ -28,7 +36,7 @@ export const ArtistEdit = ({ memberList, groupName }: ArtistEditProps) => {
   return (
     <div className="truncate text-16 text-gray-900">
       {memberList.join(", ")}
-      <span>{`(${groupName})`}</span>
+      {groupName && <span>{`(${groupName})`}</span>}
     </div>
   );
 };
