@@ -4,8 +4,9 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Api } from "app/_api/api";
 import Image from "next/image";
 import Link from "next/link";
-import { ButtonHTMLAttributes, ReactNode, useState } from "react";
+import { ButtonHTMLAttributes, ReactNode, useEffect, useState } from "react";
 import Chip from "@/components/chip/Chip";
+import { useStore } from "@/store/index";
 import { formatDate } from "@/utils/formatString";
 import { EventCardType, EventType, TargetArtistType } from "@/types/index";
 import { SnsIcon } from "@/constants/snsIcon";
@@ -31,6 +32,11 @@ interface Props {
 }
 
 const Banner = ({ data, eventId }: Props) => {
+  const { setEventHeader } = useStore((state) => ({ setEventHeader: state.setEventHeader }));
+  useEffect(() => {
+    setEventHeader(data.placeName);
+  }, []);
+
   const formattedDate = formatDate(data.startDate, data.endDate, true);
   const bannerImage = data.eventImages.find((images) => images.isMain);
   const formattedOrganizerSns = data.organizerSns[0] === "@" ? data.organizerSns : `@${data.organizerSns}`;
@@ -80,7 +86,7 @@ const Banner = ({ data, eventId }: Props) => {
             <MapIcon {...IconStyleProps} />
             {`${data.address} ${data.addressDetail}`}
           </SubDescription>
-          <SubDescription>
+          <SubDescription isVisible={Boolean(data.eventTags.length !== 0)}>
             <GiftIcon {...IconStyleProps} />
             <div className="flex items-center gap-4">
               {data.eventTags.map((tag) => (
@@ -117,7 +123,7 @@ interface MainDescriptionProps {
 
 const MainDescription = ({ placeName, artists, eventType }: MainDescriptionProps) => {
   const formatArtist = (artists: { artistName: string; groupName: string }[]) => {
-    return artists.map((artist) => `${artist.artistName}${artist.groupName && ` (${artist.groupName})`}`).join(", ");
+    return artists.map((artist) => `${artist.artistName}${artist.groupName ? ` (${artist.groupName})` : ""}`).join(", ");
   };
   const formattedArtist = formatArtist(artists);
 

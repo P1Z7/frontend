@@ -111,6 +111,7 @@ type ArtistAndGroupType = {
 };
 
 export interface ArtistAndGroupListType {
+  totalCount: number;
   page: number;
   size: number;
   artistAndGroupList: ArtistAndGroupType[];
