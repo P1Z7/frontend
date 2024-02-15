@@ -41,10 +41,11 @@ export interface ProfileSetupType<T> {
 export interface SignUpFormType {
   email: string;
   password: string;
-  passwordCh: string;
-  profileImg: string;
+  passwordCheck: string;
   nickName: string;
   myArtists: string[] | [];
+  myArtistsInfo: { name: string; id: string }[];
+  code: number | string;
 }
 
 export interface UserType {
@@ -96,9 +97,10 @@ export interface ReviewType {
 
 // 삭제 예정
 export type ArtistType = {
+  id: string;
   name: string;
-  group?: string[];
-  profileImage: string;
+  type: string;
+  image: string;
 };
 
 type ArtistAndGroupType = {
@@ -174,3 +176,23 @@ export interface EventReviewType {
   user: UserType;
   reviewImages: { url: string; createdAt: string }[];
 }
+
+export type PostValueType =
+  | "placeName"
+  | "eventType"
+  | "groupId"
+  | "artists"
+  | "groupName"
+  | "artistNames"
+  | "startDate"
+  | "endDate"
+  | "address"
+  | "addressDetail"
+  | "eventImages"
+  | "description"
+  | "eventUrl"
+  | "organizerSns"
+  | "snsType"
+  | "tags";
+
+export type CategoryType = "placeName" | "eventType" | "artist" | "address" | "period" | "tags" | "eventImages" | "organizer" | "eventUrl" | "description";

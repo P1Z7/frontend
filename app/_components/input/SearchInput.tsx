@@ -44,11 +44,11 @@ const SearchInput = ({ setKeyword, initialKeyword, placeholder = "검색어를 �
         onKeyDown={handleSearchEnter}
         autoComplete="off"
       />
-      <button className="absolute right-12 top-12" onClick={() => setKeyword(getValues("search") ?? "")}>
+      <button className="absolute right-12 top-12" type="button" onClick={() => setKeyword(getValues("search") ?? "")}>
         <SearchIcon width="20" height="20" stroke="#494F5A" />
       </button>
       {search && (
-        <button className="absolute right-48 top-[1.4rem]" onClick={handleCloseClick}>
+        <button className="absolute right-48 top-[1.4rem]" type="button" onClick={handleCloseClick}>
           <CloseIcon stroke="#A0A5B1" width="16" height="16" />
         </button>
       )}
