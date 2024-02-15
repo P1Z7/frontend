@@ -5,8 +5,8 @@ import { useState } from "react";
 import LocationDetailBottomSheet from "@/components/bottom-sheet/LocationDetailBottomSheet";
 import { Api } from "@/api/api";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
+import { EventCardType } from "@/types/index";
 import CheckIcon from "@/public/icon/check.svg";
-import { ScheduleDataProps } from "../../page";
 import MyKakaoMap from "../MyKaKaoMap";
 
 const ButtonColor = {
@@ -15,7 +15,7 @@ const ButtonColor = {
 };
 
 const MyLocationTab = () => {
-  const [locationInfo, setLocationInfo] = useState<ScheduleDataProps | undefined>();
+  const [locationInfo, setLocationInfo] = useState<EventCardType | undefined>();
   const { bottomSheet, openBottomSheet, closeBottomSheet } = useBottomSheet();
   const [inChecked, setIsChecked] = useState(false);
 

@@ -13,7 +13,6 @@ import ArrowDownIcon from "@/public/icon/arrow-down_sm.svg";
 import NextIcon from "@/public/icon/arrow-left_lg.svg";
 import PrevIcon from "@/public/icon/arrow-right_lg.svg";
 import ArrowUpIcon from "@/public/icon/arrow-up_sm.svg";
-import { ScheduleDataProps } from "../../page";
 import { getCalendarTime } from "./getCalendarTime";
 
 type StatueType = "" | "예정" | "종료" | "진행중" | "종료제외";
@@ -31,7 +30,7 @@ const EventTab = () => {
   });
 
   const [calendarStyle, setCalendarStyle] = useState("");
-  let lastDay: (ScheduleDataProps | "blank")[] = [];
+  let lastDay: (EventCardType | "blank")[] = [];
 
   const tileContent = ({ date }: { date: Date }) => {
     const eventsForDate = myEventsData.filter((event: EventCardType) => {
@@ -43,7 +42,7 @@ const EventTab = () => {
     });
 
     if (eventsForDate.length > 0) {
-      let today: (ScheduleDataProps | "blank")[] = sortEvents(eventsForDate);
+      let today: (EventCardType | "blank")[] = sortEvents(eventsForDate);
 
       for (let idx in today) {
         const lastDayItem = lastDay[idx];

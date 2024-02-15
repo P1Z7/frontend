@@ -53,12 +53,6 @@ export interface UserType {
   profileImage?: string;
 }
 
-export interface UserType {
-  id: string;
-  nickName: string;
-  profileImage?: string;
-}
-
 export type LabelType = "아티스트" | "행사 유형" | "장소 이름" | "주소" | "기간" | "주최자" | "링크" | "특전" | "이미지" | "상세 내용";
 export type EventType = "카페" | "나눔" | "팬광고" | "팝업스토어" | "상영회" | "기타";
 export type GiftType = "컵홀더" | "포스터" | "스티커" | "티켓" | "포토카드" | "엽서" | "굿즈" | "기타";
@@ -124,6 +118,12 @@ export interface EventImageType {
   deletedAt: string | null;
 }
 
+export interface MyArtistsType {
+  artistId: string;
+  artistName: string;
+  artistImage: string;
+}
+
 export interface TargetArtistType {
   eventId: string;
   artistId: string;
@@ -157,6 +157,7 @@ export interface EventCardType {
   updatedAt?: string | null;
   deletedAt?: string | null;
   likeCount: number;
+  isLike: boolean;
   eventImages: EventImageType[];
   targetArtists: TargetArtistType[];
   eventTags: EventTagType[];

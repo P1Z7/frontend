@@ -1,4 +1,3 @@
-import { ScheduleDataProps } from "../../page";
 import EventTabs from "../EventTabs";
 import MyCalendarTab from "./MyCalendarTab";
 import MyLocationTab from "./MyLocationTab";

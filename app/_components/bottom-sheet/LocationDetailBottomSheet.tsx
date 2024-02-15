@@ -1,5 +1,5 @@
-import { ScheduleDataProps } from "@/(route)/(bottom-nav)/mypage/page";
 import toast from "react-hot-toast";
+import { EventCardType } from "@/types/index";
 import MapIcon from "@/public/icon/map.svg";
 import HorizontalEventCard from "../card/HorizontalEventCard";
 import BottomSheet from "./BottomSheetMaterial";
@@ -15,7 +15,7 @@ const getPlaceId = async (address: string, placeName: string) => {
 
 interface Props {
   closeBottomSheet: () => void;
-  locationInfo: ScheduleDataProps | undefined;
+  locationInfo: EventCardType | undefined;
 }
 
 const LocationDetailBottomSheet = ({ closeBottomSheet, locationInfo }: Props) => {

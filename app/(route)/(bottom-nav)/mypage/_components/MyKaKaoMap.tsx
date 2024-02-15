@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { ScheduleDataProps } from "../page";
+import { EventCardType } from "@/types/index";
 
 interface Props {
-  scheduleData: ScheduleDataProps[];
-  setLocationInfo: (data: ScheduleDataProps) => void;
+  scheduleData: EventCardType[];
+  setLocationInfo: (data: EventCardType) => void;
   openBottomSheet: (name: string) => void;
 }
 
@@ -19,7 +19,7 @@ const MyKakaoMap = ({ scheduleData, setLocationInfo, openBottomSheet }: Props) =
         const map = new window.kakao.maps.Map(mapContainer, mapOption);
         const geocoder = new window.kakao.maps.services.Geocoder();
 
-        const myMarker = (data: ScheduleDataProps) => {
+        const myMarker = (data: EventCardType) => {
           const { address, placeName } = data;
 
           geocoder.addressSearch(address, (result: any, status: any) => {

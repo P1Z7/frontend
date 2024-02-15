@@ -82,7 +82,16 @@ export class Api {
   }
 }
 
-type GetEndPoint = "/event" | "/event/like" | `/event/${string}/like` | `/event/${string}` | "/artist/group" | `/artist/${string}` | "/group/solo" | `/reviews/${string}`;
+type GetEndPoint =
+  | "/event"
+  | "/event/like"
+  | `/event/${string}/like`
+  | `/event/${string}`
+  | "/artist/group"
+  | `/artist/${string}`
+  | "/group/solo"
+  | `/reviews/${string}`
+  | `/users/${string}/artists`;
 type PostEndPoint =
   | "/event"
   | "/event/like"
