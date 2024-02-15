@@ -12,7 +12,7 @@ const MyPage = () => {
     <div className="flex w-full flex-col gap-24 pb-72">
       <UserProfile data={MOCK_USER_INFO} />
       <Tabs names={["행사", "아티스트", "후기"]}>
-        <MyEventTab scheduleData={mockScheduleData} />
+        <MyEventTab />
         <MyArtistTab data={MOCK} />
         <MyReviewTab reviewList={MOCK_REVIEWS} />
       </Tabs>
@@ -29,19 +29,43 @@ const MOCK_USER_INFO = {
 };
 
 export interface ScheduleDataProps {
-  id: number;
+  id: string;
+  sequence: number;
+  userId: string;
   placeName: string;
-  artists: string[];
-  eventType: "카페";
-  address: string;
+  description: string;
+  eventType: string;
   startDate: string;
   endDate: string;
-  eventImages?: string[];
-  tags: ["포토카드"];
-  isLike: boolean;
+  eventUrl: string;
+  organizerSns: string;
+  snsType: string;
+  address: string;
+  addressDetail: string;
+  createdAt: string;
+  likeCount: number;
+  eventImages: {
+    id: string;
+    eventId: string;
+    imageUrl: string;
+    sequence: number;
+    isMain: boolean;
+  }[];
+  targetArtists: {
+    eventId: string;
+    artistId: string;
+    artistName: string;
+    groupId: string;
+    groupName: string;
+  }[];
+  eventTags: {
+    eventId: string;
+    tagId: string;
+    tagName: string;
+  }[];
 }
 
-const mockScheduleData: ScheduleDataProps[] = [
+const mockScheduleData = [
   {
     id: 1,
     placeName: "앤디스커피 연남점",
