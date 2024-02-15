@@ -201,10 +201,10 @@ const HeartButton = ({ isLiked, likeCount, onClick }: HeartButtonProps) => {
   return (
     <button onClick={onClick} className="absolute right-20 top-24 text-center text-12 font-600 tablet:right-0 tablet:top-0 tablet:text-14">
       <div className="tablet:hidden">
-        <HeartIcon stroke={liked ? "#FF50AA" : "#1C1E22"} fill={liked ? "#FF50AA" : "none"} />
+        <HeartIcon stroke={liked ? "#FF50AA" : "#1C1E22"} fill={liked ? "#FF50AA" : "none"} strokeWidth={1.7} />
       </div>
       <div className="hidden tablet:block">
-        <HeartIcon stroke={liked ? "#FF50AA" : "#1C1E22"} fill={liked ? "#FF50AA" : "none"} width={32} height={32} viewBox="0 0 24 24" />
+        <HeartIcon stroke={liked ? "#FF50AA" : "#1C1E22"} fill={liked ? "#FF50AA" : "none"} width={32} height={32} viewBox="0 0 24 24" strokeWidth={1.4} />
       </div>
       {likeCount}
     </button>
