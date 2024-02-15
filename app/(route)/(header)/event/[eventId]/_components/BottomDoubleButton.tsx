@@ -8,14 +8,13 @@ interface Props {
 
 const BottomDoubleButton = ({ onClickLeft, onClickRight }: Props) => {
   return (
-    <div className="fixed bottom-0 left-0 z-popup flex w-360 gap-8 border-t border-gray-50 bg-white-black px-20 pb-24 pt-12">
-      <div className="w-156">
-        {/* 추후 회색으로 변경 예정 */}
-        <Button size="xl" type="lined" onClick={onClickLeft}>
+    <div className="fixed bottom-0 left-0 z-popup flex w-full gap-12 border-t border-gray-50 bg-white-black px-20 pb-24 pt-12">
+      <div className="w-full">
+        <Button size="xl" type="linedGray" onClick={onClickLeft}>
           거절하기
         </Button>
       </div>
-      <div className="w-156">
+      <div className="w-full">
         <Button size="xl" type="lined" onClick={onClickRight}>
           승인하기
         </Button>
