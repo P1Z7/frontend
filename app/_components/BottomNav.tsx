@@ -24,11 +24,12 @@ const BottomNav = () => {
       label: "마이페이지",
     },
   ];
-
   useEffect(() => {
     if (session?.user.profileImage) {
       setProfileImage(session?.user.profileImage);
+      return;
     }
+    setProfileImage("");
   }, [session]);
 
   return (

@@ -39,7 +39,7 @@ const ProfilePage = () => {
 
     setTimeout(async () => {
       const api = new Api(
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmYTc1ODhiMi1kYzY5LTRlNjgtOTExNi1jOWUwZGEyOTRhYmQiLCJ1c2VybmFtZSI6Iuq5gO2VmOuKmCIsImlhdCI6MTcwODAyODY1OSwiZXhwIjoxNzA4MDMyMjU5fQ.dauPBKSrs57hWn6XpwKzPnUVMAj_7N-EDc3aylTzDkc",
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmYTc1ODhiMi1kYzY5LTRlNjgtOTExNi1jOWUwZGEyOTRhYmQiLCJ1c2VybmFtZSI6Iuq5gO2VmOuKmCIsImlhdCI6MTcwODAzMjk3MywiZXhwIjoxNzA4MDM2NTczfQ.cWff9EeRW1Q9Xi0FdmqzbC9V0-7m_363ZrLZjyoti1o",
       );
 
       try {

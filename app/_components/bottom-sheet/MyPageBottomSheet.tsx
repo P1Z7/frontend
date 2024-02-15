@@ -1,4 +1,5 @@
 import { useRouter } from "next/navigation";
+import { outSession } from "@/store/session/cookies";
 import { BottomSheetBaseType } from "@/types/index";
 import BottomSheet from "./BottomSheetMaterial";
 
@@ -23,7 +24,9 @@ const MyPageBottomSheet = ({ closeBottomSheet, refs }: any) => {
         <li className={ButtonStyle} onClick={() => router.push("/setting/password")}>
           {EditUserInfo.password}
         </li>
-        <li className={ButtonStyle}>{EditUserInfo.logOut}</li>
+        <li onClick={() => (outSession(), router.refresh())} className={ButtonStyle}>
+          {EditUserInfo.logOut}
+        </li>
         <li className={ButtonStyle}>{EditUserInfo.withdrawal}</li>
         <li className={ButtonStyle} />
       </ul>

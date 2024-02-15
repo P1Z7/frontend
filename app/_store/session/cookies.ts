@@ -19,6 +19,12 @@ export const getCookies: typeof cookies.get = (name: string) => {
   return cookies.get(name);
 };
 
-export const setSession = (newSession: Session) => (cookies.remove("session"), setCookies("session", newSession));
+export const deleteCookies: typeof cookies.remove = (name) => {
+  return cookies.remove(name);
+};
+
+export const setSession = (newSession: Session) => (deleteCookies("session"), setCookies("session", newSession));
 
 export const useSession = (): Session | undefined => getCookies("session");
+
+export const outSession = () => deleteCookies("session");
