@@ -1,6 +1,5 @@
 import { NoFavCard } from "@/(route)/_components/carousel/FavArtistEventsCarousel";
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import ArtistCard from "@/components/ArtistCard";
 import { Api } from "@/api/api";
@@ -15,7 +14,7 @@ const MyArtistTab = () => {
   const { data: myArtistsData, isSuccess } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      return instance.get(`/users/${NoneMyArtistID}/artists`);
+      return instance.get(`/users/${ID}/artists`);
     },
   });
 

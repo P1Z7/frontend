@@ -14,7 +14,7 @@ const MyPage = () => {
       <Tabs names={["행사", "아티스트", "후기"]}>
         <MyEventTab />
         <MyArtistTab />
-        <MyReviewTab reviewList={MOCK_REVIEWS} />
+        <MyReviewTab />
       </Tabs>
     </div>
   );
