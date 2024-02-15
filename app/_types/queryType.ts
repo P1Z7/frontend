@@ -5,6 +5,7 @@ type Req_Query_Event = {
   startDate?: string;
   endDate?: string;
   tags?: string;
+  sort?: "최신순" | "인기순";
   page?: number;
   size?: number;
 };
