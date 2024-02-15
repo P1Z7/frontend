@@ -6,14 +6,14 @@ import useHeaderTitle from "@/hooks/useHeaderTitle";
 import { useModal } from "@/hooks/useModal";
 import ArrowLeft from "@/public/icon/arrow-left_lg.svg";
 import KebabButton from "@/public/icon/kebab.svg";
-import EventKebabBottomSheet from "./bottom-sheet/EventKebabBottomSheet";
-import ReportModal from "./modal/ReportModal";
+import EventKebabBottomSheet from "../bottom-sheet/EventKebabBottomSheet";
+import ReportModal from "../modal/ReportModal";
 
 interface Props {
   handleClick?: () => void;
 }
 
-const Header = ({ handleClick }: Props) => {
+const MobileHeader = ({ handleClick }: Props) => {
   const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
   const { modal, openModal, closeModal } = useModal();
 
@@ -49,4 +49,4 @@ const Header = ({ handleClick }: Props) => {
   );
 };
 
-export default Header;
+export default MobileHeader;

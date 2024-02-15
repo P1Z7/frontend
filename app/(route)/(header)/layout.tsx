@@ -1,10 +1,10 @@
 import React, { ReactNode } from "react";
-import Header from "@/components/Header";
+import MobileHeader from "@/components/header/MobileHeader";
 
 const TopAppBarLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div>
-      <Header />
+      <MobileHeader />
       {children}
     </div>
   );
