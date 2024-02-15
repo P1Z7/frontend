@@ -49,7 +49,7 @@ const Edit = () => {
   return (
     <div className="flex flex-col gap-24 p-20 text-16">
       {init && (
-        <GenericFormProvider formOptions={{ mode: "onBlur", defaultValues: INITIAL_DATA, shouldFocusError: true }}>
+        <GenericFormProvider formOptions={{ mode: "onChange", defaultValues: INITIAL_DATA, shouldFocusError: true }}>
           <EditContent />
         </GenericFormProvider>
       )}
