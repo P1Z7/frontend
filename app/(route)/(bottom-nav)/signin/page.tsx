@@ -116,7 +116,7 @@ const SignInPage = () => {
             onKeyDown={handleEnterNext}
           />
           <div className={`mt-16 overflow-hidden transition-all ${submitState.isLoading ? "w-4/5" : "w-full"}`}>
-            <Button isDisabled={!formState.isValid || !!formState.errors.email || !!formState.errors.password || submitState.isLoading}>
+            <Button isSubmit isDisabled={!formState.isValid || !!formState.errors.email || !!formState.errors.password || submitState.isLoading}>
               <div className="relative h-full w-full">
                 <span className={`absolute w-max transition-all ${formState.isSubmitted ? "top-48" : "absolute-center"}`}>로그인</span>
                 <span className={`absolute w-max transition-all ${submitState.isLoading ? "absolute-center" : "-top-48"}`}>
