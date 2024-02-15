@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { ChangeEvent, KeyboardEvent, ReactNode } from "react";
 import { FieldPath, FieldValues, UseControllerProps, useController } from "react-hook-form";
+import toast from "react-hot-toast";
 import EditIcon from "@/public/icon/pencil.svg";
 
 interface Props {
@@ -16,6 +17,14 @@ const InputProfileImg: Function = ({ children, hasProfile, ...props }) => {
   const { field, fieldState } = useController(props);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const image = e.target.files?.[0];
+    const maxSize = 1024 * 1024 * 3;
+    if (image && image.size > maxSize) {
+      toast("이미지 크기는 3MB 이하로 부탁드립니다!", {
+        className: "text-16 font-600",
+      });
+      return;
+    }
     field.onChange({ target: { value: e.target.files, name: field.name } });
   };
 
@@ -53,7 +62,7 @@ const InputProfileImg: Function = ({ children, hasProfile, ...props }) => {
               이미지 등록
             </div>
           )}
-          <input type="file" name={field.name} ref={field.ref} multiple onChange={handleChange} className="hidden" accept="image/*" />
+          <input type="file" name={field.name} ref={field.ref} multiple onChange={handleChange} className="hidden" accept=".jpg,.jpeg,.png,.webp" />
         </label>
       </div>
       {fieldState.error && (

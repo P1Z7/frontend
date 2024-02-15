@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ButtonHTMLAttributes, ReactNode, useState } from "react";
 import Chip from "@/components/chip/Chip";
+import { useSession } from "@/store/session/cookies";
 import { formatDate } from "@/utils/formatString";
 import { EventCardType, EventType, TargetArtistType } from "@/types/index";
 import CalendarIcon from "@/public/icon/calendar.svg";
@@ -32,7 +33,7 @@ const SnsIcon = {
   기타: null,
 };
 
-const USER_ID = "4a256531-6f40-41de-aba2-d37d7507e5d7";
+const USER_ID = useSession().user.userId;
 
 interface Props {
   data: EventCardType;

@@ -15,9 +15,9 @@ export const ERROR_MESSAGES = {
     codeField: "인증번호를 입력해주세요",
     emailToVerify: "인증 코드가 일치하지 않습니다.",
   },
-  nickname: {
-    nicknameField: "닉네임을 입력해주세요.",
-    nicknamePattern: "2~10자 영문 또는 한글 닉네임을 사용해주세요.",
+  nickName: {
+    nickNameField: "닉네임을 입력해주세요.",
+    nickNamePattern: "2~10자 영문 또는 한글 닉네임을 사용해주세요.",
   },
   password: {
     passwordField: "비밀번호를 입력해주세요.",
