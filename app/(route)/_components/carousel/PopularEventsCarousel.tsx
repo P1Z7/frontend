@@ -1,8 +1,8 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { Api } from "app/_api/api";
 import VerticalEventCard from "@/components/card/VerticalEventCard";
-import { Api } from "@/api/api";
 import { Res_Get_Type } from "@/types/getResType";
 import Carousel from "./Carousel";
 
