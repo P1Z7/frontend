@@ -73,7 +73,7 @@ const ReviewPostPage = () => {
     setIsLoading(true);
     const imagesUrl = await makeImgUrlList(imageList, instance);
     try {
-      await instance.post("/reviews", {
+      const res = await instance.post("/reviews", {
         userId: USER_ID,
         eventId: Array.isArray(eventId) ? eventId[0] : eventId,
         isPublic: Boolean(isPublic),
@@ -82,6 +82,9 @@ const ReviewPostPage = () => {
         description: form.description,
         isAgree: isCheck,
       });
+      if (res.error) {
+        throw new Error(res.error);
+      }
       router.push(`/event/${eventId}`);
     } catch (e) {
       console.error(e);
@@ -153,7 +156,7 @@ const ReviewPostPage = () => {
         <WarningCheck />
       </div>
       <div className={`sticky bottom-0 h-92 w-full border-t border-gray-50 bg-white-black pb-24 pt-12 transition-all ${isLoading ? "px-72" : "px-20"}`}>
-        <Button type="lined" size="xl" isDisabled={isDisabled || isLoading}>
+        <Button type="lined" size="xl" isDisabled={isDisabled || isLoading} isSubmit>
           {isLoading ? <LoadingDot /> : "후기 작성하기"}
         </Button>
       </div>

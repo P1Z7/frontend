@@ -41,10 +41,11 @@ export interface ProfileSetupType<T> {
 export interface SignUpFormType {
   email: string;
   password: string;
-  passwordCh: string;
-  profileImg: string;
+  passwordCheck: string;
   nickName: string;
   myArtists: string[] | [];
+  myArtistsInfo: { name: string; id: string }[];
+  code: number | string;
 }
 
 export interface UserType {
@@ -90,9 +91,10 @@ export interface ReviewType {
 
 // 삭제 예정
 export type ArtistType = {
+  id: string;
   name: string;
-  group?: string[];
-  profileImage: string;
+  type: string;
+  image: string;
 };
 
 type ArtistAndGroupType = {
@@ -103,6 +105,7 @@ type ArtistAndGroupType = {
 };
 
 export interface ArtistAndGroupListType {
+  totalCount: number;
   page: number;
   size: number;
   artistAndGroupList: ArtistAndGroupType[];

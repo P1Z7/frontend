@@ -92,7 +92,9 @@ type GetEndPoint =
   | "/group/solo"
   | `/reviews/${string}`
   | `/users/${string}/artists`
-  | `/reviews/user/${string}`;
+  | `/reviews/user/${string}`
+  | "/users/nickname";
+
 type PostEndPoint =
   | "/event"
   | "/event/like"
@@ -104,7 +106,10 @@ type PostEndPoint =
   | "/file/upload"
   | "/reviews"
   | `/reviews/${string}/like`
+  | "/email"
+  | "/email/verification"
   | "/event/update/application";
+
 type PutEndPoint = `/event/${string}`;
 type DeleteEndPoint = `/users/${string}/artists` | `/reviews/${string}/images`;
 type PostQueryType<T> = T extends "/file/upload" ? { category: "event" | "artist" | "user" } : unknown;
@@ -129,9 +134,13 @@ type PostBodyType<T> = T extends "/event"
                   ? Req_Post_Type["review"]
                   : T extends `/reviews/${string}/like`
                     ? Req_Post_Type["reviewLike"]
-                    : T extends "/event/update/application"
-                      ? Req_Post_Type["edit"]
-                      : unknown;
+                    : T extends `/email`
+                      ? Req_Post_Type["email"]
+                      : T extends `/email/verification`
+                        ? Req_Post_Type["verification"]
+                        : T extends "/event/update/application"
+                          ? Req_Post_Type["edit"]
+                          : unknown;
 
 type GetQueryType<T> = T extends "/event"
   ? Req_Query_Type["행사목록"]

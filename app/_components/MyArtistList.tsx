@@ -34,7 +34,7 @@ const MyArtistList = ({ data }: Props) => {
         <ul className="grid grid-cols-3 gap-x-16 gap-y-20 px-8">
           {data.map((artist, index) => (
             <li key={index}>
-              <ArtistCard onClick={() => handleArtistClick(artist.name)} isChecked={selected.includes(artist.name)} profileImage={artist.profileImage}>
+              <ArtistCard onClick={() => handleArtistClick(artist.name)} isChecked={selected.includes(artist.name)} profileImage={artist.image}>
                 {artist.name}
               </ArtistCard>
             </li>

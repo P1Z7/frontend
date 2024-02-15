@@ -1,11 +1,11 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { Api } from "app/_api/api";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import VerticalEventCard from "@/components/card/VerticalEventCard";
-import { Api } from "@/api/api";
 import { Res_Get_Type } from "@/types/getResType";
 import Hero from "@/public/icon/hero.svg";
 import Carousel from "./Carousel";
