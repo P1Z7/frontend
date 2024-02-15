@@ -73,7 +73,7 @@ const ReviewPostPage = () => {
     setIsLoading(true);
     const imagesUrl = await makeImgUrlList(imageList, instance);
     try {
-      await instance.post("/reviews", {
+      const res = await instance.post("/reviews", {
         userId: USER_ID,
         eventId: Array.isArray(eventId) ? eventId[0] : eventId,
         isPublic: Boolean(isPublic),
@@ -82,6 +82,9 @@ const ReviewPostPage = () => {
         description: form.description,
         isAgree: isCheck,
       });
+      if (res.error) {
+        throw new Error(res.error);
+      }
       router.push(`/event/${eventId}`);
     } catch (e) {
       console.error(e);
