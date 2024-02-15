@@ -125,8 +125,8 @@ const SearchPage = () => {
       keyword,
       sido: filter.bigRegion,
       gungu: filter.smallRegion === "전지역" ? "" : filter.smallRegion,
-      ...(filter.startDate && { startDate: filter.startDate }),
-      ...(filter.endDate && { endDate: filter.endDate }),
+      ...{ startDate: filter.startDate || "" },
+      ...{ endDate: filter.endDate || "" },
       tags: filter.gifts.map((gift) => TAG[gift]).join(","),
     });
     return data;
