@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import WarningCheck from "@/components/WarningCheck";
 import InputArea from "@/components/input/InputArea";
+import { checkArrUpdate } from "@/utils/checkArrUpdate";
 import { validateEdit } from "@/utils/editValidate";
 import { PostType } from "../../page";
 import { MemoizedImageSection } from "../ImageSection";
@@ -31,7 +32,12 @@ const DetailInput = () => {
   return (
     <>
       <section className="flex flex-col gap-8">
-        <div>이미지</div>
+        <div className="flex items-center gap-4">
+          이미지
+          {validateEdit(typeof defaultValues?.eventImages !== "undefined" && checkArrUpdate(defaultValues?.eventImages, imgList)) && (
+            <p className="text-12 font-600 text-blue">수정됨</p>
+          )}
+        </div>
         <MemoizedImageSection imgList={imgList} setImgList={setImgList} />
         {imgList.length <= 5 ? (
           <div className="text-12 font-500 text-gray-300">첫번째 이미지가 썸네일로 등록됩니다.</div>

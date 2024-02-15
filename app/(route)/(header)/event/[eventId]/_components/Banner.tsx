@@ -1,11 +1,11 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Api } from "app/_api/api";
 import Image from "next/image";
 import Link from "next/link";
 import { ButtonHTMLAttributes, ReactNode, useState } from "react";
 import Chip from "@/components/chip/Chip";
-import { Api } from "@/api/api";
 import { formatDate } from "@/utils/formatString";
 import { EventCardType, EventType, TargetArtistType } from "@/types/index";
 import CalendarIcon from "@/public/icon/calendar.svg";
@@ -42,6 +42,7 @@ interface Props {
 const Banner = ({ data, eventId }: Props) => {
   const formattedDate = formatDate(data.startDate, data.endDate, true);
   const bannerImage = data.eventImages.find((images) => images.isMain);
+  const formattedOrganizerSns = data.organizerSns[0] === "@" ? data.organizerSns : `@${data.organizerSns}`;
 
   const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
   const queryClient = useQueryClient();
@@ -96,17 +97,17 @@ const Banner = ({ data, eventId }: Props) => {
               ))}
             </div>
           </SubDescription>
-          <SubDescription isVisible={Boolean(data?.eventUrl)}>
+          <SubDescription isVisible={Boolean(data.eventUrl)}>
             <LinkIcon {...IconStyleProps} />
             <Link href={data?.eventUrl ?? ""} target="_blank" rel="noreferrer noopener" className="text-blue">
               {data?.eventUrl}
             </Link>
           </SubDescription>
-          <SubDescription isVisible={Boolean(data?.organizerSns)}>
+          <SubDescription isVisible={Boolean(data.organizerSns)}>
             <UserIcon width={20} height={20} viewBox="0 0 24 24" stroke="#A0A5B1" />
             <div className="flex items-center gap-4">
               {SnsIcon[data?.snsType ?? "기타"]}
-              <span>{`@${data?.organizerSns}`}</span>
+              <span>{formattedOrganizerSns}</span>
             </div>
           </SubDescription>
         </div>

@@ -1,4 +1,5 @@
-import { MOCK } from "app/_constants/mock";
+import { useQuery } from "@tanstack/react-query";
+import { Api } from "app/_api/api";
 import { useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -10,35 +11,36 @@ import { ArtistType } from "@/types/index";
 import InputModal from "./modal/InputModal";
 
 interface Props {
-  data: ArtistType[];
-  onClick: (id: string, isChecked: boolean) => void;
+  onClick: (name: string, id: string, isChecked: boolean) => void;
   myArtists: string[];
+  myArtistsInfo: { name: string; id: string }[];
 }
 
-const SearchArtist = ({ data, onClick, myArtists }: Props) => {
+const SearchArtist = ({ onClick, myArtists, myArtistsInfo }: Props) => {
   const [keyword, setKeyword] = useState("");
-  const [searchedData, setSearchedData] = useState(data);
+  const instance = new Api();
 
-  useEffect(() => {
-    // 검색 API 들어갈 자리
-    setSearchedData(
-      MOCK.filter((item) => {
-        return item.name.toLowerCase().includes(keyword.toLowerCase()) || (item.group && item.group.some((group) => group.toLowerCase().includes(keyword.toLowerCase())));
-      }),
-    );
-  }, [keyword]);
+  const { data } = useQuery({
+    queryKey: ["group", keyword],
+    queryFn: async () => {
+      return instance.get("/artist/group", { keyword: keyword, size: 12, page: 1 });
+    },
+  });
 
-  const [selected, setSelected] = useState<string[]>(myArtists);
+  const [selected, setSelected] = useState(myArtistsInfo);
   const lastButton = useRef<HTMLButtonElement>(null);
 
-  const handleArtistClick = (name: string, isChecked: boolean) => {
-    onClick(name, isChecked);
+  const handleArtistClick = (name: string, isChecked: boolean, id: string) => {
+    onClick(name, id, isChecked);
 
-    if (selected.includes(name)) {
-      setSelected((prevSelected) => prevSelected.filter((item) => item !== name));
-    } else {
-      setSelected((prevSelected) => [...prevSelected, name]);
-    }
+    setSelected((prevSelected) => {
+      const isSelected = prevSelected.some((item) => item.id === id);
+      if (isSelected) {
+        return prevSelected.filter((item) => item.id !== id);
+      } else {
+        return [...prevSelected, { name, id }];
+      }
+    });
   };
 
   useEffect(() => {
@@ -51,12 +53,7 @@ const SearchArtist = ({ data, onClick, myArtists }: Props) => {
   const notify = () =>
     toast.success("등록 요청이 제출되었습니다.", {
       position: "bottom-center",
-      style: {
-        padding: "16px 28px",
-        fontFamily: "Pretendard",
-        fontWeight: "600",
-        fontSize: "16px",
-      },
+      className: "text-16 font-600 px-28 py-16",
     });
 
   const onModalSubmit: SubmitHandler<{ request: string }> = ({ request }) => {
@@ -67,6 +64,10 @@ const SearchArtist = ({ data, onClick, myArtists }: Props) => {
     }
   };
 
+  if (!data?.artistAndGroupList) return;
+
+  const searchedData: ArtistType[] = data.artistAndGroupList;
+
   return (
     <div className="flex w-full flex-col pt-8">
       <button className="w-fit text-14 font-500 text-gray-400 underline" onClick={() => openModal("reqArtist")} type="button">
@@ -76,15 +77,20 @@ const SearchArtist = ({ data, onClick, myArtists }: Props) => {
         <SearchInput placeholder="입력해주세요." setKeyword={setKeyword} />
       </section>
       <div className="sticky top-72 z-nav mb-16 mt-8 flex w-full gap-12 overflow-hidden bg-white-black">
-        {selected.map((name, idx) => (
-          <div className="mb-8 mt-8 rounded-full bg-white-black" key={name}>
-            <ChipButton label={name} onClick={() => handleArtistClick(name, !myArtists.includes(name))} ref={idx === selected.length - 1 ? lastButton : undefined} canDelete />
+        {selected.map((item, idx) => (
+          <div className="mb-8 mt-8 rounded-full bg-white-black" key={idx}>
+            <ChipButton
+              label={item.name}
+              onClick={() => handleArtistClick(item.name, !myArtists.includes(item.id), item.id)}
+              ref={idx === selected.length - 1 ? lastButton : undefined}
+              canDelete
+            />
           </div>
         ))}
       </div>
       <ul className="flex w-full flex-wrap justify-center gap-x-16 gap-y-20 overflow-hidden px-8">
         {searchedData.map((cardList) => (
-          <Card data={cardList} onClick={handleArtistClick} myArtists={myArtists} key={cardList.name} />
+          <Card data={cardList} onClick={handleArtistClick} myArtists={myArtists} key={cardList.id} />
         ))}
       </ul>
       {modal === "reqArtist" && (
@@ -103,29 +109,29 @@ const SearchArtist = ({ data, onClick, myArtists }: Props) => {
 export default SearchArtist;
 
 interface CardProps {
-  data: { name: string; profileImage: string };
-  onClick: (id: string, isChecked: boolean) => void;
+  data: ArtistType;
+  onClick: (name: string, isChecked: boolean, id: string) => void;
   myArtists: string[];
 }
 
 const Card = ({ data, onClick, myArtists }: CardProps) => {
-  const { name, profileImage } = data;
+  const { name, image, id } = data;
 
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
   useEffect(() => {
-    setIsChecked(myArtists.includes(name));
+    setIsChecked(myArtists.includes(id));
   }, [myArtists]);
 
   return (
     <li>
-      <label htmlFor={name}>
-        <ArtistCard isChecked={isChecked} profileImage={profileImage} isSmall>
+      <label htmlFor={id}>
+        <ArtistCard isChecked={isChecked} profileImage={image === "http://image.co.kr" ? undefined : image} isSmall>
           {name}
         </ArtistCard>
       </label>
 
-      <input name="myArtists" type="checkbox" id={name} onChange={() => onClick(name, !isChecked)} checked={isChecked} hidden />
+      <input name="myArtists" type="checkbox" id={id} onChange={() => onClick(name, !isChecked, id)} checked={isChecked} hidden />
     </li>
   );
 };

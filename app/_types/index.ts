@@ -41,10 +41,11 @@ export interface ProfileSetupType<T> {
 export interface SignUpFormType {
   email: string;
   password: string;
-  passwordCh: string;
-  profileImg: string;
+  passwordCheck: string;
   nickName: string;
   myArtists: string[] | [];
+  myArtistsInfo: { name: string; id: string }[];
+  code: number | string;
 }
 
 export interface UserType {
@@ -53,6 +54,13 @@ export interface UserType {
   profileImage?: string;
 }
 
+export interface UserType {
+  id: string;
+  nickName: string;
+  profileImage?: string;
+}
+
+export type LabelType = "아티스트" | "행사 유형" | "장소 이름" | "주소" | "기간" | "주최자" | "링크" | "특전" | "이미지" | "상세 내용";
 export type EventType = "카페" | "나눔" | "팬광고" | "팝업스토어" | "상영회" | "기타";
 export type GiftType = "컵홀더" | "포스터" | "스티커" | "티켓" | "포토카드" | "엽서" | "굿즈" | "기타";
 export type SnsType = "트위터" | "인스타그램" | "유튜브" | "기타";
@@ -89,9 +97,10 @@ export interface ReviewType {
 
 // 삭제 예정
 export type ArtistType = {
+  id: string;
   name: string;
-  group?: string[];
-  profileImage: string;
+  type: string;
+  image: string;
 };
 
 type ArtistAndGroupType = {
@@ -168,3 +177,23 @@ export interface EventReviewType {
   user: UserType;
   reviewImages: { url: string; createdAt: string }[];
 }
+
+export type PostValueType =
+  | "placeName"
+  | "eventType"
+  | "groupId"
+  | "artists"
+  | "groupName"
+  | "artistNames"
+  | "startDate"
+  | "endDate"
+  | "address"
+  | "addressDetail"
+  | "eventImages"
+  | "description"
+  | "eventUrl"
+  | "organizerSns"
+  | "snsType"
+  | "tags";
+
+export type CategoryType = "placeName" | "eventType" | "artist" | "address" | "period" | "tags" | "eventImages" | "organizer" | "eventUrl" | "description";

@@ -6,11 +6,11 @@ const MyArtistEvent = () => {
 
   return (
     <>
-      {MOCK_EVENTS.map((event, index) => (
+      {/* {MOCK_EVENTS.map((event, index) => (
         <div key={index}>
           <HorizontalEventCard data={event} />
         </div>
-      ))}
+      ))} */}
     </>
   );
 };
