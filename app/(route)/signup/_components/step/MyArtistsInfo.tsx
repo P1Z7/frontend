@@ -1,7 +1,7 @@
+import SearchArtist from "@/(route)/signup/_components/SearchArtist";
 import { useFormContext, useWatch } from "react-hook-form";
 import BottomButton from "@/components/button/BottomButton";
 import { SignUpFormType } from "@/types/index";
-import SearchArtist from "../../../../_components/SearchArtist";
 
 const MyArtistsInfo = () => {
   const { setValue } = useFormContext<SignUpFormType>();
