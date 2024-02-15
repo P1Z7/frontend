@@ -176,6 +176,26 @@ export interface EventReviewType {
   reviewImages: { url: string; createdAt: string }[];
 }
 
+export interface MyReviewType {
+  id: string;
+  cursorId: number;
+  isPublic: boolean;
+  isLike: boolean;
+  rating: boolean;
+  likeCount: number;
+  description: string;
+  createdAt: string;
+  event: {
+    id: string;
+    placeName: string;
+    eventType: "카페" | "나눔" | "팬광고" | "팝업스토어" | "상영회" | "기타";
+    address: string;
+    startDate: string;
+    endDate: string;
+  };
+  reviewImages: { url: string; createdAt: string }[];
+}
+
 export type PostValueType =
   | "placeName"
   | "eventType"

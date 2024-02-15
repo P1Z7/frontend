@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
 import ChipButton from "@/components/chip/ChipButton";
 import { Api } from "@/api/api";
+import { getCalendarTime } from "@/utils/getCalendarTime";
 import { sortEvents } from "@/utils/sortEventList";
 import { EventCardType } from "@/types/index";
 import { MYPAGE_CALENDAR_STYLE } from "@/constants/calendarStyle";
@@ -13,7 +13,6 @@ import ArrowDownIcon from "@/public/icon/arrow-down_sm.svg";
 import NextIcon from "@/public/icon/arrow-left_lg.svg";
 import PrevIcon from "@/public/icon/arrow-right_lg.svg";
 import ArrowUpIcon from "@/public/icon/arrow-up_sm.svg";
-import { getCalendarTime } from "./getCalendarTime";
 
 type StatueType = "" | "예정" | "종료" | "진행중" | "종료제외";
 
