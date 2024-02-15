@@ -1,8 +1,10 @@
 import { useParams, usePathname } from "next/navigation";
+import { useStore } from "@/store/index";
 
 const useHeaderTitle = () => {
   const pathname = usePathname();
   const { eventId, editId } = useParams();
+  const { eventHeader } = useStore((state) => ({ eventHeader: state.eventHeader }));
   let title = "";
 
   switch (pathname) {
@@ -25,7 +27,7 @@ const useHeaderTitle = () => {
       title = "등록하기";
       break;
     case `/event/${eventId}`:
-      title = "카페 이름";
+      title = eventHeader;
       break;
     case `/event/${eventId}/post`:
       title = "후기 작성하기";

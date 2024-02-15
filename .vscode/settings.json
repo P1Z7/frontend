@@ -7,6 +7,7 @@
     "_utils": "Utils",
     "_types": "Typescript",
     "_constants": "Constant",
+    "_styles": "CSS",
     "(route)": "Routes"
   },
   "tailwindCSS.rootFontSize": 10
