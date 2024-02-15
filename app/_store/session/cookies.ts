@@ -1,6 +1,6 @@
 import { Cookies } from "react-cookie";
 
-type Session = {
+export type Session = {
   isAuth: boolean;
   user: {
     userId: string;

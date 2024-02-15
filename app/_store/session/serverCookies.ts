@@ -1,11 +1,12 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { Session } from "@/store/session/cookies";
 
-export const serverSession = () => {
+export const serverSession = (): Session | null => {
   const sessionJSON = cookies().get("session")?.value;
   if (sessionJSON) {
     return JSON.parse(sessionJSON);
   }
-  return "로그인 정보가 없습니다.";
+  return null;
 };
