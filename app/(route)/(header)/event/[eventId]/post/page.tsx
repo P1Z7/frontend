@@ -153,7 +153,7 @@ const ReviewPostPage = () => {
         <WarningCheck />
       </div>
       <div className={`sticky bottom-0 h-92 w-full border-t border-gray-50 bg-white-black pb-24 pt-12 transition-all ${isLoading ? "px-72" : "px-20"}`}>
-        <Button type="lined" size="xl" isDisabled={isDisabled || isLoading}>
+        <Button type="lined" size="xl" isDisabled={isDisabled || isLoading} isSubmit>
           {isLoading ? <LoadingDot /> : "후기 작성하기"}
         </Button>
       </div>
