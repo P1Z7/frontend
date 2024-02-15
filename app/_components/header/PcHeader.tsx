@@ -15,7 +15,7 @@ const PcHeader = () => {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-nav hidden h-72 w-full bg-white-black tablet:block">
+    <header className="sticky top-0 z-nav hidden h-72 w-full bg-white-black px-24 tablet:block">
       <div className="mx-auto flex h-full max-w-[104rem] items-center justify-between">
         <LogoIcon />
         <div className="flex gap-16">
