@@ -42,7 +42,7 @@ const EditDetailApprove = () => {
   }, [data]);
 
   const handleApplicationSubmit = async (isApproved: boolean) => {
-    const res = await instance.post("/event/update/approval", { eventUpdateApplicationId: String(editId), isApproved });
+    const res = await instance.post("/event/update/approval", { eventUpdateApplicationId: String(editId), isApproved, userId: "edit-api" });
     refetch();
     if (res.statusCode === 409) {
       toast("이미 승인/거절한 요청입니다!", { className: "text-14" });

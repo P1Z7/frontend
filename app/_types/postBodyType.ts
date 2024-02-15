@@ -94,6 +94,7 @@ type Req_Post_Edit_Application = EditContentType & {
 type Req_Post_Approval = {
   eventUpdateApplicationId: string;
   isApproved: boolean;
+  userId: string;
 };
 
 export type Req_Post_Type = {
