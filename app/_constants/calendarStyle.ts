@@ -71,14 +71,15 @@ export const MYPAGE_CALENDAR_STYLE = `
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
 }
 
 .react-calendar__tile > div {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
 }
 
 .react-calendar__month-view__days__day {

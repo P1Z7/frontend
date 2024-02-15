@@ -16,7 +16,9 @@ import ArrowUpIcon from "@/public/icon/arrow-up_sm.svg";
 
 type StatueType = "" | "예정" | "종료" | "진행중" | "종료제외";
 
-const EventTab = () => {
+const MyCalendarTab = () => {
+  const [data, setData] = useState<EventCardType[] | []>([]);
+  const [isFold, setIsFold] = useState(true);
   const [statue, setStatus] = useState<StatueType>("");
   const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
   const ID = "f14ab7e7-ee5c-4707-b68e-ddb6cf8b0f00";
@@ -28,11 +30,17 @@ const EventTab = () => {
     },
   });
 
+  useEffect(() => {
+    if (isSuccess) {
+      setData(myEventsData);
+    }
+  }, [myEventsData]);
+
   const [calendarStyle, setCalendarStyle] = useState("");
   let lastDay: (EventCardType | "blank")[] = [];
 
   const tileContent = ({ date }: { date: Date }) => {
-    const eventsForDate = myEventsData.filter((event: EventCardType) => {
+    const eventsForDate = data.filter((event: EventCardType) => {
       const startDate = getCalendarTime(event.startDate);
       const endDate = getCalendarTime(event.endDate);
       const currentDate = getCalendarTime(date);
@@ -40,56 +48,76 @@ const EventTab = () => {
       return startDate <= currentDate && endDate >= currentDate;
     });
 
-    if (eventsForDate.length > 0) {
-      let today: (EventCardType | "blank")[] = sortEvents(eventsForDate);
+    switch (isFold) {
+      case true:
+        if (eventsForDate.length === 0) return;
 
-      for (let idx in today) {
-        const lastDayItem = lastDay[idx];
-        const todayItem = today[idx];
-        if (!lastDayItem) {
-          lastDay[idx] = todayItem;
-          continue;
+        let type;
+        if (eventsForDate.length === 1) {
+          type = COUNT_CHIP_TYPE.light;
+        } else if (eventsForDate.length >= 5) {
+          type = COUNT_CHIP_TYPE.bold;
+        } else {
+          type = COUNT_CHIP_TYPE.regular;
         }
-        if (lastDayItem === todayItem) {
-          continue;
-        }
-        let rpt = 0;
-        while (lastDay[Number(idx) + rpt] !== today[Number(idx) + rpt]) {
-          if (Number(idx) + rpt > lastDay.length) break;
-          today.splice(Number(idx) + rpt, 0, "blank");
-          rpt++;
-        }
-      }
+        return <div className={`h-20 w-20 rounded-full text-12 font-600 ${type}`}>{eventsForDate.length}</div>;
 
-      if (date.getDay() === 1) {
-        today = today.filter((item) => item !== "blank");
-      }
-      lastDay = today;
+      case false:
+        if (eventsForDate.length == 0) {
+          lastDay = [];
+        }
+        if (eventsForDate.length > 0) {
+          let today: (EventCardType | "blank")[] = sortEvents(eventsForDate);
 
-      return (
-        <div>
-          {today.map((event, idx) => {
-            if (event === "blank") {
-              return <span key={idx + event} className={`h-4 rounded-sm`} />;
+          for (let idx in today) {
+            const lastDayItem = lastDay[idx];
+            const todayItem = today[idx];
+            if (lastDayItem === todayItem) {
+              continue;
             }
-            let type;
-            const startDate = getCalendarTime(event.startDate);
-            const endDate = getCalendarTime(event.endDate);
-            const currentDate = getCalendarTime(date);
-
-            if (event.startDate === event.endDate) {
-              type = SHAPE_TYPE.oneDay;
-            } else if (startDate === currentDate) {
-              type = SHAPE_TYPE.firstDay;
-            } else if (endDate === currentDate) {
-              type = SHAPE_TYPE.lastDay;
-            } else {
-              type = SHAPE_TYPE.middleDay;
+            if (!lastDayItem) {
+              lastDay[idx] = todayItem;
+              continue;
             }
-            return <span key={event.id} className={`h-4 rounded-sm ${type} ${COLOR_TYPE[1]}`} />;
-          })}
-        </div>
-      );
+            let rpt = 0;
+            while (lastDay[Number(idx) + rpt] !== today[Number(idx) + rpt]) {
+              if (Number(idx) + rpt > lastDay.length) break;
+              today.splice(Number(idx) + rpt, 0, "blank");
+              rpt++;
+            }
+          }
+
+          if (date.getDay() === 1) {
+            today = today.filter((item) => item !== "blank");
+          }
+          lastDay = today;
+
+          return (
+            <div>
+              {today.map((event, idx) => {
+                if (event === "blank") {
+                  return <span key={idx + event} className={`h-4 rounded-sm`} />;
+                }
+                let type;
+                const startDate = getCalendarTime(event.startDate);
+                const endDate = getCalendarTime(event.endDate);
+                const currentDate = getCalendarTime(date);
+                const idNumber = Number((event.id.match(/\d+/g) || ["1"]).join(""));
+
+                if (event.startDate === event.endDate) {
+                  type = SHAPE_TYPE.oneDay;
+                } else if (startDate === currentDate) {
+                  type = SHAPE_TYPE.firstDay;
+                } else if (endDate === currentDate) {
+                  type = SHAPE_TYPE.lastDay;
+                } else {
+                  type = SHAPE_TYPE.middleDay;
+                }
+                return <span key={event.id} className={`h-4 rounded-sm ${type} ${COLOR_TYPE[idNumber % 6]}`} />;
+              })}
+            </div>
+          );
+        }
     }
 
     return null;
@@ -109,8 +137,21 @@ const EventTab = () => {
     setSelectedDate(date);
   };
 
-  const handleHeartClick = () => {
-    console.log("내 행사 데이터 다시 받아오기");
+  const handleHeartClick = async (eventId: string) => {
+    const res = await instance.post("/event/like", {
+      userId: ID,
+      eventId: eventId,
+    });
+
+    if (res.error) {
+      throw new Error(res.error);
+    }
+
+    setData(
+      data.filter((event) => {
+        return event.id !== eventId;
+      }),
+    );
   };
 
   const handleChipClick = (label: StatueType) => {
@@ -130,13 +171,9 @@ const EventTab = () => {
     }
   };
 
-  const [isFold, setIsFold] = useState(true);
-
   const handleClick = () => {
     setIsFold((prev) => !prev);
   };
-
-  if (!isSuccess) return;
 
   return (
     <div className="flex flex-col items-center justify-stretch gap-16 px-20 pb-16 pt-72">
@@ -171,13 +208,13 @@ const EventTab = () => {
           <ChipButton label="종료" onClick={() => handleChipClick("종료")} selected={statue === "종료"} />
         </div>
         <ul>
-          {myEventsData
+          {data
             .filter(
               (event: EventCardType) =>
-                !selectedDate || (new Date(event.startDate).getTime() <= selectedDate.getTime() && new Date(event.endDate).getTime() >= selectedDate.getTime()),
+                !selectedDate || (getCalendarTime(event.startDate) <= getCalendarTime(selectedDate) && getCalendarTime(event.endDate) >= getCalendarTime(selectedDate)),
             )
             .map((event: EventCardType) => (
-              <HorizontalEventCard key={event.id} data={event} hasHeart onHeartClick={handleHeartClick} />
+              <HorizontalEventCard key={event.id} data={event} hasHeart onHeartClick={() => handleHeartClick(event.id)} />
             ))}
         </ul>
       </div>
@@ -185,7 +222,7 @@ const EventTab = () => {
   );
 };
 
-export default EventTab;
+export default MyCalendarTab;
 
 const COLOR_TYPE: Record<number, string> = {
   0: `bg-sub-pink`,
@@ -201,4 +238,10 @@ const SHAPE_TYPE = {
   firstDay: "ml-8 w-44",
   lastDay: "mr-8 w-44",
   middleDay: "w-52",
+};
+
+const COUNT_CHIP_TYPE = {
+  light: "text-main-pink-300 bg-main-pink-50",
+  regular: "text-main-pink-500 bg-main-pink-50",
+  bold: "text-white=white bg-main-pink-500",
 };
