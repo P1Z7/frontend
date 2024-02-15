@@ -21,7 +21,8 @@ const config: Config = {
     },
     zIndex: {
       base: "1",
-      nav: "2",
+      heart: "2",
+      nav: "3",
       popup: "999",
       floating: "1000",
     },
@@ -91,6 +92,10 @@ const config: Config = {
           "0%": { opacity: "0", transform: "translateY(50%)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
         brrr: {
           "25%": { transform: "translateX(2%)" },
           "50%": { transform: "translateX(-2%)" },
@@ -100,6 +105,7 @@ const config: Config = {
       },
       animation: {
         slideUp: "slideUp 0.1s ease-in-out",
+        fadeIn: "fadeIn 0.15s ease-in-out",
         brrr: "brrr 0.2s",
       },
       boxShadow: {

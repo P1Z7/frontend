@@ -1,6 +1,10 @@
 import { format } from "date-fns";
 
-export const formatDate = (startDate: string, endDate: string, extend: boolean = false) => {
+export const formatDate = (startDate: string | null, endDate: string | null, extend: boolean = false) => {
+  if (!(startDate && endDate)) {
+    return;
+  }
+
   const start = new Date(startDate);
   const end = new Date(endDate);
 

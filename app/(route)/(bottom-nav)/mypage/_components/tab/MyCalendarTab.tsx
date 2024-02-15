@@ -152,11 +152,11 @@ const EventTab = ({ scheduleData }: { scheduleData: ScheduleDataProps[] }) => {
           <ChipButton label="종료" onClick={() => handleChipClick("종료")} selected={currentLabel === "종료"} />
         </div>
         <ul>
-          {data
+          {/* {data
             .filter((event) => !selectedDate || (new Date(event.startDate).getTime() <= selectedDate.getTime() && new Date(event.endDate).getTime() >= selectedDate.getTime()))
             .map((event) => (
               <HorizontalEventCard key={event.id} data={event} hasHeart onHeartClick={handleHeartClick} />
-            ))}
+            ))} */}
         </ul>
       </div>
     </div>
