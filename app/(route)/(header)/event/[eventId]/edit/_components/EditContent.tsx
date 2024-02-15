@@ -56,7 +56,9 @@ const EditContent = () => {
       <MainInput />
       <SubInput />
       <DetailInput />
-      <BottomButton isDisabled={!isValid}>수정사항 등록</BottomButton>
+      <BottomButton isDisabled={!isValid} isSubmit>
+        수정사항 등록
+      </BottomButton>
     </div>
   );
 };
