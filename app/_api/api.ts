@@ -108,7 +108,8 @@ type PostEndPoint =
   | `/reviews/${string}/like`
   | "/email"
   | "/email/verification"
-  | "/event/update/application";
+  | "/event/update/application"
+  | "/event/update/approval";
 
 type PutEndPoint = `/event/${string}`;
 type DeleteEndPoint = `/users/${string}/artists` | `/reviews/${string}/images`;
@@ -140,7 +141,9 @@ type PostBodyType<T> = T extends "/event"
                         ? Req_Post_Type["verification"]
                         : T extends "/event/update/application"
                           ? Req_Post_Type["edit"]
-                          : unknown;
+                          : T extends "/event/update/approval"
+                            ? Req_Post_Type["approve"]
+                            : unknown;
 
 type GetQueryType<T> = T extends "/event"
   ? Req_Query_Type["행사목록"]

@@ -91,6 +91,11 @@ type Req_Post_Edit_Application = EditContentType & {
   isAgreed: boolean;
 };
 
+type Req_Post_Approval = {
+  eventUpdateApplicationId: string;
+  isApproved: boolean;
+};
+
 export type Req_Post_Type = {
   event: Req_Post_Event;
   eventLike: Req_Post_Event_Like;
@@ -104,4 +109,5 @@ export type Req_Post_Type = {
   email: Req_Post_Email;
   verification: Req_Post_Verification;
   edit: Req_Post_Edit_Application;
+  approve: Req_Post_Approval;
 };

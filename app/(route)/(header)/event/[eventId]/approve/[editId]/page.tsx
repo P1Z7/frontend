@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { Api } from "@/api/api";
 import { CategoryType, EditContentType, LabelType, PostValueType } from "@/types/index";
 import { LABEL_BY_CATEGORY } from "@/constants/post";
@@ -19,8 +20,8 @@ import EditBox from "./_components/EditBox";
 const EditDetailApprove = () => {
   const [originData, setOriginData] = useState<EditContentType>();
   const { editId } = useParams();
-  const instance = new Api();
-  const { data, isSuccess } = useQuery({
+  const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
+  const { data, isSuccess, refetch } = useQuery({
     queryKey: ["approveDetail", editId],
     queryFn: async () => {
       return instance.get(`/event/update/application/${editId}`, { eventUpdateApplicationId: String(editId) });
@@ -40,6 +41,14 @@ const EditDetailApprove = () => {
       setOriginData(data.originEvent);
     }
   }, [data]);
+
+  const handleApplicationSubmit = async (isApproved: boolean) => {
+    const res = await instance.post("/event/update/approval", { eventUpdateApplicationId: String(editId), isApproved });
+    refetch();
+    if (res.statusCode === 409) {
+      toast("이미 승인/거절한 요청입니다!", { className: "text-14" });
+    }
+  };
 
   return (
     <div className="flex flex-col gap-20 px-20 py-16 pb-96 text-16 font-500 text-gray-900">
@@ -99,7 +108,7 @@ const EditDetailApprove = () => {
           )}
         </>
       )}
-      <BottomDoubleButton onClickLeft={() => console.log("거절")} onClickRight={() => console.log("승인")} />
+      <BottomDoubleButton onClickLeft={() => handleApplicationSubmit(false)} onClickRight={() => handleApplicationSubmit(true)} />
     </div>
   );
 };
