@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import Chip from "@/components/chip/Chip";
 import { GiftType } from "@/types/index";
+import { EDIT_ERR_MSG } from "@/constants/errorMsg";
 import { SnsIcon } from "@/constants/snsIcon";
 
 interface ImageEditProps {
@@ -17,12 +18,13 @@ export const ImageEdit = ({ imgList }: ImageEditProps) => {
 
   return (
     <div className="flex gap-8 overflow-x-scroll scrollbar-hide">
-      {imgList.length > 0 &&
-        imgList.map((url: string) => (
-          <div key={url} className={classNames("relative h-120 w-120 flex-shrink-0", { "cursor-pointer": isPreview })} onClick={() => (isPreview ? router.push(url) : null)}>
-            <Image alt="수정된 행사 이미지" src={url} fill sizes="12rem, 12rem" className="object-cover" />
-          </div>
-        ))}
+      {imgList.length > 0
+        ? imgList.map((url: string) => (
+            <div key={url} className={classNames("relative h-120 w-120 flex-shrink-0", { "cursor-pointer": isPreview })} onClick={() => (isPreview ? router.push(url) : null)}>
+              <Image alt="수정된 행사 이미지" src={url} fill sizes="12rem, 12rem" className="object-cover" />
+            </div>
+          ))
+        : EDIT_ERR_MSG["noInfo"]}
     </div>
   );
 };
@@ -49,8 +51,14 @@ interface OrganizerEditProps {
 export const OrganizerEdit = ({ snsType, snsId }: OrganizerEditProps) => {
   return (
     <div className="flex items-center gap-4 text-16 text-gray-900">
-      {SnsIcon[snsType]}
-      <p className="truncate">{snsId}</p>
+      {snsId ? (
+        <>
+          {SnsIcon[snsType]}
+          <p className="truncate">{snsId}</p>
+        </>
+      ) : (
+        EDIT_ERR_MSG["noInfo"]
+      )}
     </div>
   );
 };
@@ -61,11 +69,7 @@ interface TagEditProps {
 
 export const TagEdit = ({ tagList }: TagEditProps) => {
   return (
-    <div className="flex flex-wrap gap-4">
-      {tagList.map((gift: GiftType) => (
-        <Chip key={gift} kind="goods" label={gift} />
-      ))}
-    </div>
+    <div className="flex flex-wrap gap-4">{tagList.length === 0 ? EDIT_ERR_MSG["noInfo"] : tagList.map((gift: GiftType) => <Chip key={gift} kind="goods" label={gift} />)}</div>
   );
 };
 

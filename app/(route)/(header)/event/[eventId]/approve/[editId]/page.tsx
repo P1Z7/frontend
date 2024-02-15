@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Api } from "@/api/api";
 import { CategoryType, EditContentType, LabelType, PostValueType } from "@/types/index";
+import { EDIT_ERR_MSG } from "@/constants/errorMsg";
 import { LABEL_BY_CATEGORY, exceptionList } from "@/constants/post";
 import LinkIcon from "@/public/icon/link.svg";
 import IdIcon from "@/public/icon/user.svg";
@@ -44,8 +45,8 @@ const EditDetailApprove = () => {
   const handleApplicationSubmit = async (isApproved: boolean) => {
     const res = await instance.post("/event/update/approval", { eventUpdateApplicationId: String(editId), isApproved, userId: "edit-api" });
     refetch();
-    if (res.statusCode === 409) {
-      toast("이미 승인/거절한 요청입니다!", { className: "text-14" });
+    if (res.error) {
+      toast(EDIT_ERR_MSG[res.statusCode as "409" | "500"], { icon: "⚠️", className: "text-14 !text-red font-600" });
     }
   };
 
@@ -60,7 +61,7 @@ const EditDetailApprove = () => {
                 (exceptionList.includes(LABEL_BY_CATEGORY[data.applicationDetail.updateCategory as CategoryType] as LabelType) ? (
                   <RenderException editContent={originData} instance={instance} type={LABEL_BY_CATEGORY[data.applicationDetail.updateCategory as CategoryType] as LabelType} />
                 ) : (
-                  <>{originData[data.applicationDetail.updateCategory as PostValueType]}</>
+                  <>{originData[data.applicationDetail.updateCategory as PostValueType] || EDIT_ERR_MSG["noInfo"]}</>
                 ))}
             </EditBox>
             <EditBox isEdited>
