@@ -54,7 +54,7 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
   };
 
   return (
-    <div className="flex flex-col gap-20 pt-36">
+    <div className="flex flex-col gap-20 pb-160 pt-36">
       <div className="flex items-end gap-8">
         <InputText
           isSuccess={canWrite}
@@ -128,7 +128,8 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
       >
         비밀번호 확인
       </InputText>
-      <BottomButton onClick={onNext} isDisabled={isButtonDisabled}>
+      <BottomButton onClick={onNext}>
+        {/* <BottomButton onClick={onNext} isDisabled={isButtonDisabled}> */}
         다음으로
       </BottomButton>
     </div>
