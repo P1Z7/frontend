@@ -26,10 +26,10 @@ const Edit = () => {
       INITIAL_DATA = {
         placeName,
         eventType,
-        groupId: targetArtists[0].groupId,
-        groupName: targetArtists[0].groupName,
+        groupId: targetArtists[0].groupId || "",
+        groupName: targetArtists[0].groupId ? targetArtists[0].groupName : targetArtists[0].artistName,
         artists,
-        artistNames,
+        artistNames: targetArtists[0].groupId ? artistNames : [],
         startDate: format(startDate, "yyyy.MM.dd"),
         endDate: format(endDate, "yyyy.MM.dd"),
         address,

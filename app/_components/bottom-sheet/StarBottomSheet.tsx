@@ -71,7 +71,7 @@ const StarBottomSheet = ({ closeBottomSheet, refs, isFirst = false }: Props) => 
   return (
     <BottomSheet.Frame closeBottomSheet={closeBottomSheet} ref={refs.sheet}>
       <BottomSheet.Title>아티스트 선택</BottomSheet.Title>
-      <div className="flex flex-col gap-24 px-24 pt-16 text-16">
+      <div className="flex flex-col gap-24 px-24 pt-16 text-16" ref={refs.content}>
         {groupId ? (
           <div className="flex flex-col gap-12">
             <GroupTitle setGroupId={setGroupId} />
