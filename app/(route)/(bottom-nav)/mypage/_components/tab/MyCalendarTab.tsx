@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
@@ -13,6 +14,7 @@ import NextIcon from "@/public/icon/arrow-left_lg.svg";
 import PrevIcon from "@/public/icon/arrow-right_lg.svg";
 import ArrowUpIcon from "@/public/icon/arrow-up_sm.svg";
 import { ScheduleDataProps } from "../../page";
+import { getCalendarTime } from "./getCalendarTime";
 
 type StatueType = "" | "예정" | "종료" | "진행중" | "종료제외";
 
@@ -32,9 +34,13 @@ const EventTab = () => {
   let lastDay: (ScheduleDataProps | "blank")[] = [];
 
   const tileContent = ({ date }: { date: Date }) => {
-    const eventsForDate = myEventsData.filter(
-      (event: EventCardType) => new Date(event.startDate).getTime() <= date.getTime() && new Date(event.endDate).getTime() >= date.getTime(),
-    );
+    const eventsForDate = myEventsData.filter((event: EventCardType) => {
+      const startDate = getCalendarTime(event.startDate);
+      const endDate = getCalendarTime(event.endDate);
+      const currentDate = getCalendarTime(date);
+
+      return startDate <= currentDate && endDate >= currentDate;
+    });
 
     if (eventsForDate.length > 0) {
       let today: (ScheduleDataProps | "blank")[] = sortEvents(eventsForDate);
@@ -69,11 +75,15 @@ const EventTab = () => {
               return <span key={idx + event} className={`h-4 rounded-sm`} />;
             }
             let type;
+            const startDate = getCalendarTime(event.startDate);
+            const endDate = getCalendarTime(event.endDate);
+            const currentDate = getCalendarTime(date);
+
             if (event.startDate === event.endDate) {
               type = SHAPE_TYPE.oneDay;
-            } else if (new Date(event.startDate).getTime() === date.getTime()) {
+            } else if (startDate === currentDate) {
               type = SHAPE_TYPE.firstDay;
-            } else if (new Date(event.endDate).getTime() === date.getTime()) {
+            } else if (endDate === currentDate) {
               type = SHAPE_TYPE.lastDay;
             } else {
               type = SHAPE_TYPE.middleDay;
