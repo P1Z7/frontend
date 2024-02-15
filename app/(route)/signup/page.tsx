@@ -12,10 +12,12 @@ const STEPS: SignupStepNameType[] = ["계정 정보", "프로필 정보", "아�
 const DEFAULT_VALUES = {
   email: "",
   password: "",
-  passwordCh: "",
+  passwordCheck: "",
   profileImg: "",
   nickName: "",
   myArtists: [],
+  myArtistsInfo: [],
+  code: "",
 };
 
 const SignUp = () => {

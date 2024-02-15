@@ -1,9 +1,8 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import InfiniteScroll from "react-infinite-scroller";
+import { Api } from "app/_api/api";
 import ArtistCard from "@/components/ArtistCard";
-import { Api } from "@/api/api";
 import { Res_Get_Type } from "@/types/getResType";
 
 const ArtistList = () => {
