@@ -25,7 +25,7 @@ const VerticalEventCard = ({ data }: Props) => {
   return (
     <Link href={`/event/${data.id}`} className="border-black flex w-148 cursor-pointer flex-col gap-12">
       <div className="relative h-196 w-148">
-        <div className="absolute right-8 top-8 z-nav">
+        <div className="z-heart absolute right-8 top-8">
           <HeartButton isSelected={!!data.likeCount} onClick={handleHeartClick} />
         </div>
         <Image
