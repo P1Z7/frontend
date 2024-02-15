@@ -89,7 +89,7 @@ const Banner = ({ data, eventId }: Props) => {
             <MapIcon {...IconStyleProps} />
             {`${data.address} ${data.addressDetail}`}
           </SubDescription>
-          <SubDescription>
+          <SubDescription isVisible={Boolean(data.eventTags.length !== 0)}>
             <GiftIcon {...IconStyleProps} />
             <div className="flex items-center gap-4">
               {data.eventTags.map((tag) => (
