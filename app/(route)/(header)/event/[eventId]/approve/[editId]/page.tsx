@@ -1,6 +1,9 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
+import { useParams } from "next/navigation";
+import { Api } from "@/api/api";
 import LinkIcon from "@/public/icon/link.svg";
 import IdIcon from "@/public/icon/user.svg";
 import BottomDoubleButton from "../../_components/BottomDoubleButton";
@@ -8,6 +11,17 @@ import ReactionIcon from "../_components/ReactionIcon";
 import EditBox from "./_components/EditBox";
 
 const EditDetailApprove = () => {
+  const { editId } = useParams();
+  const instance = new Api();
+  const { data } = useQuery({
+    queryKey: ["approveDetail", editId],
+    queryFn: async () => {
+      return instance.get(`/event/update/application/${editId}`, { eventUpdateApplicationId: String(editId) });
+    },
+  });
+
+  console.log(data);
+
   return (
     <div className="flex flex-col gap-20 px-20 py-16 pb-96 text-16 font-500 text-gray-900">
       <section className="flex flex-col gap-4">

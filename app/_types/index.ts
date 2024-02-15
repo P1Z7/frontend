@@ -201,3 +201,34 @@ export interface approveArtistType {
   groupId: string;
   artists: string[];
 }
+
+export type EditContentType = {
+  placeName?: string;
+  eventType?: EventType;
+  groupId?: string;
+  artists?: string[];
+  startDate?: string;
+  endDate?: string;
+  address?: string;
+  addressDetail?: string;
+  eventImages?: string[];
+  description?: string;
+  eventUrl?: string;
+  organizerSns?: string;
+  snsType?: SnsType;
+  tags?: GiftType[];
+  groupName?: string;
+  artistNames?: string;
+};
+
+export type EditApplicationType = {
+  id: string;
+  eventId: string;
+  userId: string;
+  updateCategory: CategoryType;
+  updateData: string;
+  approvalCount: string;
+  rejectionCount: string;
+  isReflected: boolean;
+  createdAt: string;
+};

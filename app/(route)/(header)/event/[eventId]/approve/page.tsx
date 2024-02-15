@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { Api } from "@/api/api";
-import { CategoryType, LabelType } from "@/types/index";
+import { EditApplicationType, LabelType } from "@/types/index";
 import { LABEL_BY_CATEGORY } from "@/constants/post";
 import EditCard from "./_components/EditCard";
 
@@ -25,14 +25,14 @@ const EditApprove = () => {
       </section>
       {isLoading && <div>로딩중</div>}
       {isSuccess &&
-        data.map(({ id, approvalCount, rejectionCount, updateCategory, updateData, createdAt }: any) => (
+        data.map(({ id, approvalCount, rejectionCount, updateCategory, updateData, createdAt }: EditApplicationType) => (
           <EditCard
             key={id}
             id={id}
             category={updateCategory}
-            type={LABEL_BY_CATEGORY[updateCategory as CategoryType] as LabelType}
-            editContent={updateCategory === "eventImages" ? {} : JSON.parse(updateData)}
-            count={{ approve: approvalCount, decline: rejectionCount }}
+            type={LABEL_BY_CATEGORY[updateCategory] as LabelType}
+            editContent={JSON.parse(updateData)}
+            count={{ approve: Number(approvalCount), decline: Number(rejectionCount) }}
             createdAt={createdAt}
           />
         ))}

@@ -1,8 +1,8 @@
-import { CategoryType } from ".";
+import { CategoryType, EditContentType, EventType, SnsType } from ".";
 
 type Req_Post_Event = {
   placeName: string;
-  eventType: "카페" | "팝업스토어";
+  eventType: EventType;
   groupId?: string;
   artists: string[];
   startDate: string;
@@ -14,7 +14,7 @@ type Req_Post_Event = {
   description?: string;
   eventUrl?: string;
   organizerSns?: string;
-  snsType?: "인스타그램" | "트위터" | "유튜브" | "기타";
+  snsType?: SnsType;
   tags?: string[];
   isAgreed: boolean;
 };
@@ -84,27 +84,11 @@ type Req_Post_Verification = {
   verificationNumber: number | string;
 };
 
-type Req_Post_Edit_Application = {
+type Req_Post_Edit_Application = EditContentType & {
   eventId: string;
   updateCategory: CategoryType[];
   userId: string;
-  placeName?: string;
-  eventType?: string;
-  groupId?: string;
-  artists?: string[];
-  startDate?: string;
-  endDate?: string;
-  address?: string;
-  addressDetail?: string;
-  eventImages?: string[];
-  description?: string;
-  eventUrl?: string;
-  organizerSns?: string;
-  snsType?: string;
-  tags?: string[];
   isAgreed: boolean;
-  groupName?: string;
-  artistNames?: string;
 };
 
 export type Req_Post_Type = {
