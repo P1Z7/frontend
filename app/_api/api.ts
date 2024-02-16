@@ -16,6 +16,12 @@ export class Api {
     this.accessToken = token;
   }
 
+  private makeError(result: any) {
+    if (result.message) {
+      throw new Error(result.message);
+    }
+  }
+
   private makeQueryString<T>(queryObj: GetQueryType<T> | PostQueryType<T>) {
     this.queryString = "?";
     if (queryObj) {
@@ -39,7 +45,10 @@ export class Api {
         Authorization: `Bearer ${this.accessToken}`,
       },
     });
-    return await res.json();
+    const result = await res.json();
+    this.makeError(result);
+
+    return result;
   }
 
   async post<T extends PostEndPoint>(endPoint: T, body: PostBodyType<T>, queryObj?: PostQueryType<T>) {
@@ -56,7 +65,10 @@ export class Api {
         credentials: "include",
       },
     });
-    return STR_RES_ENDPOINT.includes(endPoint) ? await res.text() : await res.json();
+    const result = STR_RES_ENDPOINT.includes(endPoint) ? await res.text() : await res.json();
+    this.makeError(result);
+
+    return result;
   }
 
   async put<T extends PutEndPoint>(endPoint: T, body: PutBodyType<T>) {
@@ -69,7 +81,10 @@ export class Api {
         Authorization: `Bearer ${this.accessToken}`,
       },
     });
-    return await res.json();
+    const result = await res.json();
+    this.makeError(result);
+
+    return result;
   }
 
   async delete<T extends DeleteEndPoint>(endPoint: T, body: DeleteBodyType<T>) {
@@ -81,9 +96,14 @@ export class Api {
         Authorization: `Bearer ${this.accessToken}`,
       },
     });
-    return await res.json();
+    const result = await res.json();
+    this.makeError(result);
+
+    return result;
   }
 }
+
+export const instance = new Api();
 
 type GetEndPoint = "/event" | "/event/like" | `/event/${string}` | "/artist/group" | `/artist/${string}` | "/group/solo" | `/reviews/${string}` | "/users/nickname";
 

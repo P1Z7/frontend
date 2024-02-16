@@ -20,7 +20,7 @@ const WithdrawModal = ({ closeModal }: Props) => {
       return;
     }
 
-    const api = new Api();
+    const api = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
     const res = await api.delete(`/users/${session.user.userId}`, undefined);
     if (res.statusCode === 200) {
       toast("지금까지 Opener와 함께해 주셔서 감사합니다!", {

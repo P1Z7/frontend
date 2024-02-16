@@ -36,9 +36,7 @@ const PasswordPage = () => {
     }
     setSubmitState({ isLoading: true, isError: false });
     setTimeout(async () => {
-      const api = new Api(
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmYTc1ODhiMi1kYzY5LTRlNjgtOTExNi1jOWUwZGEyOTRhYmQiLCJ1c2VybmFtZSI6Iuq5gO2VmOuKmCIsImlhdCI6MTcwODAzMjMxMCwiZXhwIjoxNzA4MDM1OTEwfQ.XvWs7r8_JibEHCmS0-7E04dCq25tbpf5Pl7Nm_78P7I",
-      );
+      const api = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
 
       try {
         const res = await api.put(`/users/${session.user.userId}/password`, { password: newPw, passwordCheck: newPwCheck });

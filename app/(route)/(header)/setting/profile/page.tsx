@@ -36,9 +36,7 @@ const ProfilePage = () => {
     setSubmitState((prev) => ({ isError: false, isLoading: true }));
 
     setTimeout(async () => {
-      const api = new Api(
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmYTc1ODhiMi1kYzY5LTRlNjgtOTExNi1jOWUwZGEyOTRhYmQiLCJ1c2VybmFtZSI6Iuq5gO2VmOuKmCIsImlhdCI6MTcwODAzMjk3MywiZXhwIjoxNzA4MDM2NTczfQ.cWff9EeRW1Q9Xi0FdmqzbC9V0-7m_363ZrLZjyoti1o",
-      );
+      const api = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
 
       try {
         let url;
