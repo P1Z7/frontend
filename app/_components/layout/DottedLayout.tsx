@@ -12,10 +12,13 @@ interface Props {
 
 const DottedLayout = ({ children, type }: Props) => {
   return (
-    <div className="w-full bg-contain bg-repeat-y px-20 tablet:bg-[url('/image/dotted-background.png')]">
-      <div className={`mx-auto ${MAX_X[type]} bg-white-black`}>{children}</div>
-      <div />
-    </div>
+    <>
+      <div className="pc:hidden">{children}</div>
+      <div className="hidden w-full bg-[url('/image/dotted-background.png')] bg-contain bg-repeat-y px-20 pc:block">
+        <div className={`mx-auto ${MAX_X[type]} bg-white-black`}>{children}</div>
+        <div />
+      </div>
+    </>
   );
 };
 

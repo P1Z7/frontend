@@ -43,7 +43,7 @@ const ReviewTab = ({ eventId }: Props) => {
   const isEmpty = reviews?.pages[0].length === 0;
 
   return (
-    <div className="w-full bg-white-black pt-16 tablet:px-40 tablet:py-32">
+    <div className="w-full bg-white-black pt-16 pc:px-40 pc:py-32">
       <div className="min-h-300 w-full text-center">
         {isEmpty ? (
           <span className="text-14 font-500 text-gray-500">등록된 후기가 없습니다.</span>
