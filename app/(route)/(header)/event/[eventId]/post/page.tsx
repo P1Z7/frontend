@@ -9,7 +9,7 @@ import WarningCheck from "@/components/WarningCheck";
 import Button from "@/components/button";
 import InputArea from "@/components/input/InputArea";
 import InputFile from "@/components/input/InputFile";
-import { Api } from "@/api/api";
+import { instance } from "@/api/api";
 import { useStore } from "@/store/index";
 import { makeImgUrlList } from "@/utils/changeImgUrl";
 import PartyIcon from "@/public/icon/party.svg";
@@ -64,7 +64,6 @@ const ReviewPostPage = () => {
 
   const isDisabled = !(isDirty && isValid && isEvaluated && isCheck && isPublic !== null);
 
-  const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
   const { eventId } = useParams();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);

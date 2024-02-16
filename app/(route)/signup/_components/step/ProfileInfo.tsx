@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Api } from "app/_api/api";
+import { instance } from "app/_api/api";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import BottomButton from "@/components/button/BottomButton";
@@ -10,7 +10,6 @@ import { SignUpFormType } from "@/types/index";
 const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
   const { formState, control } = useFormContext<SignUpFormType>();
   const [current, setCurrent] = useState("");
-  const instance = new Api();
 
   const { data } = useQuery({
     queryKey: ["nickname", current],
@@ -28,8 +27,8 @@ const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
         name="nickName"
         placeholder="닉네임을 입력해주세요"
         rules={{
-          required: ERROR_MESSAGES.nickname.nicknameField,
-          pattern: { value: REG_EXP.CHECK_NICKNAME, message: ERROR_MESSAGES.nickname.nicknamePattern },
+          required: ERROR_MESSAGES.nickName.nickNameField,
+          pattern: { value: REG_EXP.CHECK_NICKNAME, message: ERROR_MESSAGES.nickName.nickNamePattern },
           validate: {
             isDuplicated: (value) => {
               setCurrent(value);

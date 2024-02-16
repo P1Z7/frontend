@@ -9,7 +9,6 @@ import { handleEnterDown } from "@/utils/handleEnterDown";
 import { PostType } from "../../page";
 
 const MainInput = () => {
-  const { modal, openModal, closeModal } = useModal();
   const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
   const {
     formState: { defaultValues },

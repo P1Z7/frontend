@@ -15,9 +15,11 @@ const PcHeader = () => {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-nav hidden h-72 w-full bg-white-black px-24 tablet:block">
+    <header className="sticky top-0 z-nav hidden h-72 w-full bg-white-black px-24 pc:block">
       <div className="mx-auto flex h-full max-w-[104rem] items-center justify-between">
-        <LogoIcon />
+        <Link href="/">
+          <LogoIcon />
+        </Link>
         <div className="flex gap-16">
           <NavButton icon={<HomeIcon />} label="홈" href={"/"} isActive={pathname === "/"} />
           <NavButton icon={<SearchIcon />} label="둘러보기" href={"/search"} isActive={pathname === "/search"} />

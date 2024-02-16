@@ -32,7 +32,7 @@ const MobileHeader = ({ handleClick }: Props) => {
 
   return (
     <>
-      <header className="sticky left-0 top-0 z-nav flex h-72 w-full justify-between border-b border-gray-50 bg-white-white px-20 pb-12 pt-36 tablet:hidden">
+      <header className="sticky left-0 top-0 z-nav flex h-72 w-full justify-between border-b border-gray-50 bg-white-white px-20 pb-12 pt-36 pc:hidden">
         <button onClick={handleClick || (() => router.back())} className="z-nav">
           <ArrowLeft />
         </button>

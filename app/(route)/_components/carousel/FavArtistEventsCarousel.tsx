@@ -1,18 +1,16 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { instance } from "app/_api/api";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Api } from "@/api/api";
 import { Res_Get_Type } from "@/types/getResType";
 import Carousel from "./Carousel";
 
 const FavArtistEventsCarousel = () => {
   const [status, setStatus] = useState(false);
-
-  const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
 
   const {
     data: favArtistEvent,

@@ -1,7 +1,7 @@
 "use client";
 
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { Api } from "app/_api/api";
+import { Api, instance } from "app/_api/api";
 import { usePathname } from "next/navigation";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { Res_Get_Type } from "@/types/getResType";
@@ -16,7 +16,6 @@ interface Props {
 }
 
 const ReviewTab = ({ eventId }: Props) => {
-  const instance = new Api();
   const pathname = usePathname();
 
   const getReviews = async ({ pageParam = 1 }) => {
@@ -40,9 +39,17 @@ const ReviewTab = ({ eventId }: Props) => {
     deps: [reviews],
   });
 
+  const isEmpty = reviews?.pages[0].length === 0;
+
   return (
-    <div className="w-full bg-white-black pt-16 tablet:px-40 tablet:py-32">
-      <div className="w-full">{reviews?.pages.map((page) => page.map((review) => <EventReview key={review.id} data={review} />))}</div>
+    <div className="w-full bg-white-black pt-16 pc:px-40 pc:py-32">
+      <div className="min-h-300 w-full text-center">
+        {isEmpty ? (
+          <span className="text-14 font-500 text-gray-500">등록된 후기가 없습니다.</span>
+        ) : (
+          reviews?.pages.map((page) => page.map((review) => <EventReview key={review.id} data={review} />))
+        )}
+      </div>
       <div ref={containerRef} className="h-16 w-full" />
       <BottomButton />
     </div>

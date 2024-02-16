@@ -1,13 +1,12 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { Api } from "@/api/api";
+import { instance } from "app/_api/api";
+import VerticalEventCard from "@/components/card/VerticalEventCard";
 import { Res_Get_Type } from "@/types/getResType";
 import Carousel from "./Carousel";
 
 const NewestEventsCarousel = () => {
-  const instance = new Api();
-
   const {
     data: newestEvents,
     isLoading,

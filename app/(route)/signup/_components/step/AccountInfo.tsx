@@ -1,7 +1,6 @@
-import { Api } from "app/_api/api";
+import { instance } from "app/_api/api";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import toast from "react-hot-toast";
 import Button from "@/components/button";
 import BottomButton from "@/components/button/BottomButton";
 import InputText from "@/components/input/InputText";
@@ -11,7 +10,6 @@ import { SignUpFormType } from "@/types/index";
 const AccountInfo = ({ onNext }: { onNext: () => void }) => {
   const { formState, control, getValues, watch, setError } = useFormContext<SignUpFormType>();
   const { email, password, passwordCheck, code } = watch();
-  const instance = new Api();
   const [canWrite, setCanWrite] = useState(false);
   const [isVerification, setIsVerification] = useState(false);
 

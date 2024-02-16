@@ -9,7 +9,8 @@ import GiftBottomSheet from "@/components/bottom-sheet/GiftsBottomSheet";
 import SmallRegionBottomSheet from "@/components/bottom-sheet/SmallRegionBottomSheet";
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
 import SearchInput from "@/components/input/SearchInput";
-import { Api } from "@/api/api";
+import DottedLayout from "@/components/layout/DottedLayout";
+import { instance } from "@/api/api";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { formatDate } from "@/utils/formatString";
@@ -114,7 +115,6 @@ const SearchPage = () => {
     router.push(pathname + "?" + newQuery);
   }, [keyword, sort, filter]);
 
-  const instance = new Api();
   const queryClient = useQueryClient();
 
   const getEvents = async ({ pageParam = 1 }) => {
@@ -150,6 +150,8 @@ const SearchPage = () => {
     deps: [events],
   });
 
+  const isEmpty = events?.pages[0].eventList.length === 0;
+
   useEffect(() => {
     queryClient.removeQueries({ queryKey: ["search"] });
     refetch();
@@ -172,14 +174,14 @@ const SearchPage = () => {
   }, [position]);
 
   return (
-    <>
-      <main className="relative w-full px-20 pb-84 pt-160">
-        <section className="fixed left-0 top-0 z-nav flex w-full flex-col bg-white-black text-14 text-gray-500 shadow-top">
-          <div className="bg-white-black px-20 pb-8 pt-40">
-            <SearchInput setKeyword={setKeyword} initialKeyword={initialKeyword} placeholder="최애의 행사를 찾아보세요!" />
+    <DottedLayout type="wide">
+      <main className="relative w-full px-20 pb-84 pt-160 pc:p-0 pc:pb-84">
+        <section className="fixed left-0 right-0 top-0 z-nav flex w-full flex-col bg-white-black text-14 text-gray-500 shadow-top pc:static pc:shadow-none">
+          <div className="bg-white-black px-20 pb-8 pt-40 pc:px-0 pc:pb-20 pc:pt-[7rem]">
+            <SearchInput keyword={keyword} setKeyword={setKeyword} initialKeyword={initialKeyword} placeholder="최애의 행사를 찾아보세요!" />
           </div>
-          <div className={`px-20 pb-8 ${visible ? "block animate-fadeIn" : "hidden"}`}>
-            <div className="flex gap-4 pb-12">
+          <div className={`animate-fadeIn px-20 pb-8 pc:p-0 ${visible ? "block" : "hidden pc:block"}`}>
+            <div className="flex gap-4 pb-12 pc:pb-32">
               <FilterButton onClick={() => openBottomSheet(BOTTOM_SHEET.bigRegion)} selected={Boolean(filter.bigRegion)}>
                 {filter.bigRegion || "시/도"}
               </FilterButton>
@@ -203,14 +205,19 @@ const SearchPage = () => {
               <SortButton onClick={() => setSort("인기순")} selected={sort === "인기순"}>
                 인기순
               </SortButton>
-              <button onClick={resetFilter} type="button" className="ml-auto">
+              <button onClick={resetFilter} type="button" className="ml-auto flex gap-[0.3rem] text-14 text-gray-400">
+                초기화
                 <ResetIcon />
               </button>
             </div>
           </div>
         </section>
-        <section className="flex flex-col items-center">
-          {events?.pages.map((page) => page.eventList.map((event) => <HorizontalEventCard key={event.id} data={event} />))}
+        <section className="flex flex-wrap items-center justify-center gap-x-24">
+          {isEmpty ? (
+            <div className="pt-36 text-14 font-500 text-gray-500">검색 결과가 없습니다.</div>
+          ) : (
+            events?.pages.map((page) => page.eventList.map((event) => <HorizontalEventCard key={event.id} data={event} />))
+          )}
           <div ref={containerRef} className="h-16 w-full" />
         </section>
       </main>
@@ -227,7 +234,7 @@ const SearchPage = () => {
         <CalenderBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} setStartDateFilter={setStartDateFilter} setEndDateFilter={setEndDateFilter} />
       )}
       {bottomSheet === BOTTOM_SHEET.gift && <GiftBottomSheet refs={refs} closeBottomSheet={closeBottomSheet} setGiftsFilter={setGiftsFilter} selected={filter.gifts} />}
-    </>
+    </DottedLayout>
   );
 };
 

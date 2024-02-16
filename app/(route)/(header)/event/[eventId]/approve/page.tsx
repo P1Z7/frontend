@@ -2,14 +2,13 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import { Api } from "@/api/api";
+import { instance } from "@/api/api";
 import { EditApplicationType, LabelType } from "@/types/index";
 import { LABEL_BY_CATEGORY } from "@/constants/post";
 import EditCard from "./_components/EditCard";
 
 const EditApprove = () => {
   const { eventId } = useParams();
-  const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
   const { data, isSuccess, isLoading } = useQuery({
     queryKey: ["approve", eventId],
     queryFn: async () => {
