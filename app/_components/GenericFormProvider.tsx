@@ -29,9 +29,9 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
     }
     if (path === `/event/${eventId}/edit`) {
       //작성 유저
-      // const res = await submitEditWriter(methods.getValues(), instance, eventId);
+      const res = await submitEditWriter(methods.getValues(), instance, eventId);
       //신청 유저
-      await submitEditApplication(instance, defaultValue, userInputValue, eventId);
+      // await submitEditApplication(instance, defaultValue, userInputValue, eventId);
       openModal("endEdit");
     }
     if (path === "/signup") {

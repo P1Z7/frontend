@@ -3,12 +3,11 @@ import { useQuery } from "@tanstack/react-query";
 import { instance } from "app/_api/api";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
+import { useFetchGroupSolo } from "@/hooks/useFetchGroupSolo";
 import { useFetchMember } from "@/hooks/useFetchMember";
-import { useSearch } from "@/hooks/useSearch";
 import { BottomSheetBaseType } from "@/types/index";
 import BackIcon from "@/public/icon/arrow-left_lg.svg";
 import ArtistCard from "../ArtistCard";
-import ArtistList from "../ArtistList";
 import SearchInput from "../input/SearchInput";
 import BottomSheet from "./BottomSheetMaterial";
 
@@ -19,18 +18,7 @@ interface Props extends BottomSheetBaseType {
 const StarBottomSheet = ({ closeBottomSheet, refs, isFirst = false }: Props) => {
   const { setValue, getValues, watch } = useFormContext<PostType>();
   const { groupName, artistNames } = watch();
-  const {
-    data: groupData,
-    isSuccess,
-    isLoading,
-    refetch: refetchGroup,
-  } = useQuery({
-    queryKey: ["group"],
-    queryFn: async () => {
-      return instance.get("/group/solo", { size: 12, page: 1, keyword: keyword });
-    },
-  });
-  const { keyword, setKeyword } = useSearch(refetchGroup);
+  const { setKeyword, groupList, containerRef, isSuccess, isLoading } = useFetchGroupSolo(instance);
   const { groupId, setGroupId, isLoading: isMemberLoading, isSuccess: isMemberSuccess, data: memberData } = useFetchMember(instance, getValues, isFirst);
 
   const handleFirstDepthClick = (type: string, id: string, name: string) => {
@@ -80,40 +68,36 @@ const StarBottomSheet = ({ closeBottomSheet, refs, isFirst = false }: Props) => 
               (memberData.length === 0 ? (
                 <div>데이터가 없어요ㅠㅠ</div>
               ) : (
-                <ArtistList
-                  render={() => (
-                    <>
-                      {memberData.map(({ id, artistName, artistImage }: any) => (
-                        <ArtistCard key={id} profileImage={artistImage} isChecked={getValues("artists").includes(id)} onClick={() => handleMemberClick(id, artistName)}>
-                          {artistName}
-                        </ArtistCard>
-                      ))}
-                    </>
-                  )}
-                />
+                <div className="h-[34rem] overflow-y-scroll">
+                  <div className="flex flex-wrap justify-center gap-16">
+                    {memberData.map(({ id, artistName, artistImage }: any) => (
+                      <ArtistCard key={id} profileImage={artistImage} isChecked={getValues("artists").includes(id)} onClick={() => handleMemberClick(id, artistName)}>
+                        {artistName}
+                      </ArtistCard>
+                    ))}
+                  </div>
+                </div>
               ))}
           </div>
         ) : (
           <>
             <SearchInput setKeyword={setKeyword} />
-            {isLoading && <div>데이터 로딩중 ~~</div>}
+            {isLoading && <div>로딩중</div>}
             {isSuccess && (
-              <ArtistList
-                render={() => (
-                  <>
-                    {groupData.groupAndSoloList.map(({ id, image, name, type }: any) => (
-                      <ArtistCard
-                        key={id}
-                        profileImage={image}
-                        isChecked={getValues("groupId") === id || getValues("artists").includes(id)}
-                        onClick={() => handleFirstDepthClick(type, id, name)}
-                      >
-                        {name}
-                      </ArtistCard>
-                    ))}
-                  </>
-                )}
-              />
+              <div ref={containerRef} className="flex h-[34rem] overflow-y-scroll">
+                <div className="flex flex-wrap justify-center gap-x-16 gap-y-20 px-8">
+                  {groupList.map(({ id, image, name, type }: any) => (
+                    <ArtistCard
+                      key={id}
+                      profileImage={image}
+                      isChecked={getValues("groupId") === id || getValues("artists").includes(id)}
+                      onClick={() => handleFirstDepthClick(type, id, name)}
+                    >
+                      {name}
+                    </ArtistCard>
+                  ))}
+                </div>
+              </div>
             )}
           </>
         )}
