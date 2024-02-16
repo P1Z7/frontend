@@ -53,7 +53,7 @@ const ProfilePage = () => {
           nickName,
         };
 
-        const res = await api.put(`/users/${session.user.userId}/profile`, patchData);
+        const res = await instance.put(`/users/${session.user.userId}/profile`, patchData);
         if (res.message) {
           throw new Error(res.message);
         }
