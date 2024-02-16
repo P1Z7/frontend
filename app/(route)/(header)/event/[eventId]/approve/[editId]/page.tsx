@@ -2,13 +2,15 @@
 
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { instance } from "@/api/api";
 import { CategoryType, EditContentType, LabelType, PostValueType } from "@/types/index";
 import { EDIT_ERR_MSG } from "@/constants/errorMsg";
 import { LABEL_BY_CATEGORY, exceptionList } from "@/constants/post";
+import ApproveIcon from "@/public/icon/edit-approve.svg";
+import DeclineIcon from "@/public/icon/edit-reject.svg";
 import LinkIcon from "@/public/icon/link.svg";
 import IdIcon from "@/public/icon/user.svg";
 import BottomDoubleButton from "../../_components/BottomDoubleButton";
@@ -18,6 +20,8 @@ import RenderException from "../_components/RenderException";
 import EditBox from "./_components/EditBox";
 
 const EditDetailApprove = () => {
+  const router = useRouter();
+  const { eventId } = useParams();
   const [originData, setOriginData] = useState<EditContentType>();
   const { editId } = useParams();
   const { data, isSuccess, refetch } = useQuery({
@@ -45,7 +49,13 @@ const EditDetailApprove = () => {
     const res = await instance.post("/event/update/approval", { eventUpdateApplicationId: String(editId), isApproved, userId: "edit-api" });
     refetch();
     if (res.error) {
-      toast(EDIT_ERR_MSG[res.statusCode as "409" | "500"], { icon: "⚠️", className: "text-14 !text-red font-600" });
+      toast.error(EDIT_ERR_MSG[res.statusCode as "409" | "500"], { className: "text-14 !text-red font-600" });
+    } else {
+      toast(EDIT_ERR_MSG[isApproved ? "approve" : "reject"], {
+        icon: isApproved ? <ApproveIcon width="20" height="20" /> : <DeclineIcon width="20" height="20" />,
+        className: "text-16 font-500",
+      });
+      router.replace(`/event/${eventId}/approve`);
     }
   };
 
