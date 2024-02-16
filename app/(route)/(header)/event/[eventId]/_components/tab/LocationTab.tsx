@@ -21,16 +21,16 @@ const LocationTab = ({ name, address, addressDetail }: MapType) => {
   };
 
   return (
-    <>
+    <div className="tablet:px-40 tablet:py-32">
       <KakaoMap name={name} address={address} />
-      <div className="mb-40 flex w-full flex-col gap-4 border-t border-gray-100 px-20 pb-32 pt-16">
+      <div className="mb-40 flex w-full flex-col gap-4 border-t border-gray-100 px-20 pb-32 pt-16 tablet:px-24">
         <h3 className="text-20 font-500">{name}</h3>
-        <h4 className="text-14 font-500 text-gray-500">{address}</h4>
+        <h4 className="text-14 font-500 text-gray-500 tablet:text-16">{address}</h4>
         <button onClick={handleRedirectToMap} className="text-left text-14 font-500 text-blue">
           지도 앱으로 연결
         </button>
       </div>
-    </>
+    </div>
   );
 };
 

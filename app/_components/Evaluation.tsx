@@ -8,7 +8,7 @@ interface Props {
 const Evaluation = ({ rating }: Props) => {
   return (
     <div
-      className={`flex h-40 w-full items-center gap-8 rounded-sm border px-12 py-8 text-14 font-500 ${rating ? "border-blue bg-sub-blue-bg text-blue" : "border-gray-200 bg-gray-50 text-gray-600"}`}
+      className={`flex h-40 w-full max-w-320 items-center gap-8 rounded-sm border px-12 py-8 text-14 font-500 ${rating ? "border-blue bg-sub-blue-bg text-blue" : "border-gray-200 bg-gray-50 text-gray-600"}`}
     >
       {rating ? (
         <>

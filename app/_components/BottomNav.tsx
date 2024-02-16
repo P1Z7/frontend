@@ -33,7 +33,7 @@ const BottomNav = () => {
   }, [session]);
 
   return (
-    <nav className="fixed bottom-0 left-0 z-nav flex h-72 w-full items-center justify-evenly gap-28 border-t border-gray-50 bg-white-black py-8 shadow-top">
+    <nav className="fixed bottom-0 left-0 z-nav flex h-72 w-full items-center justify-evenly gap-28 border-t border-gray-50 bg-white-black py-8 shadow-top tablet:hidden">
       {navButtons.map((item, index) => (
         <NavButton key={index} href={item.href} icon={item.icon} label={item.label} isActive={pathname === item.href} />
       ))}
@@ -49,7 +49,7 @@ interface NavItemProps {
 }
 
 const NavButton = ({ href, icon, label, isActive }: NavItemProps) => {
-  let clonedIcon = cloneElement(icon, {
+  const clonedIcon = cloneElement(icon, {
     stroke: isActive ? "#FF50AA" : "#494F5A",
   });
 

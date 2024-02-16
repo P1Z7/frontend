@@ -54,12 +54,6 @@ export interface UserType {
   profileImage?: string;
 }
 
-export interface UserType {
-  id: string;
-  nickName: string;
-  profileImage?: string;
-}
-
 export type LabelType = "아티스트" | "행사 유형" | "장소 이름" | "주소" | "기간" | "주최자" | "링크" | "특전" | "이미지" | "상세 내용";
 export type EventType = "카페" | "나눔" | "팬광고" | "팝업스토어" | "상영회" | "기타";
 export type GiftType = "컵홀더" | "포스터" | "스티커" | "티켓" | "포토카드" | "엽서" | "굿즈" | "기타";
@@ -127,6 +121,12 @@ export interface EventImageType {
   deletedAt: string | null;
 }
 
+export interface MyArtistsType {
+  artistId: string;
+  artistName: string;
+  artistImage: string;
+}
+
 export interface TargetArtistType {
   eventId: string;
   artistId: string;
@@ -160,6 +160,7 @@ export interface EventCardType {
   updatedAt?: string | null;
   deletedAt?: string | null;
   likeCount: number;
+  isLike: boolean;
   eventImages: EventImageType[];
   targetArtists: TargetArtistType[];
   eventTags: EventTagType[];
@@ -175,6 +176,26 @@ export interface EventReviewType {
   likeCount: number;
   isLike: boolean;
   user: UserType;
+  reviewImages: { url: string; createdAt: string }[];
+}
+
+export interface MyReviewType {
+  id: string;
+  cursorId: number;
+  isPublic: boolean;
+  isLike: boolean;
+  rating: boolean;
+  likeCount: number;
+  description: string;
+  createdAt: string;
+  event: {
+    id: string;
+    placeName: string;
+    eventType: "카페" | "나눔" | "팬광고" | "팝업스토어" | "상영회" | "기타";
+    address: string;
+    startDate: string;
+    endDate: string;
+  };
   reviewImages: { url: string; createdAt: string }[];
 }
 
@@ -197,3 +218,39 @@ export type PostValueType =
   | "tags";
 
 export type CategoryType = "placeName" | "eventType" | "artist" | "address" | "period" | "tags" | "eventImages" | "organizer" | "eventUrl" | "description";
+
+export interface approveArtistType {
+  groupId: string;
+  artists: string[];
+}
+
+export type EditContentType = {
+  placeName?: string;
+  eventType?: EventType;
+  groupId?: string;
+  artists?: string[];
+  startDate?: string;
+  endDate?: string;
+  address?: string;
+  addressDetail?: string;
+  eventImages?: string[];
+  description?: string;
+  eventUrl?: string;
+  organizerSns?: string;
+  snsType?: SnsType;
+  tags?: GiftType[] | string[];
+  groupName?: string;
+  artistNames?: string;
+};
+
+export type EditApplicationType = {
+  id: string;
+  eventId: string;
+  userId: string;
+  updateCategory: CategoryType;
+  updateData: string;
+  approvalCount: string;
+  rejectionCount: string;
+  isReflected: boolean;
+  createdAt: string;
+};
