@@ -174,7 +174,7 @@ const SearchPage = () => {
 
   return (
     <DottedLayout type="wide">
-      <main className="relative w-full px-20 pb-84 pt-160 tablet:p-0">
+      <main className="relative w-full px-20 pb-84 pt-160 tablet:p-0 tablet:pb-84">
         <section className="fixed left-0 right-0 top-0 z-nav flex w-full flex-col bg-white-black text-14 text-gray-500 shadow-top tablet:static tablet:shadow-none">
           <div className="bg-white-black px-20 pb-8 pt-40 tablet:px-0 tablet:pb-20 tablet:pt-[7rem]">
             <SearchInput keyword={keyword} setKeyword={setKeyword} initialKeyword={initialKeyword} placeholder="최애의 행사를 찾아보세요!" />
@@ -211,7 +211,7 @@ const SearchPage = () => {
             </div>
           </div>
         </section>
-        <section className="flex flex-col items-center">
+        <section className="flex flex-wrap items-center justify-center gap-x-24">
           {events?.pages.map((page) => page.eventList.map((event) => <HorizontalEventCard key={event.id} data={event} />))}
           <div ref={containerRef} className="h-16 w-full" />
         </section>

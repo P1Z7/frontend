@@ -19,7 +19,7 @@ const HorizontalEventCard = ({ data, hasHeart = false, onHeartClick }: Props) =>
   const formattedAddress = formatAddress(data.address);
 
   return (
-    <Link href={`/event/${data.id}`} className="relative flex w-full items-center gap-12 border-b border-gray-50 bg-white-black py-12 tablet:gap-20 tablet:py-20">
+    <Link href={`/event/${data.id}`} className="relative flex w-full max-w-[50.8rem] items-center gap-12 border-b border-gray-50 bg-white-black py-12 tablet:gap-20 tablet:py-20">
       <div className="absolute right-0 top-[1.3rem] tablet:top-[2.75rem]" onClick={(e: SyntheticEvent) => e.preventDefault()}>
         <HeartButton isSmall isSelected={hasHeart} onClick={onHeartClick} />
       </div>
