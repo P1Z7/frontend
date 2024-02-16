@@ -9,6 +9,7 @@ import GiftBottomSheet from "@/components/bottom-sheet/GiftsBottomSheet";
 import SmallRegionBottomSheet from "@/components/bottom-sheet/SmallRegionBottomSheet";
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
 import SearchInput from "@/components/input/SearchInput";
+import DottedLayout from "@/components/layout/DottedLayout";
 import { Api } from "@/api/api";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
@@ -172,11 +173,11 @@ const SearchPage = () => {
   }, [position]);
 
   return (
-    <>
+    <DottedLayout type="wide">
       <main className="relative w-full px-20 pb-84 pt-160">
         <section className="fixed left-0 top-0 z-nav flex w-full flex-col bg-white-black text-14 text-gray-500 shadow-top">
           <div className="bg-white-black px-20 pb-8 pt-40">
-            <SearchInput setKeyword={setKeyword} initialKeyword={initialKeyword} placeholder="최애의 행사를 찾아보세요!" />
+            <SearchInput keyword={keyword} setKeyword={setKeyword} initialKeyword={initialKeyword} placeholder="최애의 행사를 찾아보세요!" />
           </div>
           <div className={`px-20 pb-8 ${visible ? "block animate-fadeIn" : "hidden"}`}>
             <div className="flex gap-4 pb-12">
@@ -227,7 +228,7 @@ const SearchPage = () => {
         <CalenderBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} setStartDateFilter={setStartDateFilter} setEndDateFilter={setEndDateFilter} />
       )}
       {bottomSheet === BOTTOM_SHEET.gift && <GiftBottomSheet refs={refs} closeBottomSheet={closeBottomSheet} setGiftsFilter={setGiftsFilter} selected={filter.gifts} />}
-    </>
+    </DottedLayout>
   );
 };
 

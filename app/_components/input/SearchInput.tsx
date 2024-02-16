@@ -5,12 +5,13 @@ import CloseIcon from "@/public/icon/close.svg";
 import SearchIcon from "@/public/icon/search.svg";
 
 interface Props {
+  keyword?: string;
   setKeyword: Dispatch<SetStateAction<string>>;
   initialKeyword?: string;
   placeholder?: string;
 }
 
-const SearchInput = ({ setKeyword, initialKeyword, placeholder = "검색어를 입력하세요." }: Props) => {
+const SearchInput = ({ keyword, setKeyword, initialKeyword, placeholder = "검색어를 입력하세요." }: Props) => {
   const { register, getValues, setValue, watch } = useForm({
     defaultValues: {
       search: initialKeyword,
@@ -35,20 +36,24 @@ const SearchInput = ({ setKeyword, initialKeyword, placeholder = "검색어를 �
     }
   }, [search]);
 
+  useEffect(() => {
+    setValue("search", keyword);
+  }, [keyword]);
+
   return (
     <div className="relative">
       <input
-        className="h-44 w-full rounded-full bg-gray-50 px-16 py-12 pr-68 text-16 text-black-white placeholder:text-gray-400 focus:outline-none"
+        className="h-44 w-full rounded-full bg-gray-50 px-16 py-12 pr-68 text-16 text-black-white placeholder:text-gray-400 focus:outline-none tablet:h-52 tablet:border tablet:border-gray-100 tablet:bg-white-black tablet:px-20 tablet:pr-76"
         placeholder={placeholder}
         {...register("search")}
         onKeyDown={handleSearchEnter}
         autoComplete="off"
       />
-      <button className="absolute right-12 top-12" type="button" onClick={() => setKeyword(getValues("search") ?? "")}>
+      <button className="flex-center absolute right-12 top-4 h-36 w-36 rounded-full bg-gray-50 tablet:top-8" type="button" onClick={() => setKeyword(getValues("search") ?? "")}>
         <SearchIcon width="20" height="20" stroke="#494F5A" />
       </button>
       {search && (
-        <button className="absolute right-48 top-[1.4rem]" type="button" onClick={handleCloseClick}>
+        <button className="absolute right-48 top-[1.4rem] tablet:right-56 tablet:top-[1.8rem]" type="button" onClick={handleCloseClick}>
           <CloseIcon stroke="#A0A5B1" width="16" height="16" />
         </button>
       )}

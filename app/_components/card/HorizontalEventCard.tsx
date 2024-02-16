@@ -19,7 +19,7 @@ const HorizontalEventCard = ({ data, hasHeart = false, onHeartClick }: Props) =>
   const formattedAddress = formatAddress(data.address);
 
   return (
-    <Link href={`/event/${data.id}`} className="flex w-full items-center gap-12 border-b border-gray-50 bg-transparent py-12">
+    <Link href={`/event/${data.id}`} className="flex w-full items-center gap-12 border-b border-gray-50 bg-white-black py-12">
       <div className="relative h-112 w-84 shrink-0">
         <Image src={data.eventImages?.[0]?.imageUrl ?? NoImage} className="rounded-[0.4rem] object-cover" fill alt="행사 포스터" sizes="82px" />
       </div>
