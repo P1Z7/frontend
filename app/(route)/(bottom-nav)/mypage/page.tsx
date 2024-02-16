@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import Tabs from "@/components/Tabs";
 import { useAuth } from "@/hooks/useAuth";
 import UserProfile from "./_components/UserProfile";
@@ -10,7 +11,7 @@ import MyReviewTab from "./_components/tab/MyReviewTab";
 const MyPage = () => {
   const session = useAuth("/signin");
   if (!session) {
-    return null;
+    return <Suspense />;
   }
   return (
     <div className="flex w-full flex-col gap-24 pb-72">
