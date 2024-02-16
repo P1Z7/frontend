@@ -1,19 +1,11 @@
 import { useEffect } from "react";
-import { ScheduleDataProps } from "../page";
+import { EventCardType } from "@/types/index";
 
 interface Props {
-  scheduleData: ScheduleDataProps[];
-  setLocationInfo: ({ placeName, address }: { placeName: string; address: string }) => void;
+  scheduleData: EventCardType[];
+  setLocationInfo: (data: EventCardType) => void;
   openBottomSheet: (name: string) => void;
 }
-
-const getPlaceId = async (address: string) => {
-  const data = await fetch(`https://dapi.kakao.com/v2/local/search/keyword.json?query=${address}`, {
-    headers: { Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}` },
-  });
-  const ret = await data.json();
-  return ret.documents?.[0].id;
-};
 
 const MyKakaoMap = ({ scheduleData, setLocationInfo, openBottomSheet }: Props) => {
   useEffect(() => {
@@ -27,7 +19,9 @@ const MyKakaoMap = ({ scheduleData, setLocationInfo, openBottomSheet }: Props) =
         const map = new window.kakao.maps.Map(mapContainer, mapOption);
         const geocoder = new window.kakao.maps.services.Geocoder();
 
-        const myMarker = (address: string, placeName: string, eventType: string) => {
+        const myMarker = (data: EventCardType) => {
+          const { address, placeName } = data;
+
           geocoder.addressSearch(address, (result: any, status: any) => {
             if (status === window.kakao.maps.services.Status.OK) {
               const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
@@ -65,7 +59,7 @@ const MyKakaoMap = ({ scheduleData, setLocationInfo, openBottomSheet }: Props) =
               });
 
               window.kakao.maps.event.addListener(marker, "click", () => {
-                setLocationInfo({ placeName: placeName, address: address });
+                setLocationInfo(data);
                 openBottomSheet("location_detail");
               });
 
@@ -74,11 +68,11 @@ const MyKakaoMap = ({ scheduleData, setLocationInfo, openBottomSheet }: Props) =
           });
         };
         for (let i = 0; i < scheduleData.length; i++) {
-          myMarker(scheduleData[i].address, scheduleData[i].placeName, scheduleData[i].eventType);
+          myMarker(scheduleData[i]);
         }
       });
     }
-  }, []);
+  }, [scheduleData]);
 
   return <div id="map" className="h-full w-full" />;
 };

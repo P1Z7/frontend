@@ -52,10 +52,28 @@ const BottomSheetButton = ({ onClick }: BottomSheetButtonProps) => {
   );
 };
 
+const BottomSheetMapFrame = forwardRef<HTMLDivElement, BottomSheetFrameProps>(({ children, closeBottomSheet }, ref) => {
+  return (
+    <BottomSheetPortal>
+      <div onClick={closeBottomSheet} className="fixed bottom-0 left-0 z-popup flex h-screen w-full items-end justify-center">
+        <div
+          ref={ref}
+          onClick={(e: SyntheticEvent) => e.stopPropagation()}
+          className="relative flex max-h-[55.6rem] w-full transform animate-slideUp flex-col overflow-hidden border-t bg-white-black transition duration-150 ease-out"
+        >
+          <div className="overflow-y-auto">{children}</div>
+        </div>
+      </div>
+    </BottomSheetPortal>
+  );
+});
+BottomSheetMapFrame.displayName = "BottomSheetMapFrame";
+
 const BottomSheet = Object.assign(BottomSheetFrame, {
   Frame: BottomSheetFrame,
   Title: BottomSheetTitle,
   Button: BottomSheetButton,
+  MapFrame: BottomSheetMapFrame,
 });
 
 export default BottomSheet;
