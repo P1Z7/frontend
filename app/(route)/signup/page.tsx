@@ -1,11 +1,25 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
+import { ReactNode } from "react";
 import { useFunnel } from "@/hooks/useFunnel";
 import { SignUpFormType, SignupStepNameType } from "@/types/index";
 import ArrowLeft from "@/public/icon/arrow-left_lg.svg";
 import GenericFormProvider from "../../_components/GenericFormProvider";
 import ProfileSetup from "./_components/ProfileSetup";
+
+interface Props {
+  children: ReactNode;
+}
+
+const FixedDottedLayout = ({ children }: Props) => {
+  return (
+    <div className="relative w-screen pc:block pc:h-[calc(100vh-7.2rem)] pc:bg-main-pink-50 pc:bg-[url('/image/dotted-background.png')] pc:bg-contain pc:bg-repeat-y">
+      <div className={`pc:fixed-center bg-white-white pc:h-[75vh] pc:min-h-fit pc:w-[40.8rem] pc:overflow-auto pc:rounded-lg pc:shadow-hero pc:shadow-gray-200`}>{children}</div>
+      <div />
+    </div>
+  );
+};
 
 const STEPS: SignupStepNameType[] = ["계정 정보", "프로필 정보", "아티스트 선택"];
 
@@ -36,14 +50,14 @@ const SignUp = () => {
   };
 
   return (
-    <>
+    <FixedDottedLayout>
       <Header onClick={handlePrevClick} />
       <GenericFormProvider<SignUpFormType> formOptions={{ mode: "onBlur", defaultValues: DEFAULT_VALUES }}>
-        <div className="flex flex-col px-20">
+        <div className="flex h-full flex-col px-20 ">
           <ProfileSetup steps={STEPS} handleNextClick={handleNextClick} Funnel={Funnel} Step={Step} />
         </div>
       </GenericFormProvider>
-    </>
+    </FixedDottedLayout>
   );
 };
 

@@ -105,7 +105,7 @@ const SearchArtist = ({ onClick, myArtists, myArtistsInfo }: Props) => {
       <ul className="flex w-full flex-wrap justify-center gap-x-16 gap-y-20 overflow-hidden px-8">
         {artistData?.pages.map((page) => page.artistAndGroupList.map((artist) => <Card data={artist} onClick={handleArtistClick} myArtists={myArtists} key={artist.id} />))}
       </ul>
-      <div ref={containerRef} className="h-16 w-full pb-160" />
+      <div ref={containerRef} className="h-16 w-full" />
       {modal === "reqArtist" && (
         <InputModal
           title="아티스트 등록 요청"

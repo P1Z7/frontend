@@ -1,7 +1,6 @@
 import { Api } from "app/_api/api";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import toast from "react-hot-toast";
 import Button from "@/components/button";
 import BottomButton from "@/components/button/BottomButton";
 import InputText from "@/components/input/InputText";
@@ -54,8 +53,8 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
   };
 
   return (
-    <div className="flex flex-col gap-20 pb-160 pt-36">
-      <div className="flex items-end gap-8">
+    <div className="relative flex h-full flex-col items-stretch gap-20 pt-36">
+      <div className="flex items-end gap-8 ">
         <InputText
           isSuccess={canWrite}
           noButton
