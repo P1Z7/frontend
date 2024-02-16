@@ -13,14 +13,14 @@ const EventReview = ({ data }: Props) => {
   return (
     <div className="flex flex-col gap-16 border-b border-gray-50 px-20 py-16">
       <div className="flex items-center gap-8">
-        <div className="relative h-32 w-32 tablet:h-40 tablet:w-40">
+        <div className="relative h-32 w-32 pc:h-40 pc:w-40">
           <Image src={data.user?.profileImage ?? DEFAULT_PROFILE_IMAGE} alt="프로필 이미지" fill className="rounded-full object-cover" sizes="3.2rem" />
         </div>
         <div className="text-16 font-500">{data.user.nickName}</div>
         <button className="ml-auto text-12 font-500 text-gray-400">신고하기</button>
       </div>
       <Evaluation rating={data.rating} />
-      <div className="text-14 font-400 tablet:text-16">{data.description}</div>
+      <div className="text-left text-14 font-400 pc:text-16">{data.description}</div>
       <ul className="flex gap-8 overflow-auto">
         {data.reviewImages?.map((image, index) => (
           <li key={index} className="relative h-120 w-120 shrink-0">
