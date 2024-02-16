@@ -86,11 +86,14 @@ export class Api {
 type GetEndPoint =
   | "/event"
   | "/event/like"
+  | `/event/${string}/like`
   | `/event/${string}`
   | "/artist/group"
   | `/artist/${string}`
   | "/group/solo"
   | `/reviews/${string}`
+  | `/users/${string}/artists`
+  | `/reviews/user/${string}`
   | "/group"
   | "/artist"
   | "/users/nickname"
@@ -149,23 +152,27 @@ type GetQueryType<T> = T extends "/event"
   ? Req_Query_Type["행사목록"]
   : T extends "/event/like"
     ? Req_Query_Type["행사좋아요"]
-    : T extends `/event/update/application/${string}`
-      ? Req_Query_Type["수정상세"]
-      : T extends `/event/${string}`
-        ? Req_Query_Type["행사상세"]
-        : T extends "/artist/group"
-          ? Req_Query_Type["아티스트"]
-          : T extends `/artist/${string}`
-            ? Req_Query_Type["멤버"]
-            : T extends "/group/solo"
-              ? Req_Query_Type["그룹솔로"]
-              : T extends `/reviews/${string}`
-                ? Req_Query_Type["리뷰"]
-                : T extends "/group"
-                  ? Req_Query_Type["그룹조회"]
-                  : T extends "/artist"
-                    ? Req_Query_Type["멤버조회"]
-                    : unknown;
+    : T extends `/event/${string}/like`
+      ? Req_Query_Type["유저좋아요"]
+      : T extends `/event/update/application/${string}`
+        ? Req_Query_Type["수정상세"]
+        : T extends `/event/${string}`
+          ? Req_Query_Type["행사상세"]
+          : T extends "/artist/group"
+            ? Req_Query_Type["아티스트"]
+            : T extends `/artist/${string}`
+              ? Req_Query_Type["멤버"]
+              : T extends "/group/solo"
+                ? Req_Query_Type["그룹솔로"]
+                : T extends `/reviews/user/${string}`
+                  ? Req_Query_Type["유저리뷰"]
+                  : T extends `/reviews/${string}`
+                    ? Req_Query_Type["리뷰"]
+                    : T extends "/group"
+                      ? Req_Query_Type["그룹조회"]
+                      : T extends "/artist"
+                        ? Req_Query_Type["멤버조회"]
+                        : unknown;
 // 사용하실 때 직접 추가 부탁드립니다!
 type PutBodyType<T> = T extends `/event/${string}` ? Req_Post_Type["event"] : any;
 type DeleteBodyType<T> = any;

@@ -3,6 +3,7 @@ import Script from "next/script";
 import { Toaster } from "react-hot-toast";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import "@/public/font/pretendard/font.css";
+import PcHeader from "./_components/header/PcHeader";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -26,9 +27,10 @@ export default function RootLayout({
       <body>
         <Toaster containerClassName="toast" />
         <ReactQueryProvider>
+          <PcHeader />
           {children}
           <div id="bottom-sheet" />
-          <div id="modal"></div>
+          <div id="modal" />
         </ReactQueryProvider>
       </body>
       <Script src="https://developers.kakao.com/sdk/js/kakao.js" async />

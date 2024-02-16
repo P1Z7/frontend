@@ -1,7 +1,7 @@
 "use client";
 
 import GenericFormProvider from "@/components/GenericFormProvider";
-import Header from "@/components/Header";
+import MobileHeader from "@/components/header/MobileHeader";
 import { useFunnel } from "@/hooks/useFunnel";
 import { PostStepNameType } from "@/types/index";
 import DetailInfo from "./_components/DetailInfo";
@@ -47,7 +47,7 @@ const Post = () => {
 
   return (
     <>
-      <Header handleClick={handlePrevClick} />
+      <MobileHeader handleClick={handlePrevClick} />
       <div className="p-20 pb-92 pt-36 text-16">
         <GenericFormProvider formOptions={{ mode: "onBlur", defaultValues: DEFAULT_INPUT_VALUES, shouldFocusError: true }}>
           <Funnel>

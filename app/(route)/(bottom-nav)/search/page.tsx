@@ -178,7 +178,7 @@ const SearchPage = () => {
           <div className="bg-white-black px-20 pb-8 pt-40">
             <SearchInput setKeyword={setKeyword} initialKeyword={initialKeyword} placeholder="최애의 행사를 찾아보세요!" />
           </div>
-          <div className={`px-20 pb-8 ${visible ? "animate-fadeIn block" : "hidden"}`}>
+          <div className={`px-20 pb-8 ${visible ? "block animate-fadeIn" : "hidden"}`}>
             <div className="flex gap-4 pb-12">
               <FilterButton onClick={() => openBottomSheet(BOTTOM_SHEET.bigRegion)} selected={Boolean(filter.bigRegion)}>
                 {filter.bigRegion || "시/도"}
