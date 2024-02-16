@@ -4,7 +4,7 @@ import FadingDot from "@/(route)/(bottom-nav)/signin/_components/FadingDot";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect } from "react";
 import toast from "react-hot-toast";
-import { Api } from "@/api/api";
+import { instance } from "@/api/api";
 import { setSession } from "@/store/session/cookies";
 import Logo from "@/public/icon/logo.svg";
 import KakaoLogo from "@/public/icon/logo_kakao.svg";
@@ -17,8 +17,7 @@ const OAuth = () => {
   const signinMethod = url.pathname.split("/").pop()!;
 
   const handleOAuth = async () => {
-    const api = new Api();
-    const res = await api.post(`/auth`, { code, signinMethod, email: "", password: "" });
+    const res = await instance.post(`/auth`, { code, signinMethod, email: "", password: "" });
     if (res.error) {
       toast("네트워크 오류! 다시 시도해 주십시오.", {
         className: "text-16 font-600",

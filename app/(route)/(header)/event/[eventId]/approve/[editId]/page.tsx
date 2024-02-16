@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { Api } from "@/api/api";
+import { instance } from "@/api/api";
 import { CategoryType, EditContentType, LabelType, PostValueType } from "@/types/index";
 import { EDIT_ERR_MSG } from "@/constants/errorMsg";
 import { LABEL_BY_CATEGORY, exceptionList } from "@/constants/post";
@@ -20,7 +20,6 @@ import EditBox from "./_components/EditBox";
 const EditDetailApprove = () => {
   const [originData, setOriginData] = useState<EditContentType>();
   const { editId } = useParams();
-  const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
   const { data, isSuccess, refetch } = useQuery({
     queryKey: ["approveDetail", editId],
     queryFn: async () => {

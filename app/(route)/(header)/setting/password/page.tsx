@@ -6,7 +6,7 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import BottomButton from "@/components/button/BottomButton";
 import InputText from "@/components/input/InputText";
-import { Api } from "@/api/api";
+import { instance } from "@/api/api";
 import useEnterNext from "@/hooks/useEnterNext";
 import { useSession } from "@/store/session/cookies";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
@@ -36,10 +36,8 @@ const PasswordPage = () => {
     }
     setSubmitState({ isLoading: true, isError: false });
     setTimeout(async () => {
-      const api = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
-
       try {
-        const res = await api.put(`/users/${session.user.userId}/password`, { password: newPw, passwordCheck: newPwCheck });
+        const res = await instance.put(`/users/${session.user.userId}/password`, { password: newPw, passwordCheck: newPwCheck });
         if (res.message) {
           throw new Error(res.message);
         }

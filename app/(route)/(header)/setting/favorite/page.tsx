@@ -1,8 +1,6 @@
 "use client";
 
-import { MOCK } from "app/_constants/mock";
 import { SubmitHandler, useForm } from "react-hook-form";
-import MyArtistList from "@/components/MyArtistList";
 import AlertModal from "@/components/modal/AlertModal";
 import InputModal from "@/components/modal/InputModal";
 import { useModal } from "@/hooks/useModal";

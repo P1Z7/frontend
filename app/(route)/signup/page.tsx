@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useFunnel } from "@/hooks/useFunnel";
 import { SignUpFormType, SignupStepNameType } from "@/types/index";
 import ArrowLeft from "@/public/icon/arrow-left_lg.svg";
