@@ -6,22 +6,28 @@ import { format } from "date-fns";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import GenericFormProvider from "@/components/GenericFormProvider";
+import { useAuth } from "@/hooks/useAuth";
+import { useStore } from "@/store/index";
 import EditContent from "./_components/EditContent";
 
 let INITIAL_DATA: PostType;
 
 const Edit = () => {
+  const session = useAuth("/signin");
   const { eventId } = useParams();
   const [init, setInit] = useState(false);
+  const { setWriterId } = useStore((state) => ({ setWriterId: state.setWriterId }));
 
   useEffect(() => {
     const fetchData = async () => {
       const data = await instance.get(`/event/${eventId}`);
-      const { address, addressDetail, description, endDate, startDate, eventImages, eventTags, eventUrl, eventType, organizerSns, placeName, snsType, targetArtists } = data;
+      const { address, addressDetail, description, endDate, startDate, eventImages, eventTags, eventUrl, eventType, organizerSns, placeName, snsType, targetArtists, userId } =
+        data;
       const artistNames: string[] = targetArtists.map(({ artistName }: { artistName: string }) => artistName);
       const artists = targetArtists.map(({ artistId }: { artistId: string }) => artistId);
       const tags = eventTags.map(({ tagName }: { tagName: string }) => tagName);
       const imgList = eventImages.map(({ imageUrl }: { imageUrl: string }) => imageUrl);
+      setWriterId(userId);
 
       INITIAL_DATA = {
         placeName,
@@ -47,13 +53,17 @@ const Edit = () => {
   }, []);
 
   return (
-    <div className="flex flex-col gap-24 p-20 text-16">
-      {init && (
-        <GenericFormProvider formOptions={{ mode: "onChange", defaultValues: INITIAL_DATA, shouldFocusError: true }}>
-          <EditContent />
-        </GenericFormProvider>
+    <>
+      {session && (
+        <div className="flex flex-col gap-24 p-20 text-16">
+          {init && (
+            <GenericFormProvider formOptions={{ mode: "onChange", defaultValues: INITIAL_DATA, shouldFocusError: true }}>
+              <EditContent />
+            </GenericFormProvider>
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 };
 
