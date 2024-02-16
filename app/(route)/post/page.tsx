@@ -2,6 +2,7 @@
 
 import GenericFormProvider from "@/components/GenericFormProvider";
 import MobileHeader from "@/components/header/MobileHeader";
+import PinkLayout from "@/components/layout/PinkLayout";
 import { useFunnel } from "@/hooks/useFunnel";
 import { PostStepNameType } from "@/types/index";
 import DetailInfo from "./_components/DetailInfo";
@@ -46,7 +47,7 @@ const Post = () => {
   };
 
   return (
-    <>
+    <PinkLayout type="narrow">
       <MobileHeader handleClick={handlePrevClick} />
       <div className="p-20 pb-92 pt-36 text-16">
         <GenericFormProvider formOptions={{ mode: "onBlur", defaultValues: DEFAULT_INPUT_VALUES, shouldFocusError: true }}>
@@ -66,7 +67,7 @@ const Post = () => {
           </Funnel>
         </GenericFormProvider>
       </div>
-    </>
+    </PinkLayout>
   );
 };
 
