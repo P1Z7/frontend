@@ -151,6 +151,8 @@ const SearchPage = () => {
     deps: [events],
   });
 
+  const isEmpty = events?.pages[0].eventList.length === 0;
+
   useEffect(() => {
     queryClient.removeQueries({ queryKey: ["search"] });
     refetch();
@@ -212,7 +214,11 @@ const SearchPage = () => {
           </div>
         </section>
         <section className="flex flex-wrap items-center justify-center gap-x-24">
-          {events?.pages.map((page) => page.eventList.map((event) => <HorizontalEventCard key={event.id} data={event} />))}
+          {isEmpty ? (
+            <div className="pt-36 text-14 font-500 text-gray-500">검색 결과가 없습니다.</div>
+          ) : (
+            events?.pages.map((page) => page.eventList.map((event) => <HorizontalEventCard key={event.id} data={event} />))
+          )}
           <div ref={containerRef} className="h-16 w-full" />
         </section>
       </main>
