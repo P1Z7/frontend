@@ -174,13 +174,13 @@ const SearchPage = () => {
 
   return (
     <DottedLayout type="wide">
-      <main className="relative w-full px-20 pb-84 pt-160">
-        <section className="fixed left-0 top-0 z-nav flex w-full flex-col bg-white-black text-14 text-gray-500 shadow-top">
-          <div className="bg-white-black px-20 pb-8 pt-40">
+      <main className="relative w-full px-20 pb-84 pt-160 tablet:p-0">
+        <section className="fixed left-0 right-0 top-0 z-nav flex w-full flex-col bg-white-black text-14 text-gray-500 shadow-top tablet:static tablet:shadow-none">
+          <div className="bg-white-black px-20 pb-8 pt-40 tablet:px-0 tablet:pb-20 tablet:pt-[7rem]">
             <SearchInput keyword={keyword} setKeyword={setKeyword} initialKeyword={initialKeyword} placeholder="최애의 행사를 찾아보세요!" />
           </div>
-          <div className={`px-20 pb-8 ${visible ? "block animate-fadeIn" : "hidden"}`}>
-            <div className="flex gap-4 pb-12">
+          <div className={`animate-fadeIn px-20 pb-8 tablet:p-0 ${visible ? "block" : "hidden tablet:block"}`}>
+            <div className="flex gap-4 pb-12 tablet:pb-32">
               <FilterButton onClick={() => openBottomSheet(BOTTOM_SHEET.bigRegion)} selected={Boolean(filter.bigRegion)}>
                 {filter.bigRegion || "시/도"}
               </FilterButton>
@@ -204,7 +204,8 @@ const SearchPage = () => {
               <SortButton onClick={() => setSort("인기순")} selected={sort === "인기순"}>
                 인기순
               </SortButton>
-              <button onClick={resetFilter} type="button" className="ml-auto">
+              <button onClick={resetFilter} type="button" className="ml-auto flex gap-[0.3rem] text-14 text-gray-400">
+                초기화
                 <ResetIcon />
               </button>
             </div>
