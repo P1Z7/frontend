@@ -47,7 +47,7 @@ const ArtistList = () => {
             {artistData?.pages.map((page) =>
               page.artistAndGroupList.map((artist) => (
                 <li key={artist.id} className="w-88">
-                  <ArtistCard profileImage={artist.image} onClick={() => router.push(`/search?keyword=${artist.name}`)}>
+                  <ArtistCard profileImage={artist.image} onClick={() => router.push(`/search?keyword=${artist.name}&sort=최신순`)}>
                     {artist.name}
                   </ArtistCard>
                 </li>
