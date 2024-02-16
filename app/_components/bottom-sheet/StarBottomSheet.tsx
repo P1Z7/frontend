@@ -1,3 +1,4 @@
+import LoadingDot from "@/(route)/(bottom-nav)/signin/_components/LoadingDot";
 import { PostType } from "@/(route)/post/page";
 import { instance } from "app/_api/api";
 import { Dispatch, SetStateAction, useEffect } from "react";
@@ -62,10 +63,14 @@ const StarBottomSheet = ({ closeBottomSheet, refs, isFirst = false }: Props) => 
         {groupId ? (
           <div className="flex flex-col gap-12">
             <GroupTitle setGroupId={setGroupId} />
-            {isMemberLoading && <div>멤버 로딩중</div>}
+            {isMemberLoading && (
+              <div className="flex justify-center py-40">
+                <LoadingDot />
+              </div>
+            )}
             {isMemberSuccess &&
               (memberData.length === 0 ? (
-                <div>데이터가 없어요ㅠㅠ</div>
+                <div>아직 데이터가 없어요💦</div>
               ) : (
                 <div className="h-[34rem] overflow-y-scroll">
                   <div className="flex flex-wrap justify-center gap-16">
@@ -81,7 +86,11 @@ const StarBottomSheet = ({ closeBottomSheet, refs, isFirst = false }: Props) => 
         ) : (
           <>
             <SearchInput setKeyword={setKeyword} />
-            {isLoading && <div>로딩중</div>}
+            {isLoading && (
+              <div className="flex justify-center py-40">
+                <LoadingDot />
+              </div>
+            )}
             {isSuccess && (
               <div ref={containerRef} className="flex h-[34rem] overflow-y-scroll">
                 <div className="flex flex-wrap justify-center gap-x-16 gap-y-20 px-8">

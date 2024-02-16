@@ -4,7 +4,7 @@ import { PostType } from "@/(route)/post/page";
 import { instance } from "app/_api/api";
 import { format } from "date-fns";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import GenericFormProvider from "@/components/GenericFormProvider";
 import { useAuth } from "@/hooks/useAuth";
 import { useStore } from "@/store/index";
@@ -13,7 +13,7 @@ import EditContent from "./_components/EditContent";
 let INITIAL_DATA: PostType;
 
 const Edit = () => {
-  const session = useAuth("/signin");
+  // const session = useAuth("/signin");
   const { eventId } = useParams();
   const [init, setInit] = useState(false);
   const { setWriterId } = useStore((state) => ({ setWriterId: state.setWriterId }));
@@ -53,17 +53,13 @@ const Edit = () => {
   }, []);
 
   return (
-    <>
-      {session && (
-        <div className="flex flex-col gap-24 p-20 text-16">
-          {init && (
-            <GenericFormProvider formOptions={{ mode: "onChange", defaultValues: INITIAL_DATA, shouldFocusError: true }}>
-              <EditContent />
-            </GenericFormProvider>
-          )}
-        </div>
+    <div className="flex flex-col gap-24 p-20 text-16">
+      {init && (
+        <GenericFormProvider formOptions={{ mode: "onChange", defaultValues: INITIAL_DATA, shouldFocusError: true }}>
+          <EditContent />
+        </GenericFormProvider>
       )}
-    </>
+    </div>
   );
 };
 
