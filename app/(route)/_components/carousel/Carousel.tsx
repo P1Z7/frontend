@@ -48,7 +48,7 @@ const Carousel = ({ cards }: Props) => {
   return (
     <div className="flex flex-col gap-16 pc:gap-24">
       <div className="pc:flex pc:w-[112rem]">
-        <div onClick={handlePrevClick} className={`relative top-76 hidden w-[5rem] cursor-pointer pc:block ${isPrevDisabled ? "pointer-events-none opacity-50" : ""}`}>
+        <div onClick={handlePrevClick} className={`relative top-76 hidden h-100 w-[5rem] cursor-pointer pc:block ${isPrevDisabled ? "pointer-events-none opacity-50" : ""}`}>
           <PrevButtonIcon />
         </div>
         <div className="flex gap-16 overflow-auto px-20 pc:gap-20 pc:overflow-hidden pc:p-0 pc:transition-transform pc:duration-1000 pc:ease-in-out">
@@ -66,7 +66,7 @@ const Carousel = ({ cards }: Props) => {
         </div>
         <div
           onClick={handleNextClick}
-          className={`relative top-76 hidden w-[5rem] cursor-pointer pc:flex pc:justify-end ${isNextDisabled ? "pointer-events-none opacity-50" : ""}`}
+          className={`relative top-76 hidden h-100 w-[5rem] cursor-pointer pc:flex pc:justify-end ${isNextDisabled ? "pointer-events-none opacity-50" : ""}`}
         >
           <NextButtonIcon />
         </div>
