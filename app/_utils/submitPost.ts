@@ -14,13 +14,13 @@ const matchTagIdList = (tags: GiftType[]) => {
 };
 
 const makeUpdateCategory = (defaultValue: any, userInputValue: any, eventId: string, userId: string) => {
-  const updateCategory: CategoryType[] = [];
+  const updateCategory = new Set();
   const approveBody = new Map();
   for (const key of Object.keys(defaultValue || {})) {
     if (!defaultValue) {
       return {
         eventId,
-        updateCategory,
+        updateCategory: [],
         userId,
         isAgreed: true,
       };
@@ -30,29 +30,30 @@ const makeUpdateCategory = (defaultValue: any, userInputValue: any, eventId: str
     switch (key) {
       case "artists":
         if (checkArrUpdate(prev, cur)) {
-          updateCategory.push("artist");
+          updateCategory.add("artist");
           EDIT_CATEGORY_VALUE["artist"].map((value) => approveBody.set(value, userInputValue[value]));
         }
         break;
       case "tags":
       case "eventImages":
         if (checkArrUpdate(prev, cur)) {
-          updateCategory.push(key);
+          updateCategory.add(key);
           approveBody.set(key, cur);
         }
         break;
       default:
         const category = EDIT_CATEGORY[key as PostValueType];
         if (prev !== cur && category !== "null") {
-          updateCategory.push(category as CategoryType);
+          updateCategory.add(category as CategoryType);
           EDIT_CATEGORY_VALUE[category as CategoryType].map((value) => approveBody.set(value, userInputValue[value]));
         }
     }
   }
+
   let body: Req_Post_Type["edit"] = {
     eventId,
-    updateCategory,
-    userId: "edit-api",
+    updateCategory: Array.from(updateCategory) as CategoryType[],
+    userId,
     isAgreed: true,
   };
   for (const [key, value] of approveBody.entries()) {

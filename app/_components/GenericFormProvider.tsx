@@ -70,13 +70,13 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>{children}</form>
       {modal === "editApprove" && (
-        <AlertModal closeModal={closeModal} handleBtnClick={() => router.push(`/event/${eventId}/approve`)}>
+        <AlertModal closeModal={closeModal} handleBtnClick={() => router.replace(`/event/${eventId}/approve`)}>
           수정사항은 사용자 3인 이상의
           <br /> 승인 후에 반영됩니다.
         </AlertModal>
       )}
       {modal === "editWriter" && (
-        <AlertModal closeModal={closeModal} handleBtnClick={() => router.push(`/event/${eventId}`)}>
+        <AlertModal closeModal={closeModal} handleBtnClick={() => router.replace(`/event/${eventId}`)}>
           수정이 완료되었습니다.
         </AlertModal>
       )}
