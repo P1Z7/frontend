@@ -6,7 +6,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
 import ChipButton from "@/components/chip/ChipButton";
-import { Api } from "@/api/api";
+import { Api, instance } from "@/api/api";
 import { getCalendarTime } from "@/utils/getCalendarTime";
 import { sortEvents } from "@/utils/sortEventList";
 import { EventCardType } from "@/types/index";
@@ -22,7 +22,6 @@ const MyCalendarTab = () => {
   const [data, setData] = useState<EventCardType[] | []>([]);
   const [isFold, setIsFold] = useState(true);
   const [statue, setStatus] = useState<StatueType>("");
-  const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
   const ID = "f14ab7e7-ee5c-4707-b68e-ddb6cf8b0f00";
 
   const { data: myEventsData, isSuccess } = useQuery({

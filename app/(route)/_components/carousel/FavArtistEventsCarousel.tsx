@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { Api } from "app/_api/api";
+import { instance } from "app/_api/api";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -11,10 +11,7 @@ import Hero from "@/public/icon/hero.svg";
 import Carousel from "./Carousel";
 
 const FavArtistEventsCarousel = () => {
-  // 추후 next auth로 변경 예정
   const [status, setStatus] = useState(false);
-
-  const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
 
   const {
     data: favArtistEvent,

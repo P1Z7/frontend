@@ -4,12 +4,11 @@ import { NoFavCard } from "@/(route)/_components/carousel/FavArtistEventsCarouse
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import ArtistCard from "@/components/ArtistCard";
-import { Api } from "@/api/api";
+import { instance } from "@/api/api";
 import { MyArtistsType } from "@/types/index";
 
 const MyArtistTab = () => {
   const router = useRouter();
-  const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
   const ID = "b4a2354c-ff70-49c5-be9b-02bdd83e4df9";
   const NoneMyArtistID = "f14ab7e7-ee5c-4707-b68e-ddb6cf8b0f00";
 

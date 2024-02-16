@@ -3,7 +3,7 @@
 import { formatDate } from "date-fns";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Api } from "@/api/api";
+import { instance } from "@/api/api";
 import { CategoryType, EditContentType, LabelType, PostValueType } from "@/types/index";
 import { exceptionList } from "@/constants/post";
 import LinkIcon from "@/public/icon/arrow-right_lg.svg";
@@ -24,7 +24,6 @@ interface Props {
 
 const EditCard = ({ id, type, editContent, count, createdAt, category }: Props) => {
   const curPath = usePathname();
-  const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
 
   return (
     <div className="relative flex w-full flex-col gap-8 border-b border-gray-100 py-16 pr-24 text-14 font-500">

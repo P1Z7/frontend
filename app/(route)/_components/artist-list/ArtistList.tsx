@@ -3,7 +3,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import ArtistCard from "@/components/ArtistCard";
-import { Api } from "@/api/api";
+import { instance } from "@/api/api";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { Res_Get_Type } from "@/types/getResType";
 
@@ -11,8 +11,6 @@ const SIZE = 12;
 
 const ArtistList = () => {
   const router = useRouter();
-
-  const instance = new Api();
 
   const getArtists = async ({ pageParam = 1 }) => {
     const data: Res_Get_Type["artistGroup"] = await instance.get("/artist/group", {

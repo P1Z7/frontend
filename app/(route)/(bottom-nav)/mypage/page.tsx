@@ -1,6 +1,5 @@
 "use client";
 
-import { MOCK_REVIEWS } from "app/_constants/mock";
 import Tabs from "@/components/Tabs";
 import { useAuth } from "@/hooks/useAuth";
 import UserProfile from "./_components/UserProfile";

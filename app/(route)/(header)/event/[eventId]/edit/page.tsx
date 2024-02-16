@@ -1,7 +1,7 @@
 "use client";
 
 import { PostType } from "@/(route)/post/page";
-import { Api } from "app/_api/api";
+import { instance } from "app/_api/api";
 import { format } from "date-fns";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -11,7 +11,6 @@ import EditContent from "./_components/EditContent";
 let INITIAL_DATA: PostType;
 
 const Edit = () => {
-  const instance = new Api();
   const { eventId } = useParams();
   const [init, setInit] = useState(false);
 

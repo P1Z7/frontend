@@ -1,10 +1,10 @@
-import { Api } from "app/_api/api";
+import { instance } from "app/_api/api";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import React from "react";
 import { FieldValues, FormProvider, UseFormProps, useForm } from "react-hook-form";
 import { useModal } from "@/hooks/useModal";
 import { handleSignupSubmit } from "@/utils/handleSignupSubmit";
-import { handlePostSubmit, submitEditApplication, submitEditWriter } from "@/utils/submitPost";
+import { handlePostSubmit, submitEditApplication } from "@/utils/submitPost";
 import AlertModal from "./modal/AlertModal";
 
 interface GenericFormProps<T extends FieldValues> {
@@ -18,7 +18,6 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
   const router = useRouter();
   const methods = useForm<T>(formOptions);
   const path = usePathname();
-  const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
 
   const onSubmit = async () => {
     const userInputValue = methods.getValues();

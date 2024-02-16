@@ -2,7 +2,7 @@
 
 import FeelMyRhythm from "@/(route)/(bottom-nav)/signin/_components/Confetti";
 import LoadingDot from "@/(route)/(bottom-nav)/signin/_components/LoadingDot";
-import { Api } from "app/_api/api";
+import { instance } from "app/_api/api";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 import Button from "@/components/button";
 import InputText from "@/components/input/InputText";
 import useEnterNext from "@/hooks/useEnterNext";
-import { setCookies, setSession } from "@/store/session/cookies";
+import { setSession } from "@/store/session/cookies";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 import { SHOT_SIGNIN } from "@/constants/confetti";
 import { OAUTH } from "@/constants/oauth";
@@ -40,7 +40,6 @@ const SignInPage = () => {
   const handleSignin: SubmitHandler<DefaultValues> = ({ email, password }) => {
     setSubmitState({ isLoading: true, isError: false });
     setTimeout(async () => {
-      const instance = new Api();
       const signinData = {
         email,
         password,

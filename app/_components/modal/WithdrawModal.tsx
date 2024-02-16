@@ -1,11 +1,9 @@
-import FeelMyRhythm from "@/(route)/(bottom-nav)/signin/_components/Confetti";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Button from "@/components/button";
 import Modal from "@/components/modal/ModalMaterial";
-import { Api } from "@/api/api";
+import { instance } from "@/api/api";
 import { useSession } from "@/store/session/cookies";
-import { SHOT_WITHDRAW } from "@/constants/confetti";
 
 interface Props {
   closeModal: () => void;
@@ -20,8 +18,7 @@ const WithdrawModal = ({ closeModal }: Props) => {
       return;
     }
 
-    const api = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
-    const res = await api.delete(`/users/${session.user.userId}`, undefined);
+    const res = await instance.delete(`/users/${session.user.userId}`, undefined);
     if (res.statusCode === 200) {
       toast("지금까지 Opener와 함께해 주셔서 감사합니다!", {
         className: "text-16 font-600",

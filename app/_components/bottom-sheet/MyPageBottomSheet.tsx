@@ -1,9 +1,7 @@
 import { useRouter } from "next/navigation";
-import AlertModal from "@/components/modal/AlertModal";
 import WithdrawModal from "@/components/modal/WithdrawModal";
 import { useModal } from "@/hooks/useModal";
 import { outSession } from "@/store/session/cookies";
-import { BottomSheetBaseType } from "@/types/index";
 import BottomSheet from "./BottomSheetMaterial";
 
 const EditUserInfo = {
@@ -38,9 +36,7 @@ const MyPageBottomSheet = ({ closeBottomSheet, refs }: any) => {
           <li className={ButtonStyle} />
         </ul>
       </BottomSheet.Frame>
-      {modal === "withdraw" && (
-        <WithdrawModal closeModal={closeModal}/>
-      )}
+      {modal === "withdraw" && <WithdrawModal closeModal={closeModal} />}
     </>
   );
 };

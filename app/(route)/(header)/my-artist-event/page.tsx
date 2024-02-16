@@ -1,4 +1,3 @@
-import BottomNav from "@/components/BottomNav";
 import MyArtistEvent from "./_components/MyArtistEvent";
 
 const MyArtistEventPage = () => {

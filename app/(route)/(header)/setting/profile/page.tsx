@@ -7,7 +7,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import BottomButton from "@/components/button/BottomButton";
 import InputProfileImg from "@/components/input/InputProfileImg";
 import InputText from "@/components/input/InputText";
-import { Api } from "@/api/api";
+import { instance } from "@/api/api";
 import { setSession, useSession } from "@/store/session/cookies";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 
@@ -36,8 +36,6 @@ const ProfilePage = () => {
     setSubmitState((prev) => ({ isError: false, isLoading: true }));
 
     setTimeout(async () => {
-      const api = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
-
       try {
         let url;
         if (!formState.dirtyFields.profileImage) {
@@ -47,7 +45,7 @@ const ProfilePage = () => {
         } else if (profileImage) {
           const formData = new FormData();
           formData.set("file", profileImage);
-          url = await api.post("/file/upload", formData, { category: "user" });
+          url = await instance.post("/file/upload", formData, { category: "user" });
         }
 
         const patchData = {
