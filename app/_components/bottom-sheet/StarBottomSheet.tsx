@@ -1,6 +1,6 @@
 import { PostType } from "@/(route)/post/page";
 import { useQuery } from "@tanstack/react-query";
-import { Api } from "app/_api/api";
+import { instance } from "app/_api/api";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { useFetchMember } from "@/hooks/useFetchMember";
@@ -19,7 +19,6 @@ interface Props extends BottomSheetBaseType {
 const StarBottomSheet = ({ closeBottomSheet, refs, isFirst = false }: Props) => {
   const { setValue, getValues, watch } = useFormContext<PostType>();
   const { groupName, artistNames } = watch();
-  const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
   const {
     data: groupData,
     isSuccess,

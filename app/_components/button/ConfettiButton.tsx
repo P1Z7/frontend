@@ -10,7 +10,7 @@ interface Props {
   onClick?: () => void;
 }
 
-const HeartButton = ({ isSmall = false, isSelected = false, onClick, ...props }: Props) => {
+const ConfettiButton = ({ isSmall = false, isSelected = false, onClick, ...props }: Props) => {
   const [selected, setSelected] = useState(isSelected);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -46,7 +46,7 @@ const HeartButton = ({ isSmall = false, isSelected = false, onClick, ...props }:
   );
 };
 
-export default HeartButton;
+export default ConfettiButton;
 
 const heart = confetti.shapeFromPath({
   path: "M167 72c19,-38 37,-56 75,-56 42,0 76,33 76,75 0,76 -76,151 -151,227 -76,-76 -151,-151 -151,-227 0,-42 33,-75 75,-75 38,0 57,18 76,56z",

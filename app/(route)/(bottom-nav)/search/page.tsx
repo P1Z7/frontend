@@ -10,7 +10,7 @@ import SmallRegionBottomSheet from "@/components/bottom-sheet/SmallRegionBottomS
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
 import SearchInput from "@/components/input/SearchInput";
 import DottedLayout from "@/components/layout/DottedLayout";
-import { Api } from "@/api/api";
+import { instance } from "@/api/api";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { formatDate } from "@/utils/formatString";
@@ -115,7 +115,6 @@ const SearchPage = () => {
     router.push(pathname + "?" + newQuery);
   }, [keyword, sort, filter]);
 
-  const instance = new Api();
   const queryClient = useQueryClient();
 
   const getEvents = async ({ pageParam = 1 }) => {

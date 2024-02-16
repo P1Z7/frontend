@@ -2,7 +2,7 @@
 
 import FeelMyRhythm from "@/(route)/(bottom-nav)/signin/_components/Confetti";
 import LoadingDot from "@/(route)/(bottom-nav)/signin/_components/LoadingDot";
-import { Api } from "app/_api/api";
+import { instance } from "app/_api/api";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -11,11 +11,14 @@ import toast from "react-hot-toast";
 import Button from "@/components/button";
 import InputText from "@/components/input/InputText";
 import useEnterNext from "@/hooks/useEnterNext";
+import { setSession } from "@/store/session/cookies";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
+import { SHOT_SIGNIN } from "@/constants/confetti";
+import { OAUTH } from "@/constants/oauth";
 import ArrowLeft from "@/public/icon/arrow-left_lg.svg";
 import Logo from "@/public/icon/logo.svg";
-import GoogleLogo from "@/public/icon/logo_google.svg";
 import KakaoLogo from "@/public/icon/logo_kakao.svg";
+import NaverLogo from "@/public/icon/logo_naver.svg";
 
 const SIGNIN_DEFAULT = {
   mode: "onBlur",
@@ -35,9 +38,8 @@ const SignInPage = () => {
   const [submitState, setSubmitState] = useState({ isLoading: false, isError: false });
 
   const handleSignin: SubmitHandler<DefaultValues> = ({ email, password }) => {
-    setSubmitState((prev) => ({ ...prev, isLoading: true }));
+    setSubmitState({ isLoading: true, isError: false });
     setTimeout(async () => {
-      const instance = new Api();
       const signinData = {
         email,
         password,
@@ -50,12 +52,16 @@ const SignInPage = () => {
           throw new Error(res.error);
         }
         setSubmitState((prev) => ({ ...prev, isError: false }));
-        toast.custom(<FeelMyRhythm />, {
+
+        toast.custom(<FeelMyRhythm shotList={SHOT_SIGNIN} location={{ y: 0.5 }} />, {
           className: "z-popup",
         });
-        toast("어서오세요! 김하늘님", {
+        toast(`어서오세요! ${res.nickName}님`, {
           className: "text-16 font-600",
         });
+
+        setSession({ isAuth: true, user: res });
+
         router.push("/");
       } catch (e: any) {
         setSubmitState((prev) => ({ ...prev, isError: true }));
@@ -79,7 +85,6 @@ const SignInPage = () => {
       }
     }, 1000);
   };
-  const handleOAuth = (provider: string) => () => {};
 
   return (
     <>
@@ -109,8 +114,8 @@ const SignInPage = () => {
             rules={{ required: ERROR_MESSAGES.password.passwordField, pattern: { value: REG_EXP.CHECK_PASSWORD, message: ERROR_MESSAGES.password.passwordPattern } }}
             onKeyDown={handleEnterNext}
           />
-          <div className={`mt-16 overflow-hidden transition-all ${submitState.isLoading ? "w-4/5" : "w-full"}`}>
-            <Button isDisabled={!formState.isValid || !!formState.errors.email || !!formState.errors.password || submitState.isLoading}>
+          <div className={`mt-16 overflow-hidden transition-all ${submitState.isLoading ? "w-4/5" : "w-full"} ${submitState.isError ? "animate-[brrr_0.2s_0.2s]" : ""}`}>
+            <Button isSubmit isDisabled={!formState.isValid || !!formState.errors.email || !!formState.errors.password || submitState.isLoading}>
               <div className="relative h-full w-full">
                 <span className={`absolute w-max transition-all ${formState.isSubmitted ? "top-48" : "absolute-center"}`}>로그인</span>
                 <span className={`absolute w-max transition-all ${submitState.isLoading ? "absolute-center" : "-top-48"}`}>
@@ -131,14 +136,14 @@ const SignInPage = () => {
           <Link href="">비밀번호 찾기</Link>
         </div>
         <div className="flex w-full flex-col gap-20">
-          <button onClick={handleOAuth("kakao")} className="flex-center w-full gap-8 rounded-sm bg-[#FEE500] py-16 text-16 font-500">
+          <Link href={OAUTH.kakao()} className="flex-center w-full gap-8 rounded-sm bg-[#FEE500] py-16 text-16 font-500">
             <KakaoLogo />
             <p>카카오 계정으로 로그인</p>
-          </button>
-          <button onClick={handleOAuth("google")} className="flex-center w-full gap-8 rounded-sm bg-gray-50 py-16 text-16 font-500">
-            <GoogleLogo />
-            <p>Google 계정으로 로그인</p>
-          </button>
+          </Link>
+          <Link href={OAUTH.naver()} className="flex-center w-full gap-8 rounded-sm bg-[#03CF5D] py-16 text-16 font-500 text-white-white">
+            <NaverLogo fill="white" />
+            <p>네이버 계정으로 로그인</p>
+          </Link>
         </div>
       </div>
     </>

@@ -1,4 +1,4 @@
-import { useController, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { ModalBaseType } from "@/types/index";
 import TextModal from "./TextModal";
 
