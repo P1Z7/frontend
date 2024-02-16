@@ -11,15 +11,15 @@ const Home = () => {
       <header className="sticky left-0 top-0 z-nav h-88 w-full bg-white-black px-20 pb-16 pt-48 tablet:hidden">
         <Logo />
       </header>
-      <div className="flex flex-col gap-40 pb-72 pc:items-center pc:pt-52">
+      <div className="flex flex-col gap-40 pb-72 pc:items-center pc:pb-0 pc:pt-52">
         <main className="flex flex-col gap-40 overflow-hidden pc:w-[112rem]">
           <FavArtistEventsCarousel />
           <PopularEventsCarousel />
           <NewestEventsCarousel />
           <ArtistList />
         </main>
-        <Footer />
       </div>
+      <Footer />
     </>
   );
 };
