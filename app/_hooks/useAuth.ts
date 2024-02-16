@@ -7,5 +7,5 @@ export const useAuth = (href: string) => {
   if (!session) {
     router.push(href);
   }
-  return session!;
+  return session;
 };
