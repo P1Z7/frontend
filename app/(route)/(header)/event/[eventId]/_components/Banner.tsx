@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Api } from "app/_api/api";
+import { instance } from "app/_api/api";
 import Image from "next/image";
 import Link from "next/link";
 import { ButtonHTMLAttributes, ReactNode, useEffect, useState } from "react";
@@ -50,7 +50,6 @@ const Banner = ({ data, eventId }: Props) => {
   const bannerImage = data.eventImages.find((images) => images.isMain);
   const formattedOrganizerSns = data.organizerSns[0] === "@" ? data.organizerSns : `@${data.organizerSns}`;
 
-  const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
   const queryClient = useQueryClient();
 
   const getEventLiked = async (userId: string, eventId: string) => {

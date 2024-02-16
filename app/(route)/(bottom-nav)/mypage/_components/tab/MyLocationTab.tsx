@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import LocationDetailBottomSheet from "@/components/bottom-sheet/LocationDetailBottomSheet";
-import { Api } from "@/api/api";
+import { instance } from "@/api/api";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
 import { EventCardType } from "@/types/index";
 import CheckIcon from "@/public/icon/check.svg";
@@ -19,7 +19,6 @@ const MyLocationTab = () => {
   const { bottomSheet, openBottomSheet, closeBottomSheet } = useBottomSheet();
   const [inChecked, setIsChecked] = useState(false);
 
-  const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
   const ID = "f14ab7e7-ee5c-4707-b68e-ddb6cf8b0f00";
 
   const { data: myEventsData, isSuccess } = useQuery({

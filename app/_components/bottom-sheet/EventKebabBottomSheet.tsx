@@ -2,9 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useModal } from "@/hooks/useModal";
 import { BottomSheetBaseType } from "@/types/index";
-import ReportModal from "../modal/ReportModal";
 import BottomSheet from "./BottomSheetMaterial";
 
 interface Props extends BottomSheetBaseType {

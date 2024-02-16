@@ -85,7 +85,7 @@ const InputText: Function = ({
     return (
       <>
         {(!!fieldState.error || hint) && (
-          <div className="mt-4 flex h-12">
+          <div className="mt-4 flex">
             <p className={`font-normal text-12 ${fieldState.error ? "text-red" : isSuccess ? "text-sub-skyblue" : "text-gray-500"}`}>{fieldState?.error?.message || hint}</p>
           </div>
         )}
