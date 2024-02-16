@@ -1,5 +1,4 @@
 import { PostType } from "@/(route)/post/page";
-import { useQuery } from "@tanstack/react-query";
 import { instance } from "app/_api/api";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { useFormContext } from "react-hook-form";

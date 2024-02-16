@@ -6,6 +6,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { instance } from "@/api/api";
+import { EditErrMsgType } from "@/types/errorMsgType";
 import { CategoryType, EditContentType, LabelType, PostValueType } from "@/types/index";
 import { EDIT_ERR_MSG } from "@/constants/errorMsg";
 import { LABEL_BY_CATEGORY, exceptionList } from "@/constants/post";
@@ -46,16 +47,17 @@ const EditDetailApprove = () => {
   }, [data]);
 
   const handleApplicationSubmit = async (isApproved: boolean) => {
-    const res = await instance.post("/event/update/approval", { eventUpdateApplicationId: String(editId), isApproved, userId: "edit-api" });
-    refetch();
-    if (res.error) {
-      toast.error(EDIT_ERR_MSG[res.statusCode as "409" | "500"], { className: "text-14 !text-red font-600" });
-    } else {
+    try {
+      const res = await instance.post("/event/update/approval", { eventUpdateApplicationId: String(editId), isApproved, userId: "edit-api" });
+      refetch();
       toast(EDIT_ERR_MSG[isApproved ? "approve" : "reject"], {
         icon: isApproved ? <ApproveIcon width="20" height="20" /> : <DeclineIcon width="20" height="20" />,
         className: "text-16 font-500",
       });
       router.replace(`/event/${eventId}/approve`);
+    } catch (err: any) {
+      toast.error(EDIT_ERR_MSG[err.message as EditErrMsgType], { className: "text-16 !text-red font-500" });
+      if (err.message === "Unauthorized") router.push("/signin");
     }
   };
 

@@ -2,9 +2,14 @@ import { instance } from "app/_api/api";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import React from "react";
 import { FieldValues, FormProvider, UseFormProps, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { useAuth } from "@/hooks/useAuth";
 import { useModal } from "@/hooks/useModal";
+import { useSession } from "@/store/session/cookies";
 import { handleSignupSubmit } from "@/utils/handleSignupSubmit";
-import { handlePostSubmit, submitEditApplication } from "@/utils/submitPost";
+import { handlePostSubmit, submitEditApplication, submitEditWriter } from "@/utils/submitPost";
+import { PostErrMsgType } from "@/types/errorMsgType";
+import { POST_ERR_MSG } from "@/constants/errorMsg";
 import AlertModal from "./modal/AlertModal";
 
 interface GenericFormProps<T extends FieldValues> {
@@ -22,16 +27,25 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
   const onSubmit = async () => {
     const userInputValue = methods.getValues();
     const defaultValue = methods.formState.defaultValues;
+    const session = useAuth("/signin");
+    if (!session) return;
 
     if (path === "/post") {
-      const res = await handlePostSubmit(userInputValue, instance);
-      router.push(`/event/${res.eventId}`);
+      try {
+        const res = await handlePostSubmit(userInputValue, instance, session.user.userId);
+        router.push(`/event/${res.eventId}`);
+      } catch (err: any) {
+        toast.error(POST_ERR_MSG[err.message as PostErrMsgType], { className: "text-16 font-500 !text-red" });
+        if (err.message === "Unauthorized") {
+          return router.push("/signin");
+        }
+      }
     }
     if (path === `/event/${eventId}/edit`) {
       //작성 유저
-      const res = await submitEditWriter(methods.getValues(), instance, eventId);
+      const res = await submitEditWriter(methods.getValues(), instance, session.user.userId, eventId);
       //신청 유저
-      // await submitEditApplication(instance, defaultValue, userInputValue, eventId);
+      // await submitEditApplication(instance, defaultValue, userInputValue, session.user.userId, eventId);
       openModal("endEdit");
     }
     if (path === "/signup") {
