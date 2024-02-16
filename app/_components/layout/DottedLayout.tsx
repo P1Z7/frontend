@@ -7,15 +7,15 @@ const MAX_W = {
 
 interface Props {
   children: ReactNode;
-  type: "narrow" | "wide";
+  size: "narrow" | "wide";
 }
 
-const DottedLayout = ({ children, type }: Props) => {
+const DottedLayout = ({ children, size }: Props) => {
   return (
     <>
       <div className="pc:hidden">{children}</div>
       <div className="hidden min-h-dvh w-full bg-[url('/image/dotted-background.png')] bg-[length:100%_auto] bg-top bg-repeat-y px-20 pc:block">
-        <div className={`mx-auto ${MAX_W[type]} bg-white-black`}>{children}</div>
+        <div className={`mx-auto ${MAX_W[size]} bg-white-black`}>{children}</div>
       </div>
     </>
   );

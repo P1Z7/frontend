@@ -51,7 +51,7 @@ const EditContent = () => {
   const isValid = checkUpdated() && isCheck;
 
   return (
-    <div className="flex flex-col gap-20 pb-120">
+    <div className="flex flex-col gap-20">
       <StarInput />
       <MainInput />
       <SubInput />

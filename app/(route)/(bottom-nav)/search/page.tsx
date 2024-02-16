@@ -9,7 +9,6 @@ import GiftBottomSheet from "@/components/bottom-sheet/GiftsBottomSheet";
 import SmallRegionBottomSheet from "@/components/bottom-sheet/SmallRegionBottomSheet";
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
 import SearchInput from "@/components/input/SearchInput";
-import DottedLayout from "@/components/layout/DottedLayout";
 import { instance } from "@/api/api";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
@@ -174,7 +173,7 @@ const SearchPage = () => {
   }, [position]);
 
   return (
-    <DottedLayout type="wide">
+    <>
       <main className="relative w-full px-20 pb-84 pt-160 pc:p-0 pc:pb-84">
         <section className="fixed left-0 right-0 top-0 z-nav flex w-full flex-col bg-white-black text-14 text-gray-500 shadow-top pc:static pc:shadow-none">
           <div className="bg-white-black px-20 pb-8 pt-40 pc:px-0 pc:pb-20 pc:pt-[7rem]">
@@ -234,7 +233,7 @@ const SearchPage = () => {
         <CalenderBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} setStartDateFilter={setStartDateFilter} setEndDateFilter={setEndDateFilter} />
       )}
       {bottomSheet === BOTTOM_SHEET.gift && <GiftBottomSheet refs={refs} closeBottomSheet={closeBottomSheet} setGiftsFilter={setGiftsFilter} selected={filter.gifts} />}
-    </DottedLayout>
+    </>
   );
 };
 
