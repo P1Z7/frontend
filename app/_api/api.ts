@@ -1,3 +1,4 @@
+import { Req_Delete_Type } from "@/types/deleteBodyType";
 import { Req_Post_Type } from "@/types/postBodyType";
 import { Req_Put_Type } from "@/types/putBodyType";
 import { Req_Query_Type } from "@/types/queryType";
@@ -102,7 +103,7 @@ type PostEndPoint =
   | "/event/update/application";
 
 type PutEndPoint = `/event/${string}` | `/users/${string}/profile` | `/users/${string}/password`;
-type DeleteEndPoint = `/users/${string}/artists` | `/reviews/${string}/images` | `users/${string}`;
+type DeleteEndPoint = `/users/${string}/artists` | `/reviews/${string}/images` | `/users/${string}`;
 type PostQueryType<T> = T extends "/file/upload" ? { category: "event" | "artist" | "user" } : unknown;
 
 type PostBodyType<T> = T extends "/event"
@@ -156,4 +157,4 @@ type PutBodyType<T> = T extends `/event/${string}`
     : T extends `/users/${string}/password`
       ? Req_Put_Type["password"]
       : any;
-type DeleteBodyType<T> = any;
+type DeleteBodyType<T> = T extends `/users/${string}` ? Req_Delete_Type["user"] : any;

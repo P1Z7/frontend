@@ -14,7 +14,6 @@ import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 const PWCHANGE_DEFAULT = {
   mode: "onBlur",
   defaultValues: {
-    curPw: "",
     newPw: "",
     newPwCheck: "",
   },
@@ -31,7 +30,7 @@ const PasswordPage = () => {
 
   const [submitState, setSubmitState] = useState({ isLoading: false, isError: false });
 
-  const handlePwChange: SubmitHandler<DefaultValues> = ({ curPw, newPw, newPwCheck }) => {
+  const handlePwChange: SubmitHandler<DefaultValues> = ({ newPw, newPwCheck }) => {
     if (!session) {
       return;
     }
@@ -62,35 +61,18 @@ const PasswordPage = () => {
   return (
     <form ref={formSection} onSubmit={handleSubmit(handlePwChange)} className="flex flex-col gap-20 px-20 py-36">
       <InputText
-        name="curPw"
-        type="password"
-        control={control}
-        rules={{
-          required: ERROR_MESSAGES.password.passwordField,
-          pattern: { value: REG_EXP.CHECK_PASSWORD, message: ERROR_MESSAGES.password.passwordPattern },
-        }}
-        onKeyDown={handleEnterNext}
-      >
-        현재 비밀번호
-      </InputText>
-      <InputText
         name="newPw"
         type="password"
         control={control}
         rules={{
           required: ERROR_MESSAGES.password.passwordField,
           pattern: { value: REG_EXP.CHECK_PASSWORD, message: ERROR_MESSAGES.password.passwordPattern },
-          validate: {
-            matchPassword: (value: string) => {
-              return value === getValues("curPw") ? "현재 비밀번호와 다르게 입력해주세요." : true;
-            },
-          },
           deps: [getValues("newPwCheck") ? "newPwCheck" : ""],
         }}
         onKeyDown={handleEnterNext}
         hint="숫자, 영문을 조합하여 8자리 이상"
       >
-        새 비밀번호
+        비밀번호
       </InputText>
       <InputText
         name="newPwCheck"
@@ -109,7 +91,7 @@ const PasswordPage = () => {
         onKeyDown={handleEnterNext}
         placeholder="다시 입력해주세요."
       >
-        새 비밀번호 확인
+        비밀번호 확인
       </InputText>
       <div className={`fixed bottom-0 left-0 w-full ${submitState.isError ? "animate-brrr" : ""}`}>
         <BottomButton isDisabled={!isFormValid} isSubmit>
