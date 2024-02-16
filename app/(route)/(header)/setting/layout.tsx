@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
-import { authRedirectServer } from "@/utils/authRedirect";
+import { serverAuth } from "@/utils/serverAuth";
 
 const SettingLayout = ({ children }: { children: ReactNode }) => {
-  authRedirectServer("/signin");
+  serverAuth("/signin");
   return children;
 };
 export default SettingLayout;

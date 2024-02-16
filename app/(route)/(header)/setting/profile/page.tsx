@@ -1,16 +1,14 @@
 "use client";
 
 import FadingDot from "@/(route)/(bottom-nav)/signin/_components/FadingDot";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import BottomButton from "@/components/button/BottomButton";
 import InputProfileImg from "@/components/input/InputProfileImg";
 import InputText from "@/components/input/InputText";
 import { Api } from "@/api/api";
 import { setSession, useSession } from "@/store/session/cookies";
-import { authRedirectServer } from "@/utils/authRedirect";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 
 interface DefaultValues {
