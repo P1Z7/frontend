@@ -16,14 +16,21 @@ import HeartIcon from "@/public/icon/heart.svg";
 import LinkIcon from "@/public/icon/link.svg";
 import MapIcon from "@/public/icon/map.svg";
 import UserIcon from "@/public/icon/user.svg";
-import YoutubeIcon from "@/public/icon/youtube.svg";
 import DefaultImage from "@/public/image/no-profile.png";
 
 const IconStyleProps = {
-  width: 20,
-  height: 20,
-  viewBox: "0 0 24 24",
-  stroke: "#A0A5B1",
+  mobile: {
+    width: 20,
+    height: 20,
+    viewBox: "0 0 24 24",
+    stroke: "#A0A5B1",
+  },
+  pc: {
+    width: 24,
+    height: 24,
+    viewBox: "0 0 24 24",
+    stroke: "#A0A5B1",
+  },
 };
 
 const USER_ID = "4a256531-6f40-41de-aba2-d37d7507e5d7";
