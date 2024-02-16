@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { Api } from "app/_api/api";
+import { Api } from "@/api/api";
 import { Res_Get_Type } from "@/types/getResType";
 import Carousel from "./Carousel";
 
@@ -20,10 +20,11 @@ const PopularEventsCarousel = () => {
   });
 
   return (
-    <>
+    <div className="flex flex-col gap-16 pc:gap-24">
+      <h2 className="px-20 text-20 font-700 text-gray-900 pc:px-48">지금 가장 인기 있는 행사</h2>
       {isLoading && <div>로딩중</div>}
-      {isSuccess && <Carousel title="지금 가장 인기 있는 행사" cards={popularEvents} />}
-    </>
+      {isSuccess && <Carousel cards={popularEvents} />}
+    </div>
   );
 };
 

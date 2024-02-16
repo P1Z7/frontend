@@ -26,6 +26,7 @@ const ArtistList = () => {
     data: artistData,
     fetchNextPage,
     isFetching,
+    isLoading,
   } = useInfiniteQuery({
     initialPageParam: 1,
     queryKey: ["artist"],
@@ -44,6 +45,7 @@ const ArtistList = () => {
       <div className="flex flex-col items-center">
         <div className="flex w-full max-w-[52rem] flex-col items-center pc:max-w-full">
           <ul className="flex flex-wrap justify-center gap-20 pc:gap-32">
+            {isLoading && <div>로딩중</div>}
             {artistData?.pages.map((page) =>
               page.artistAndGroupList.map((artist) => (
                 <li key={artist.id} className="w-88 pc:w-120">

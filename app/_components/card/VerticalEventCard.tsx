@@ -31,8 +31,7 @@ const VerticalEventCard = ({ data }: Props) => {
         <Image
           src={bannerImage?.imageUrl ?? "/image/no-profile.png"}
           fill
-          // pc 사이즈일 땐 size를 어떻게..?
-          sizes="14.8rem"
+          sizes="100%"
           style={{
             objectFit: "cover",
           }}

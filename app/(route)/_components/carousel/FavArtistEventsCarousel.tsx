@@ -1,12 +1,12 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { Api } from "app/_api/api";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Api } from "@/api/api";
 import { Res_Get_Type } from "@/types/getResType";
-import Hero from "@/public/icon/hero.svg";
 import Carousel from "./Carousel";
 
 const FavArtistEventsCarousel = () => {
@@ -73,10 +73,18 @@ export const NoFavCard = ({ href, buttonName }: NoFavCardProps) => {
 
   return (
     <div className="w-full px-20 pc:px-40">
-      <div className="flex-center relative h-160 overflow-hidden rounded-lg">
-        <Hero className="absolute left-1/2 top-0 -translate-x-1/2" />
-        <div className="flex-center absolute top-96 w-full flex-col gap-16">
-          <div onClick={() => router.push(href)} className="h-32 cursor-pointer rounded-full bg-gray-900 px-16 text-14 font-600 leading-loose text-white-white ">
+      <div className="flex-center relative h-160 overflow-hidden rounded-lg border border-main-pink-50 pc:h-232">
+        <Image
+          src="/image/hero.png"
+          fill
+          sizes="100%"
+          // style={{
+          //   objectFit: "cover",
+          // }}
+          alt="배너이미지"
+        />
+        <div className="flex-center absolute top-96 w-full flex-col gap-16 pc:top-152">
+          <div onClick={() => router.push(href)} className="pc:text-18 h-32 cursor-pointer rounded-full bg-gray-900 px-16 text-14 font-600 leading-loose text-white-white pc:h-40">
             {buttonName}
           </div>
         </div>

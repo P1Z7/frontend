@@ -5,11 +5,10 @@ import PrevButtonIcon from "@/public/icon/arrow-left_xl.svg";
 import NextButtonIcon from "@/public/icon/arrow-right_xl.svg";
 
 interface Props {
-  title?: string;
   cards: Res_Get_Type["eventList"] | undefined;
 }
 
-const Carousel = ({ title, cards }: Props) => {
+const Carousel = ({ cards }: Props) => {
   const [slideIndex, setSlideIndex] = useState(0);
   const [isPrevDisabled, setIsPrevDisabled] = useState(true);
   const [isNextDisabled, setIsNextDisabled] = useState(false);
@@ -48,7 +47,6 @@ const Carousel = ({ title, cards }: Props) => {
 
   return (
     <div className="flex flex-col gap-16 pc:gap-24">
-      {title && <h2 className="px-20 text-20 font-700 text-gray-900 pc:px-48">{title}</h2>}
       <div className="pc:flex pc:w-[112rem]">
         <div onClick={handlePrevClick} className={`relative top-76 hidden w-[5rem] cursor-pointer pc:block ${isPrevDisabled ? "pointer-events-none opacity-50" : ""}`}>
           <PrevButtonIcon />
