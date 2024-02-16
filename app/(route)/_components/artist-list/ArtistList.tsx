@@ -39,7 +39,7 @@ const ArtistList = () => {
   });
 
   return (
-    <div className="flex flex-col gap-16 px-20">
+    <div className="flex flex-col gap-16 px-20 pc:px-40">
       <h2 className="text-20 font-700 text-gray-900">아티스트로 찾아보기</h2>
       <div className="flex flex-col items-center">
         <div className="flex w-full max-w-[52rem] flex-col items-center pc:max-w-full">

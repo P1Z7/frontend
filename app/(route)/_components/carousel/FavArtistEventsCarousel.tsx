@@ -47,13 +47,15 @@ const FavArtistEventsCarousel = () => {
   };
 
   return (
-    <div className="flex flex-col gap-16">
-      <div className="flex items-center justify-between self-stretch px-20">
-        <h2 className="text-20 font-700 text-gray-900">내 아티스트의 새 행사</h2>
-        {hasFavoriteEvents && (
-          <Link href="/my-artist-event" className="text-12 font-600 text-blue">
-            전체보기
-          </Link>
+    <div className="flex flex-col gap-16 pc:gap-24">
+      <div className="flex items-center justify-between self-stretch px-20 pc:px-48">
+        {status && (
+          <>
+            <h2 className="text-20 font-700 text-gray-900">내 아티스트의 새 행사</h2>
+            <Link href="/my-artist-event" className="text-12 font-600 text-blue">
+              전체보기
+            </Link>
+          </>
         )}
       </div>
       {renderContent()}
@@ -70,7 +72,7 @@ const NoFavCard = ({ href, buttonName }: NoFavCardProps) => {
   const router = useRouter();
 
   return (
-    <div className="px-20">
+    <div className="px-20 pc:px-40">
       <div className="flex-center relative h-160 overflow-hidden rounded-lg">
         <Hero className="absolute left-1/2 top-0 -translate-x-1/2" />
         <div className="flex-center absolute top-96 w-full flex-col gap-16">
