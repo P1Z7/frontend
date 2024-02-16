@@ -76,11 +76,11 @@ interface NoFavCardProps {
   buttonName: string;
 }
 
-const NoFavCard = ({ href, buttonName }: NoFavCardProps) => {
+export const NoFavCard = ({ href, buttonName }: NoFavCardProps) => {
   const router = useRouter();
 
   return (
-    <div className="px-20">
+    <div className="w-full px-20">
       <div className="flex-center relative h-160 overflow-hidden rounded-lg">
         <Hero className="absolute left-1/2 top-0 -translate-x-1/2" />
         <div className="flex-center absolute top-96 w-full flex-col gap-16">

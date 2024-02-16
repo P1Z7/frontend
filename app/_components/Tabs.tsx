@@ -3,7 +3,7 @@
 import { ButtonHTMLAttributes, ReactNode, useState } from "react";
 
 const TOP_OFFSET = {
-  mypage: "top-112",
+  mypage: "top-0",
   event: "top-72",
 };
 interface Tab {
