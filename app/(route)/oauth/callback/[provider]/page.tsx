@@ -12,7 +12,7 @@ import NaverLogo from "@/public/icon/logo_naver.svg";
 
 const OAuth = () => {
   const router = useRouter();
-  const url = new URL(typeof window !== "undefined" ? window.location.href : "");
+  const url = new URL(window.location.href);
   const code = url.searchParams.get("code")!;
   const signinMethod = url.pathname.split("/").pop()!;
 
