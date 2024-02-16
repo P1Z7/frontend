@@ -50,6 +50,18 @@ type Req_Query_User_Review = {
   userId: string;
 };
 
+type Req_Query_Group = {
+  groupId: string;
+};
+
+type Req_Query_Artist = {
+  artists: string;
+};
+
+type Req_Query_Approve = {
+  eventUpdateApplicationId: string;
+};
+
 export type Req_Query_Type = {
   행사목록: Req_Query_Event;
   행사상세: Req_Query_Event_Detail;
@@ -60,4 +72,7 @@ export type Req_Query_Type = {
   그룹솔로: Req_Query_Group_And_Solo;
   리뷰: Req_Query_Review;
   유저리뷰: Req_Query_User_Review;
+  그룹조회: Req_Query_Group;
+  멤버조회: Req_Query_Artist;
+  수정상세: Req_Query_Approve;
 };

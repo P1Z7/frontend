@@ -16,7 +16,7 @@ import { formatDate } from "@/utils/formatString";
 import { createQueryString } from "@/utils/handleQueryString";
 import { Res_Get_Type } from "@/types/getResType";
 import { GiftType } from "@/types/index";
-import { TAG } from "@/constants/data";
+import { TAG } from "@/constants/post";
 import { BIG_REGIONS } from "@/constants/regions";
 import ResetIcon from "@/public/icon/reset.svg";
 import SortIcon from "@/public/icon/sort.svg";
