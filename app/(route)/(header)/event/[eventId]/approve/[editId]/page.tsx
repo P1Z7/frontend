@@ -84,6 +84,7 @@ const EditDetailApprove = () => {
                 <>{JSON.parse(data.applicationDetail.updateData)[data.applicationDetail.updateCategory]}</>
               )}
             </EditBox>
+            {data.applicationDetail.updateCategory === "eventImages" && <p className="text-14 text-gray-400">사진을 클릭해 확인해 보세요.</p>}
           </section>
           <section className="flex flex-col gap-4">
             승인 현황

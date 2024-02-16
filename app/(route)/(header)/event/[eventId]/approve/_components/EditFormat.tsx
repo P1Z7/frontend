@@ -1,7 +1,9 @@
 import classNames from "classnames";
 import Image from "next/image";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import Chip from "@/components/chip/Chip";
+import ModalPortal from "@/components/modal/ModalPortal";
+import { useModal } from "@/hooks/useModal";
 import { GiftType } from "@/types/index";
 import { EDIT_ERR_MSG } from "@/constants/errorMsg";
 import { SnsIcon } from "@/constants/snsIcon";
@@ -11,20 +13,29 @@ interface ImageEditProps {
 }
 
 export const ImageEdit = ({ imgList }: ImageEditProps) => {
-  const router = useRouter();
   const { eventId, editId } = useParams();
   const curPath = usePathname();
   const isPreview = curPath === `/event/${eventId}/approve/${editId}`;
+  const { modal, openModal, closeModal } = useModal();
 
   return (
     <div className="flex gap-8 overflow-x-scroll scrollbar-hide">
       {imgList.length > 0
         ? imgList.map((url: string) => (
-            <div key={url} className={classNames("relative h-120 w-120 flex-shrink-0", { "cursor-pointer": isPreview })} onClick={() => (isPreview ? router.push(url) : null)}>
+            <div key={url} className={classNames("relative h-120 w-120 flex-shrink-0", { "cursor-pointer": isPreview })} onClick={() => (isPreview ? openModal(url) : null)}>
               <Image alt="수정된 행사 이미지" src={url} fill sizes="12rem, 12rem" className="object-cover" />
             </div>
           ))
         : EDIT_ERR_MSG["noInfo"]}
+      {modal && (
+        <ModalPortal>
+          <div onClick={closeModal} className="fixed left-0 top-0 z-popup flex h-screen w-full items-center justify-center bg-gray-900 bg-opacity-70 px-20 py-32">
+            <div className="relative z-popup h-full w-full">
+              <Image alt="크게보기" src={modal} width={0} height={0} sizes="100vw, 100vh" className="h-full w-full object-contain" />
+            </div>
+          </div>
+        </ModalPortal>
+      )}
     </div>
   );
 };
