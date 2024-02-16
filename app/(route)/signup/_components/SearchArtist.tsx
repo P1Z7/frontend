@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { Api } from "app/_api/api";
 import { useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -6,9 +6,11 @@ import toast from "react-hot-toast";
 import ArtistCard from "@/components/ArtistCard";
 import ChipButton from "@/components/chip/ChipButton";
 import SearchInput from "@/components/input/SearchInput";
+import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { useModal } from "@/hooks/useModal";
+import { Res_Get_Type } from "@/types/getResType";
 import { ArtistType } from "@/types/index";
-import InputModal from "./modal/InputModal";
+import InputModal from "../../../_components/modal/InputModal";
 
 interface Props {
   onClick: (name: string, id: string, isChecked: boolean) => void;
@@ -16,15 +18,31 @@ interface Props {
   myArtistsInfo: { name: string; id: string }[];
 }
 
+const SIZE = 12;
+
 const SearchArtist = ({ onClick, myArtists, myArtistsInfo }: Props) => {
   const [keyword, setKeyword] = useState("");
   const instance = new Api();
 
-  const { data } = useQuery({
-    queryKey: ["group", keyword],
-    queryFn: async () => {
-      return instance.get("/artist/group", { keyword: keyword, size: 12, page: 1 });
-    },
+  const getArtists = async ({ pageParam = 1 }) => {
+    const data: Res_Get_Type["artistGroup"] = await instance.get("/artist/group", {
+      keyword: keyword,
+      size: SIZE,
+      page: pageParam,
+    });
+    return data;
+  };
+
+  const { data: artistData, fetchNextPage } = useInfiniteQuery({
+    initialPageParam: 1,
+    queryKey: ["artist", keyword],
+    queryFn: getArtists,
+    getNextPageParam: (lastPage) => (lastPage.page * SIZE < lastPage.totalCount ? lastPage.page + 1 : null),
+  });
+
+  const containerRef = useInfiniteScroll({
+    handleScroll: fetchNextPage,
+    deps: [artistData],
   });
 
   const [selected, setSelected] = useState(myArtistsInfo);
@@ -64,10 +82,6 @@ const SearchArtist = ({ onClick, myArtists, myArtistsInfo }: Props) => {
     }
   };
 
-  if (!data?.artistAndGroupList) return;
-
-  const searchedData: ArtistType[] = data.artistAndGroupList;
-
   return (
     <div className="flex w-full flex-col pt-8">
       <button className="w-fit text-14 font-500 text-gray-400 underline" onClick={() => openModal("reqArtist")} type="button">
@@ -89,10 +103,9 @@ const SearchArtist = ({ onClick, myArtists, myArtistsInfo }: Props) => {
         ))}
       </div>
       <ul className="flex w-full flex-wrap justify-center gap-x-16 gap-y-20 overflow-hidden px-8">
-        {searchedData.map((cardList) => (
-          <Card data={cardList} onClick={handleArtistClick} myArtists={myArtists} key={cardList.id} />
-        ))}
+        {artistData?.pages.map((page) => page.artistAndGroupList.map((artist) => <Card data={artist} onClick={handleArtistClick} myArtists={myArtists} key={artist.id} />))}
       </ul>
+      <div ref={containerRef} className="h-16 w-full pb-160" />
       {modal === "reqArtist" && (
         <InputModal
           title="아티스트 등록 요청"

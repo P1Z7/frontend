@@ -8,8 +8,9 @@ const BottomButton = () => {
   const pathname = usePathname();
   const postUrl = pathname + "/post";
   return (
-    <div className="sticky bottom-0 w-full border-t border-gray-50 bg-white-black px-20 pb-24 pt-12">
-      <Link href={postUrl}>
+    <div className="sticky bottom-0 flex w-full items-center justify-center gap-24 border-t border-gray-50 bg-white-black px-20 pb-24 pt-12 tablet:justify-end tablet:rounded-lg tablet:border-x tablet:px-40 tablet:pb-32 tablet:pt-16">
+      <span className="hidden text-16 font-400 text-gray-500 tablet:inline">이벤트에 방문하셨다면 후기를 남겨주세요!</span>
+      <Link href={postUrl} className="block w-full tablet:w-320">
         <Button size="xl" type="lined">
           후기 작성하기
         </Button>

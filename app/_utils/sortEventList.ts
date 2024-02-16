@@ -1,6 +1,6 @@
-import { ScheduleDataProps } from "@/(route)/(bottom-nav)/mypage/page";
+import { EventCardType } from "../_types";
 
-export const sortEvents = (events: ScheduleDataProps[]) => {
+export const sortEvents = (events: EventCardType[]) => {
   const sortedEvents = events.sort((a, b) => {
     const startDateA = new Date(a.startDate).getTime();
     const startDateB = new Date(b.startDate).getTime();
