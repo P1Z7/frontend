@@ -7,18 +7,20 @@ import PopularEventsCarousel from "../_components/carousel/PopularEventsCarousel
 
 const Home = () => {
   return (
-    <div className="flex flex-col gap-40 pb-72 pt-88">
-      <header className="fixed left-0 top-0 z-nav h-88 w-full bg-white-black px-20 pb-16 pt-48">
+    <>
+      <header className="sticky left-0 top-0 z-nav h-88 w-full bg-white-black px-20 pb-16 pt-48 tablet:hidden">
         <Logo />
       </header>
-      <main className="flex flex-col gap-40 overflow-hidden">
-        <FavArtistEventsCarousel />
-        <PopularEventsCarousel />
-        <NewestEventsCarousel />
-        <ArtistList />
-      </main>
-      <Footer />
-    </div>
+      <div className="flex flex-col gap-40 pb-72">
+        <main className="flex flex-col gap-40 overflow-hidden">
+          <FavArtistEventsCarousel />
+          <PopularEventsCarousel />
+          <NewestEventsCarousel />
+          <ArtistList />
+        </main>
+        <Footer />
+      </div>
+    </>
   );
 };
 export default Home;

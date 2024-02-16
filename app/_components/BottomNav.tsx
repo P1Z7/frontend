@@ -14,23 +14,23 @@ const MOCK_USER_INFO = {
   profileImg: null,
 };
 
+const NAV_BUTTONS = [
+  { href: "/", icon: <HomeIcon />, label: "홈" },
+  { href: "/search", icon: <SearchIcon />, label: "둘러보기" },
+  { href: "/post", icon: <PostIcon />, label: "등록하기" },
+  {
+    href: "/mypage",
+    icon: <Image src={MOCK_USER_INFO.profileImg ? MOCK_USER_INFO.profileImg : "/icon/no-profile.svg"} alt="프로필 이미지" width={24} height={24} />,
+    label: "마이페이지",
+  },
+];
+
 const BottomNav = () => {
   const pathname = usePathname();
 
-  const navButtons = [
-    { href: "/", icon: <HomeIcon />, label: "홈" },
-    { href: "/search", icon: <SearchIcon />, label: "둘러보기" },
-    { href: "/post", icon: <PostIcon />, label: "등록하기" },
-    {
-      href: "/mypage",
-      icon: <Image src={MOCK_USER_INFO.profileImg ? MOCK_USER_INFO.profileImg : "/icon/no-profile.svg"} alt="프로필 이미지" width={24} height={24} />,
-      label: "마이페이지",
-    },
-  ];
-
   return (
     <nav className="fixed bottom-0 left-0 z-nav flex h-72 w-full items-center justify-evenly gap-28 border-t border-gray-50 bg-white-black py-8 shadow-top">
-      {navButtons.map((item, index) => (
+      {NAV_BUTTONS.map((item, index) => (
         <NavButton key={index} href={item.href} icon={item.icon} label={item.label} isActive={pathname === item.href} />
       ))}
     </nav>
@@ -45,7 +45,7 @@ interface NavItemProps {
 }
 
 const NavButton = ({ href, icon, label, isActive }: NavItemProps) => {
-  let clonedIcon = cloneElement(icon, {
+  const clonedIcon = cloneElement(icon, {
     stroke: isActive ? "#FF50AA" : "#494F5A",
   });
 
