@@ -9,15 +9,13 @@ import Chip from "@/components/chip/Chip";
 import { useStore } from "@/store/index";
 import { formatDate } from "@/utils/formatString";
 import { EventCardType, EventType, TargetArtistType } from "@/types/index";
+import { SnsIcon } from "@/constants/snsIcon";
 import CalendarIcon from "@/public/icon/calendar.svg";
 import GiftIcon from "@/public/icon/gift.svg";
 import HeartIcon from "@/public/icon/heart.svg";
-import InstagramIcon from "@/public/icon/instagram.svg";
 import LinkIcon from "@/public/icon/link.svg";
 import MapIcon from "@/public/icon/map.svg";
-import TwitterIcon from "@/public/icon/twitter.svg";
 import UserIcon from "@/public/icon/user.svg";
-import YoutubeIcon from "@/public/icon/youtube.svg";
 import DefaultImage from "@/public/image/no-profile.png";
 
 const IconStyleProps = {
@@ -33,13 +31,6 @@ const IconStyleProps = {
     viewBox: "0 0 24 24",
     stroke: "#A0A5B1",
   },
-};
-
-const SnsIcon = {
-  트위터: <TwitterIcon />,
-  인스타그램: <InstagramIcon />,
-  유튜브: <YoutubeIcon />,
-  기타: null,
 };
 
 const USER_ID = "4a256531-6f40-41de-aba2-d37d7507e5d7";
