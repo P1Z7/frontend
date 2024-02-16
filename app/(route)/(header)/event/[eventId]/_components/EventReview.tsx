@@ -20,7 +20,7 @@ const EventReview = ({ data }: Props) => {
         <button className="ml-auto text-12 font-500 text-gray-400">신고하기</button>
       </div>
       <Evaluation rating={data.rating} />
-      <div className="text-14 font-400 pc:text-16">{data.description}</div>
+      <div className="text-left text-14 font-400 pc:text-16">{data.description}</div>
       <ul className="flex gap-8 overflow-auto">
         {data.reviewImages?.map((image, index) => (
           <li key={index} className="relative h-120 w-120 shrink-0">
