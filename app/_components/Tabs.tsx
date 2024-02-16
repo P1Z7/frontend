@@ -22,7 +22,7 @@ const Tabs = ({ children, names, topOffset = "mypage" }: Props) => {
 
   return (
     <section className="w-full">
-      <div className={`sticky z-nav flex h-44 w-full items-center border-b border-gray-50 bg-white-black px-20 tablet:h-56 ${TOP_OFFSET[topOffset]}`}>
+      <div className={`sticky z-popup flex h-44 w-full items-center border-b border-gray-50 bg-white-black px-20 tablet:h-56 ${TOP_OFFSET[topOffset]}`}>
         {names.map((name, index) => (
           <TabButton key={name} onClick={() => setSelectedTab({ name, index })} selected={name === selectedTab.name}>
             {name}
