@@ -220,7 +220,7 @@ const MyCalendarTab = ({ userId }: Props) => {
           <ChipButton label="진행중" onClick={() => handleChipClick("진행중")} selected={statue === "진행중"} />
           <ChipButton label="종료" onClick={() => handleChipClick("종료")} selected={statue === "종료"} />
         </div>
-        <ul>
+        <section className="flex-center flex-wrap gap-x-24">
           {data
             .filter(
               (event: EventCardType) =>
@@ -229,7 +229,7 @@ const MyCalendarTab = ({ userId }: Props) => {
             .map((event: EventCardType) => (
               <HorizontalEventCard key={event.id} data={event} onHeartClick={() => handleHeartClick(event.id)} />
             ))}
-        </ul>
+        </section>
         {!data.length && (
           <div className="flex-center flex-col gap-8 p-40">
             <h1 className="text-16 font-500 ">관심있는 행사에 좋아요를 눌러보세요!</h1>
