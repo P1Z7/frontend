@@ -4,10 +4,10 @@ import { EventCardType } from "@/types/index";
 interface Props {
   scheduleData: EventCardType[];
   setLocationInfo: (data: EventCardType) => void;
-  openBottomSheet: (name: string) => void;
+  openMapBox: (open: true) => void;
 }
 
-const MyKakaoMap = ({ scheduleData, setLocationInfo, openBottomSheet }: Props) => {
+const MyKakaoMap = ({ scheduleData, setLocationInfo, openMapBox }: Props) => {
   useEffect(() => {
     if (window.kakao) {
       window.kakao.maps.load(() => {
@@ -60,7 +60,7 @@ const MyKakaoMap = ({ scheduleData, setLocationInfo, openBottomSheet }: Props) =
 
               window.kakao.maps.event.addListener(marker, "click", () => {
                 setLocationInfo(data);
-                openBottomSheet("location_detail");
+                openMapBox(true);
               });
 
               map.setCenter(coords);

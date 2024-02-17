@@ -67,7 +67,11 @@ const MyCalendarTab = ({ userId }: Props) => {
         } else {
           type = COUNT_CHIP_TYPE.regular;
         }
-        return <div className={`h-20 w-20 rounded-full text-12 font-600 ${type}`}>{eventsForDate.length}</div>;
+        return (
+          <span className="pc:flex pc:w-full pc:items-center pc:justify-end pc:self-stretch pc:px-8">
+            <div className={`flex-center h-20 w-20 rounded-full text-12 font-600 pc:h-28 pc:w-28 pc:text-16 ${type}`}>{eventsForDate.length}</div>
+          </span>
+        );
 
       case false:
         if (eventsForDate.length == 0) {
@@ -100,7 +104,7 @@ const MyCalendarTab = ({ userId }: Props) => {
           lastDay = today;
 
           return (
-            <div>
+            <span className="flex flex-col items-center justify-center gap-4 self-stretch pc:pt-4">
               {today.map((event, idx) => {
                 if (event === "blank") {
                   return <span key={idx + event} className={`h-4 rounded-sm`} />;
@@ -120,9 +124,9 @@ const MyCalendarTab = ({ userId }: Props) => {
                 } else {
                   type = SHAPE_TYPE.middleDay;
                 }
-                return <span key={event.id} className={`h-4 rounded-sm ${type} ${COLOR_TYPE[idNumber % 6]}`} />;
+                return <div key={event.id} className={`h-4 rounded-sm ${type} ${COLOR_TYPE[idNumber % 6]}`} />;
               })}
-            </div>
+            </span>
           );
         }
     }
@@ -255,14 +259,14 @@ const COLOR_TYPE: Record<number, string> = {
 };
 
 const SHAPE_TYPE = {
-  oneDay: "w-36",
-  firstDay: "ml-8 w-44",
-  lastDay: "mr-8 w-44",
-  middleDay: "w-52",
+  oneDay: "w-36 pc:w-100",
+  firstDay: "ml-8 w-44 pc:w-108",
+  lastDay: "mr-8 w-44 pc:w-108",
+  middleDay: "w-52 pc:w-120",
 };
 
 const COUNT_CHIP_TYPE = {
   light: "text-main-pink-300 bg-main-pink-50",
   regular: "text-main-pink-500 bg-main-pink-50",
-  bold: "text-white=white bg-main-pink-500",
+  bold: "text-white-white bg-main-pink-500",
 };
