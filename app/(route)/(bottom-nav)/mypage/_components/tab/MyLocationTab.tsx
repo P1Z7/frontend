@@ -79,7 +79,7 @@ const MapInfoBox = ({ locationInfo, closeMapBox }: { locationInfo: EventCardType
     <div onClick={() => closeMapBox()} className="fixed bottom-0 left-0 z-popup flex h-full w-full flex-col items-end justify-end gap-4 pt-16 pc:absolute pc:px-[3.8rem]">
       <div
         onClick={(e: SyntheticEvent) => e.stopPropagation()}
-        className="flex max-h-[55.6rem] w-full transform animate-slideUp flex-col overflow-hidden border-t bg-white-black px-8 transition duration-150 ease-out"
+        className="flex max-h-[55.6rem] w-full transform animate-slideUp flex-col overflow-hidden border-t bg-white-black px-20 transition duration-150 ease-out pc:px-8"
       >
         <button onClick={handleRedirectToMap} className="flex-center w-fit gap-4 pt-20 text-14 font-500 text-gray-900 hover:underline">
           <MapIcon width={20} height={20} viewBox="0 0 24 24" stroke="#A0A5B1" />

@@ -15,15 +15,15 @@ interface Props {
   children: ReactNode[];
   names: readonly string[];
   topOffset?: "mypage" | "event";
-  narrow?: boolean;
+  isNarrow?: boolean;
 }
 
-const Tabs = ({ children, names, topOffset = "mypage", narrow = false }: Props) => {
+const Tabs = ({ children, names, topOffset = "mypage", isNarrow: narrow = false }: Props) => {
   const [selectedTab, setSelectedTab] = useState<Tab>({ name: names[0], index: 0 });
 
   return (
     <section className="h-full w-full">
-      <div className={`sticky z-popup flex h-44 w-full items-center border-b border-gray-50 bg-white-black px-20 pc:h-56 ${TOP_OFFSET[topOffset]}`}>
+      <div className={`sticky z-popup flex h-44 w-full items-center border-b border-gray-50 bg-white-black px-20 pc:h-56 ${TOP_OFFSET[topOffset]} ${narrow && "pc:static"}`}>
         {names.map((name, index) => (
           <TabButton key={name} onClick={() => setSelectedTab({ name, index })} selected={name === selectedTab.name} narrow={narrow}>
             {name}
