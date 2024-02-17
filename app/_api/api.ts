@@ -8,12 +8,10 @@ const STR_RES_ENDPOINT = ["/file/upload", "/event/update/application"];
 export class Api {
   private baseUrl;
   private queryString;
-  private accessToken;
 
-  constructor(token?: string) {
+  constructor() {
     this.baseUrl = "";
     this.queryString = "";
-    this.accessToken = token;
   }
 
   private makeError(result: any) {
@@ -59,7 +57,6 @@ export class Api {
         ...(endPoint === "/file/upload" || endPoint === "/reviews" ? {} : { "Content-Type": "application/json" }),
         credentials: "include",
       },
-      credentials: "include",
     });
     const result = STR_RES_ENDPOINT.includes(endPoint) ? await res.text() : await res.json();
     this.makeError(result);
@@ -74,7 +71,6 @@ export class Api {
       body: JSON.stringify(body),
       headers: {
         "Content-type": "application/json",
-        Authorization: `Bearer ${this.accessToken}`,
       },
     });
     const result = await res.json();
@@ -88,9 +84,6 @@ export class Api {
     const res = await fetch(this.baseUrl, {
       method: "DELETE",
       body: JSON.stringify(body),
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
     });
     const result = await res.json();
     this.makeError(result);
