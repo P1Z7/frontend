@@ -62,6 +62,12 @@ type Req_Query_Approve = {
   eventUpdateApplicationId: string;
 };
 
+type Req_Query_Artist_Event = {
+  size?: number;
+  page?: number;
+  userId: string;
+};
+
 export type Req_Query_Type = {
   행사목록: Req_Query_Event;
   행사상세: Req_Query_Event_Detail;
@@ -75,4 +81,5 @@ export type Req_Query_Type = {
   그룹조회: Req_Query_Group;
   멤버조회: Req_Query_Artist;
   수정상세: Req_Query_Approve;
+  아티스트행사: Req_Query_Artist_Event;
 };
