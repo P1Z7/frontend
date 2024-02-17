@@ -1,6 +1,8 @@
 "use client";
 
+import FadingDot from "@/(route)/(bottom-nav)/signin/_components/FadingDot";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
@@ -16,18 +18,22 @@ import NextIcon from "@/public/icon/arrow-left_lg.svg";
 import PrevIcon from "@/public/icon/arrow-right_lg.svg";
 import ArrowUpIcon from "@/public/icon/arrow-up_sm.svg";
 
+interface Props {
+  userId: string;
+}
+
 type StatueType = "" | "예정" | "종료" | "진행중" | "종료제외";
 
-const MyCalendarTab = () => {
+const MyCalendarTab = ({ userId }: Props) => {
+  const route = useRouter();
   const [data, setData] = useState<EventCardType[] | []>([]);
   const [isFold, setIsFold] = useState(true);
   const [statue, setStatus] = useState<StatueType>("");
-  const ID = "f14ab7e7-ee5c-4707-b68e-ddb6cf8b0f00";
 
   const { data: myEventsData, isSuccess } = useQuery({
     queryKey: ["events", statue],
     queryFn: async () => {
-      return instance.get(`/event/${ID}/like`, { status: statue });
+      return instance.get(`/event/${userId}/like`, { status: statue });
     },
   });
 
@@ -140,7 +146,7 @@ const MyCalendarTab = () => {
 
   const handleHeartClick = async (eventId: string) => {
     const res = await instance.post("/event/like", {
-      userId: ID,
+      userId: userId,
       eventId: eventId,
     });
 
@@ -179,29 +185,36 @@ const MyCalendarTab = () => {
   return (
     <div className="flex flex-col items-center justify-stretch gap-16 px-20 pb-16 pt-72">
       <style>{calendarStyle}</style>
-      {calendarStyle !== "" && (
-        <div className="flex-center flex-col gap-8 rounded-sm border border-gray-50 pb-8 pt-16">
-          <Calendar
-            locale="ko"
-            onChange={handleClickToday}
-            value={selectedDate}
-            tileContent={tileContent}
-            nextLabel={<PrevIcon onClick={() => (lastDay = [])} width={32} height={16} viewBox="0 0 24 24" stroke="#A2A5AA" />}
-            prevLabel={<NextIcon onClick={() => (lastDay = [])} width={32} height={16} viewBox="0 0 24 24" stroke="#A2A5AA" />}
-            next2Label={null}
-            prev2Label={null}
-            formatDay={(locale, date) => date.getDate().toString()}
-            formatShortWeekday={(locale, date) => {
-              const shortWeekdays = ["S", "M", "T", "W", "T", "F", "S"];
-              return shortWeekdays[date.getDay()];
-            }}
-          />
-          <button className="flex-center w-fit px-12" onClick={handleClick}>
-            <p>{isFold ? "펼치기" : "접기"}</p>
-            {isFold ? <ArrowDownIcon width="20" height="20" viewBox="0 0 24 24" stroke="#A0A5B1" /> : <ArrowUpIcon width="20" height="20" viewBox="0 0 24 24" stroke="#A0A5B1" />}
-          </button>
-        </div>
-      )}
+      <div className="flex-center flex-col gap-8 rounded-sm border border-gray-50 pb-8 pt-16">
+        {calendarStyle === "" ? (
+          <div className="flex-center h-332 w-[90vw]">
+            <FadingDot />
+          </div>
+        ) : (
+          <>
+            <Calendar
+              locale="ko"
+              onChange={handleClickToday}
+              value={selectedDate}
+              tileContent={tileContent}
+              nextLabel={<PrevIcon onClick={() => (lastDay = [])} width={32} height={16} viewBox="0 0 24 24" stroke="#A2A5AA" />}
+              prevLabel={<NextIcon onClick={() => (lastDay = [])} width={32} height={16} viewBox="0 0 24 24" stroke="#A2A5AA" />}
+              next2Label={null}
+              prev2Label={null}
+              formatDay={(locale, date) => date.getDate().toString()}
+              formatShortWeekday={(locale, date) => {
+                const shortWeekdays = ["S", "M", "T", "W", "T", "F", "S"];
+                return shortWeekdays[date.getDay()];
+              }}
+            />
+            <button className="flex-center w-fit px-12" onClick={handleClick}>
+              <p>{isFold ? "펼치기" : "접기"}</p>
+              {isFold ? <ArrowDownIcon width="20" height="20" viewBox="0 0 24 24" stroke="#A0A5B1" /> : <ArrowUpIcon width="20" height="20" viewBox="0 0 24 24" stroke="#A0A5B1" />}
+            </button>
+          </>
+        )}
+      </div>
+
       <div className="w-full">
         <div className="flex w-full gap-12">
           <ChipButton label="예정" onClick={() => handleChipClick("예정")} selected={statue === "예정"} />
@@ -218,6 +231,14 @@ const MyCalendarTab = () => {
               <HorizontalEventCard key={event.id} data={event} hasHeart onHeartClick={() => handleHeartClick(event.id)} />
             ))}
         </ul>
+        {!data.length && (
+          <div className="flex-center flex-col gap-8 p-40">
+            <h1 className="text-16 font-500 ">관심있는 행사에 좋아요를 눌러보세요!</h1>
+            <button onClick={() => route.push("/search")} className="text-14 text-sub-pink hover:underline">
+              행사 둘러보기
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -14,17 +14,19 @@ const ButtonColor = {
   notChecked: "bg-white-white border border-gray-100 text-gray-900",
 };
 
-const MyLocationTab = () => {
+interface Props {
+  userId: string;
+}
+
+const MyLocationTab = ({ userId }: Props) => {
   const [locationInfo, setLocationInfo] = useState<EventCardType | undefined>();
   const { bottomSheet, openBottomSheet, closeBottomSheet } = useBottomSheet();
   const [inChecked, setIsChecked] = useState(false);
 
-  const ID = "f14ab7e7-ee5c-4707-b68e-ddb6cf8b0f00";
-
   const { data: myEventsData, isSuccess } = useQuery({
     queryKey: ["events", inChecked],
     queryFn: async () => {
-      return instance.get(`/event/${ID}/like`, { status: inChecked ? "종료제외" : "" });
+      return instance.get(`/event/${userId}/like`, { status: inChecked ? "종료제외" : "" });
     },
   });
 

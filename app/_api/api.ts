@@ -40,11 +40,7 @@ export class Api {
     if (queryObj) {
       this.makeQueryString<T>(queryObj);
     }
-    const res = await fetch(queryObj ? this.baseUrl + this.queryString : this.baseUrl, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const res = await fetch(queryObj ? this.baseUrl + this.queryString : this.baseUrl);
     const result = await res.json();
     this.makeError(result);
 
@@ -61,7 +57,6 @@ export class Api {
       body: endPoint === "/file/upload" ? (body as any) : JSON.stringify(body),
       headers: {
         ...(endPoint === "/file/upload" || endPoint === "/reviews" ? {} : { "Content-Type": "application/json" }),
-        Authorization: `Bearer ${this.accessToken}`,
         credentials: "include",
       },
       credentials: "include",

@@ -7,15 +7,17 @@ import ArtistCard from "@/components/ArtistCard";
 import { instance } from "@/api/api";
 import { MyArtistsType } from "@/types/index";
 
-const MyArtistTab = () => {
+interface Props {
+  userId: string;
+}
+
+const MyArtistTab = ({ userId }: Props) => {
   const router = useRouter();
-  const ID = "b4a2354c-ff70-49c5-be9b-02bdd83e4df9";
-  const NoneMyArtistID = "f14ab7e7-ee5c-4707-b68e-ddb6cf8b0f00";
 
   const { data: myArtistsData, isSuccess } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      return instance.get(`/users/${ID}/artists`);
+      return instance.get(`/users/${userId}/artists`);
     },
   });
 
@@ -34,7 +36,7 @@ const MyArtistTab = () => {
                 key={cardList.artistId}
                 profileImage={cardList.artistImage}
                 onClick={() => {
-                  console.log(`${cardList.artistName}(으)로 검색`);
+                  router.push(`/search?keyword=${cardList.artistName}`);
                 }}
               >
                 {cardList.artistName}

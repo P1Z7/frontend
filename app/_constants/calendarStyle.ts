@@ -64,8 +64,9 @@ export const MYPAGE_CALENDAR_STYLE = `
 
 .react-calendar__tile {
   width: 44px;
+  min-height: 44px;
   text-align: center;
-  min-height: 40px;
+  min-height: 44px;
   padding: 2px 6.6667px;
   display: flex;
   flex-direction: column;

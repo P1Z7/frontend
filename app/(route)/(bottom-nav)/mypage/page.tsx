@@ -13,13 +13,18 @@ const MyPage = () => {
   if (!session) {
     return <Suspense />;
   }
+
+  const {
+    user: { userId },
+  } = session;
+
   return (
     <div className="flex w-full flex-col gap-24 pb-72">
       <UserProfile session={session} />
       <Tabs names={["행사", "아티스트", "후기"]}>
-        <MyEventTab />
-        <MyArtistTab />
-        <MyReviewTab />
+        <MyEventTab userId={userId} />
+        <MyArtistTab userId={userId} />
+        <MyReviewTab userId={userId} />
       </Tabs>
     </div>
   );
