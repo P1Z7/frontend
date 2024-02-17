@@ -33,7 +33,7 @@ const useHeaderTitle = () => {
       title = "후기 작성하기";
       break;
     case `/event/${eventId}/edit`:
-      title = "수정 등록하기";
+      title = "수정하기";
       break;
     case `/event/${eventId}/approve`:
       title = "수정요청";

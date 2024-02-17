@@ -61,7 +61,7 @@ const Edit = () => {
       {isLogin && (
         <PinkLayout size="narrow">
           <MobileHeader />
-          <div className="flex flex-col gap-24 p-20 pb-116 text-16 pc:pb-0">
+          <div className="p-20 pb-116 text-16 pc:p-32 pc:pb-0">
             {init && (
               <GenericFormProvider formOptions={{ mode: "onChange", defaultValues: INITIAL_DATA, shouldFocusError: true }}>
                 <EditContent />

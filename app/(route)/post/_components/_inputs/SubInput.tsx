@@ -50,7 +50,7 @@ const SubInput = () => {
 
   return (
     <div>
-      <div className="flex flex-col gap-20">
+      <div className="flex flex-col gap-20 pc:gap-32">
         <div className="flex flex-col gap-12">
           <div className="relative flex flex-col gap-16 ">
             <label className="flex items-center">

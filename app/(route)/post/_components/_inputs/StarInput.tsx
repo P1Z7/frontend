@@ -29,7 +29,7 @@ const StarInput = () => {
 
   return (
     <>
-      <div className="flex-item flex flex-col gap-20 pc:h-[30rem]">
+      <div className="flex-item flex flex-col gap-20 pc:gap-32">
         <div className="relative flex flex-col">
           <label className="flex items-center gap-4">
             아티스트
