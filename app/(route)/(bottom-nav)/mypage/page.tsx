@@ -2,6 +2,7 @@
 
 import { Suspense } from "react";
 import Tabs from "@/components/Tabs";
+import DottedLayout from "@/components/layout/DottedLayout";
 import { useAuth } from "@/hooks/useAuth";
 import UserProfile from "./_components/UserProfile";
 import MyArtistTab from "./_components/tab/MyArtistTab";
@@ -14,14 +15,16 @@ const MyPage = () => {
     return <Suspense />;
   }
   return (
-    <div className="flex w-full flex-col gap-24 pb-72">
-      <UserProfile session={session} />
-      <Tabs names={["행사", "아티스트", "후기"]}>
-        <MyEventTab />
-        <MyArtistTab />
-        <MyReviewTab />
-      </Tabs>
-    </div>
+    <DottedLayout size="wide">
+      <div className="flex w-full flex-col gap-24 pb-72">
+        <UserProfile session={session} />
+        <Tabs names={["행사", "아티스트", "후기"]}>
+          <MyEventTab />
+          <MyArtistTab />
+          <MyReviewTab />
+        </Tabs>
+      </div>
+    </DottedLayout>
   );
 };
 
