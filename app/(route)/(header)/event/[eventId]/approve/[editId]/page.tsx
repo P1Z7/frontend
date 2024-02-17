@@ -6,6 +6,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { instance } from "@/api/api";
+import { useSession } from "@/store/session/cookies";
 import { EditErrMsgType } from "@/types/errorMsgType";
 import { CategoryType, EditContentType, LabelType, PostValueType } from "@/types/index";
 import { EDIT_ERR_MSG } from "@/constants/errorMsg";
@@ -22,15 +23,15 @@ import EditBox from "./_components/EditBox";
 
 const EditDetailApprove = () => {
   const router = useRouter();
-  const { eventId } = useParams();
+  const { eventId, editId } = useParams();
   const [originData, setOriginData] = useState<EditContentType>();
-  const { editId } = useParams();
   const { data, isSuccess, refetch } = useQuery({
     queryKey: ["approveDetail", editId],
     queryFn: async () => {
       return instance.get(`/event/update/application/${editId}`, { eventUpdateApplicationId: String(editId) });
     },
   });
+  const session = useSession();
 
   useEffect(() => {
     if (isSuccess) {
@@ -48,6 +49,8 @@ const EditDetailApprove = () => {
 
   const handleApplicationSubmit = async (isApproved: boolean) => {
     try {
+      if (!session) throw Error("Unauthorized");
+      if (session.user.userId === data.applicationDetail.userId) throw Error("the applicant is the author");
       const res = await instance.post("/event/update/approval", { eventUpdateApplicationId: String(editId), isApproved, userId: "edit-api" });
       refetch();
       toast(EDIT_ERR_MSG[isApproved ? "approve" : "reject"], {

@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { useFetchGroupSolo } from "@/hooks/useFetchGroupSolo";
 import { useFetchMember } from "@/hooks/useFetchMember";
-import { BottomSheetBaseType } from "@/types/index";
+import { BottomSheetBaseType, GroupAndSoloType, MemberDataType } from "@/types/index";
 import BackIcon from "@/public/icon/arrow-left_lg.svg";
 import ArtistCard from "../ArtistCard";
 import SearchInput from "../input/SearchInput";
@@ -74,7 +74,7 @@ const StarBottomSheet = ({ closeBottomSheet, refs, isFirst = false }: Props) => 
               ) : (
                 <div className="h-[34rem] overflow-y-scroll">
                   <div className="flex flex-wrap justify-center gap-16">
-                    {memberData.map(({ id, artistName, artistImage }: any) => (
+                    {memberData.map(({ id, artistName, artistImage }: MemberDataType) => (
                       <ArtistCard key={id} profileImage={artistImage} isChecked={getValues("artists").includes(id)} onClick={() => handleMemberClick(id, artistName)}>
                         {artistName}
                       </ArtistCard>
@@ -94,7 +94,7 @@ const StarBottomSheet = ({ closeBottomSheet, refs, isFirst = false }: Props) => 
             {isSuccess && (
               <div ref={containerRef} className="flex h-[34rem] overflow-y-scroll">
                 <div className="flex flex-wrap justify-center gap-x-16 gap-y-20 px-8">
-                  {groupList.map(({ id, image, name, type }: any) => (
+                  {groupList.map(({ id, image, name, type }: GroupAndSoloType) => (
                     <ArtistCard
                       key={id}
                       profileImage={image}

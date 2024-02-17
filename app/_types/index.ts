@@ -254,3 +254,16 @@ export type EditApplicationType = {
   isReflected: boolean;
   createdAt: string;
 };
+
+export type MemberDataType = {
+  id: string;
+  artistName: string;
+  artistImage: string;
+};
+
+export type GroupAndSoloType = {
+  id: string;
+  image: string;
+  name: string;
+  type: string;
+};
