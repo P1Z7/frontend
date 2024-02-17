@@ -5,8 +5,10 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import BottomButton from "@/components/button/BottomButton";
+import MobileHeader from "@/components/header/MobileHeader";
 import InputProfileImg from "@/components/input/InputProfileImg";
 import InputText from "@/components/input/InputText";
+import PinkLayout from "@/components/layout/PinkLayout";
 import { instance } from "@/api/api";
 import { setSession, useSession } from "@/store/session/cookies";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
@@ -78,17 +80,20 @@ const ProfilePage = () => {
       };
 
   return (
-    <form onSubmit={handleSubmit(handleProfileSubmit)} className="flex flex-col gap-20 px-20 py-36">
-      <InputProfileImg control={control} name="profileImage" />
-      <InputText name="nickName" control={control} maxLength={10} rules={nickNameRules}>
-        닉네임
-      </InputText>
-      <div className={`fixed bottom-0 left-0 w-full ${submitState.isError ? "animate-brrr" : ""}`}>
-        <BottomButton isSubmit isDisabled={!!formState.errors.nickName || !formState.isDirty}>
-          {submitState.isLoading ? <FadingDot fill="white" /> : submitState.isError ? "다시 시도하기" : "변경하기"}
-        </BottomButton>
-      </div>
-    </form>
+    <PinkLayout size="narrow">
+      <MobileHeader />
+      <form onSubmit={handleSubmit(handleProfileSubmit)} className="flex flex-col gap-20 px-20 py-36">
+        <InputProfileImg control={control} name="profileImage" />
+        <InputText name="nickName" control={control} maxLength={10} rules={nickNameRules}>
+          닉네임
+        </InputText>
+        <div className={`fixed bottom-0 left-0 w-full ${submitState.isError ? "animate-brrr" : ""}`}>
+          <BottomButton isSubmit isDisabled={!!formState.errors.nickName || !formState.isDirty}>
+            {submitState.isLoading ? <FadingDot fill="white" /> : submitState.isError ? "다시 시도하기" : "변경하기"}
+          </BottomButton>
+        </div>
+      </form>
+    </PinkLayout>
   );
 };
 export default ProfilePage;

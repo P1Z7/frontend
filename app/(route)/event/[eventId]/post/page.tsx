@@ -7,8 +7,10 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import WarningCheck from "@/components/WarningCheck";
 import Button from "@/components/button";
+import MobileHeader from "@/components/header/MobileHeader";
 import InputArea from "@/components/input/InputArea";
 import InputFile from "@/components/input/InputFile";
+import PinkLayout from "@/components/layout/PinkLayout";
 import { instance } from "@/api/api";
 import { useStore } from "@/store/index";
 import { makeImgUrlList } from "@/utils/changeImgUrl";
@@ -108,58 +110,61 @@ const ReviewPostPage = () => {
   }, []);
 
   return (
-    <form noValidate onSubmit={handleSubmit(postReview)} className="relative w-full">
-      <div className="flex w-full flex-col gap-16 px-20 py-16">
-        <section>
-          <div className="pb-16 text-16 font-400">공개 범위</div>
-          <div className="flex w-full justify-between">
-            <RadioButton value={"비공개"} onChange={handleRadioClick}>
-              나만보기(비공개)
-            </RadioButton>
-            <RadioButton value={"공개"} onChange={handleRadioClick}>
-              전체공개
-            </RadioButton>
-          </div>
-        </section>
-        <section>
-          <div className="pb-8 text-16 font-400">평가</div>
-          <div className="flex gap-8">
-            <EvaluationButton selected={isEvaluated && evaluation} onClick={() => setEvaluation(true)}>
-              <PartyIcon stroke={isEvaluated && evaluation ? "#EB278C" : "#A0A5B1"} />
-              <span className="text-left">
-                최고의 행사, <br />
-                추천합니다!
-              </span>
-            </EvaluationButton>
-            <EvaluationButton selected={isEvaluated && !evaluation} onClick={() => setEvaluation(false)}>
-              <SadIcon stroke={isEvaluated && !evaluation ? "#EB278C" : "#A0A5B1"} />
-              <span className="text-left">
-                조금 <br />
-                아쉬웠어요...
-              </span>
-            </EvaluationButton>
-          </div>
-        </section>
-        <section>
-          <div className="pb-8 text-16 font-400">이미지</div>
-          <ul className="flex gap-8 overflow-x-auto">
-            <li className="shrink-0">
-              <InputFile control={control} name="images" />
-            </li>
-            <MemoizedImageList imageList={imageList} handleRemoveImage={handleRemoveImage} />
-          </ul>
-        </section>
-        <InputArea control={control} name="description" hasLimit>
-          상세 내용
-        </InputArea>
-        <WarningCheck />
-      </div>
-      <div className={`sticky bottom-0 h-92 w-full border-t border-gray-50 bg-white-black pb-24 pt-12 transition-all ${isLoading ? "px-72" : "px-20"}`}>
-        <Button type="lined" size="xl" isDisabled={isDisabled || isLoading} isSubmit>
-          {isLoading ? <LoadingDot /> : "후기 작성하기"}
-        </Button>
-      </div>
-    </form>
+    <PinkLayout size="narrow">
+      <MobileHeader />
+      <form noValidate onSubmit={handleSubmit(postReview)} className="relative w-full">
+        <div className="flex w-full flex-col gap-16 px-20 py-16">
+          <section>
+            <div className="pb-16 text-16 font-400">공개 범위</div>
+            <div className="flex w-full justify-between">
+              <RadioButton value={"비공개"} onChange={handleRadioClick}>
+                나만보기(비공개)
+              </RadioButton>
+              <RadioButton value={"공개"} onChange={handleRadioClick}>
+                전체공개
+              </RadioButton>
+            </div>
+          </section>
+          <section>
+            <div className="pb-8 text-16 font-400">평가</div>
+            <div className="flex gap-8">
+              <EvaluationButton selected={isEvaluated && evaluation} onClick={() => setEvaluation(true)}>
+                <PartyIcon stroke={isEvaluated && evaluation ? "#EB278C" : "#A0A5B1"} />
+                <span className="text-left">
+                  최고의 행사, <br />
+                  추천합니다!
+                </span>
+              </EvaluationButton>
+              <EvaluationButton selected={isEvaluated && !evaluation} onClick={() => setEvaluation(false)}>
+                <SadIcon stroke={isEvaluated && !evaluation ? "#EB278C" : "#A0A5B1"} />
+                <span className="text-left">
+                  조금 <br />
+                  아쉬웠어요...
+                </span>
+              </EvaluationButton>
+            </div>
+          </section>
+          <section>
+            <div className="pb-8 text-16 font-400">이미지</div>
+            <ul className="flex gap-8 overflow-x-auto">
+              <li className="shrink-0">
+                <InputFile control={control} name="images" />
+              </li>
+              <MemoizedImageList imageList={imageList} handleRemoveImage={handleRemoveImage} />
+            </ul>
+          </section>
+          <InputArea control={control} name="description" hasLimit>
+            상세 내용
+          </InputArea>
+          <WarningCheck />
+        </div>
+        <div className={`sticky bottom-0 h-92 w-full border-t border-gray-50 bg-white-black pb-24 pt-12 transition-all ${isLoading ? "px-72" : "px-20"}`}>
+          <Button type="lined" size="xl" isDisabled={isDisabled || isLoading} isSubmit>
+            {isLoading ? <LoadingDot /> : "후기 작성하기"}
+          </Button>
+        </div>
+      </form>
+    </PinkLayout>
   );
 };
 
