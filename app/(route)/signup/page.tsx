@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import PinkLayout from "@/components/layout/PinkLayout";
 import { useFunnel } from "@/hooks/useFunnel";
 import { SignUpFormType, SignupStepNameType } from "@/types/index";
 import ArrowLeft from "@/public/icon/arrow-left_lg.svg";
@@ -36,14 +37,14 @@ const SignUp = () => {
   };
 
   return (
-    <>
+    <PinkLayout size="narrow">
       <Header onClick={handlePrevClick} />
       <GenericFormProvider<SignUpFormType> formOptions={{ mode: "onBlur", defaultValues: DEFAULT_VALUES }}>
         <div className="flex flex-col px-20">
           <ProfileSetup steps={STEPS} handleNextClick={handleNextClick} Funnel={Funnel} Step={Step} />
         </div>
       </GenericFormProvider>
-    </>
+    </PinkLayout>
   );
 };
 

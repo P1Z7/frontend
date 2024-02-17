@@ -1,6 +1,8 @@
 "use client";
 
 import { SubmitHandler, useForm } from "react-hook-form";
+import MobileHeader from "@/components/header/MobileHeader";
+import PinkLayout from "@/components/layout/PinkLayout";
 import AlertModal from "@/components/modal/AlertModal";
 import InputModal from "@/components/modal/InputModal";
 import { useModal } from "@/hooks/useModal";
@@ -16,7 +18,8 @@ const FavoritePage = () => {
     }
   };
   return (
-    <>
+    <PinkLayout size="wide">
+      <MobileHeader />
       <div className="flex flex-col gap-24 px-20 py-36">
         <section className="flex flex-col gap-12">
           <h2 className="text-20 font-700 text-gray-900">좋아하는 아티스트를 알려주세요!</h2>
@@ -36,7 +39,7 @@ const FavoritePage = () => {
         />
       )}
       {modal === "confirm" && <AlertModal closeModal={closeModal}>등록 요청이 제출되었습니다.</AlertModal>}
-    </>
+    </PinkLayout>
   );
 };
 export default FavoritePage;

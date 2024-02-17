@@ -52,7 +52,7 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
   };
 
   return (
-    <div className="flex flex-col gap-20 pb-160 pt-36">
+    <div className="flex flex-col gap-20 pb-160 pt-36 pc:pb-0">
       <div className="flex items-end gap-8">
         <InputText
           isSuccess={canWrite}

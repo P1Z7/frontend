@@ -4,9 +4,10 @@ import { PostType } from "@/(route)/post/page";
 import { instance } from "app/_api/api";
 import { format } from "date-fns";
 import { useParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import GenericFormProvider from "@/components/GenericFormProvider";
-import { useAuth } from "@/hooks/useAuth";
+import MobileHeader from "@/components/header/MobileHeader";
+import PinkLayout from "@/components/layout/PinkLayout";
 import { useStore } from "@/store/index";
 import EditContent from "./_components/EditContent";
 
@@ -53,13 +54,16 @@ const Edit = () => {
   }, []);
 
   return (
-    <div className="flex flex-col gap-24 p-20 text-16">
-      {init && (
-        <GenericFormProvider formOptions={{ mode: "onChange", defaultValues: INITIAL_DATA, shouldFocusError: true }}>
-          <EditContent />
-        </GenericFormProvider>
-      )}
-    </div>
+    <PinkLayout size="narrow">
+      <MobileHeader />
+      <div className="flex flex-col gap-24 p-20 pb-116 text-16 pc:pb-0">
+        {init && (
+          <GenericFormProvider formOptions={{ mode: "onChange", defaultValues: INITIAL_DATA, shouldFocusError: true }}>
+            <EditContent />
+          </GenericFormProvider>
+        )}
+      </div>
+    </PinkLayout>
   );
 };
 

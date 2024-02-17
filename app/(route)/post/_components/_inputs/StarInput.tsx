@@ -1,4 +1,4 @@
-import InitButton from "@/(route)/(header)/event/[eventId]/edit/_components/InitButton";
+import InitButton from "@/(route)/event/[eventId]/edit/_components/InitButton";
 import { useFormContext } from "react-hook-form";
 import EventTypeBottomSheet from "@/components/bottom-sheet/EventTypeBottomSheet";
 import StarBottomSheet from "@/components/bottom-sheet/StarBottomSheet";
@@ -29,7 +29,7 @@ const StarInput = () => {
 
   return (
     <>
-      <div className="flex-item flex flex-col gap-20">
+      <div className="flex-item flex flex-col gap-20 pc:h-[30rem]">
         <div className="relative flex flex-col">
           <label className="flex items-center gap-4">
             아티스트
