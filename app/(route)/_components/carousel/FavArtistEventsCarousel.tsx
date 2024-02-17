@@ -9,8 +9,6 @@ import { useSession } from "@/store/session/cookies";
 import { Res_Get_Type } from "@/types/getResType";
 import Carousel from "./Carousel";
 
-const SIZE = 10;
-
 const FavArtistEventsCarousel = () => {
   const session = useSession();
 
@@ -19,12 +17,12 @@ const FavArtistEventsCarousel = () => {
     isSuccess,
     isLoading,
   } = useQuery({
-    queryKey: ["artistEvent"],
+    queryKey: ["artistNewEvent"],
     queryFn: async () => {
       if (!session) {
         return;
       }
-      return instance.get(`/event/${session.user.userId}/artist`, {
+      return instance.get(`/event/new/${session.user.userId}/artist`, {
         userId: session.user.userId,
       });
     },
