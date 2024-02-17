@@ -29,10 +29,10 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
     const userInputValue = methods.getValues();
     const defaultValue = methods.formState.defaultValues;
     const session = useSession();
-    if (!session) return;
 
     if (path === "/post") {
       try {
+        if (!session) throw Error("Unauthorized");
         const res = await handlePostSubmit(userInputValue, instance, session.user.userId);
         router.push(`/event/${res.eventId}`);
       } catch (err: any) {
@@ -44,6 +44,7 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
     }
     if (path === `/event/${eventId}/edit`) {
       try {
+        if (!session) throw Error("Unauthorized");
         if (writerId === session.user.userId) {
           await submitEditWriter(methods.getValues(), instance, session.user.userId, eventId);
           openModal("editWriter");
