@@ -59,7 +59,7 @@ const Post = () => {
       {isLogin && (
         <PinkLayout size="narrow">
           <MobileHeader handleClick={handlePrevClick} />
-          <div className="p-20 pb-116 pt-36 text-16 pc:pb-0">
+          <div className="p-20 pb-116 pt-36 text-16 pc:min-h-[68.8rem]">
             <GenericFormProvider formOptions={{ mode: "onBlur", defaultValues: DEFAULT_INPUT_VALUES, shouldFocusError: true }}>
               <Funnel>
                 <Step name={POST_STEPS[0]}>
