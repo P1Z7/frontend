@@ -4,14 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactElement, cloneElement, useEffect, useState } from "react";
-import { useSession } from "@/store/session/cookies";
+import { getSession } from "@/store/session/cookies";
 import PostIcon from "@/public/icon/add-outline.svg";
 import HomeIcon from "@/public/icon/home.svg";
 import SearchIcon from "@/public/icon/search_black.svg";
 
 const BottomNav = () => {
   const pathname = usePathname();
-  const session = useSession();
+  const session = getSession();
   const [profileImage, setProfileImage] = useState("");
 
   const navButtons = [

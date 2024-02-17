@@ -26,12 +26,11 @@ const OAuth = () => {
       return;
     }
     setSession({ isAuth: true, user: res });
-
-    router.push("/");
-
     toast(`${signinMethod} 계정으로 연동 되었습니다. ${res.nickName}님`, {
       className: "text-16 font-600",
     });
+
+    router.push("/");
   };
 
   useEffect(() => {

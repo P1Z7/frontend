@@ -4,18 +4,14 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import MyPageBottomSheet from "@/components/bottom-sheet/MyPageBottomSheet";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
-import { Session, useSession } from "@/store/session/cookies";
+import { Session, getSession } from "@/store/session/cookies";
 
-interface Props {
-  session: Session;
-}
-
-const UserProfile = ({ session: init }: Props) => {
+const UserProfile = () => {
   const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
 
-  const [session, setSession] = useState(init);
+  const [session, setSession] = useState<Session>({ isAuth: false, user: { userId: "", profileImage: "", nickName: "", email: "", signupMethod: "opener" } });
   useEffect(() => {
-    const session = useSession();
+    const session = getSession();
     if (session) {
       setSession(session);
     }
