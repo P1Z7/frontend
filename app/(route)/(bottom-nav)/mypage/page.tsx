@@ -20,7 +20,7 @@ const MyPage = () => {
   } = session;
 
   return (
-    <DottedLayout type="mypage">
+    <DottedLayout size="extrawide">
       <div className="flex h-screen w-full flex-col gap-24 pb-72 pc:h-[calc(100vh-7.2rem)] pc:flex-row pc:items-start pc:pb-0 pc:pt-48">
         <UserProfile session={session} />
         <div className="h-full pc:w-[83.4rem]">
