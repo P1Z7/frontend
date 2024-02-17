@@ -16,12 +16,12 @@ const EventTypeBottomSheet = ({ closeBottomSheet, refs }: BottomSheetBaseType) =
   return (
     <BottomSheet.Frame closeBottomSheet={closeBottomSheet} ref={refs.sheet}>
       <BottomSheet.Title>행사 유형 선택</BottomSheet.Title>
-      <ul className="pb-40" ref={refs.content}>
+      <ul className="pb-40 pt-16" ref={refs.content}>
         {EVENT_TYPE_LIST.map((event) => (
           <li
             key={event}
             onClick={() => handleEventClick(event)}
-            className="hover:bg-main-pink-50 cursor-pointer border-b border-gray-50 px-24 py-20 text-16 font-500 text-gray-900"
+            className="cursor-pointer border-b border-gray-50 px-24 py-20 text-16 font-500 text-gray-900 hover:bg-main-pink-50"
           >
             {event}
           </li>

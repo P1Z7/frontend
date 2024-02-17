@@ -2,6 +2,7 @@
 
 import GenericFormProvider from "@/components/GenericFormProvider";
 import MobileHeader from "@/components/header/MobileHeader";
+import { useAuth } from "@/hooks/useAuth";
 import { useFunnel } from "@/hooks/useFunnel";
 import { PostStepNameType } from "@/types/index";
 import DetailInfo from "./_components/DetailInfo";
@@ -39,6 +40,7 @@ export type PostType = Omit<typeof DEFAULT_INPUT_VALUES, "artists" | "artistName
 };
 
 const Post = () => {
+  // const session = useAuth("/signin");
   const { Funnel, Step, setStep, currentStep } = useFunnel<PostStepNameType>(POST_STEPS);
 
   const handlePrevClick = () => {
@@ -48,7 +50,7 @@ const Post = () => {
   return (
     <>
       <MobileHeader handleClick={handlePrevClick} />
-      <div className="p-20 pb-92 pt-36 text-16">
+      <div className="p-20 pb-116 pt-36 text-16">
         <GenericFormProvider formOptions={{ mode: "onBlur", defaultValues: DEFAULT_INPUT_VALUES, shouldFocusError: true }}>
           <Funnel>
             <Step name={POST_STEPS[0]}>
