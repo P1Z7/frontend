@@ -1,6 +1,6 @@
 "use client";
 
-import { ButtonHTMLAttributes, Ref, RefObject, forwardRef } from "react";
+import { ButtonHTMLAttributes, Ref, forwardRef } from "react";
 import CloseIcon from "@/public/icon/close.svg";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {

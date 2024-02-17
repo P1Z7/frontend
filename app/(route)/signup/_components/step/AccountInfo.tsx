@@ -1,4 +1,4 @@
-import { Api } from "app/_api/api";
+import { instance } from "app/_api/api";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import Button from "@/components/button";
@@ -10,7 +10,6 @@ import { SignUpFormType } from "@/types/index";
 const AccountInfo = ({ onNext }: { onNext: () => void }) => {
   const { formState, control, getValues, watch, setError } = useFormContext<SignUpFormType>();
   const { email, password, passwordCheck, code } = watch();
-  const instance = new Api();
   const [canWrite, setCanWrite] = useState(false);
   const [isVerification, setIsVerification] = useState(false);
 
@@ -53,8 +52,8 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
   };
 
   return (
-    <div className="relative flex h-full flex-col items-stretch gap-20 pt-36">
-      <div className="flex items-end gap-8 ">
+    <div className="flex flex-col gap-20 pb-160 pt-36 pc:pb-0">
+      <div className="flex items-end gap-8">
         <InputText
           isSuccess={canWrite}
           noButton

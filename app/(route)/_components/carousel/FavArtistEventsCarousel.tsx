@@ -1,20 +1,16 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { Api } from "app/_api/api";
+import { instance } from "app/_api/api";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import VerticalEventCard from "@/components/card/VerticalEventCard";
 import { Res_Get_Type } from "@/types/getResType";
-import Hero from "@/public/icon/hero.svg";
 import Carousel from "./Carousel";
 
 const FavArtistEventsCarousel = () => {
-  // 추후 next auth로 변경 예정
   const [status, setStatus] = useState(false);
-
-  const instance = new Api(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
 
   const {
     data: favArtistEvent,
@@ -43,27 +39,21 @@ const FavArtistEventsCarousel = () => {
     return (
       <>
         {isLoading && <div>로딩중</div>}
-        {isSuccess && (
-          <Carousel>
-            {favArtistEvent.map((event) => (
-              <div key={event.id}>
-                <VerticalEventCard data={event} />
-              </div>
-            ))}
-          </Carousel>
-        )}
+        {isSuccess && <Carousel cards={favArtistEvent} />}
       </>
     );
   };
 
   return (
-    <div className="flex flex-col gap-16">
-      <div className="flex items-center justify-between self-stretch px-20">
-        <h2 className="text-20 font-700 text-gray-900">내 아티스트의 새 행사</h2>
-        {hasFavoriteEvents && (
-          <Link href="/my-artist-event" className="text-12 font-600 text-blue">
-            전체보기
-          </Link>
+    <div className="flex flex-col gap-16 pc:gap-24">
+      <div className="flex items-center justify-between self-stretch px-20 pc:px-48">
+        {status && (
+          <>
+            <h2 className="text-20 font-700 text-gray-900">내 아티스트의 새 행사</h2>
+            <Link href="/my-artist-event" className="text-12 font-600 text-blue">
+              전체보기
+            </Link>
+          </>
         )}
       </div>
       {renderContent()}
@@ -80,11 +70,19 @@ export const NoFavCard = ({ href, buttonName }: NoFavCardProps) => {
   const router = useRouter();
 
   return (
-    <div className="w-full px-20">
-      <div className="flex-center relative h-160 overflow-hidden rounded-lg">
-        <Hero className="absolute left-1/2 top-0 -translate-x-1/2" />
-        <div className="flex-center absolute top-96 w-full flex-col gap-16">
-          <div onClick={() => router.push(href)} className="h-32 cursor-pointer rounded-full bg-gray-900 px-16 text-14 font-600 leading-loose text-white-white ">
+    <div className="w-full px-20 pc:px-40">
+      <div className="flex-center relative h-160 overflow-hidden rounded-lg border border-main-pink-50 pc:h-232">
+        <Image
+          src="/image/hero.png"
+          fill
+          sizes="100%"
+          // style={{
+          //   objectFit: "cover",
+          // }}
+          alt="배너이미지"
+        />
+        <div className="flex-center absolute top-96 w-full flex-col gap-16 pc:top-152">
+          <div onClick={() => router.push(href)} className="pc:text-18 h-32 cursor-pointer rounded-full bg-gray-900 px-16 text-14 font-600 leading-loose text-white-white pc:h-40">
             {buttonName}
           </div>
         </div>

@@ -23,15 +23,15 @@ const VerticalEventCard = ({ data }: Props) => {
   };
 
   return (
-    <Link href={`/event/${data.id}`} className="border-black flex w-148 cursor-pointer flex-col gap-12">
-      <div className="relative h-196 w-148">
-        <div className="z-heart absolute right-8 top-8">
+    <Link href={`/event/${data.id}`} className="flex w-148 cursor-pointer flex-col gap-12 pc:w-188">
+      <div className="relative h-196 w-148 pc:h-244 pc:w-188">
+        <div className="absolute right-8 top-8 z-heart">
           <HeartButton isSelected={!!data.likeCount} onClick={handleHeartClick} />
         </div>
         <Image
           src={bannerImage?.imageUrl ?? "/image/no-profile.png"}
           fill
-          sizes="14.8rem"
+          sizes="100%"
           style={{
             objectFit: "cover",
           }}
@@ -40,9 +40,9 @@ const VerticalEventCard = ({ data }: Props) => {
           priority
         />
       </div>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 pc:gap-8">
         <p className="truncate text-16 font-600 text-gray-900">{data.placeName}</p>
-        <div className="flex gap-8 text-12 font-600 text-gray-400">
+        <div className="flex gap-8 text-12 font-600 text-gray-400 pc:text-16 pc:font-500">
           <p className="border-r border-gray-400 pr-8">{formattedDate}</p>
           <p>{formattedAddress}</p>
         </div>

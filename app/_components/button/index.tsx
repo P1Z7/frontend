@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes, ReactNode, cloneElement } from "react";
+import React, { ReactNode, cloneElement } from "react";
 
 interface IconProps {
   width: string;

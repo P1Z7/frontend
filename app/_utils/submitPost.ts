@@ -1,41 +1,9 @@
 import { Api } from "app/_api/api";
 import { CategoryType, GiftType, PostValueType } from "@/types/index";
 import { Req_Post_Type } from "@/types/postBodyType";
-import { TAG } from "@/constants/data";
+import { EDIT_CATEGORY, EDIT_CATEGORY_VALUE, TAG } from "@/constants/post";
 import { makeImgUrlList } from "./changeImgUrl";
 import { checkArrUpdate } from "./checkArrUpdate";
-
-const EDIT_CATEGORY = {
-  placeName: "placeName",
-  eventType: "eventType",
-  groupId: "artist",
-  artists: "artist",
-  address: "address",
-  addressDetail: "address",
-  startDate: "period",
-  endDate: "period",
-  tags: "tags",
-  eventImages: "eventImages",
-  organizerSns: "organizer",
-  snsType: "organizer",
-  eventUrl: "eventUrl",
-  description: "description",
-  groupName: "null",
-  artistNames: "null",
-};
-
-const EDIT_CATEGORY_VALUE = {
-  placeName: ["placeName"],
-  eventType: ["eventType"],
-  artist: ["groupId", "artists"],
-  address: ["address", "addressDetail"],
-  period: ["startDate", "endDate"],
-  tags: ["tags"],
-  eventImages: ["eventImages"],
-  organizer: ["organizerSns", "snsType"],
-  eventUrl: ["eventUrl"],
-  description: ["description"],
-};
 
 const matchTagIdList = (tags: GiftType[]) => {
   let tagList: string[] = [];
@@ -45,15 +13,15 @@ const matchTagIdList = (tags: GiftType[]) => {
   return tagList;
 };
 
-const makeUpdateCategory = (defaultValue: any, userInputValue: any, eventId: string) => {
-  const updateCategory: CategoryType[] = [];
+const makeUpdateCategory = (defaultValue: any, userInputValue: any, eventId: string, userId: string) => {
+  const updateCategory = new Set();
   const approveBody = new Map();
   for (const key of Object.keys(defaultValue || {})) {
     if (!defaultValue) {
       return {
         eventId,
-        updateCategory,
-        userId: "edit-api",
+        updateCategory: [],
+        userId,
         isAgreed: true,
       };
     }
@@ -62,29 +30,30 @@ const makeUpdateCategory = (defaultValue: any, userInputValue: any, eventId: str
     switch (key) {
       case "artists":
         if (checkArrUpdate(prev, cur)) {
-          updateCategory.push("artist");
+          updateCategory.add("artist");
           EDIT_CATEGORY_VALUE["artist"].map((value) => approveBody.set(value, userInputValue[value]));
         }
         break;
       case "tags":
       case "eventImages":
         if (checkArrUpdate(prev, cur)) {
-          updateCategory.push(key);
+          updateCategory.add(key);
           approveBody.set(key, cur);
         }
         break;
       default:
         const category = EDIT_CATEGORY[key as PostValueType];
         if (prev !== cur && category !== "null") {
-          updateCategory.push(category as CategoryType);
+          updateCategory.add(category as CategoryType);
           EDIT_CATEGORY_VALUE[category as CategoryType].map((value) => approveBody.set(value, userInputValue[value]));
         }
     }
   }
+
   let body: Req_Post_Type["edit"] = {
     eventId,
-    updateCategory,
-    userId: "edit-api",
+    updateCategory: Array.from(updateCategory) as CategoryType[],
+    userId,
     isAgreed: true,
   };
   for (const [key, value] of approveBody.entries()) {
@@ -93,7 +62,7 @@ const makeUpdateCategory = (defaultValue: any, userInputValue: any, eventId: str
   return body;
 };
 
-export const handlePostSubmit = async (userInput: any, instance: Api) => {
+export const handlePostSubmit = async (userInput: any, instance: Api, userId: string) => {
   const { placeName, eventType, groupId, artists, startDate, endDate, address, addressDetail, eventImages, description, eventUrl, organizerSns, snsType, tags } = userInput;
   const imgUrlList = await makeImgUrlList(eventImages, instance);
   const tagList = matchTagIdList(tags);
@@ -113,11 +82,11 @@ export const handlePostSubmit = async (userInput: any, instance: Api) => {
     eventImages: imgUrlList,
     tags: tagList,
     isAgreed: true,
-    userId: "post-api",
+    userId,
   });
 };
 
-export const submitEditWriter = async (userInput: any, instance: Api, id?: string | string[]) => {
+export const submitEditWriter = async (userInput: any, instance: Api, userId: string, id?: string | string[]) => {
   const { placeName, eventType, groupId, artists, startDate, endDate, address, addressDetail, eventImages, description, eventUrl, organizerSns, snsType, tags } = userInput;
   const imgUrlList = await makeImgUrlList(eventImages, instance);
   const tagList = matchTagIdList(tags);
@@ -137,12 +106,12 @@ export const submitEditWriter = async (userInput: any, instance: Api, id?: strin
     eventImages: imgUrlList,
     tags: tagList,
     isAgreed: true,
-    userId: "post-api",
+    userId,
   });
 };
 
-export const submitEditApplication = async (instance: Api, defaultValue: any, userInput: any, id?: string | string[]) => {
-  const body = makeUpdateCategory(defaultValue, userInput, id as string);
+export const submitEditApplication = async (instance: Api, defaultValue: any, userInput: any, userId: string, id?: string | string[]) => {
+  const body = makeUpdateCategory(defaultValue, userInput, id as string, userId);
   if ("eventImages" in body) {
     body.eventImages = await makeImgUrlList(body.eventImages || [], instance);
   }

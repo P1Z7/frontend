@@ -218,3 +218,52 @@ export type PostValueType =
   | "tags";
 
 export type CategoryType = "placeName" | "eventType" | "artist" | "address" | "period" | "tags" | "eventImages" | "organizer" | "eventUrl" | "description";
+
+export interface approveArtistType {
+  groupId: string;
+  artists: string[];
+}
+
+export type EditContentType = {
+  placeName?: string;
+  eventType?: EventType;
+  groupId?: string;
+  artists?: string[];
+  startDate?: string;
+  endDate?: string;
+  address?: string;
+  addressDetail?: string;
+  eventImages?: string[];
+  description?: string;
+  eventUrl?: string;
+  organizerSns?: string;
+  snsType?: SnsType;
+  tags?: GiftType[] | string[];
+  groupName?: string;
+  artistNames?: string;
+};
+
+export type EditApplicationType = {
+  id: string;
+  eventId: string;
+  userId: string;
+  updateCategory: CategoryType;
+  updateData: string;
+  approvalCount: string;
+  rejectionCount: string;
+  isReflected: boolean;
+  createdAt: string;
+};
+
+export type MemberDataType = {
+  id: string;
+  artistName: string;
+  artistImage: string;
+};
+
+export type GroupAndSoloType = {
+  id: string;
+  image: string;
+  name: string;
+  type: string;
+};

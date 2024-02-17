@@ -1,5 +1,5 @@
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { Api } from "app/_api/api";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { instance } from "app/_api/api";
 import { useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -22,7 +22,6 @@ const SIZE = 12;
 
 const SearchArtist = ({ onClick, myArtists, myArtistsInfo }: Props) => {
   const [keyword, setKeyword] = useState("");
-  const instance = new Api();
 
   const getArtists = async ({ pageParam = 1 }) => {
     const data: Res_Get_Type["artistGroup"] = await instance.get("/artist/group", {

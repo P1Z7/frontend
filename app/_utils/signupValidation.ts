@@ -1,7 +1,7 @@
 export const REG_EXP = {
   CHECK_EMAIL: /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
   CHECK_NICKNAME: /^[가-힣A-Za-z]{2,10}$/,
-  CHECK_PASSWORD: /^(?=.*[a-zA-Z])(?=.*\d)[\Sa-zA-Z0-9]{8,}$/,
+  CHECK_PASSWORD: /^[A-Za-z0-9]{8,}$/,
 };
 
 export const ERROR_MESSAGES = {
@@ -15,9 +15,9 @@ export const ERROR_MESSAGES = {
     codeField: "인증번호를 입력해주세요",
     emailToVerify: "인증 코드가 일치하지 않습니다.",
   },
-  nickname: {
-    nicknameField: "닉네임을 입력해주세요.",
-    nicknamePattern: "2~10자 영문 또는 한글 닉네임을 사용해주세요.",
+  nickName: {
+    nickNameField: "닉네임을 입력해주세요.",
+    nickNamePattern: "2~10자 영문 또는 한글 닉네임을 사용해주세요.",
   },
   password: {
     passwordField: "비밀번호를 입력해주세요.",
