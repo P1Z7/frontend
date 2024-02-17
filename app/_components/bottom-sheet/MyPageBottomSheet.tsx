@@ -27,7 +27,13 @@ const MyPageBottomSheet = ({ closeBottomSheet, refs }: any) => {
           <li className={ButtonStyle} onClick={() => router.push("/setting/password")}>
             {EditUserInfo.password}
           </li>
-          <li onClick={() => (outSession(), router.refresh())} className={ButtonStyle}>
+          <li
+            onClick={() => {
+              outSession();
+              router.refresh();
+            }}
+            className={ButtonStyle}
+          >
             {EditUserInfo.logOut}
           </li>
           <li onClick={() => openModal("withdraw")} className={ButtonStyle}>

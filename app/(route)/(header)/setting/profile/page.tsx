@@ -4,11 +4,12 @@ import FadingDot from "@/(route)/(bottom-nav)/signin/_components/FadingDot";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import BottomButton from "@/components/button/BottomButton";
 import InputProfileImg from "@/components/input/InputProfileImg";
 import InputText from "@/components/input/InputText";
 import { instance } from "@/api/api";
-import { setSession, useSession } from "@/store/session/cookies";
+import { getSession, setSession } from "@/store/session/cookies";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 
 interface DefaultValues {
@@ -18,7 +19,7 @@ interface DefaultValues {
 
 const ProfilePage = () => {
   const router = useRouter();
-  const session = useSession();
+  const session = getSession();
   const { formState, control, handleSubmit } = useForm<DefaultValues>({
     mode: "onChange",
     defaultValues: {
@@ -54,15 +55,15 @@ const ProfilePage = () => {
         };
 
         const res = await instance.put(`/users/${session.user.userId}/profile`, patchData);
-        if (res.message) {
-          throw new Error(res.message);
-        }
         if (res) {
-          setSession({ ...session, user: { profileImage: url, nickName, userId: session?.user.userId } });
+          setSession({ ...session, user: { ...session.user, profileImage: url, nickName } });
           router.push("/mypage");
         }
-      } catch (e) {
+      } catch {
         setSubmitState((prev) => ({ ...prev, isError: true }));
+        toast("다시 시도해 주십시오.", {
+          className: "text-16 font-600",
+        });
       } finally {
         setSubmitState((prev) => ({ ...prev, isLoading: false }));
       }

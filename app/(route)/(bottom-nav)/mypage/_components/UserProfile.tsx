@@ -9,11 +9,11 @@ import { Session, getSession } from "@/store/session/cookies";
 const UserProfile = () => {
   const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
 
-  const [session, setSession] = useState<Session>({ isAuth: false, user: { userId: "", profileImage: "", nickName: "", email: "", signupMethod: "opener" } });
+  const [session, setSession] = useState<Session>({ isAuth: false, user: { email: "", nickName: "", profileImage: "", signupMethod: "opener", userId: "" } });
   useEffect(() => {
-    const session = getSession();
-    if (session) {
-      setSession(session);
+    const newSession = getSession();
+    if (newSession) {
+      setSession(newSession);
     }
   }, []);
 
@@ -21,16 +21,16 @@ const UserProfile = () => {
     <div className="flex items-center justify-between px-20 pt-48">
       <div className="flex items-center gap-12">
         <Image
-          src={session.user.profileImage ? session.user.profileImage : "/icon/no-profile.svg"}
-          alt={`${session.user.nickName}님의 프로필 사진`}
+          src={session?.user.profileImage ? session?.user.profileImage : "/icon/no-profile.svg"}
+          alt="프로필 사진"
           width={56}
           height={56}
           className="h-56 w-56 rounded-full object-cover"
           priority
         />
         <div className="flex flex-col gap-4">
-          <p className="text-16 font-600">{session.user.nickName}</p>
-          {/* <p className="font-12 font-500 text-gray-400">{session.email}</p> */}
+          <p className="text-16 font-600">{session?.user.nickName}</p>
+          <p className="font-12 font-500 text-gray-400">{session?.user.email}</p>
         </div>
       </div>
       <button onClick={() => openBottomSheet("mypage")}>

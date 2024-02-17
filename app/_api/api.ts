@@ -86,10 +86,12 @@ export class Api {
       method: "DELETE",
       body: JSON.stringify(body),
     });
-    const result = await res.json();
-    this.makeError(result);
-
-    return result;
+    if (!res.ok) {
+      const result = await res.json();
+      this.makeError(result);
+      return result;
+    }
+    return res;
   }
 }
 
