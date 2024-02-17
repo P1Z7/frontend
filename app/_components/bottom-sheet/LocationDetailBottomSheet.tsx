@@ -42,7 +42,7 @@ const LocationDetailBottomSheet = ({ closeBottomSheet, locationInfo }: Props) =>
             <MapIcon width={20} height={20} viewBox="0 0 24 24" stroke="#A0A5B1" />
             {locationInfo.address}
           </button>
-          <HorizontalEventCard data={locationInfo} hasHeart={locationInfo.isLike} />
+          <HorizontalEventCard data={locationInfo} />
         </div>
       </BottomSheet.MapFrame>
     </>

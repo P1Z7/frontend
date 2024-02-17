@@ -8,7 +8,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
 import ChipButton from "@/components/chip/ChipButton";
-import { Api, instance } from "@/api/api";
+import { instance } from "@/api/api";
 import { getCalendarTime } from "@/utils/getCalendarTime";
 import { sortEvents } from "@/utils/sortEventList";
 import { EventCardType } from "@/types/index";
@@ -214,7 +214,6 @@ const MyCalendarTab = ({ userId }: Props) => {
           </>
         )}
       </div>
-
       <div className="w-full">
         <div className="flex w-full gap-12">
           <ChipButton label="예정" onClick={() => handleChipClick("예정")} selected={statue === "예정"} />
@@ -228,7 +227,7 @@ const MyCalendarTab = ({ userId }: Props) => {
                 !selectedDate || (getCalendarTime(event.startDate) <= getCalendarTime(selectedDate) && getCalendarTime(event.endDate) >= getCalendarTime(selectedDate)),
             )
             .map((event: EventCardType) => (
-              <HorizontalEventCard key={event.id} data={event} hasHeart onHeartClick={() => handleHeartClick(event.id)} />
+              <HorizontalEventCard key={event.id} data={event} onHeartClick={() => handleHeartClick(event.id)} />
             ))}
         </ul>
         {!data.length && (

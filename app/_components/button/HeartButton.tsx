@@ -18,7 +18,7 @@ const HeartButton = ({ isSmall = false, isSelected = false, onClick, ...props }:
   };
 
   return (
-    <div className="flex-center h-32 w-32">
+    <div className="flex-center z-heart h-32 w-32">
       <button className="w-fit pc:hidden" onClick={handleClick} {...props}>
         <HeartIcon
           width={isSmall ? "24" : "28"}
