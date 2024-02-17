@@ -17,7 +17,7 @@ const PcHeader = () => {
   return (
     <header className="sticky top-0 z-nav hidden h-72 w-full bg-white-black px-24 pc:block">
       <div className="mx-auto flex h-full max-w-[104rem] items-center justify-between">
-        <Link href="/">
+        <Link href="/" scroll={false}>
           <LogoIcon />
         </Link>
         <div className="flex gap-16">
@@ -46,7 +46,7 @@ const NavButton = ({ href, icon, label, isActive }: NavButtonProps) => {
   });
 
   return (
-    <Link href={href} className="flex h-full w-[12.2rem] items-center gap-8 p-8">
+    <Link href={href} scroll={false} className="flex h-full w-[12.2rem] items-center gap-8 p-8">
       {clonedIcon}
       <span className={`text-16 font-500 ${isActive ? "text-main-pink-500" : "text-gray-700"}`}>{label}</span>
     </Link>

@@ -54,7 +54,7 @@ const NavButton = ({ href, icon, label, isActive }: NavItemProps) => {
   });
 
   return (
-    <Link href={href} className={"flex w-60 flex-col items-center gap-8"}>
+    <Link href={href} scroll={false} className={"flex w-60 flex-col items-center gap-8"}>
       {clonedIcon}
       <p className={`${isActive ? "text-main-pink-500" : "text-gray-700"} text-12`}>{label}</p>
     </Link>
