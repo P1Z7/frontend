@@ -17,7 +17,7 @@ interface Props {
 
 const Layout = ({ children }: Props) => {
   const pathname = usePathname();
-  const { eventId, editId } = useParams();
+  const { eventId, editId, provider } = useParams();
   const [layout, setLayout] = useState<LayoutType>({ type: "dotted", size: "narrow" });
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const Layout = ({ children }: Props) => {
       case "/setting/artist":
         setLayout({ type: "pink", size: "wide" });
         break;
-      case "/oauth":
+      case `/oauth/callback/${provider}`:
         setLayout({ type: "none", size: "narrow" });
         break;
     }

@@ -24,7 +24,7 @@ const PcHeader = () => {
           <NavButton icon={<HomeIcon />} label="홈" href={"/"} isActive={pathname === "/"} />
           <NavButton icon={<SearchIcon />} label="둘러보기" href={"/search"} isActive={pathname === "/search"} />
           <NavButton icon={<PostIcon />} label="등록하기" href={"/post"} isActive={pathname === "/post"} />
-          <NavButton icon={<UserIcon width={24} />} label="마이페이지" href={"/mypage"} isActive={pathname === "/mypage"} />
+          <NavButton icon={<UserIcon width={24} height={24} />} label="마이페이지" href={"/mypage"} isActive={pathname === "/mypage"} />
         </div>
       </div>
     </header>
