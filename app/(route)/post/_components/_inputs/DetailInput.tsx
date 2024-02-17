@@ -1,3 +1,4 @@
+import InitButton from "@/(route)/(header)/event/[eventId]/edit/_components/InitButton";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import WarningCheck from "@/components/WarningCheck";
@@ -32,10 +33,10 @@ const DetailInput = () => {
   return (
     <>
       <section className="flex flex-col gap-8">
-        <div className="flex items-center gap-4">
+        <div className="relative flex items-center gap-4">
           이미지
           {validateEdit(typeof defaultValues?.eventImages !== "undefined" && checkArrUpdate(defaultValues?.eventImages, imgList)) && (
-            <p className="text-12 font-600 text-blue">수정됨</p>
+            <InitButton onClick={() => setImgList(defaultValues?.eventImages as (string | File)[])} />
           )}
         </div>
         <MemoizedImageSection imgList={imgList} setImgList={setImgList} />
@@ -51,6 +52,7 @@ const DetailInput = () => {
         rules={{ maxLength: 100 }}
         hasLimit
         isEdit={validateEdit(defaultValues?.description !== getValues("description"))}
+        onInit={() => setValue("description", defaultValues?.description || "")}
       >
         상세 내용
       </InputArea>
