@@ -13,9 +13,10 @@ import NoImage from "@/public/image/no-profile.png";
 interface Props {
   data: EventCardType;
   onHeartClick?: () => void; //기본 동작 말고 다른 기능이 필요한 경우
+  isGrow?: boolean;
 }
 
-const HorizontalEventCard = ({ data, onHeartClick }: Props) => {
+const HorizontalEventCard = ({ data, onHeartClick, isGrow = false }: Props) => {
   const session = useSession();
   const formattedDate = formatDate(data.startDate, data.endDate);
   const formattedAddress = formatAddress(data.address);
@@ -42,7 +43,10 @@ const HorizontalEventCard = ({ data, onHeartClick }: Props) => {
   };
 
   return (
-    <Link href={`/event/${data.id}`} className="relative flex w-full max-w-[50.8rem] items-center gap-12 border-b border-gray-50 bg-white-black py-12 pc:gap-20 pc:py-20">
+    <Link
+      href={`/event/${data.id}`}
+      className={`relative flex w-full ${isGrow || "max-w-[50.8rem]"}  items-center gap-12 border-b border-gray-50 bg-white-black py-12 pc:gap-20 pc:py-20`}
+    >
       <div className="absolute right-0 top-[1.3rem] z-heart pc:top-[2.75rem]" onClick={(e: SyntheticEvent) => e.preventDefault()}>
         <HeartButton isSmall isSelected={selected} onClick={handleClick} />
       </div>

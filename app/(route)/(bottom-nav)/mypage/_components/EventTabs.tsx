@@ -17,8 +17,8 @@ const EventTabs = ({ children, names }: Props) => {
   const [selectedTab, setSelectedTab] = useState<Tab>({ name: names[0], index: 0 });
 
   return (
-    <section className="relative w-full">
-      <div className="absolute left-1/2 top-16 z-nav flex h-40 w-300 -translate-x-1/2 items-center gap-8 rounded-full border border-gray-50 bg-white-white shadow-[0_0_8px_0_rgba(0,0,0,0.08)]">
+    <section className="relative h-full w-full">
+      <div className="absolute left-1/2 top-16 z-nav flex h-40 w-300 -translate-x-1/2 items-center gap-8 rounded-full border border-gray-50 bg-white-white shadow-[0_0_8px_0_rgba(0,0,0,0.08)] pc:left-auto pc:right-0 pc:top-8 pc:mx-40 pc:w-220 pc:-translate-x-0 pc:shadow-none">
         {names.map((name, index) => (
           <TabButton key={name} onClick={() => setSelectedTab({ name, index })} selected={name === selectedTab.name}>
             {name}

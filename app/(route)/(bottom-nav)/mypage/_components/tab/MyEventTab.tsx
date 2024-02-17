@@ -8,7 +8,7 @@ interface Props {
 
 const MyEventTab = ({ userId }: Props) => {
   return (
-    <div className="gap-20">
+    <div className="h-full w-full">
       <EventTabs names={["달력 보기", "지도 보기"]}>
         <MyCalendarTab userId={userId} />
         <MyLocationTab userId={userId} />

@@ -21,9 +21,9 @@ const MyPage = () => {
 
   return (
     <DottedLayout type="mypage">
-      <div className="flex w-full flex-col gap-24 pb-72 pc:flex-row pc:items-start pc:pt-48">
+      <div className="flex h-screen w-full flex-col gap-24 pb-72 tablet:pb-0 pc:flex-row pc:items-start pc:pt-48">
         <UserProfile session={session} />
-        <div className="pc:w-[83.4rem]">
+        <div className="h-full pc:w-[83.4rem]">
           <Tabs names={["행사", "아티스트", "후기"]} narrow>
             <MyEventTab userId={userId} />
             <MyArtistTab userId={userId} />

@@ -220,14 +220,14 @@ const MyCalendarTab = ({ userId }: Props) => {
           <ChipButton label="진행중" onClick={() => handleChipClick("진행중")} selected={statue === "진행중"} />
           <ChipButton label="종료" onClick={() => handleChipClick("종료")} selected={statue === "종료"} />
         </div>
-        <section className="flex-center flex-wrap gap-x-24">
+        <section>
           {data
             .filter(
               (event: EventCardType) =>
                 !selectedDate || (getCalendarTime(event.startDate) <= getCalendarTime(selectedDate) && getCalendarTime(event.endDate) >= getCalendarTime(selectedDate)),
             )
             .map((event: EventCardType) => (
-              <HorizontalEventCard key={event.id} data={event} onHeartClick={() => handleHeartClick(event.id)} />
+              <HorizontalEventCard key={event.id} data={event} onHeartClick={() => handleHeartClick(event.id)} isGrow />
             ))}
         </section>
         {!data.length && (

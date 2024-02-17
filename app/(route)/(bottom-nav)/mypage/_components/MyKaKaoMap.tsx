@@ -74,7 +74,7 @@ const MyKakaoMap = ({ scheduleData, setLocationInfo, openBottomSheet }: Props) =
     }
   }, [scheduleData]);
 
-  return <div id="map" className="h-full w-full" />;
+  return <div id="map" className="h-full w-full pc:h-[72.4rem]" />;
 };
 
 export default MyKakaoMap;
