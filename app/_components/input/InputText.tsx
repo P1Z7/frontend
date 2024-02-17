@@ -15,6 +15,7 @@ interface Prop extends InputHTMLAttributes<HTMLInputElement> {
   isEdit?: boolean;
   isSuccess?: boolean;
   noButton?: boolean;
+  onInit?: () => void;
 }
 
 type Function = <TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>>(
@@ -37,6 +38,7 @@ const InputText: Function = ({
   isEdit,
   isSuccess,
   noButton,
+  onInit,
   ...control
 }) => {
   const { field, fieldState } = useController(control);
@@ -56,7 +58,11 @@ const InputText: Function = ({
         <label htmlFor={field.name} className={`flex items-center text-16 ${horizontal && "mt-20"}`}>
           {children}
           {required && <span className="ml-4 text-sub-red">*</span>}
-          {isEdit && <span className="ml-4 text-12 font-600 text-blue">수정됨</span>}
+          {isEdit && (
+            <button type="button" onClick={onInit} className="absolute right-0 ml-4 text-12 font-600 text-blue">
+              초기화
+            </button>
+          )}
         </label>
       );
     }
@@ -96,7 +102,7 @@ const InputText: Function = ({
   return (
     <>
       {!hidden && (
-        <div className={`w-full ${horizontal && "flex gap-28"}`}>
+        <div className={`w-full ${horizontal && "flex gap-28"} relative`}>
           <Label />
           <div className={`relative ${horizontal && "flex-1"}`}>
             <input

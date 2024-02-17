@@ -1,3 +1,4 @@
+import InitButton from "@/(route)/(header)/event/[eventId]/edit/_components/InitButton";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import ChipButton from "@/components/chip/ChipButton";
@@ -45,6 +46,10 @@ const SubInput = () => {
             name="organizerSns"
             placeholder="sns 계정을 입력해주세요."
             isEdit={validateEdit(defaultValues?.organizerSns !== organizerSns || defaultValues.snsType !== snsType)}
+            onInit={() => {
+              setSnsType(defaultValues?.snsType || "트위터");
+              setValue("organizerSns", defaultValues?.organizerSns || "");
+            }}
           >
             주최자
           </InputText>
@@ -64,13 +69,20 @@ const SubInput = () => {
             ))}
           </div>
         </div>
-        <InputText name="eventUrl" placeholder="URL을 입력해주세요." isEdit={validateEdit(defaultValues?.eventUrl !== eventUrl)}>
+        <InputText
+          name="eventUrl"
+          placeholder="URL을 입력해주세요."
+          isEdit={validateEdit(defaultValues?.eventUrl !== eventUrl)}
+          onInit={() => setValue("eventUrl", defaultValues?.eventUrl || "")}
+        >
           링크
         </InputText>
         <div className="flex flex-col gap-8">
-          <div className="flex items-center gap-4">
+          <div className="relative flex items-center gap-4">
             특전
-            {validateEdit(typeof defaultValues?.tags !== "undefined" && checkArrUpdate(defaultValues?.tags, giftList)) && <p className="text-12 font-600 text-blue">수정됨</p>}
+            {validateEdit(typeof defaultValues?.tags !== "undefined" && checkArrUpdate(defaultValues?.tags, giftList)) && (
+              <InitButton onClick={() => setGiftList(defaultValues?.tags as string[])} />
+            )}
           </div>
           <ul className="flex flex-wrap gap-8 gap-y-12">
             {GIFT_LIST.map((gift) => (

@@ -1,3 +1,4 @@
+import InitButton from "@/(route)/(header)/event/[eventId]/edit/_components/InitButton";
 import classNames from "classnames";
 import { KeyboardEvent, ReactNode } from "react";
 import { FieldPath, FieldValues, UseControllerProps, useController } from "react-hook-form";
@@ -9,20 +10,21 @@ interface Prop {
   isEdit?: boolean;
   height?: number;
   hasLimit?: boolean;
+  onInit?: () => void;
 }
 
 type Function = <TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>>(
   prop: UseControllerProps<TFieldValues, TName> & Prop,
 ) => ReactNode;
 
-const InputArea: Function = ({ children, placeholder, onKeyDown, isEdit, hasLimit = false, ...control }) => {
+const InputArea: Function = ({ children, placeholder, onKeyDown, isEdit, hasLimit = false, onInit, ...control }) => {
   const { field } = useController(control);
 
   return (
     <div className="flex flex-col">
-      <label htmlFor={field.name} className="pb-8 text-16 text-gray-900">
+      <label htmlFor={field.name} className="relative pb-8 text-16 text-gray-900">
         {children}
-        {isEdit && <span className="ml-4 text-12 font-600 text-sub-skyblue">수정됨</span>}
+        {isEdit && <InitButton onClick={onInit} />}
       </label>
       <textarea
         id={field.name}
