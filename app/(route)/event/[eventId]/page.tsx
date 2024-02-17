@@ -1,4 +1,6 @@
 import Tabs from "@/components/Tabs";
+import MobileHeader from "@/components/header/MobileHeader";
+import DottedLayout from "@/components/layout/DottedLayout";
 import { Res_Get_Type } from "@/types/getResType";
 import Banner from "./_components/Banner";
 import DescriptionTab from "./_components/tab/DescriptionTab";
@@ -19,14 +21,15 @@ const EventInfoPage = async ({ params }: Props) => {
   const eventInfo = await getEventInfo(params.eventId);
 
   return (
-    <>
+    <DottedLayout size="narrow">
+      <MobileHeader />
       <Banner data={eventInfo} eventId={params.eventId} />
       <Tabs names={["행사정보", "위치", "후기"]} topOffset="event">
         <DescriptionTab images={eventInfo.eventImages} description={eventInfo.description} />
         <LocationTab name={eventInfo.placeName} address={eventInfo.address} addressDetail={eventInfo.addressDetail} />
         <ReviewTab eventId={params.eventId} />
       </Tabs>
-    </>
+    </DottedLayout>
   );
 };
 

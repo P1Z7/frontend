@@ -1,4 +1,4 @@
-import InitButton from "@/(route)/(header)/event/[eventId]/edit/_components/InitButton";
+import InitButton from "@/(route)/event/[eventId]/edit/_components/InitButton";
 import { useFormContext } from "react-hook-form";
 import EventTypeBottomSheet from "@/components/bottom-sheet/EventTypeBottomSheet";
 import StarBottomSheet from "@/components/bottom-sheet/StarBottomSheet";

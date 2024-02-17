@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { Toaster } from "react-hot-toast";
-import Layout from "@/components/layout/Layout";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import "@/public/font/pretendard/font.css";
+import PcHeader from "./_components/header/PcHeader";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -27,7 +27,8 @@ export default function RootLayout({
       <body>
         <Toaster containerClassName="toast" />
         <ReactQueryProvider>
-          <Layout>{children}</Layout>
+          <PcHeader />
+          {children}
           <div id="bottom-sheet" />
           <div id="modal" />
         </ReactQueryProvider>

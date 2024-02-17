@@ -1,4 +1,4 @@
-import InitButton from "@/(route)/(header)/event/[eventId]/edit/_components/InitButton";
+import InitButton from "@/(route)/event/[eventId]/edit/_components/InitButton";
 import classNames from "classnames";
 import { KeyboardEvent, ReactNode } from "react";
 import { FieldPath, FieldValues, UseControllerProps, useController } from "react-hook-form";
