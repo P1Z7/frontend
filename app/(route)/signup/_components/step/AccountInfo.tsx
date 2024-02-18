@@ -73,7 +73,7 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
         >
           이메일
         </InputText>
-        <div className="w-88 shrink-0 pb-16">
+        <div className="w-88 shrink-0 pb-20">
           <Button type={canWrite ? "linedGray" : "lined"} size="free" style="h-48 text-14 rounded-sm" isDisabled={!!formState.errors.email || !email} onClick={handleEmailClick}>
             {canWrite ? "재인증" : "인증하기"}
           </Button>
@@ -96,7 +96,7 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
         >
           인증코드 입력
         </InputText>
-        <div className="w-88 shrink-0 pb-16">
+        <div className="w-88 shrink-0 pb-20">
           <Button type="lined" size="free" style="h-48 text-14 rounded-sm" isDisabled={!canWrite || !code || isVerification} onClick={handleCodeClick}>
             {isVerification ? "인증완료" : "확인"}
           </Button>

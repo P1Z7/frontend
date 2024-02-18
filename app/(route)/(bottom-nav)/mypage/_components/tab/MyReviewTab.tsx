@@ -3,14 +3,15 @@ import { instance } from "@/api/api";
 import { MyReviewType } from "@/types/index";
 import MyReview from "../MyRiew";
 
-const MyReviewTab = () => {
-  const ID = "6fc13c28-26f5-4ec0-ad41-b8548aeaa9c8";
-  const NoneMyArtistID = "b4a2354c-ff70-49c5-be9b-02bdd83e4df9";
+interface Props {
+  userId: string;
+}
 
+const MyReviewTab = ({ userId }: Props) => {
   const { data: myReviewsData, isSuccess } = useQuery({
-    queryKey: [ID],
+    queryKey: [userId],
     queryFn: async () => {
-      return instance.get(`/reviews/user/${NoneMyArtistID}`, { size: 12, cursorId: 1, userId: ID });
+      return instance.get(`/reviews/user/${userId}`, { size: 12, cursorId: 500, userId: userId });
     },
   });
 
@@ -20,7 +21,7 @@ const MyReviewTab = () => {
     <ul className="flex-center w-full flex-col pt-8">
       {myReviewsData.length > 0 ? (
         myReviewsData.map((review: MyReviewType) => (
-          <li key={review.id}>
+          <li key={review.id} className="w-full">
             <MyReview data={review} />
           </li>
         ))

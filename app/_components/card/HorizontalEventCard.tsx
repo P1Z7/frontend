@@ -1,8 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { SyntheticEvent } from "react";
+import { SyntheticEvent, useState } from "react";
 import HeartButton from "@/components/button/HeartButton";
 import Chip from "@/components/chip/Chip";
+import { instance } from "@/api/api";
+import { useSession } from "@/store/session/cookies";
 import { formatAddress, formatDate } from "@/utils/formatString";
 import { EventCardType } from "@/types/index";
 import { TAG_ORDER } from "@/constants/data";
@@ -10,18 +12,43 @@ import NoImage from "@/public/image/no-profile.png";
 
 interface Props {
   data: EventCardType;
-  hasHeart?: boolean;
-  onHeartClick?: () => void;
+  onHeartClick?: () => void; //기본 동작 말고 다른 기능이 필요한 경우
+  isGrow?: boolean;
 }
 
-const HorizontalEventCard = ({ data, hasHeart = false, onHeartClick }: Props) => {
+const HorizontalEventCard = ({ data, onHeartClick, isGrow = false }: Props) => {
+  const session = useSession();
   const formattedDate = formatDate(data.startDate, data.endDate);
   const formattedAddress = formatAddress(data.address);
+  const [selected, setSelected] = useState(data.isLike);
+
+  const handleClick = async () => {
+    if (onHeartClick) {
+      onHeartClick();
+      return;
+    }
+
+    if (!session) {
+      return;
+    }
+    const res = await instance.post("/event/like", {
+      userId: session?.user.userId,
+      eventId: data.id,
+    });
+
+    if (res.error) {
+      throw new Error(res.error);
+    }
+    setSelected(res);
+  };
 
   return (
-    <Link href={`/event/${data.id}`} className="relative flex w-full max-w-[50.8rem] items-center gap-12 border-b border-gray-50 bg-white-black py-12 pc:gap-20 pc:py-20">
-      <div className="absolute right-0 top-[1.3rem] pc:top-[2.75rem]" onClick={(e: SyntheticEvent) => e.preventDefault()}>
-        <HeartButton isSmall isSelected={hasHeart} onClick={onHeartClick} />
+    <Link
+      href={`/event/${data.id}`}
+      className={`relative flex w-full ${isGrow ? "" : "pc:max-w-[50.8rem]"} items-center gap-12 border-b border-gray-50 bg-white-black py-12 pc:gap-20 pc:py-20`}
+    >
+      <div className="z-heart absolute right-0 top-[1.3rem] pc:top-[2.75rem]" onClick={(e: SyntheticEvent) => e.preventDefault()}>
+        <HeartButton isSmall isSelected={selected} onClick={handleClick} />
       </div>
       <div className="relative h-112 w-84 shrink-0 pc:h-152 pc:w-116">
         <Image src={data.eventImages?.[0]?.imageUrl ?? NoImage} className="rounded-[0.4rem] object-cover" fill alt="행사 포스터" sizes="116px" />
