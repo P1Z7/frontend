@@ -160,7 +160,6 @@ export interface EventCardType {
   updatedAt?: string | null;
   deletedAt?: string | null;
   likeCount: number;
-  isLike: boolean;
   eventImages: EventImageType[];
   targetArtists: TargetArtistType[];
   eventTags: EventTagType[];

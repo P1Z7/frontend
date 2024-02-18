@@ -47,7 +47,7 @@ const HorizontalEventCard = ({ data, onHeartClick, isGrow = false }: Props) => {
       href={`/event/${data.id}`}
       className={`relative flex w-full ${isGrow || "max-w-[50.8rem]"}  items-center gap-12 border-b border-gray-50 bg-white-black py-12 pc:gap-20 pc:py-20`}
     >
-      <div className="absolute right-0 top-[1.3rem] z-heart pc:top-[2.75rem]" onClick={(e: SyntheticEvent) => e.preventDefault()}>
+      <div className="z-heart absolute right-0 top-[1.3rem] pc:top-[2.75rem]" onClick={(e: SyntheticEvent) => e.preventDefault()}>
         <HeartButton isSmall isSelected={selected} onClick={handleClick} />
       </div>
       <div className="relative h-112 w-84 shrink-0 pc:h-152 pc:w-116">
