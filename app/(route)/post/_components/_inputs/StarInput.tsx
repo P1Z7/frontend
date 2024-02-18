@@ -5,8 +5,10 @@ import EventTypeBottomSheet from "@/components/bottom-sheet/EventTypeBottomSheet
 import StarBottomSheet from "@/components/bottom-sheet/StarBottomSheet";
 import EventTypeList from "@/components/bottom-sheet/content/EventTypeList";
 import InputText from "@/components/input/InputText";
+import ArtistModal from "@/components/modal/ArtistModal";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
 import useGetWindowWidth from "@/hooks/useGetWindowWidth";
+import { useModal } from "@/hooks/useModal";
 import { checkArrUpdate } from "@/utils/checkArrUpdate";
 import { validateEdit } from "@/utils/editValidate";
 import { handleEnterDown } from "@/utils/handleEnterDown";
@@ -14,6 +16,7 @@ import { PostType } from "../../page";
 
 const StarInput = () => {
   const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
+  const { modal, openModal, closeModal } = useModal();
   const { isPc } = useGetWindowWidth();
   const [isOpenEventType, setIsOpenEventType] = useState(false);
 
@@ -47,15 +50,15 @@ const StarInput = () => {
               name="groupName"
               placeholder="아티스트 선택"
               readOnly
-              onClick={() => openBottomSheet("firstArtist")}
-              onKeyDown={(event) => handleEnterDown(event, () => openBottomSheet("firstArtist"))}
+              onClick={() => (isPc ? openModal("firstArtist") : openBottomSheet("firstArtist"))}
+              onKeyDown={(event) => handleEnterDown(event, () => (isPc ? openModal("firstArtist") : openBottomSheet("firstArtist")))}
             />
             <InputText
               name="artistNames"
               placeholder="멤버 선택"
               readOnly
-              onClick={() => openBottomSheet("secondArtist")}
-              onKeyDown={(event) => handleEnterDown(event, () => openBottomSheet("secondArtist"))}
+              onClick={() => (isPc ? openModal("secondArtist") : openBottomSheet("secondArtist"))}
+              onKeyDown={(event) => handleEnterDown(event, () => (isPc ? openModal("secondArtist") : openBottomSheet("secondArtist")))}
             />
           </div>
           {isNotMember && <div className="pt-4 text-12 font-500 text-red">그룹 선택 시, 멤버 선택이 필수입니다.</div>}
@@ -77,6 +80,8 @@ const StarInput = () => {
         <InputText name="groupId" hidden />
         <InputText name="artists" hidden />
       </div>
+      {modal === "firstArtist" && <ArtistModal closeModal={closeModal} isFirst />}
+      {modal === "secondArtist" && <ArtistModal closeModal={closeModal} />}
       {bottomSheet === "event" && <EventTypeBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} />}
       {bottomSheet === "firstArtist" && <StarBottomSheet closeBottomSheet={closeBottomSheet} isFirst refs={refs} />}
       {bottomSheet === "secondArtist" && <StarBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} />}

@@ -2,23 +2,38 @@
 
 import classNames from "classnames";
 import React, { ReactNode } from "react";
+import useNotScroll from "@/hooks/useNotScroll";
 import { ModalBaseType } from "@/types/index";
 import CloseIcon from "@/public/icon/close.svg";
 import Button from "../button";
 import ModalPortal from "./ModalPortal";
 
+const FRAME_STYLE = {
+  bg: {
+    mobile: "relative w-[30.8rem] rounded-md bg-white-black px-20 pb-20 pt-40 text-16",
+    pc: "relative w-[54.8rem] rounded-md bg-white-black p-32 text-16",
+  },
+  closeBtn: {
+    mobile: "absolute right-12 top-12",
+    pc: "absolute right-32 top-32",
+  },
+};
+
 interface ModalFrameProps extends ModalBaseType {
   children: ReactNode;
   hasNotCloseBtn?: boolean;
+  type: "mobile" | "pc";
 }
 
-const ModalFrame = ({ children, closeModal, hasNotCloseBtn = false }: ModalFrameProps) => {
+const ModalFrame = ({ children, closeModal, type = "mobile", hasNotCloseBtn = false }: ModalFrameProps) => {
+  useNotScroll();
+
   return (
     <ModalPortal>
       <div onClick={closeModal} className="fixed left-0 top-0 z-popup flex h-screen w-full items-center justify-center bg-gray-900 bg-opacity-70 text-center">
-        <div className="relative w-[308px] rounded-md bg-white-black px-20 pb-20 pt-40 text-16">
+        <div className={FRAME_STYLE.bg[type]}>
           {hasNotCloseBtn || (
-            <button onClick={closeModal} className="absolute right-12 top-12">
+            <button onClick={closeModal} className={FRAME_STYLE.closeBtn[type]}>
               <CloseIcon stroke="#C1C5CC" width={24} height={24} />
             </button>
           )}
