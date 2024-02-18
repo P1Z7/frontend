@@ -5,6 +5,7 @@ import { instance } from "app/_api/api";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useSession } from "@/store/session/cookies";
 import { Res_Get_Type } from "@/types/getResType";
 import Carousel from "./Carousel";
@@ -12,11 +13,13 @@ import Carousel from "./Carousel";
 const FavArtistEventsCarousel = () => {
   const session = useSession();
 
+  const [isSignin, setIsSignin] = useState(false);
+
   const {
     data: favArtistEvent,
     isSuccess,
     isLoading,
-  } = useQuery({
+  } = useQuery<Res_Get_Type["eventList"]>({
     queryKey: ["artistNewEvent"],
     queryFn: async () => {
       if (!session) {
@@ -26,27 +29,32 @@ const FavArtistEventsCarousel = () => {
         userId: session.user.userId,
       });
     },
+    enabled: session?.isAuth,
   });
+
+  useEffect(() => {
+    if (session?.isAuth) setIsSignin(true);
+  }, []);
 
   return (
     <div className="flex flex-col gap-16 pc:gap-24">
       <div className="flex items-center justify-between self-stretch px-20 pc:px-48">
-        {session?.isAuth && (
+        {isSignin && (
           <>
             <h2 className="text-20 font-700 text-gray-900">내 아티스트의 새 행사</h2>
-            <Link href="/my-artist-event" className="text-12 font-600 text-blue">
+            <Link href="/my-artist-event?sort=최신순" className="text-12 font-600 text-blue">
               전체보기
             </Link>
           </>
         )}
       </div>
-      <RenderContent status={!!session?.isAuth} hasFavoriteEvents={!!favArtistEvent?.length} isLoading={isLoading} isSuccess={isSuccess} />
+      <RenderContent status={isSignin} hasFavoriteEvents={!!favArtistEvent} isLoading={isLoading} isSuccess={isSuccess} favArtistEvent={favArtistEvent} />
     </div>
   );
 };
 
 interface RenderContentProps {
-  status: boolean;
+  status?: boolean;
   hasFavoriteEvents: boolean;
   isLoading: boolean;
   isSuccess: boolean;
@@ -58,14 +66,15 @@ const RenderContent = ({ status, hasFavoriteEvents, isLoading, isSuccess, favArt
     return <NoFavCard buttonName="로그인 하기" href={"/signin"} />;
   }
 
-  if (!hasFavoriteEvents) {
-    return <NoFavCard buttonName="아티스트 둘러보기" href={"/setting/favorite"} />;
-  }
-
   return (
     <>
       {isLoading && <div>로딩중</div>}
-      {isSuccess && <Carousel cards={favArtistEvent} />}
+      {isSuccess && (
+        <>
+          {!hasFavoriteEvents && <NoFavCard buttonName="아티스트 둘러보기" href={"/setting/favorite"} />}
+          {hasFavoriteEvents && <Carousel cards={favArtistEvent} />}
+        </>
+      )}
     </>
   );
 };

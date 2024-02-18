@@ -45,13 +45,21 @@ const Carousel = ({ cards }: Props) => {
     }
   };
 
+  useEffect(() => {
+    if (cards && cards.length <= 5) {
+      setIsNextDisabled(true);
+    } else {
+      setIsNextDisabled(false);
+    }
+  }, [cards]);
+
   return (
     <div className="flex flex-col gap-16 pc:gap-24">
       <div className="pc:flex pc:w-[112rem]">
         <div onClick={handlePrevClick} className={`relative top-76 hidden h-100 w-[5rem] cursor-pointer pc:block ${isPrevDisabled ? "pointer-events-none opacity-50" : ""}`}>
           <PrevButtonIcon />
         </div>
-        <div className="flex gap-16 overflow-auto px-20 pc:gap-20 pc:overflow-hidden pc:p-0 pc:transition-transform pc:duration-1000 pc:ease-in-out">
+        <div className="flex w-full gap-16 overflow-auto px-20 pc:gap-20 pc:overflow-hidden pc:p-0 pc:transition-transform pc:duration-1000 pc:ease-in-out">
           {isPc
             ? cards?.slice(slideIndex, slideIndex + 5).map((event) => (
                 <div key={event.id}>
