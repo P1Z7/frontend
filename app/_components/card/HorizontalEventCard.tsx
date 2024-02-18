@@ -1,10 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent } from "react";
 import HeartButton from "@/components/button/HeartButton";
 import Chip from "@/components/chip/Chip";
-import { instance } from "@/api/api";
-import { useSession } from "@/store/session/cookies";
+import useLikeEvent from "@/hooks/useLikeEvent";
 import { formatAddress, formatDate } from "@/utils/formatString";
 import { EventCardType } from "@/types/index";
 import { TAG_ORDER } from "@/constants/data";
@@ -17,10 +16,10 @@ interface Props {
 }
 
 const HorizontalEventCard = ({ data, onHeartClick, isGrow = false }: Props) => {
-  const session = useSession();
   const formattedDate = formatDate(data.startDate, data.endDate);
   const formattedAddress = formatAddress(data.address);
-  const [selected, setSelected] = useState(data.isLike);
+
+  const { liked, handleLikeEvent } = useLikeEvent({ eventId: data.id, initialLikeCount: data.likeCount });
 
   const handleClick = async () => {
     if (onHeartClick) {
@@ -28,18 +27,7 @@ const HorizontalEventCard = ({ data, onHeartClick, isGrow = false }: Props) => {
       return;
     }
 
-    if (!session) {
-      return;
-    }
-    const res = await instance.post("/event/like", {
-      userId: session?.user.userId,
-      eventId: data.id,
-    });
-
-    if (res.error) {
-      throw new Error(res.error);
-    }
-    setSelected(res);
+    handleLikeEvent();
   };
 
   return (
@@ -48,7 +36,7 @@ const HorizontalEventCard = ({ data, onHeartClick, isGrow = false }: Props) => {
       className={`relative flex w-full ${isGrow || "max-w-[50.8rem]"}  items-center gap-12 border-b border-gray-50 bg-white-black py-12 pc:gap-20 pc:py-20`}
     >
       <div className="z-heart absolute right-0 top-[1.3rem] pc:top-[2.75rem]" onClick={(e: SyntheticEvent) => e.preventDefault()}>
-        <HeartButton isSmall isSelected={selected} onClick={handleClick} />
+        <HeartButton isSmall isSelected={liked} onClick={handleClick} />
       </div>
       <div className="relative h-112 w-84 shrink-0 pc:h-152 pc:w-116">
         <Image src={data.eventImages?.[0]?.imageUrl ?? NoImage} className="rounded-[0.4rem] object-cover" fill alt="행사 포스터" sizes="116px" />
