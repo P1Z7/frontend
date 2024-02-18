@@ -98,7 +98,7 @@ const SearchArtist = ({ onClick, myArtists, myArtistsInfo }: Props) => {
   };
 
   return (
-    <div className="flex w-full flex-col pt-8">
+    <div className="flex w-full flex-col pt-8 pc:min-h-[37.3rem]">
       <button className="w-fit text-14 font-500 text-gray-400 underline" onClick={() => openModal("reqArtist")} type="button">
         찾으시는 아티스트가 없으신가요?
       </button>
@@ -117,8 +117,8 @@ const SearchArtist = ({ onClick, myArtists, myArtistsInfo }: Props) => {
           </div>
         ))}
       </section>
-      <div className="flex-center w-full px-8">
-        <ul className="flex w-full max-w-[60rem] flex-wrap justify-center gap-x-16 gap-y-20 overflow-hidden">
+      <div className="flex-center w-full px-8 pc:px-0">
+        <ul className="flex w-full max-w-[60rem] flex-wrap justify-center gap-x-16 gap-y-20 overflow-hidden pc:gap-x-20 pc:gap-y-24">
           {artistData?.pages.map((page) => page.artistAndGroupList.map((artist) => <Card data={artist} key={artist.id} onClick={handleArtistClick} myArtists={myArtists} />))}
         </ul>
       </div>

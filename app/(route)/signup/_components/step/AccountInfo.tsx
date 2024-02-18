@@ -133,7 +133,7 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
       >
         비밀번호 확인
       </InputText>
-      <div className={`fixed bottom-0 left-0 w-full ${isError ? "animate-brrr" : ""}`}>
+      <div className={`fixed bottom-0 left-0 w-full pc:sticky pc:mt-20 ${isError ? "animate-brrr" : ""}`}>
         {/* <BottomButton onClick={onNext}> */}
         <BottomButton onClick={onNext} isDisabled={isButtonDisabled}>
           다음으로

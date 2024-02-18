@@ -27,6 +27,7 @@ const DEFAULT_VALUES = {
 const SignUp = () => {
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(false);
+  const [pcWidth, setPcWidth] = useState<"narrow" | "wide">("narrow");
   const session = useSession();
 
   useEffect(() => {
@@ -40,18 +41,22 @@ const SignUp = () => {
 
   const handleNextClick = (step: SignupStepNameType) => {
     setStep(step);
+    if (step === "아티스트 선택") {
+      setPcWidth("wide");
+    }
   };
   const handlePrevClick = () => {
     const stepIndex = STEPS.indexOf(currentStep);
     if (stepIndex === 0) {
       router.push("/signin");
     }
+    setPcWidth("narrow");
     setStep(STEPS[stepIndex - 1]);
   };
 
   if (!isLogin)
     return (
-      <PinkLayout size="narrow">
+      <PinkLayout size={pcWidth}>
         <Header onClick={handlePrevClick} />
         <GenericFormProvider<SignUpFormType> formOptions={{ mode: "onBlur", defaultValues: DEFAULT_VALUES }}>
           <div className="flex h-full flex-col px-20 ">
