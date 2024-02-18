@@ -178,7 +178,7 @@ const SearchPage = () => {
       <main className="relative w-full px-20 pb-84 pt-160 pc:p-0 pc:pb-84">
         <section className="fixed left-0 right-0 top-0 z-nav flex w-full flex-col bg-white-black text-14 text-gray-500 shadow-top pc:static pc:shadow-none">
           <div className="bg-white-black px-20 pb-8 pt-40 pc:px-0 pc:pb-20 pc:pt-[7rem]">
-            <SearchInput keyword={keyword} setKeyword={setKeyword} initialKeyword={initialKeyword} placeholder="최애의 행사를 찾아보세요!" />
+            <SearchInput keyword={keyword} setKeyword={setKeyword} initialKeyword={initialKeyword} placeholder="최애의 이름으로 행사를 찾아보세요!" />
           </div>
           <div className={`animate-fadeIn px-20 pb-8 pc:p-0 ${visible ? "block" : "hidden pc:block"}`}>
             <div className="flex gap-4 pb-12 pc:pb-32">
