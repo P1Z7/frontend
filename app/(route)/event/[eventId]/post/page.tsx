@@ -90,13 +90,7 @@ const ReviewPostPage = () => {
     } catch (e) {
       console.error(e);
       toast.error("후기 등록에 실패하였습니다", {
-        position: "top-center",
-        style: {
-          padding: "16px 28px",
-          fontFamily: "Pretendard",
-          fontWeight: "600",
-          fontSize: "16px",
-        },
+        className: "text-14 font-600",
       });
     } finally {
       setIsLoading(false);
