@@ -1,9 +1,12 @@
 import InitButton from "@/(route)/event/[eventId]/edit/_components/InitButton";
+import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import EventTypeBottomSheet from "@/components/bottom-sheet/EventTypeBottomSheet";
 import StarBottomSheet from "@/components/bottom-sheet/StarBottomSheet";
+import EventTypeList from "@/components/bottom-sheet/content/EventTypeList";
 import InputText from "@/components/input/InputText";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
+import useGetWindowWidth from "@/hooks/useGetWindowWidth";
 import { checkArrUpdate } from "@/utils/checkArrUpdate";
 import { validateEdit } from "@/utils/editValidate";
 import { handleEnterDown } from "@/utils/handleEnterDown";
@@ -11,6 +14,8 @@ import { PostType } from "../../page";
 
 const StarInput = () => {
   const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
+  const { isPc } = useGetWindowWidth();
+  const [isOpenEventType, setIsOpenEventType] = useState(false);
 
   const {
     setValue,
@@ -60,7 +65,7 @@ const StarInput = () => {
           readOnly
           placeholder="행사 유형을 선택하세요."
           tabIndex={0}
-          onClick={() => openBottomSheet("event")}
+          onClick={() => (isPc ? setIsOpenEventType(true) : openBottomSheet("event"))}
           onKeyDown={(event) => handleEnterDown(event, () => openBottomSheet("event"))}
           isEdit={validateEdit(defaultValues?.eventType !== eventType)}
           onInit={() => setValue("eventType", defaultValues?.eventType || "카페")}
@@ -68,6 +73,7 @@ const StarInput = () => {
         >
           행사 유형
         </InputText>
+        {isOpenEventType && <EventTypeList type="dropDown" handleClickFunc={() => setIsOpenEventType(false)} />}
         <InputText name="groupId" hidden />
         <InputText name="artists" hidden />
       </div>

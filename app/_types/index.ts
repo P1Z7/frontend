@@ -4,7 +4,7 @@ export interface ModalBaseType {
   closeModal: () => void;
 }
 
-type BottomSheetRefs = {
+export type BottomSheetRefs = {
   sheet: (node: HTMLElement | null) => void;
   content: (node: HTMLElement | null) => void;
 };
