@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactElement, cloneElement, useEffect, useState } from "react";
-import { useSession } from "@/store/session/cookies";
+import { Session, useSession } from "@/store/session/cookies";
 import PostIcon from "@/public/icon/add-outline.svg";
 import HomeIcon from "@/public/icon/home.svg";
 import LogoIcon from "@/public/icon/logo.svg";
@@ -12,7 +12,8 @@ import SearchIcon from "@/public/icon/search_black.svg";
 
 const PcHeader = () => {
   const pathname = usePathname();
-  const session = useSession();
+  const [session, setSession] = useState<Session>();
+
   const [profileImage, setProfileImage] = useState("");
 
   const navButtons = [
@@ -21,12 +22,14 @@ const PcHeader = () => {
     { href: "/post", icon: <PostIcon />, label: "등록하기" },
   ];
   useEffect(() => {
+    const session = useSession();
+    setSession(session);
     if (session?.user.profileImage) {
       setProfileImage(session?.user.profileImage);
       return;
     }
     setProfileImage("");
-  }, [session]);
+  }, [pathname]);
 
   return (
     <header className="sticky top-0 z-nav hidden h-72 w-full bg-white-black px-24 pc:block">
