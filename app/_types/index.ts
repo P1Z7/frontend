@@ -170,12 +170,12 @@ export interface EventReviewType {
   cursorId: number;
   isPublic: boolean;
   rating: boolean;
-  description: string;
+  description?: string;
   createdAt: string;
   likeCount: number;
   isLike: boolean;
   user: UserType;
-  reviewImages: { url: string; createdAt: string }[];
+  reviewImages?: { url: string; createdAt: string }[];
 }
 
 export interface MyReviewType {
