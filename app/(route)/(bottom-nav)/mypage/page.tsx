@@ -14,15 +14,22 @@ const MyPage = () => {
   if (!session) {
     return <Suspense />;
   }
+
+  const {
+    user: { userId },
+  } = session;
+
   return (
-    <DottedLayout size="wide">
-      <div className="flex w-full flex-col gap-24 pb-72">
+    <DottedLayout size="extrawide">
+      <div className="flex h-screen w-full flex-col gap-24 pb-72 pc:h-[calc(100vh-7.2rem)] pc:flex-row pc:items-start pc:pb-0 pc:pt-48">
         <UserProfile session={session} />
-        <Tabs names={["행사", "아티스트", "후기"]}>
-          <MyEventTab />
-          <MyArtistTab />
-          <MyReviewTab />
-        </Tabs>
+        <div className="h-full pc:w-[83.4rem]">
+          <Tabs names={["행사", "아티스트", "후기"]} isNarrow>
+            <MyEventTab userId={userId} />
+            <MyArtistTab userId={userId} />
+            <MyReviewTab userId={userId} />
+          </Tabs>
+        </div>
       </div>
     </DottedLayout>
   );

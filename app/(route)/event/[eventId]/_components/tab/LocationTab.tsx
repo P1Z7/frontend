@@ -1,22 +1,30 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import { MapType } from "@/types/index";
 import KakaoMap from "../KakaoMap";
 
-const getPlaceId = async (name: string, address: string, addressDetail?: string) => {
-  const data = await fetch(`https://dapi.kakao.com/v2/local/search/keyword.json?query=${address}${addressDetail}${name}`, {
+const getPlaceId = async (name: string, address: string) => {
+  const data = await fetch(`https://dapi.kakao.com/v2/local/search/keyword.json?query=${address}${name}`, {
     headers: { Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}` },
   });
   const ret = await data.json();
+  if (!ret.documents?.[0]) return;
   return ret.documents?.[0].id;
 };
 
-const LocationTab = ({ name, address, addressDetail }: MapType) => {
+const LocationTab = ({ name, address }: MapType) => {
   const router = useRouter();
 
   const handleRedirectToMap = async () => {
-    const placeId = await getPlaceId(name, address, addressDetail);
+    const placeId = await getPlaceId(name, address);
+    if (!placeId) {
+      toast.error("카카오 맵과 연동되지 않은 주소입니다🥹", {
+        className: "text-14 font-600",
+      });
+      return;
+    }
     router.push(`https://map.kakao.com/link/map/${placeId}`);
   };
 

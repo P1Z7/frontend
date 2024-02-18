@@ -111,7 +111,7 @@ const Banner = ({ data, eventId }: Props) => {
             <div className="hidden pc:block">
               <GiftIcon {...IconStyleProps.pc} />
             </div>
-            <div className="flex items-center gap-4 pc:gap-8">
+            <div className="flex flex-wrap items-center gap-4 pc:gap-8">
               {data.eventTags.map((tag) => (
                 <Chip key={tag.tagId} kind="goods" label={tag.tagName} />
               ))}
@@ -140,6 +140,12 @@ const Banner = ({ data, eventId }: Props) => {
               <span>{formattedOrganizerSns}</span>
             </div>
           </SubDescription>
+        </div>
+        <div className="absolute bottom-0 right-0 text-14 font-400">
+          <Link href="edit" className="mr-16 text-blue">
+            수정하기
+          </Link>
+          <button className="text-gray-400">신고하기</button>
         </div>
       </div>
     </section>
@@ -177,7 +183,7 @@ interface SubDescriptionProps {
 }
 
 const SubDescription = ({ isVisible = true, children }: SubDescriptionProps) => {
-  return <>{isVisible && <div className="flex h-20 items-center gap-12 text-14 pc:gap-16 pc:text-16">{children}</div>}</>;
+  return <>{isVisible && <div className="flex gap-12 text-14 pc:gap-16 pc:text-16">{children}</div>}</>;
 };
 
 interface HeartButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
