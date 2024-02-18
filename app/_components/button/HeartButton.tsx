@@ -1,7 +1,7 @@
 "use client";
 
 import { MouseEvent, useState } from "react";
-import Heart from "@/public/icon/heart.svg";
+import HeartIcon from "./HeartIcon";
 
 interface Props {
   isSmall?: boolean;
@@ -18,15 +18,28 @@ const HeartButton = ({ isSmall = false, isSelected = false, onClick, ...props }:
   };
 
   return (
-    <button className="w-fit" onClick={handleClick} {...props}>
-      <Heart
-        width={isSmall ? "24" : "28"}
-        height={isSmall ? "24" : "28"}
-        viewBox="0 0 24 24"
-        stroke={selected ? "#FF50AA" : isSmall ? "#A0A5B1" : "white"}
-        fill={selected ? "#FF50AA" : "none"}
-      />
-    </button>
+    <div className="flex-center z-heart h-32 w-32">
+      <button className="w-fit pc:hidden" onClick={handleClick} {...props}>
+        <HeartIcon
+          width={isSmall ? "24" : "28"}
+          height={isSmall ? "24" : "28"}
+          viewBox="0 0 24 24"
+          stroke={selected ? "#FF50AA" : isSmall ? "#A0A5B1" : "white"}
+          fill={selected ? "#FF50AA" : "none"}
+          isSelected={selected ? true : false}
+        />
+      </button>
+      <button className="hidden w-fit pc:inline" onClick={handleClick} {...props}>
+        <HeartIcon
+          width={isSmall ? "24" : "32"}
+          height={isSmall ? "24" : "32"}
+          viewBox="0 0 24 24"
+          stroke={selected ? "#FF50AA" : isSmall ? "#A0A5B1" : "white"}
+          fill={selected ? "#FF50AA" : "none"}
+          isSelected={selected ? true : false}
+        />
+      </button>
+    </div>
   );
 };
 

@@ -7,26 +7,28 @@ import ArtistCard from "@/components/ArtistCard";
 import { instance } from "@/api/api";
 import { MyArtistsType } from "@/types/index";
 
-const MyArtistTab = () => {
+interface Props {
+  userId: string;
+}
+
+const MyArtistTab = ({ userId }: Props) => {
   const router = useRouter();
-  const ID = "b4a2354c-ff70-49c5-be9b-02bdd83e4df9";
-  const NoneMyArtistID = "f14ab7e7-ee5c-4707-b68e-ddb6cf8b0f00";
 
   const { data: myArtistsData, isSuccess } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      return instance.get(`/users/${ID}/artists`);
+      return instance.get(`/users/${userId}/artists`);
     },
   });
 
   if (!isSuccess) return;
   return (
-    <div className="flex flex-col items-start gap-16 px-20 py-24">
+    <div className="flex flex-col items-start gap-16 px-20 py-24 pc:gap-24 pc:p-32">
       <button className="text-14 font-500 text-blue" onClick={() => router.push("/setting/favorite")}>
         팔로우 아티스트 수정하기
       </button>
       <div className="flex w-full flex-col items-center">
-        <div className="flex w-full flex-wrap justify-center gap-20">
+        <div className="flex w-full flex-wrap justify-center gap-20 pc:justify-start pc:gap-32">
           {Array.isArray(myArtistsData) ? (
             myArtistsData.map((cardList: MyArtistsType) => (
               <ArtistCard
@@ -34,7 +36,7 @@ const MyArtistTab = () => {
                 key={cardList.artistId}
                 profileImage={cardList.artistImage}
                 onClick={() => {
-                  console.log(`${cardList.artistName}(으)로 검색`);
+                  router.push(`/search?keyword=${cardList.artistName}`);
                 }}
               >
                 {cardList.artistName}
