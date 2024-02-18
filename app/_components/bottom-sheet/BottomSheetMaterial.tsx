@@ -13,11 +13,11 @@ interface BottomSheetFrameProps {
 const BottomSheetFrame = forwardRef<HTMLDivElement, BottomSheetFrameProps>(({ children, closeBottomSheet }, ref) => {
   return (
     <BottomSheetPortal>
-      <div onClick={closeBottomSheet} className="fixed bottom-0 left-0 z-popup flex h-screen w-full items-end justify-center bg-gray-900 bg-opacity-70">
+      <div onClick={closeBottomSheet} className="fixed bottom-0 left-0 z-popup flex h-screen w-full items-end justify-center bg-gray-900 bg-opacity-70 pc:items-center">
         <div
           ref={ref}
           onClick={(e: SyntheticEvent) => e.stopPropagation()}
-          className="relative flex max-h-[55.6rem] w-full transform animate-slideUp flex-col overflow-hidden rounded-t-md bg-white-black pt-16 transition duration-150 ease-out"
+          className="relative flex max-h-[55.6rem] w-full transform animate-slideUp flex-col overflow-hidden rounded-t-md bg-white-black pt-16 transition duration-150 ease-out pc:w-[50rem] pc:animate-none pc:rounded-md"
         >
           <button onClick={closeBottomSheet} className="fixed right-20 top-16 z-nav">
             <CloseIcon stroke="#C1C5CC" width="24" height="24" />
@@ -45,9 +45,11 @@ interface BottomSheetButtonProps {
 const BottomSheetButton = ({ onClick }: BottomSheetButtonProps) => {
   return (
     <div className="border-t border-gray-50 px-20 pb-24 pt-12">
-      <Button onClick={onClick} type="lined">
-        선택 완료
-      </Button>
+      <div className="mx-auto max-w-380">
+        <Button onClick={onClick} type="lined">
+          선택 완료
+        </Button>
+      </div>
     </div>
   );
 };
