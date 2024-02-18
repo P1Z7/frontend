@@ -6,8 +6,10 @@ import BottomButton from "@/components/button/BottomButton";
 import InputText from "@/components/input/InputText";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 import { SignUpFormType } from "@/types/index";
+import { checkEnterENextStep } from "../checkEnterENextStep";
 
 const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
+  const { isError, handleNextEnterError } = checkEnterENextStep();
   const { formState, control } = useFormContext<SignUpFormType>();
   const [current, setCurrent] = useState("");
 
@@ -25,6 +27,7 @@ const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
       <div className="pc:h-[37.3rem]">
         <InputText
           control={control}
+          onKeyDown={(e) => handleNextEnterError(e, !isButtonDisabled, onNext)}
           name="nickName"
           placeholder="닉네임을 입력해주세요"
           rules={{
@@ -41,9 +44,11 @@ const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
           닉네임
         </InputText>
       </div>
-      <BottomButton onClick={onNext} isDisabled={isButtonDisabled}>
-        다음으로
-      </BottomButton>
+      <div className={`fixed bottom-0 left-0 w-full ${isError ? "animate-brrr" : ""}`}>
+        <BottomButton onClick={onNext} isDisabled={isButtonDisabled}>
+          다음으로
+        </BottomButton>
+      </div>
     </div>
   );
 };
