@@ -134,8 +134,8 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
         비밀번호 확인
       </InputText>
       <div className={`fixed bottom-0 left-0 w-full ${isError ? "animate-brrr" : ""}`}>
-        <BottomButton onClick={onNext}>
-          {/* <BottomButton onClick={onNext} isDisabled={isButtonDisabled}> */}
+        {/* <BottomButton onClick={onNext}> */}
+        <BottomButton onClick={onNext} isDisabled={isButtonDisabled}>
           다음으로
         </BottomButton>
       </div>

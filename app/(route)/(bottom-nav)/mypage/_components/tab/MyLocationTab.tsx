@@ -31,10 +31,10 @@ const MyLocationTab = ({ userId }: Props) => {
 
   if (!isSuccess) return;
   return (
-    <div className="relative h-full w-full pc:h-fit pc:px-40 pc:pt-56">
+    <div className="relative h-full w-full pc:h-fit pc:px-40 pc:py-56">
       <button
         onClick={() => setIsChecked((prev) => !prev)}
-        className={`flex-center fixed bottom-100 left-1/2 z-nav w-fit -translate-x-1/2 rounded-full px-12 py-4 text-14 font-500 shadow-hero ${inChecked ? ButtonColor.checked : ButtonColor.notChecked} py-4 pc:absolute pc:bottom-32 pc:text-16`}
+        className={`flex-center fixed bottom-100 left-1/2 z-nav w-fit -translate-x-1/2 rounded-full px-12 py-4 text-14 font-500 shadow-hero ${inChecked ? ButtonColor.checked : ButtonColor.notChecked} py-4 pc:absolute pc:bottom-80 pc:text-16`}
       >
         종료된 행사 제외
         <CheckIcon width={20} height={20} viewBox="0 0 24 24" stroke={inChecked ? "white" : "#1C1E22"} />
