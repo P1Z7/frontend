@@ -22,7 +22,7 @@ const FRAME_STYLE = {
 interface ModalFrameProps extends ModalBaseType {
   children: ReactNode;
   hasNotCloseBtn?: boolean;
-  type: "mobile" | "pc";
+  type?: "mobile" | "pc";
 }
 
 const ModalFrame = ({ children, closeModal, type = "mobile", hasNotCloseBtn = false }: ModalFrameProps) => {
