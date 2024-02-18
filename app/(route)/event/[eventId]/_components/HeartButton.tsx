@@ -1,6 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { ButtonHTMLAttributes, useState } from "react";
 import { instance } from "@/api/api";
 import { useSession } from "@/store/session/cookies";
@@ -16,8 +17,10 @@ interface HeartButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const HeartButton = ({ eventId, initialLikeCount }: HeartButtonProps) => {
   const session = useSession();
-  const userId = session?.user.userId ?? DEFAULT_USER_ID;
   const queryClient = useQueryClient();
+  const router = useRouter();
+
+  const userId = session?.user.userId ?? DEFAULT_USER_ID;
 
   const { data: likeData } = useQuery<Res_Get_Type["eventLike"]>({
     queryKey: ["like", eventId, userId],
@@ -26,13 +29,34 @@ const HeartButton = ({ eventId, initialLikeCount }: HeartButtonProps) => {
 
   const likeMutation = useMutation({
     mutationFn: () => instance.post("/event/like", { eventId, userId }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["like", eventId, userId] });
-      console.log("RUN");
+    onMutate: async () => {
+      await queryClient.cancelQueries({
+        queryKey: ["like", eventId, userId],
+      });
+
+      const prevStatus = queryClient.getQueryData(["like", eventId, userId]);
+
+      queryClient.setQueryData(["like", eventId, userId], (prev: Res_Get_Type["eventLike"]) => ({
+        status: !prev.status,
+        likeCount: prev.status ? prev.likeCount - 1 : prev.likeCount + 1,
+      }));
+
+      return prevStatus;
+    },
+    onError: (error, _, context) => {
+      queryClient.setQueryData(["like", eventId, userId], context);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["like", eventId, userId],
+      });
     },
   });
 
   const handleLikeEvent = () => {
+    if (!session) {
+      router.push("/signin");
+    }
     likeMutation.mutate();
   };
 
