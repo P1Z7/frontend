@@ -4,10 +4,12 @@ import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import BottomButton from "@/components/button/BottomButton";
 import InputText from "@/components/input/InputText";
+import { checkEnterNextButton } from "@/hooks/checkEnterNextButton";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 import { SignUpFormType } from "@/types/index";
 
 const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
+  const { isError, handleEnterError } = checkEnterNextButton();
   const { formState, control } = useFormContext<SignUpFormType>();
   const [current, setCurrent] = useState("");
 
@@ -25,6 +27,7 @@ const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
       <div className="pc:h-[37.3rem]">
         <InputText
           control={control}
+          onKeyDown={(e) => handleEnterError(e, !isButtonDisabled, onNext)}
           name="nickName"
           placeholder="닉네임을 입력해주세요"
           rules={{
@@ -41,9 +44,11 @@ const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
           닉네임
         </InputText>
       </div>
-      <BottomButton onClick={onNext} isDisabled={isButtonDisabled}>
-        다음으로
-      </BottomButton>
+      <div className={`fixed bottom-0 left-0 w-full ${isError ? "animate-brrr" : ""}`}>
+        <BottomButton onClick={onNext} isDisabled={isButtonDisabled}>
+          다음으로
+        </BottomButton>
+      </div>
     </div>
   );
 };

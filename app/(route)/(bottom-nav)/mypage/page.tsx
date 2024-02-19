@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Tabs from "@/components/Tabs";
 import DottedLayout from "@/components/layout/DottedLayout";
 import { useAuth } from "@/hooks/useAuth";
@@ -10,14 +10,17 @@ import MyEventTab from "./_components/tab/MyEventTab";
 import MyReviewTab from "./_components/tab/MyReviewTab";
 
 const MyPage = () => {
+  const [isLogin, setIsLogin] = useState(false);
   const session = useAuth("/signin");
-  if (!session) {
-    return <Suspense />;
-  }
 
-  const {
-    user: { userId },
-  } = session;
+  useEffect(() => {
+    if (!session) {
+      return;
+    }
+    setIsLogin(true);
+  }, []);
+
+  if (!isLogin || !session) return <Suspense />;
 
   return (
     <DottedLayout size="extrawide">
@@ -25,9 +28,9 @@ const MyPage = () => {
         <UserProfile session={session} />
         <div className="h-full pc:w-[83.4rem]">
           <Tabs names={["행사", "아티스트", "후기"]} isNarrow>
-            <MyEventTab userId={userId} />
-            <MyArtistTab userId={userId} />
-            <MyReviewTab userId={userId} />
+            <MyEventTab userId={session.user.userId} />
+            <MyArtistTab userId={session.user.userId} />
+            <MyReviewTab userId={session.user.userId} />
           </Tabs>
         </div>
       </div>
@@ -36,9 +39,3 @@ const MyPage = () => {
 };
 
 export default MyPage;
-
-const MOCK_USER_INFO = {
-  nickName: "민정사랑해",
-  email: "iloveminjeong@mail.com",
-  profileImg: null,
-};
