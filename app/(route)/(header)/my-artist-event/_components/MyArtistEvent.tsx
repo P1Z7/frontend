@@ -9,7 +9,6 @@ import { instance } from "@/api/api";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { useSession } from "@/store/session/cookies";
 import { Res_Get_Type } from "@/types/getResType";
-import ResetIcon from "@/public/icon/reset.svg";
 import SortIcon from "@/public/icon/sort.svg";
 
 const SIZE = 12;
@@ -19,9 +18,13 @@ const SORT = ["최신순", "인기순"] as const;
 const MyArtistEvent = () => {
   const session = useSession();
 
-  if (!session) return;
+  const [sort, setSort] = useState<(typeof SORT)[number]>(SORT[0]);
 
   const getArtistEvents = async ({ pageParam = 1 }) => {
+    if (!session) {
+      return;
+    }
+
     const data: Res_Get_Type["artistEvent"] = await instance.get(`/event/${session.user.userId}/artist`, {
       sort,
       size: SIZE,
@@ -35,7 +38,7 @@ const MyArtistEvent = () => {
     initialPageParam: 1,
     queryKey: ["artistEvent"],
     queryFn: getArtistEvents,
-    getNextPageParam: (lastPage) => (lastPage.page * SIZE < lastPage.totalCount ? lastPage.page + 1 : null),
+    getNextPageParam: (lastPage) => lastPage && (lastPage.page * SIZE < lastPage.totalCount ? lastPage.page + 1 : null),
   });
 
   const containerRef = useInfiniteScroll({
@@ -43,21 +46,16 @@ const MyArtistEvent = () => {
     deps: [artistEvents],
   });
 
-  const [sort, setSort] = useState<(typeof SORT)[number]>(SORT[0]);
-
   const pathname = usePathname();
   const router = useRouter();
-
-  const resetFilter = () => {
-    setSort(SORT[0]);
-  };
 
   useEffect(() => {
     router.push(`${pathname}?sort=${sort}`);
   }, [sort]);
 
   return (
-    <>
+    <div className="m-auto max-w-[104rem]">
+      <h2 className="mb-24 hidden text-20 font-600 text-gray-900 pc:block">내 아티스트의 행사</h2>
       <div className="flex items-center gap-8">
         <SortIcon />
         <SortButton onClick={() => setSort("최신순")} selected={sort === "최신순"}>
@@ -66,16 +64,12 @@ const MyArtistEvent = () => {
         <SortButton onClick={() => setSort("인기순")} selected={sort === "인기순"}>
           인기순
         </SortButton>
-        <button onClick={resetFilter} type="button" className="ml-auto flex gap-[0.3rem] text-14 text-gray-400">
-          초기화
-          <ResetIcon />
-        </button>
       </div>
       <div className="flex-center flex-wrap gap-x-24">
-        {artistEvents?.pages.map((page) => page.eventList.map((event) => <HorizontalEventCard key={event.id} data={event} />))}
+        {artistEvents?.pages.map((page) => page?.eventList.map((event) => <HorizontalEventCard key={event.id} data={event} />))}
         <div ref={containerRef} className="h-16 w-full" />
       </div>
-    </>
+    </div>
   );
 };
 

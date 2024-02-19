@@ -29,7 +29,6 @@ const FavArtistEventsCarousel = () => {
         userId: session.user.userId,
       });
     },
-    enabled: session?.isAuth,
   });
 
   useEffect(() => {
