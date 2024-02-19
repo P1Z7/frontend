@@ -2,7 +2,7 @@
 
 import { ReactNode, useEffect, useState } from "react";
 
-const DEFERRED_MS = 500;
+const DEFERRED_MS = 600;
 
 interface Props {
   fallback: ReactNode;

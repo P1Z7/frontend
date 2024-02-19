@@ -123,7 +123,7 @@ const Banner = ({ data, eventId }: Props) => {
           </SubDescription>
         </div>
         <div className="absolute bottom-0 right-0 text-14 font-400">
-          <Link href={pathname + "edit"} className="mr-16 text-blue">
+          <Link href={pathname + "/edit"} className="mr-16 text-blue">
             수정하기
           </Link>
           <button className="text-gray-400">신고하기</button>
