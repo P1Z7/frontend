@@ -27,20 +27,21 @@ const Carousel = ({ cards }: Props) => {
 
   const handlePrevClick = () => {
     if (!isPc) return;
+    const maxCardsToMove = Math.min(5, slideIndex);
     if (slideIndex <= 0) return;
-    setSlideIndex((prev) => prev - 1);
+    setSlideIndex((prev) => prev - maxCardsToMove);
     setIsNextDisabled(false);
-    if (slideIndex - 1 === 0) {
+    if (slideIndex - maxCardsToMove === 0) {
       setIsPrevDisabled(true);
     }
   };
 
   const handleNextClick = () => {
     if (!isPc) return;
-    if (slideIndex >= (cards?.length || 0) - 5) return;
-    setSlideIndex((prev) => prev + 1);
+    const maxCardsToMove = Math.min(5, (cards?.length || 0) - slideIndex - 5);
+    setSlideIndex((prev) => prev + maxCardsToMove);
     setIsPrevDisabled(false);
-    if (slideIndex + 1 === (cards?.length || 0) - 5) {
+    if (slideIndex + maxCardsToMove === (cards?.length || 0) - 5) {
       setIsNextDisabled(true);
     }
   };
