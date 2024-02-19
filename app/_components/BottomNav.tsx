@@ -33,7 +33,7 @@ const BottomNav = () => {
   }, [session]);
 
   return (
-    <nav className="fixed bottom-0 left-0 z-nav flex h-72 w-full items-center justify-evenly gap-28 border-t border-gray-50 bg-white-black py-8 shadow-top tablet:hidden">
+    <nav className="fixed bottom-0 left-0 z-nav flex h-72 w-full items-center justify-evenly gap-28 border-t border-gray-50 bg-white-black py-8 shadow-top pc:hidden">
       {navButtons.map((item, index) => (
         <NavButton key={index} href={item.href} icon={item.icon} label={item.label} isActive={pathname === item.href} />
       ))}

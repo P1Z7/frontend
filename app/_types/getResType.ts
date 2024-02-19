@@ -22,6 +22,13 @@ type Res_Get_Artist_Group = ArtistAndGroupListType;
 
 type Res_Get_Edit_Application = EditApplicationType[];
 
+type Res_Get_Artist_Event = {
+  eventList: EventCardType[];
+  page: number;
+  size: number;
+  totalCount: number;
+};
+
 export type Res_Get_Type = {
   event: Res_Get_Event;
   eventList: Res_Get_Event_List;
@@ -30,4 +37,5 @@ export type Res_Get_Type = {
   eventReviews: Res_Get_EventReviews;
   artistGroup: Res_Get_Artist_Group;
   editApplication: Res_Get_Edit_Application;
+  artistEvent: Res_Get_Artist_Event;
 };

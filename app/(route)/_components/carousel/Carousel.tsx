@@ -4,6 +4,8 @@ import { Res_Get_Type } from "@/types/getResType";
 import PrevButtonIcon from "@/public/icon/arrow-left_xl.svg";
 import NextButtonIcon from "@/public/icon/arrow-right_xl.svg";
 
+const SCROLLX = 20.8;
+
 interface Props {
   cards: Res_Get_Type["eventList"] | undefined;
 }
@@ -27,23 +29,32 @@ const Carousel = ({ cards }: Props) => {
 
   const handlePrevClick = () => {
     if (!isPc) return;
+    const maxCardsToMove = Math.min(5, slideIndex);
     if (slideIndex <= 0) return;
-    setSlideIndex((prev) => prev - 1);
+    setSlideIndex((prev) => prev - maxCardsToMove);
     setIsNextDisabled(false);
-    if (slideIndex - 1 === 0) {
+    if (slideIndex - maxCardsToMove === 0) {
       setIsPrevDisabled(true);
     }
   };
 
   const handleNextClick = () => {
     if (!isPc) return;
-    if (slideIndex >= (cards?.length || 0) - 5) return;
-    setSlideIndex((prev) => prev + 1);
+    const maxCardsToMove = Math.min(5, (cards?.length || 0) - slideIndex - 5);
+    setSlideIndex((prev) => prev + maxCardsToMove);
     setIsPrevDisabled(false);
-    if (slideIndex + 1 === (cards?.length || 0) - 5) {
+    if (slideIndex + maxCardsToMove === (cards?.length || 0) - 5) {
       setIsNextDisabled(true);
     }
   };
+
+  useEffect(() => {
+    if (cards && cards.length <= 5) {
+      setIsNextDisabled(true);
+    } else {
+      setIsNextDisabled(false);
+    }
+  }, [cards]);
 
   return (
     <div className="flex flex-col gap-16 pc:gap-24">
@@ -51,18 +62,12 @@ const Carousel = ({ cards }: Props) => {
         <div onClick={handlePrevClick} className={`relative top-76 hidden h-100 w-[5rem] cursor-pointer pc:block ${isPrevDisabled ? "pointer-events-none opacity-50" : ""}`}>
           <PrevButtonIcon />
         </div>
-        <div className="flex gap-16 overflow-auto px-20 pc:gap-20 pc:overflow-hidden pc:p-0 pc:transition-transform pc:duration-1000 pc:ease-in-out">
-          {isPc
-            ? cards?.slice(slideIndex, slideIndex + 5).map((event) => (
-                <div key={event.id}>
-                  <VerticalEventCard data={event} />
-                </div>
-              ))
-            : cards?.map((event) => (
-                <div key={event.id}>
-                  <VerticalEventCard data={event} />
-                </div>
-              ))}
+        <div className="flex w-full gap-16 overflow-auto px-20 pc:gap-20 pc:overflow-hidden pc:p-0">
+          {cards?.map((event) => (
+            <div key={event.id} className="pc:transition-transform pc:duration-500 pc:ease-in-out" style={{ transform: `translateX(-${slideIndex * SCROLLX}rem)` }}>
+              <VerticalEventCard data={event} />
+            </div>
+          ))}
         </div>
         <div
           onClick={handleNextClick}
