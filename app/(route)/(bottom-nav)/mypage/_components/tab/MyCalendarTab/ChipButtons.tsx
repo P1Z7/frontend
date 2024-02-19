@@ -2,7 +2,12 @@ import ChipButton from "@/components/chip/ChipButton";
 
 type StatueType = "" | "예정" | "종료" | "진행중" | "종료제외";
 
-const ChipButtons = ({ statue, setStatus }: { statue: string; setStatus: (statue: StatueType) => void }) => {
+interface Props {
+  statue: string;
+  setStatus: (statue: StatueType) => void;
+}
+
+const ChipButtons = ({ statue, setStatus }: Props) => {
   const handleChipClick = (label: StatueType) => {
     switch (label) {
       case statue:

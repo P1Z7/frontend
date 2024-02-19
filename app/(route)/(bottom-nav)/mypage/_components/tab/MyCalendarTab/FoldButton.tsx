@@ -1,7 +1,12 @@
 import ArrowDownIcon from "@/public/icon/arrow-down_sm.svg";
 import ArrowUpIcon from "@/public/icon/arrow-up_sm.svg";
 
-const FoldButton = ({ setIsFold, isFold }: { setIsFold: (prev: boolean) => void; isFold: boolean }) => {
+interface Props {
+  setIsFold: (prev: boolean) => void;
+  isFold: boolean;
+}
+
+const FoldButton = ({ setIsFold, isFold }: Props) => {
   const handleFoldClick = () => {
     setIsFold(!isFold);
   };

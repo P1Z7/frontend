@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { instance } from "@/api/api";
 import { MyReviewType } from "@/types/index";
-import MyReview from "../MyReview";
+import MyReview from "./MyReview";
 
 interface Props {
   userId: string;

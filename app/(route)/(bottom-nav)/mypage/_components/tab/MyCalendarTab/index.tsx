@@ -2,25 +2,17 @@
 
 import FadingDot from "@/(route)/(bottom-nav)/signin/_components/FadingDot";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
-import ChipButton from "@/components/chip/ChipButton";
 import { instance } from "@/api/api";
 import { getCalendarTime } from "@/utils/getCalendarTime";
 import { EventCardType } from "@/types/index";
 import { MYPAGE_CALENDAR_STYLE } from "@/constants/calendarStyle";
-import ArrowDownIcon from "@/public/icon/arrow-down_sm.svg";
-import NextIcon from "@/public/icon/arrow-left_lg.svg";
-import PrevIcon from "@/public/icon/arrow-right_lg.svg";
-import ArrowUpIcon from "@/public/icon/arrow-up_sm.svg";
 import ChipButtons from "./ChipButtons";
 import FoldButton from "./FoldButton";
 import MyCalendar from "./MyCalendar";
 import NoContentsInCalendar from "./NoContentsInCalendar";
-import { tileContent } from "./tileContent";
 
 interface Props {
   userId: string;
