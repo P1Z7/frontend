@@ -62,7 +62,7 @@ const Carousel = ({ cards }: Props) => {
         <div onClick={handlePrevClick} className={`relative top-76 hidden h-100 w-[5rem] cursor-pointer pc:block ${isPrevDisabled ? "pointer-events-none opacity-50" : ""}`}>
           <PrevButtonIcon />
         </div>
-        <div className="flex w-full gap-16 overflow-auto px-20 pc:gap-20 pc:overflow-hidden pc:p-0">
+        <div className="flex w-full gap-16 overflow-auto px-20 scrollbar-hide pc:gap-20 pc:overflow-hidden pc:p-0">
           {cards?.map((event) => (
             <div key={event.id} className="pc:transition-transform pc:duration-500 pc:ease-in-out" style={{ transform: `translateX(-${slideIndex * SCROLLX}rem)` }}>
               <VerticalEventCard data={event} />
