@@ -58,7 +58,7 @@ const ProfilePage = () => {
 
         const res = await instance.put(`/users/${session.user.userId}/profile`, patchData);
         if (res) {
-          setSession({ ...session, user: { ...session.user, profileImage: url, nickName } });
+          setSession({ ...session, user: { ...session.user, profileImage: url, nickName, userId: session?.user.userId } });
           router.push("/mypage");
         }
       } catch {

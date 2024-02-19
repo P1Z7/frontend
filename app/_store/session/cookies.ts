@@ -4,8 +4,10 @@ import { serverSession } from "@/store/session/serverCookies";
 export type Session = {
   isAuth: boolean;
   user: {
+    email: string;
     userId: string;
     nickName: string;
+    signupMethod: "opener" | "naver" | "kakao";
     profileImage: string | null;
     email: string;
     signupMethod: "opener" | "kakao" | "naver";
