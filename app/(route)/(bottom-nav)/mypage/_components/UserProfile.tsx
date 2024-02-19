@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import MyPageBottomSheet from "@/components/bottom-sheet/MyPageBottomSheet";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
 import { Session, useSession } from "@/store/session/cookies";
-import SettingList from "./settingList";
+import SettingList from "./SettingList";
 
 interface Props {
   session: Session;
@@ -21,8 +21,6 @@ const UserProfile = ({ session: init }: Props) => {
       setSession(session);
     }
   }, []);
-
-  console.log(session);
 
   return (
     <div className="flex items-center justify-between px-20 pt-48 pc:h-fit pc:w-[26.2rem] pc:flex-col pc:gap-28">
