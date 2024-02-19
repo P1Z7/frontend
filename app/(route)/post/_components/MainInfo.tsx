@@ -23,16 +23,20 @@ const MainInfo = ({ onNextStep }: Props) => {
   const isDisabled = !placeName || !address || !startDate || !endDate || !isValid;
 
   return (
-    <PostFrame>
-      <div className="flex flex-col gap-28">
-        <ProgressBar ratio="1/2" />
-        <FunnelTitle step="행사 정보" isRequired />
+    <>
+      <PostFrame>
+        <div className="flex flex-col gap-28">
+          <ProgressBar ratio="1/2" />
+          <FunnelTitle step="행사 정보" isRequired />
+        </div>
+        <MainInput />
+      </PostFrame>
+      <div className="fixed bottom-0 w-full bg-white-black px-20">
+        <BottomButton onClick={onNextStep} isDisabled={isDisabled}>
+          다음으로
+        </BottomButton>
       </div>
-      <MainInput />
-      <BottomButton onClick={onNextStep} isDisabled={isDisabled}>
-        다음으로
-      </BottomButton>
-    </PostFrame>
+    </>
   );
 };
 

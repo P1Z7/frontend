@@ -65,7 +65,8 @@ const SearchArtist = ({ onClick, myArtists, myArtistsInfo }: Props) => {
   }, [selected]);
 
   const { modal, openModal, closeModal } = useModal();
-  const { control, handleSubmit, setValue } = useForm({ defaultValues: { request: "" } });
+  const { control, handleSubmit, setValue, watch } = useForm({ defaultValues: { name: "" } });
+  const name = watch("name");
 
   const notify = () =>
     toast.success("등록 요청이 제출되었습니다.", {
@@ -73,23 +74,38 @@ const SearchArtist = ({ onClick, myArtists, myArtistsInfo }: Props) => {
       className: "text-16 font-600 px-28 py-16",
     });
 
-  const onModalSubmit: SubmitHandler<{ request: string }> = ({ request }) => {
-    if (request) {
-      setValue("request", "");
-      closeModal();
-      notify();
+  const onModalSubmit: SubmitHandler<{ name: string }> = async () => {
+    if (name) {
+      try {
+        const res = await instance.post("/artist/request", {
+          name: name,
+        });
+        if (res.error) {
+          throw new Error(res.error);
+        }
+        setValue("name", "");
+        closeModal();
+        notify();
+      } catch (error: any) {
+        console.log(name);
+        console.log(error);
+        toast.error("죄송합니다. 잠시 후 시도해주세요", {
+          position: "bottom-center",
+          className: "text-16 font-600 px-28 py-16",
+        });
+      }
     }
   };
 
   return (
-    <div className="flex w-full flex-col pt-8">
+    <div className="flex w-full flex-col pt-8 pc:min-h-[37.3rem]">
       <button className="w-fit text-14 font-500 text-gray-400 underline" onClick={() => openModal("reqArtist")} type="button">
         찾으시는 아티스트가 없으신가요?
       </button>
       <section className="pt-24">
         <SearchInput placeholder="입력해주세요." setKeyword={setKeyword} />
       </section>
-      <div className="sticky top-72 z-nav mb-16 mt-8 flex w-full gap-12 overflow-hidden bg-white-black">
+      <section className="sticky top-72 z-nav mb-16 mt-8 flex w-full gap-12 overflow-hidden bg-white-black">
         {selected.map((item, idx) => (
           <div className="mb-8 mt-8 rounded-full bg-white-black" key={idx}>
             <ChipButton
@@ -100,18 +116,20 @@ const SearchArtist = ({ onClick, myArtists, myArtistsInfo }: Props) => {
             />
           </div>
         ))}
+      </section>
+      <div className="flex-center w-full px-8 pc:px-0">
+        <ul className="flex w-full max-w-[60rem] flex-wrap justify-center gap-x-16 gap-y-20 overflow-hidden pc:gap-x-20 pc:gap-y-24">
+          {artistData?.pages.map((page) => page.artistAndGroupList.map((artist) => <Card data={artist} key={artist.id} onClick={handleArtistClick} myArtists={myArtists} />))}
+        </ul>
       </div>
-      <ul className="flex w-full flex-wrap justify-center gap-x-16 gap-y-20 overflow-hidden px-8">
-        {artistData?.pages.map((page) => page.artistAndGroupList.map((artist) => <Card data={artist} onClick={handleArtistClick} myArtists={myArtists} key={artist.id} />))}
-      </ul>
-      <div ref={containerRef} className="h-16 w-full pb-160" />
+      <div ref={containerRef} className="h-16 w-full" />
       {modal === "reqArtist" && (
         <InputModal
           title="아티스트 등록 요청"
           btnText="요청하기"
           handleBtnClick={handleSubmit(onModalSubmit)}
           closeModal={closeModal}
-          {...{ name: "request", placeholder: "찾으시는 아티스트를 알려주세요.", rules: { required: "내용을 입력하세요." }, control, noButton: true }}
+          {...{ name: "name", placeholder: "찾으시는 아티스트를 알려주세요.", rules: { required: "내용을 입력하세요." }, control, noButton: true }}
         />
       )}
     </div>

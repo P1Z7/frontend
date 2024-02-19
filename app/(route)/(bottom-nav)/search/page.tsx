@@ -10,6 +10,8 @@ import SmallRegionBottomSheet from "@/components/bottom-sheet/SmallRegionBottomS
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
 import SearchInput from "@/components/input/SearchInput";
 import DottedLayout from "@/components/layout/DottedLayout";
+import DeferredSuspense from "@/components/skeleton/DeferredSuspense";
+import HorizontalEventCardSkeleton from "@/components/skeleton/HorizontalEventCardSkeleton";
 import { instance } from "@/api/api";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
@@ -218,7 +220,8 @@ const SearchPage = () => {
           ) : (
             events?.pages.map((page) => page.eventList.map((event) => <HorizontalEventCard key={event.id} data={event} />))
           )}
-          <div ref={containerRef} className="h-16 w-full" />
+          <DeferredSuspense fallback={<HorizontalEventCardSkeleton />} isFetching={isFetching} />
+          <div ref={containerRef} className="h-20 w-full" />
         </section>
       </main>
       {bottomSheet === BOTTOM_SHEET.bigRegion && <BigRegionBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} setBigRegionFilter={setBigRegionFilter} />}

@@ -12,14 +12,18 @@ interface Props {
 
 const SubInfo = ({ onNextStep }: Props) => {
   return (
-    <PostFrame>
-      <div className="flex flex-col gap-28">
-        <ProgressBar ratio="3/4" />
-        <FunnelTitle step="특전 정보" />
+    <>
+      <PostFrame>
+        <div className="flex flex-col gap-28">
+          <ProgressBar ratio="3/4" />
+          <FunnelTitle step="특전 정보" />
+        </div>
+        <SubInput />
+      </PostFrame>
+      <div className="fixed bottom-0 w-full bg-white-black px-20">
+        <BottomButton onClick={onNextStep}>다음으로</BottomButton>
       </div>
-      <SubInput />
-      <BottomButton onClick={onNextStep}>다음으로</BottomButton>
-    </PostFrame>
+    </>
   );
 };
 

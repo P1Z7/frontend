@@ -26,12 +26,12 @@ const MyArtistsInfo = () => {
   };
 
   return (
-    <>
+    <div className="h-full pb-160 pc:pb-0">
       <SearchArtist onClick={handleClick} myArtists={myArtists} myArtistsInfo={myArtistsInfo} />
       <BottomButton isDisabled={isButtonDisabled} isSkip isSubmit>
         오프너 시작하기
       </BottomButton>
-    </>
+    </div>
   );
 };
 
