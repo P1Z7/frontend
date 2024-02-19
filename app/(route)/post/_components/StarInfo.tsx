@@ -15,7 +15,7 @@ const StarInfo = ({ onNextStep }: Props) => {
   const { artistNames, groupName, eventType, groupId } = watch();
   const isDisabled = !groupName || (groupId && artistNames.length === 0) || !eventType;
   return (
-    <>
+    <div className="flex h-full flex-col justify-between">
       <PostFrame>
         <div className="flex flex-col gap-28">
           <ProgressBar ratio="1/4" />
@@ -23,12 +23,10 @@ const StarInfo = ({ onNextStep }: Props) => {
         </div>
         <StarInput />
       </PostFrame>
-      <div className="sticky bottom-0 right-0 w-full bg-white-black px-20">
-        <BottomButton onClick={onNextStep} isDisabled={isDisabled}>
-          다음으로
-        </BottomButton>
-      </div>
-    </>
+      <BottomButton onClick={onNextStep} isDisabled={isDisabled}>
+        다음으로
+      </BottomButton>
+    </div>
   );
 };
 
