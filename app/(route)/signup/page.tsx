@@ -1,11 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PinkLayout from "@/components/layout/PinkLayout";
-import { useAuth } from "@/hooks/useAuth";
 import { useFunnel } from "@/hooks/useFunnel";
-import { useSession } from "@/store/session/cookies";
 import { SignUpFormType, SignupStepNameType } from "@/types/index";
 import ArrowLeft from "@/public/icon/arrow-left_lg.svg";
 import GenericFormProvider from "../../_components/GenericFormProvider";
@@ -26,16 +24,7 @@ const DEFAULT_VALUES = {
 
 const SignUp = () => {
   const router = useRouter();
-  const [isLogin, setIsLogin] = useState(false);
   const [pcWidth, setPcWidth] = useState<"narrow" | "wide">("narrow");
-  const session = useSession();
-
-  useEffect(() => {
-    if (session) {
-      router.push("/mypage");
-      setIsLogin(true);
-    }
-  }, []);
 
   const { Funnel, Step, setStep, currentStep } = useFunnel(STEPS);
 
@@ -54,17 +43,16 @@ const SignUp = () => {
     setStep(STEPS[stepIndex - 1]);
   };
 
-  if (!isLogin)
-    return (
-      <PinkLayout size={pcWidth}>
-        <Header onClick={handlePrevClick} />
-        <div className="flex h-[calc(100%-13.8rem)] grow flex-col px-20">
-          <GenericFormProvider<SignUpFormType> formOptions={{ mode: "onBlur", defaultValues: DEFAULT_VALUES }}>
-            <ProfileSetup steps={STEPS} handleNextClick={handleNextClick} Funnel={Funnel} Step={Step} />
-          </GenericFormProvider>
-        </div>
-      </PinkLayout>
-    );
+  return (
+    <PinkLayout size={pcWidth}>
+      <Header onClick={handlePrevClick} />
+      <div className="flex h-[calc(100%-13.8rem)] grow flex-col px-20">
+        <GenericFormProvider<SignUpFormType> formOptions={{ mode: "onBlur", defaultValues: DEFAULT_VALUES }}>
+          <ProfileSetup steps={STEPS} handleNextClick={handleNextClick} Funnel={Funnel} Step={Step} />
+        </GenericFormProvider>
+      </div>
+    </PinkLayout>
+  );
 };
 
 export default SignUp;

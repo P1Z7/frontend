@@ -5,7 +5,7 @@ import { instance } from "app/_api/api";
 import DeferredSuspense from "@/components/skeleton/DeferredSuspense";
 import ReviewSkeleton from "@/components/skeleton/ReviewSkeleton";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
-import { useSession } from "@/store/session/cookies";
+import { getSession } from "@/store/session/cookies";
 import { Res_Get_Type } from "@/types/getResType";
 import BottomButton from "../BottomButton";
 import EventReview from "../EventReview";
@@ -18,7 +18,7 @@ interface Props {
 }
 
 const ReviewTab = ({ eventId }: Props) => {
-  const session = useSession();
+  const session = getSession();
   const userId = session?.user.userId ?? "";
 
   const getReviews = async ({ pageParam = 1 }) => {

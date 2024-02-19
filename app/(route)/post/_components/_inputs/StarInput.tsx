@@ -1,11 +1,9 @@
 import InitButton from "@/(route)/event/[eventId]/edit/_components/InitButton";
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import EventTypeBottomSheet from "@/components/bottom-sheet/EventTypeBottomSheet";
-import StarBottomSheet from "@/components/bottom-sheet/StarBottomSheet";
 import EventTypeList from "@/components/bottom-sheet/content/EventTypeList";
 import InputText from "@/components/input/InputText";
-import ArtistModal from "@/components/modal/ArtistModal";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
 import useGetWindowWidth from "@/hooks/useGetWindowWidth";
 import { useModal } from "@/hooks/useModal";
@@ -13,6 +11,10 @@ import { checkArrUpdate } from "@/utils/checkArrUpdate";
 import { validateEdit } from "@/utils/editValidate";
 import { handleEnterDown } from "@/utils/handleEnterDown";
 import { PostType } from "../../page";
+
+const EventTypeBottomSheet = dynamic(() => import("@/components/bottom-sheet/EventTypeBottomSheet"), { ssr: false });
+const StarBottomSheet = dynamic(() => import("@/components/bottom-sheet/StarBottomSheet"), { ssr: false });
+const ArtistModal = dynamic(() => import("@/components/modal/ArtistModal"), { ssr: false });
 
 const StarInput = () => {
   const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactElement, cloneElement, useEffect, useState } from "react";
-import { Session, useSession } from "@/store/session/cookies";
+import { Session, getSession } from "@/store/session/cookies";
 import PostIcon from "@/public/icon/add-outline.svg";
 import HomeIcon from "@/public/icon/home.svg";
 import LogoIcon from "@/public/icon/logo.svg";
@@ -22,7 +22,7 @@ const PcHeader = () => {
     { href: "/post", icon: <PostIcon />, label: "등록하기" },
   ];
   useEffect(() => {
-    const session = useSession();
+    const session = getSession();
     setSession(session);
     if (session?.user.profileImage) {
       setProfileImage(session?.user.profileImage);

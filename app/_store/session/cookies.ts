@@ -21,12 +21,12 @@ export const getCookies: typeof cookies.get = (name: string) => {
   return cookies.get(name);
 };
 
-export const deleteCookies: typeof cookies.remove = (name) => {
-  return cookies.remove(name);
+export const deleteCookies: typeof cookies.remove = (name, options) => {
+  return cookies.remove(name, options);
 };
 
-export const setSession = (newSession: Session) => (deleteCookies("session"), setCookies("session", newSession));
+export const setSession = (newSession: Session) => (deleteCookies("session"), setCookies("session", newSession, { path: "/" }));
 
-export const useSession = (): Session | undefined => getCookies("session");
+export const getSession = (): Session | undefined => getCookies("session");
 
-export const outSession = () => deleteCookies("session");
+export const outSession = () => cookies.remove("session", { path: "/" });

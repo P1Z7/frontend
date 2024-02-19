@@ -1,24 +1,22 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import MyPageBottomSheet from "@/components/bottom-sheet/MyPageBottomSheet";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
-import { Session, useSession } from "@/store/session/cookies";
+import { Session, getSession } from "@/store/session/cookies";
 import SettingList from "./SettingList";
 
-interface Props {
-  session: Session;
-}
+const MyPageBottomSheet = dynamic(() => import("@/components/bottom-sheet/MyPageBottomSheet"), { ssr: false });
 
-const UserProfile = ({ session: init }: Props) => {
+const UserProfile = () => {
   const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
 
-  const [session, setSession] = useState(init);
+  const [session, setSession] = useState<Session>({ isAuth: false, user: { email: "", nickName: "", profileImage: "", signupMethod: "opener", userId: "" } });
   useEffect(() => {
-    const session = useSession();
-    if (session) {
-      setSession(session);
+    const newSession = getSession();
+    if (newSession) {
+      setSession(newSession);
     }
   }, []);
 
