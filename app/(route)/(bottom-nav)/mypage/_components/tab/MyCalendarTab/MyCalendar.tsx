@@ -74,7 +74,9 @@ const MyCalendar = ({ setSelectedDate, selectedDate, data, isFold }: Props) => {
           lastDay = today;
 
           return (
-            <span className="flex flex-col items-center justify-center gap-4 self-stretch pc:pt-4">
+            <span
+              className={`flex flex-col items-center justify-center gap-4 self-stretch pc:pt-4 ${selectedDate?.getTime() === date.getTime() ? "pc:opacity-100" : "pc:opacity-50"}`}
+            >
               {today.map((event, idx) => {
                 if (event === "blank") {
                   return <span key={idx + event} className={`h-4 rounded-sm`} />;

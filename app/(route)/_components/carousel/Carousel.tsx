@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import VerticalEventCard from "@/components/card/VerticalEventCard";
 import useGetWindowWidth from "@/hooks/useGetWindowWidth";

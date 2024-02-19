@@ -49,9 +49,6 @@ const SignInPage = () => {
 
       try {
         const res = await instance.post("/auth", signinData);
-        if (res.error) {
-          throw new Error(res.error);
-        }
         setSubmitState((prev) => ({ ...prev, isError: false }));
 
         toast.custom(<FeelMyRhythm shotList={SHOT_SIGNIN} location={{ y: 0.5 }} />, {
@@ -65,8 +62,9 @@ const SignInPage = () => {
 
         router.push("/");
       } catch (e: any) {
+        const message = e.message.split("/")[0] as string;
         setSubmitState((prev) => ({ ...prev, isError: true }));
-        if (e.message === "Not Founded") {
+        if (message === "Not Founded") {
           setError("email", {
             message: (
               <>
@@ -78,7 +76,7 @@ const SignInPage = () => {
             ) as unknown as string,
           });
         }
-        if (e.message === "password not valid") {
+        if (message === "password not valid") {
           setError("password", { message: "비밀번호가 일치하지 않습니다." });
         }
       } finally {

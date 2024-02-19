@@ -7,12 +7,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import HeroSkeleton from "@/components/skeleton/HeroSkeleton";
-import { useSession } from "@/store/session/cookies";
+import { getSession } from "@/store/session/cookies";
 import { Res_Get_Type } from "@/types/getResType";
 import Carousel from "./Carousel";
 
 const FavArtistEventsCarousel = () => {
-  const session = useSession();
+  const session = getSession();
 
   const [isSignin, setIsSignin] = useState(false);
 

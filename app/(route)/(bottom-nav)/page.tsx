@@ -1,5 +1,8 @@
 import ArtistList from "@/(route)/_components/artist-list/ArtistList";
+import { Session } from "inspector";
+import { cookies } from "next/headers";
 import DottedLayout from "@/components/layout/DottedLayout";
+import { getSession } from "@/store/session/cookies";
 import Logo from "@/public/icon/logo.svg";
 import Footer from "../_components/Footer";
 import FavArtistEventsCarousel from "../_components/carousel/FavArtistEventsCarousel";

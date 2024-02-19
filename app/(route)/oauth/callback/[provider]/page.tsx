@@ -2,7 +2,7 @@
 
 import FadingDot from "@/(route)/(bottom-nav)/signin/_components/FadingDot";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { instance } from "@/api/api";
 import { setSession } from "@/store/session/cookies";
@@ -17,38 +17,34 @@ const OAuth = () => {
   const signinMethod = url.pathname.split("/").pop()!;
 
   const handleOAuth = async () => {
-    const res = await instance.post(`/auth`, { code, signinMethod, email: "", password: "" });
-    if (res.error) {
+    try {
+      const res = await instance.post(`/auth`, { code, signinMethod, email: "", password: "" });
+
+      setSession({ isAuth: true, user: res });
+      toast(`${signinMethod} 계정으로 연동 되었습니다. ${res.nickName}님`, {
+        className: "text-16 font-600",
+      });
+      router.push("/");
+    } catch {
       toast("네트워크 오류! 다시 시도해 주십시오.", {
         className: "text-16 font-600",
       });
       router.push("/signin");
-      return;
     }
-    setSession({ isAuth: true, user: res });
-
-    router.push("/");
-
-    toast(`${signinMethod} 계정으로 연동 되었습니다. ${res.nickName}님`, {
-      className: "text-16 font-600",
-    });
   };
 
   useEffect(() => {
     handleOAuth();
   }, []);
 
-  const SocialLogo = useCallback(() => {
-    if (!signinMethod) {
-      return <p className="text-16 font-600">소셜 로그인 중</p>;
-    }
+  const SocialLogo = () => {
     if (signinMethod === "kakao") {
       return <KakaoLogo />;
     }
     if (signinMethod === "naver") {
       return <NaverLogo fill="black" />;
     }
-  }, []);
+  };
 
   return (
     <div className="flex-center fixed bottom-0 left-0 right-0 top-0 z-floating gap-12 bg-white-black">

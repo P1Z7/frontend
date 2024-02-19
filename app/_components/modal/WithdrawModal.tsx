@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import Button from "@/components/button";
 import Modal from "@/components/modal/ModalMaterial";
 import { instance } from "@/api/api";
-import { useSession } from "@/store/session/cookies";
+import { getSession, outSession } from "@/store/session/cookies";
 
 interface Props {
   closeModal: () => void;
@@ -13,17 +13,22 @@ const WithdrawModal = ({ closeModal }: Props) => {
   const router = useRouter();
 
   const handleWithdraw = async () => {
-    const session = useSession();
+    const session = getSession();
     if (!session) {
       return;
     }
-
-    const res = await instance.delete(`/users/${session.user.userId}`, undefined);
-    if (res.statusCode === 200) {
+    try {
+      await instance.delete(`/users/${session.user.userId}`, undefined);
       toast("지금까지 Opener와 함께해 주셔서 감사합니다!", {
         className: "text-16 font-600",
       });
-      router.push("/");
+
+      outSession();
+      router.refresh();
+    } catch {
+      toast.error("다시 시도해 주십시오.", {
+        className: "text-16 font-600",
+      });
     }
   };
 

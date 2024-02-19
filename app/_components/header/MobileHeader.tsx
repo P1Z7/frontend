@@ -1,13 +1,15 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
 import useHeaderTitle from "@/hooks/useHeaderTitle";
 import { useModal } from "@/hooks/useModal";
 import ArrowLeft from "@/public/icon/arrow-left_lg.svg";
 import KebabButton from "@/public/icon/kebab.svg";
-import EventKebabBottomSheet from "../bottom-sheet/EventKebabBottomSheet";
-import ReportModal from "../modal/ReportModal";
+
+const EventKebabBottomSheet = dynamic(() => import("../bottom-sheet/EventKebabBottomSheet"), { ssr: false });
+const ReportModal = dynamic(() => import("../modal/ReportModal"), { ssr: false });
 
 interface Props {
   handleClick?: () => void;

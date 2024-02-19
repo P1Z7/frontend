@@ -9,7 +9,7 @@ import DeferredSuspense from "@/components/skeleton/DeferredSuspense";
 import HorizontalEventCardSkeleton from "@/components/skeleton/HorizontalEventCardSkeleton";
 import { instance } from "@/api/api";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
-import { useSession } from "@/store/session/cookies";
+import { getSession } from "@/store/session/cookies";
 import { Res_Get_Type } from "@/types/getResType";
 import SortIcon from "@/public/icon/sort.svg";
 
@@ -18,7 +18,7 @@ const SIZE = 20;
 const SORT = ["최신순", "인기순"] as const;
 
 const MyArtistEvent = () => {
-  const session = useSession();
+  const session = getSession();
 
   const [sort, setSort] = useState<(typeof SORT)[number]>(SORT[0]);
 

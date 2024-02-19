@@ -59,6 +59,14 @@ type Req_Post_Group = {
   groupImage?: string;
 };
 
+type Req_Post_MyArtist = {
+  artistIds: string[];
+};
+
+type Req_Post_ArtistRequest = {
+  name: string;
+};
+
 type Req_Post_Review = {
   userId: string;
   eventId: string;
@@ -101,6 +109,12 @@ type Req_Post_Request = {
   name: string;
 };
 
+type Req_Post_Claim = {
+  eventId: string;
+  userId: string;
+  description: string;
+};
+
 export type Req_Post_Type = {
   event: Req_Post_Event;
   eventLike: Req_Post_Event_Like;
@@ -109,6 +123,8 @@ export type Req_Post_Type = {
   token: Req_Post_Token;
   artist: Req_Post_Artist;
   group: Req_Post_Group;
+  myArtist: Req_Post_MyArtist;
+  artistRequest: Req_Post_ArtistRequest;
   review: Req_Post_Review;
   reviewLike: Req_Post_Review_Like;
   email: Req_Post_Email;
@@ -116,4 +132,5 @@ export type Req_Post_Type = {
   edit: Req_Post_Edit_Application;
   approve: Req_Post_Approval;
   request: Req_Post_Request;
+  claim: Req_Post_Claim;
 };
