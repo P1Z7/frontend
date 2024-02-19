@@ -3,7 +3,7 @@ import { Req_Post_Type } from "@/types/postBodyType";
 import { Req_Put_Type } from "@/types/putBodyType";
 import { Req_Query_Type } from "@/types/queryType";
 
-const STR_RES_ENDPOINT = ["/file/upload", "/event/update/application", "/artist/request", "/reviews"];
+const STR_RES_ENDPOINT = ["/file/upload", "/artist/request", "/reviews"];
 
 export class Api {
   private baseUrl;
@@ -14,11 +14,22 @@ export class Api {
     this.queryString = "";
   }
 
-  private async updateToken(res: any) {
+  private async updateToken(res: any, config: any) {
     if (res.status === 401) {
-      const newToken = await fetch("/auth/token");
-      console.log(newToken);
+      const tokenRes = await fetch("/auth/token");
+      if (tokenRes.ok) {
+        return true;
+      }
+      throw new Error("토큰 갱신 과정에서 서버 문제가 있습니다.");
     }
+    return false;
+  }
+
+  private async refetch(config: [string]) {
+    const updateRes = await fetch(...config);
+    const updateResult = await updateRes.json();
+    this.makeError(updateResult);
+    return updateResult;
   }
 
   private makeError(result: any) {
@@ -48,7 +59,6 @@ export class Api {
     const res = await fetch(queryObj ? this.baseUrl + this.queryString : this.baseUrl);
     const result = await res.json();
     this.makeError(result);
-
     return result;
   }
 
