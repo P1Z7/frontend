@@ -1,11 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PinkLayout from "@/components/layout/PinkLayout";
-import { useAuth } from "@/hooks/useAuth";
 import { useFunnel } from "@/hooks/useFunnel";
-import { getSession } from "@/store/session/cookies";
 import { SignUpFormType, SignupStepNameType } from "@/types/index";
 import ArrowLeft from "@/public/icon/arrow-left_lg.svg";
 import GenericFormProvider from "../../_components/GenericFormProvider";
@@ -48,11 +46,11 @@ const SignUp = () => {
   return (
     <PinkLayout size={pcWidth}>
       <Header onClick={handlePrevClick} />
-      <GenericFormProvider<SignUpFormType> formOptions={{ mode: "onBlur", defaultValues: DEFAULT_VALUES }}>
-        <div className="flex h-full flex-col px-20 ">
+      <div className="flex h-[calc(100%-13.8rem)] grow flex-col px-20">
+        <GenericFormProvider<SignUpFormType> formOptions={{ mode: "onBlur", defaultValues: DEFAULT_VALUES }}>
           <ProfileSetup steps={STEPS} handleNextClick={handleNextClick} Funnel={Funnel} Step={Step} />
-        </div>
-      </GenericFormProvider>
+        </GenericFormProvider>
+      </div>
     </PinkLayout>
   );
 };

@@ -92,7 +92,7 @@ const SignInPage = () => {
           <ArrowLeft />
         </button>
       </header>
-      <div className="flex-center flex-col px-20 pt-80">
+      <div className="flex-center flex-col px-20 pt-80 pc:pb-20">
         <Link href="/">
           <Logo />
         </Link>

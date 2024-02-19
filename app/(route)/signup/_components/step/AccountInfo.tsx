@@ -54,84 +54,86 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
   };
 
   return (
-    <div className="flex flex-col gap-20 pb-160 pt-36 pc:pb-0">
-      <div className="flex items-end gap-8">
+    <div className="flex h-full flex-col justify-between pb-160 pt-36 pc:pb-0">
+      <div className="flex flex-col gap-20">
+        <div className="flex items-end gap-8">
+          <InputText
+            isSuccess={canWrite}
+            noButton
+            control={control}
+            onKeyDown={(e) => handleEnterError(e, !isButtonDisabled, onNext)}
+            name="email"
+            autoComplete="email"
+            placeholder="이메일을 입력해 주세요"
+            hint={canWrite ? "이메일이 발송되었습니다" : "이메일 형식으로 입력하여 주세요."}
+            rules={{
+              required: ERROR_MESSAGES.email.emailField,
+              pattern: { value: REG_EXP.CHECK_EMAIL, message: ERROR_MESSAGES.email.emailPattern },
+            }}
+          >
+            이메일
+          </InputText>
+          <div className="w-88 shrink-0 pb-20">
+            <Button type={canWrite ? "linedGray" : "lined"} size="free" style="h-48 text-14 rounded-sm" isDisabled={!!formState.errors.email || !email} onClick={handleEmailClick}>
+              {canWrite ? "재인증" : "인증하기"}
+            </Button>
+          </div>
+        </div>
+        <div className="flex items-end gap-8">
+          <InputText
+            isSuccess={isVerification}
+            onKeyDown={(e) => handleEnterError(e, !isButtonDisabled, onNext)}
+            noButton
+            control={control}
+            name="code"
+            autoComplete="none"
+            placeholder="인증코드를 입력해 주세요"
+            hint={isVerification ? "인증되었습니다" : "이메일로 발송된 인증 코드를 입력하여 주세요."}
+            rules={{
+              required: ERROR_MESSAGES.code.codeField,
+            }}
+            disabled={!canWrite}
+          >
+            인증코드 입력
+          </InputText>
+          <div className="w-88 shrink-0 pb-20">
+            <Button type="lined" size="free" style="h-48 text-14 rounded-sm" isDisabled={!canWrite || !code || isVerification} onClick={handleCodeClick}>
+              {isVerification ? "인증완료" : "확인"}
+            </Button>
+          </div>
+        </div>
         <InputText
-          isSuccess={canWrite}
-          noButton
           control={control}
           onKeyDown={(e) => handleEnterError(e, !isButtonDisabled, onNext)}
-          name="email"
-          autoComplete="email"
-          placeholder="이메일을 입력해 주세요"
-          hint={canWrite ? "이메일이 발송되었습니다" : "이메일 형식으로 입력하여 주세요."}
-          rules={{
-            required: ERROR_MESSAGES.email.emailField,
-            pattern: { value: REG_EXP.CHECK_EMAIL, message: ERROR_MESSAGES.email.emailPattern },
-          }}
+          name="password"
+          type="password"
+          placeholder="비밀번호를 입력해주세요"
+          hint="영문과 숫자를 조합하여 8자리 이상"
+          autoComplete="new-password"
+          rules={{ required: ERROR_MESSAGES.password.passwordField, pattern: { value: REG_EXP.CHECK_PASSWORD, message: ERROR_MESSAGES.password.passwordPattern } }}
         >
-          이메일
+          비밀번호
         </InputText>
-        <div className="w-88 shrink-0 pb-20">
-          <Button type={canWrite ? "linedGray" : "lined"} size="free" style="h-48 text-14 rounded-sm" isDisabled={!!formState.errors.email || !email} onClick={handleEmailClick}>
-            {canWrite ? "재인증" : "인증하기"}
-          </Button>
-        </div>
-      </div>
-      <div className="flex items-end gap-8">
         <InputText
-          isSuccess={isVerification}
-          onKeyDown={(e) => handleEnterError(e, !isButtonDisabled, onNext)}
-          noButton
           control={control}
-          name="code"
-          autoComplete="none"
-          placeholder="인증코드를 입력해 주세요"
-          hint={isVerification ? "인증되었습니다" : "이메일로 발송된 인증 코드를 입력하여 주세요."}
+          onKeyDown={(e) => handleEnterError(e, !isButtonDisabled, onNext)}
+          name="passwordCheck"
+          type="password"
+          autoComplete="new-password"
+          placeholder="비밀번호를 입력해주세요"
           rules={{
-            required: ERROR_MESSAGES.code.codeField,
-          }}
-          disabled={!canWrite}
-        >
-          인증코드 입력
-        </InputText>
-        <div className="w-88 shrink-0 pb-20">
-          <Button type="lined" size="free" style="h-48 text-14 rounded-sm" isDisabled={!canWrite || !code || isVerification} onClick={handleCodeClick}>
-            {isVerification ? "인증완료" : "확인"}
-          </Button>
-        </div>
-      </div>
-      <InputText
-        control={control}
-        onKeyDown={(e) => handleEnterError(e, !isButtonDisabled, onNext)}
-        name="password"
-        type="password"
-        placeholder="비밀번호를 입력해주세요"
-        hint="영문과 숫자를 조합하여 8자리 이상"
-        autoComplete="new-password"
-        rules={{ required: ERROR_MESSAGES.password.passwordField, pattern: { value: REG_EXP.CHECK_PASSWORD, message: ERROR_MESSAGES.password.passwordPattern } }}
-      >
-        비밀번호
-      </InputText>
-      <InputText
-        control={control}
-        onKeyDown={(e) => handleEnterError(e, !isButtonDisabled, onNext)}
-        name="passwordCheck"
-        type="password"
-        autoComplete="new-password"
-        placeholder="비밀번호를 입력해주세요"
-        rules={{
-          required: ERROR_MESSAGES.password.passwordField,
-          validate: {
-            matchPassword: (value) => {
-              const passwordValue = getValues("password");
-              return passwordValue === value || ERROR_MESSAGES.passwordCh.passwordChField;
+            required: ERROR_MESSAGES.password.passwordField,
+            validate: {
+              matchPassword: (value) => {
+                const passwordValue = getValues("password");
+                return passwordValue === value || ERROR_MESSAGES.passwordCh.passwordChField;
+              },
             },
-          },
-        }}
-      >
-        비밀번호 확인
-      </InputText>
+          }}
+        >
+          비밀번호 확인
+        </InputText>
+      </div>
       <div className={`fixed bottom-0 left-0 w-full pc:sticky pc:mt-20 ${isError ? "animate-brrr" : ""}`}>
         <BottomButton onClick={onNext}>
           {/* <BottomButton onClick={onNext} isDisabled={isButtonDisabled}> */}

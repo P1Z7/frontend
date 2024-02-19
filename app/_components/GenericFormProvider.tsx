@@ -69,7 +69,9 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>{children}</form>
+      <form onSubmit={methods.handleSubmit(onSubmit)} className="h-full">
+        {children}
+      </form>
       {modal === "editApprove" && (
         <AlertModal closeModal={closeModal} handleBtnClick={() => router.replace(`/event/${eventId}/approve`)}>
           수정사항은 사용자 3인 이상의
