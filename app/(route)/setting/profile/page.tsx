@@ -60,7 +60,7 @@ const ProfilePage = () => {
           throw new Error(res.message);
         }
         if (res) {
-          setSession({ ...session, user: { profileImage: url, nickName, userId: session?.user.userId } });
+          setSession({ ...session, user: { profileImage: url, nickName, userId: session?.user.userId, email: session?.user.email, signupMethod: session?.user.signupMethod } });
           router.push("/mypage");
         }
       } catch (e) {

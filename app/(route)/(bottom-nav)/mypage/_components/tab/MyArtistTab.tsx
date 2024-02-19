@@ -32,7 +32,6 @@ const MyArtistTab = ({ userId }: Props) => {
           {Array.isArray(myArtistsData) ? (
             myArtistsData.map((cardList: MyArtistsType) => (
               <ArtistCard
-                isSmall
                 key={cardList.artistId}
                 profileImage={cardList.artistImage}
                 onClick={() => {
