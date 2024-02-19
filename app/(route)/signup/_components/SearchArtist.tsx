@@ -98,7 +98,7 @@ const SearchArtist = ({ onClick, myArtists, myArtistsInfo }: Props) => {
   };
 
   return (
-    <div className="flex w-full flex-col pt-8 pc:min-h-[37.3rem]">
+    <div className="flex w-full flex-col pt-8">
       <button className="w-fit text-14 font-500 text-gray-400 underline" onClick={() => openModal("reqArtist")} type="button">
         찾으시는 아티스트가 없으신가요?
       </button>

@@ -15,11 +15,7 @@ const BottomButton = ({ onClick, children, isDisabled, isSkip = false, isSubmit 
   const path = usePathname();
 
   return (
-    <div
-      className={classNames("fixed bottom-0 left-0 z-nav flex w-full flex-col items-center gap-12 border-t border-gray-50 bg-white-black px-20 pb-24 pt-12 pc:sticky pc:mt-20", {
-        "pc:!mt-0": path === "/post",
-      })}
-    >
+    <div className="fixed bottom-0 left-0 z-nav flex w-full flex-col items-center gap-12 border-t border-gray-50 bg-white-black px-20 pb-24 pt-12 pc:sticky pc:mt-20">
       <Button size="xl" onClick={onClick} isDisabled={isDisabled} isSubmit={isSubmit}>
         {children}
       </Button>

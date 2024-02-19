@@ -13,7 +13,7 @@ const DetailInfo = () => {
   const { description } = watch();
 
   return (
-    <>
+    <div className="flex h-full flex-col justify-between">
       <PostFrame>
         <div className="flex flex-col gap-28">
           <ProgressBar ratio="full" />
@@ -21,12 +21,10 @@ const DetailInfo = () => {
         </div>
         <DetailInput />
       </PostFrame>
-      <div className="fixed bottom-0 w-full bg-white-black px-20">
-        <BottomButton isSubmit isDisabled={!isCheck || description.length > 100}>
-          작성 완료
-        </BottomButton>
-      </div>
-    </>
+      <BottomButton isSubmit isDisabled={!isCheck || description.length > 100}>
+        작성 완료
+      </BottomButton>
+    </div>
   );
 };
 
