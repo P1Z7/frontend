@@ -3,7 +3,7 @@ import { Req_Post_Type } from "@/types/postBodyType";
 import { Req_Put_Type } from "@/types/putBodyType";
 import { Req_Query_Type } from "@/types/queryType";
 
-const STR_RES_ENDPOINT = ["/file/upload", "/event/update/application"];
+const STR_RES_ENDPOINT = ["/file/upload", "/event/update/application", "/reviews"];
 
 export class Api {
   private baseUrl;
@@ -54,7 +54,7 @@ export class Api {
       method: "POST",
       body: endPoint === "/file/upload" ? (body as any) : JSON.stringify(body),
       headers: {
-        ...(endPoint === "/file/upload" || endPoint === "/reviews" ? {} : { "Content-Type": "application/json" }),
+        ...(endPoint === "/file/upload" ? {} : { "Content-Type": "application/json" }),
         credentials: "include",
       },
     });
