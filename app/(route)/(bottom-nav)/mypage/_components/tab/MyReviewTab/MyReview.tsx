@@ -15,7 +15,7 @@ const MyReview = ({ data }: Props) => {
 
   return (
     <div className="flex w-full flex-col gap-16 border-b border-gray-50 px-20 py-16">
-      <div>
+      <section>
         <div className="flex items-center justify-between pb-8">
           <span className="text-16 font-600">{data.event.placeName}</span>
           <span className="text-12 font-500 text-gray-400">{data.isPublic ? "공개" : "비공개"}</span>
@@ -26,7 +26,7 @@ const MyReview = ({ data }: Props) => {
           <div className="border-r border-gray-400 pr-8 text-12 font-600 text-gray-400">{formattedDate}</div>
           <span className="text-12 font-600 text-gray-400">{formattedAddress}</span>
         </div>
-      </div>
+      </section>
       <Evaluation rating={data.rating} />
       <div className="text-14 font-400">{data.description}</div>
       <ul className="flex gap-8 overflow-auto">

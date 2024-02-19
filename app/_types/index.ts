@@ -4,7 +4,7 @@ export interface ModalBaseType {
   closeModal: () => void;
 }
 
-type BottomSheetRefs = {
+export type BottomSheetRefs = {
   sheet: (node: HTMLElement | null) => void;
   content: (node: HTMLElement | null) => void;
 };
@@ -160,7 +160,6 @@ export interface EventCardType {
   updatedAt?: string | null;
   deletedAt?: string | null;
   likeCount: number;
-  isLike: boolean;
   eventImages: EventImageType[];
   targetArtists: TargetArtistType[];
   eventTags: EventTagType[];
@@ -171,12 +170,12 @@ export interface EventReviewType {
   cursorId: number;
   isPublic: boolean;
   rating: boolean;
-  description: string;
+  description?: string;
   createdAt: string;
   likeCount: number;
   isLike: boolean;
   user: UserType;
-  reviewImages: { url: string; createdAt: string }[];
+  reviewImages?: { url: string; createdAt: string }[];
 }
 
 export interface MyReviewType {

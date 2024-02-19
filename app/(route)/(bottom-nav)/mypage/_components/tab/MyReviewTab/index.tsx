@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { instance } from "@/api/api";
 import { MyReviewType } from "@/types/index";
-import MyReview from "../MyRiew";
+import MyReview from "./MyReview";
 
 interface Props {
   userId: string;
@@ -17,7 +17,6 @@ const MyReviewTab = ({ userId }: Props) => {
     },
   });
 
-  console.log(myReviewsData);
   if (!isSuccess) return;
   return (
     <ul className="flex-center w-full flex-col pt-8">

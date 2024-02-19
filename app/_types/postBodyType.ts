@@ -105,6 +105,10 @@ type Req_Post_Approval = {
   userId: string;
 };
 
+type Req_Post_Request = {
+  name: string;
+};
+
 export type Req_Post_Type = {
   event: Req_Post_Event;
   eventLike: Req_Post_Event_Like;
@@ -121,4 +125,5 @@ export type Req_Post_Type = {
   verification: Req_Post_Verification;
   edit: Req_Post_Edit_Application;
   approve: Req_Post_Approval;
+  request: Req_Post_Request;
 };

@@ -1,8 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { MouseEvent, SyntheticEvent, useState } from "react";
-import { instance } from "@/api/api";
-import { getSession } from "@/store/session/cookies";
+import { SyntheticEvent } from "react";
+import useLikeEvent from "@/hooks/useLikeEvent";
 import { formatAddress, formatDate } from "@/utils/formatString";
 import { Res_Get_Type } from "@/types/getResType";
 import HeartButton from "../button/HeartButton";
@@ -13,32 +12,17 @@ interface Props {
 }
 
 const VerticalEventCard = ({ data }: Props) => {
-  const session = getSession();
-  const [selected, setSelected] = useState(data.isLike);
   const formattedDate = formatDate(data.startDate, data.endDate);
   const formattedAddress = formatAddress(data.address);
   const bannerImage = data.eventImages.find((images) => images.isMain);
 
-  const handleClick = async () => {
-    if (!session) {
-      return;
-    }
-    const res = await instance.post("/event/like", {
-      userId: session?.user.userId,
-      eventId: data.id,
-    });
-
-    if (res.error) {
-      throw new Error(res.error);
-    }
-    setSelected(res);
-  };
+  const { liked, handleLikeEvent } = useLikeEvent({ eventId: data.id, initialLikeCount: data.likeCount });
 
   return (
     <Link href={`/event/${data.id}`} className="flex w-148 cursor-pointer flex-col gap-12 pc:w-188">
       <div className="relative h-196 w-148 pc:h-244 pc:w-188">
         <div className="absolute right-8 top-8 z-heart" onClick={(e: SyntheticEvent) => e.preventDefault()}>
-          <HeartButton isSelected={selected} onClick={handleClick} />
+          <HeartButton isSelected={liked} onClick={handleLikeEvent} />
         </div>
         <Image
           src={bannerImage?.imageUrl ?? "/image/no-profile.png"}

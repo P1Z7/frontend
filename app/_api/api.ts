@@ -3,7 +3,7 @@ import { Req_Post_Type } from "@/types/postBodyType";
 import { Req_Put_Type } from "@/types/putBodyType";
 import { Req_Query_Type } from "@/types/queryType";
 
-const STR_RES_ENDPOINT = ["/file/upload", "/event/update/application"];
+const STR_RES_ENDPOINT = ["/file/upload", "/event/update/application", "/artist/request", "/reviews"];
 
 export class Api {
   private baseUrl;
@@ -61,7 +61,7 @@ export class Api {
       method: "POST",
       body: endPoint === "/file/upload" ? (body as any) : JSON.stringify(body),
       headers: {
-        ...(endPoint === "/file/upload" || endPoint === "/reviews" ? {} : { "Content-Type": "application/json" }),
+        ...(endPoint === "/file/upload" ? {} : { "Content-Type": "application/json" }),
       },
     });
     const result = STR_RES_ENDPOINT.includes(endPoint) ? await res.text() : await res.json();
@@ -136,7 +136,8 @@ type PostEndPoint =
   | "/email"
   | "/email/verification"
   | "/event/update/application"
-  | "/event/update/approval";
+  | "/event/update/approval"
+  | "/artist/request";
 
 type PutEndPoint = `/event/${string}` | `/users/${string}/profile` | `/users/${string}/password`;
 type DeleteEndPoint = `/users/${string}/artists` | `/reviews/${string}/images` | `/users/${string}`;
@@ -156,25 +157,23 @@ type PostBodyType<T> = T extends "/event"
             ? Req_Post_Type["artist"]
             : T extends "/group"
               ? Req_Post_Type["group"]
-              : T extends `/users/${string}/artists`
-                ? Req_Post_Type["myArtist"]
-                : T extends "/artist/request"
-                  ? Req_Post_Type["artistRequest"]
-                  : T extends "/file/upload"
-                    ? FormData
-                    : T extends "/reviews"
-                      ? Req_Post_Type["review"]
-                      : T extends `/reviews/${string}/like`
-                        ? Req_Post_Type["reviewLike"]
-                        : T extends `/email`
-                          ? Req_Post_Type["email"]
-                          : T extends `/email/verification`
-                            ? Req_Post_Type["verification"]
-                            : T extends "/event/update/application"
-                              ? Req_Post_Type["edit"]
-                              : T extends "/event/update/approval"
-                                ? Req_Post_Type["approve"]
-                                : unknown;
+              : T extends "/file/upload"
+                ? FormData
+                : T extends "/reviews"
+                  ? Req_Post_Type["review"]
+                  : T extends `/reviews/${string}/like`
+                    ? Req_Post_Type["reviewLike"]
+                    : T extends `/email`
+                      ? Req_Post_Type["email"]
+                      : T extends `/email/verification`
+                        ? Req_Post_Type["verification"]
+                        : T extends "/event/update/application"
+                          ? Req_Post_Type["edit"]
+                          : T extends "/event/update/approval"
+                            ? Req_Post_Type["approve"]
+                            : T extends "/artist/request"
+                              ? Req_Post_Type["request"]
+                              : unknown;
 
 type GetQueryType<T> = T extends "/event"
   ? Req_Query_Type["행사목록"]

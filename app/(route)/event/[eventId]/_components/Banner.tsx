@@ -1,22 +1,25 @@
 "use client";
 
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { instance } from "app/_api/api";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
-import { ButtonHTMLAttributes, ReactNode, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { ReactNode, useEffect } from "react";
+import Alert from "@/components/Alert";
 import Chip from "@/components/chip/Chip";
+import { instance } from "@/api/api";
 import { useStore } from "@/store/index";
 import { formatDate } from "@/utils/formatString";
+import { Res_Get_Type } from "@/types/getResType";
 import { EventCardType, EventType, TargetArtistType } from "@/types/index";
 import { SnsIcon } from "@/constants/snsIcon";
 import CalendarIcon from "@/public/icon/calendar.svg";
 import GiftIcon from "@/public/icon/gift.svg";
-import HeartIcon from "@/public/icon/heart.svg";
 import LinkIcon from "@/public/icon/link.svg";
 import MapIcon from "@/public/icon/map.svg";
 import UserIcon from "@/public/icon/user.svg";
 import DefaultImage from "@/public/image/no-profile.png";
+import HeartButton from "./HeartButton";
 
 const IconStyleProps = {
   mobile: {
@@ -32,9 +35,6 @@ const IconStyleProps = {
     stroke: "#A0A5B1",
   },
 };
-
-const USER_ID = "4a256531-6f40-41de-aba2-d37d7507e5d7";
-
 interface Props {
   data: EventCardType;
   eventId: string;
@@ -46,36 +46,19 @@ const Banner = ({ data, eventId }: Props) => {
     setEventHeader(data.placeName);
   }, []);
 
+  const pathname = usePathname();
+
   const formattedDate = formatDate(data.startDate, data.endDate, true);
   const bannerImage = data.eventImages.find((images) => images.isMain);
   const formattedOrganizerSns = data.organizerSns[0] === "@" ? data.organizerSns : `@${data.organizerSns}`;
 
-  const queryClient = useQueryClient();
-
-  const getEventLiked = async (userId: string, eventId: string) => {
-    const data: boolean = await instance.get("/event/like", { userId, eventId });
-    return data;
-  };
-
-  const likeEvent = async (userId: string, eventId: string) => {
-    const data = await instance.post("/event/like", { userId, eventId });
-  };
-
-  const { data: isLiked } = useQuery({
-    queryKey: ["eventLiked", eventId],
-    queryFn: () => getEventLiked(USER_ID, eventId),
-  });
-
-  const likeMutation = useMutation({
-    mutationFn: ({ userId, eventId }: { userId: string; eventId: string }) => likeEvent(userId, eventId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["eventLiked", eventId] });
+  const { data: editApplication } = useQuery<Res_Get_Type["editApplication"]>({
+    queryKey: ["approve", eventId],
+    queryFn: async () => {
+      return instance.get(`/event/${eventId}/update/application`);
     },
   });
-
-  const handleLikeEvent = () => {
-    likeMutation.mutate({ userId: USER_ID, eventId });
-  };
+  const hasEditApplication = !(editApplication && editApplication?.length === 0);
 
   return (
     <section className="w-full pc:flex pc:gap-24 pc:pb-32 pc:pt-[7rem]">
@@ -83,7 +66,7 @@ const Banner = ({ data, eventId }: Props) => {
         <Image src={bannerImage?.imageUrl ?? DefaultImage} alt={"행사 포스터 썸네일"} priority fill sizes="100vw" className="object-cover" />
       </div>
       <div className="relative bottom-24 grow rounded-t-lg bg-white-black p-24 pb-0 pc:bottom-0 pc:p-0">
-        <HeartButton isLiked={isLiked ?? false} likeCount={data.likeCount} onClick={handleLikeEvent} />
+        <HeartButton eventId={data.id} initialLikeCount={data.likeCount} />
         <MainDescription placeName={data.placeName} artists={data.targetArtists} eventType={data.eventType} />
         <div className="flex flex-col gap-8 pt-16 text-14 font-500 pc:gap-20 pc:pt-24">
           <SubDescription>
@@ -140,9 +123,10 @@ const Banner = ({ data, eventId }: Props) => {
               <span>{formattedOrganizerSns}</span>
             </div>
           </SubDescription>
+          {hasEditApplication && <Alert href={pathname + "/approve"} message="수정요청 정보가 있습니다." />}
         </div>
-        <div className="absolute bottom-0 right-0 text-14 font-400">
-          <Link href="edit" className="mr-16 text-blue">
+        <div className="absolute bottom-0 right-0 hidden text-14 font-400 pc:block">
+          <Link href={pathname + "/edit"} className="mr-16 text-blue">
             수정하기
           </Link>
           <button className="text-gray-400">신고하기</button>
@@ -169,7 +153,7 @@ const MainDescription = ({ placeName, artists, eventType }: MainDescriptionProps
   return (
     <div className="flex flex-col gap-8 border-b border-gray-100 pb-16 pc:gap-12 pc:pb-32">
       <h1 className="h-24 text-20 font-600 pc:text-[2.8rem] pc:leading-[2.4rem]">{placeName}</h1>
-      <div className="flex gap-8">
+      <div className="flex items-center gap-8">
         <span className="text-16 font-600 pc:max-w-308 pc:text-20">{formattedArtist}</span>
         <Chip kind="event" label={eventType} />
       </div>
@@ -184,25 +168,4 @@ interface SubDescriptionProps {
 
 const SubDescription = ({ isVisible = true, children }: SubDescriptionProps) => {
   return <>{isVisible && <div className="flex gap-12 text-14 pc:gap-16 pc:text-16">{children}</div>}</>;
-};
-
-interface HeartButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  isLiked: boolean;
-  likeCount: number;
-}
-
-const HeartButton = ({ isLiked, likeCount, onClick }: HeartButtonProps) => {
-  const [liked, setLiked] = useState(isLiked);
-
-  return (
-    <button onClick={onClick} className="absolute right-20 top-24 text-center text-12 font-600 pc:right-0 pc:top-0 pc:text-14">
-      <div className="pc:hidden">
-        <HeartIcon stroke={liked ? "#FF50AA" : "#1C1E22"} fill={liked ? "#FF50AA" : "none"} strokeWidth={1.7} />
-      </div>
-      <div className="hidden pc:block">
-        <HeartIcon stroke={liked ? "#FF50AA" : "#1C1E22"} fill={liked ? "#FF50AA" : "none"} width={32} height={32} viewBox="0 0 24 24" strokeWidth={1.4} />
-      </div>
-      {likeCount}
-    </button>
-  );
 };

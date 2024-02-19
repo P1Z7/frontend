@@ -112,6 +112,7 @@ const config: Config = {
       boxShadow: {
         top: "0px -4px 16px 0px rgba(0, 0, 0, 0.04)",
         hero: "0px 4px 12px 0px rgba(0, 0, 0, 0.04)",
+        postBox: "0px 4px 24px 0px rgba(0, 0, 0, 0.12)",
       },
     },
   },
