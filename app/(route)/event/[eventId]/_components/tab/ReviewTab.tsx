@@ -2,6 +2,8 @@
 
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { instance } from "app/_api/api";
+import DeferredSuspense from "@/components/skeleton/DeferredSuspense";
+import ReviewSkeleton from "@/components/skeleton/ReviewSkeleton";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { useSession } from "@/store/session/cookies";
 import { Res_Get_Type } from "@/types/getResType";
@@ -52,6 +54,7 @@ const ReviewTab = ({ eventId }: Props) => {
           reviews?.pages.map((page) => page.map((review) => <EventReview key={review.id} data={review} />))
         )}
       </div>
+      <DeferredSuspense fallback={<ReviewSkeleton />} isFetching={isFetching} />
       <div ref={containerRef} className="h-16 w-full" />
       <BottomButton />
     </div>

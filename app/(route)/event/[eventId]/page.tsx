@@ -23,7 +23,7 @@ const EventInfoPage = async ({ params }: Props) => {
   return (
     <DottedLayout size="narrow">
       <MobileHeader />
-      <Banner data={eventInfo} />
+      <Banner data={eventInfo} eventId={params.eventId} />
       <Tabs names={["행사정보", "위치", "후기"]} topOffset="event">
         <DescriptionTab images={eventInfo.eventImages} description={eventInfo.description} />
         <LocationTab name={eventInfo.placeName} address={eventInfo.address} />

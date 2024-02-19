@@ -1,4 +1,4 @@
-import { ArtistAndGroupListType, EventCardType, EventReviewType } from ".";
+import { ArtistAndGroupListType, EditApplicationType, EventCardType, EventReviewType } from ".";
 
 type Res_Get_Event = EventCardType;
 
@@ -20,6 +20,8 @@ type Res_Get_EventReviews = EventReviewType[];
 
 type Res_Get_Artist_Group = ArtistAndGroupListType;
 
+type Res_Get_Edit_Application = EditApplicationType[];
+
 export type Res_Get_Type = {
   event: Res_Get_Event;
   eventList: Res_Get_Event_List;
@@ -27,4 +29,5 @@ export type Res_Get_Type = {
   eventSearch: Res_Get_Event_Search;
   eventReviews: Res_Get_EventReviews;
   artistGroup: Res_Get_Artist_Group;
+  editApplication: Res_Get_Edit_Application;
 };

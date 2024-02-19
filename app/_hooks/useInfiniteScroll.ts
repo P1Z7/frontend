@@ -27,7 +27,9 @@ const useInfiniteScroll = ({
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) handleScroll();
+        if (entry.isIntersecting) {
+          handleScroll();
+        }
       });
     }, options);
 

@@ -16,7 +16,7 @@ const Alert = ({ message, href }: Props) => {
     <Link href={href || path} className="flex items-center justify-between rounded-sm bg-[#F63D3D0D] p-8">
       <div className="flex-center gap-4">
         <ExclamationIcon />
-        <p className="text-12 font-500 text-red">{message}</p>
+        <p className="text-12 font-500 text-red pc:text-14">{message}</p>
       </div>
       <RightArrowIcon stroke="#F63D3D" />
     </Link>

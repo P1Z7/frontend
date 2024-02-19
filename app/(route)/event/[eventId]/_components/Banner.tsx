@@ -1,12 +1,16 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode, useEffect } from "react";
+import Alert from "@/components/Alert";
 import Chip from "@/components/chip/Chip";
+import { instance } from "@/api/api";
 import { useStore } from "@/store/index";
 import { formatDate } from "@/utils/formatString";
+import { Res_Get_Type } from "@/types/getResType";
 import { EventCardType, EventType, TargetArtistType } from "@/types/index";
 import { SnsIcon } from "@/constants/snsIcon";
 import CalendarIcon from "@/public/icon/calendar.svg";
@@ -33,9 +37,10 @@ const IconStyleProps = {
 };
 interface Props {
   data: EventCardType;
+  eventId: string;
 }
 
-const Banner = ({ data }: Props) => {
+const Banner = ({ data, eventId }: Props) => {
   const { setEventHeader } = useStore((state) => ({ setEventHeader: state.setEventHeader }));
   useEffect(() => {
     setEventHeader(data.placeName);
@@ -46,6 +51,14 @@ const Banner = ({ data }: Props) => {
   const formattedDate = formatDate(data.startDate, data.endDate, true);
   const bannerImage = data.eventImages.find((images) => images.isMain);
   const formattedOrganizerSns = data.organizerSns[0] === "@" ? data.organizerSns : `@${data.organizerSns}`;
+
+  const { data: editApplication } = useQuery<Res_Get_Type["editApplication"]>({
+    queryKey: ["approve", eventId],
+    queryFn: async () => {
+      return instance.get(`/event/${eventId}/update/application`);
+    },
+  });
+  const hasEditApplication = !(editApplication && editApplication?.length === 0);
 
   return (
     <section className="w-full pc:flex pc:gap-24 pc:pb-32 pc:pt-[7rem]">
@@ -110,9 +123,10 @@ const Banner = ({ data }: Props) => {
               <span>{formattedOrganizerSns}</span>
             </div>
           </SubDescription>
+          {hasEditApplication && <Alert href={pathname + "/approve"} message="수정요청 정보가 있습니다." />}
         </div>
-        <div className="absolute bottom-0 right-0 text-14 font-400">
-          <Link href={pathname + "edit"} className="mr-16 text-blue">
+        <div className="absolute bottom-0 right-0 hidden text-14 font-400 pc:block">
+          <Link href={pathname + "/edit"} className="mr-16 text-blue">
             수정하기
           </Link>
           <button className="text-gray-400">신고하기</button>
@@ -139,7 +153,7 @@ const MainDescription = ({ placeName, artists, eventType }: MainDescriptionProps
   return (
     <div className="flex flex-col gap-8 border-b border-gray-100 pb-16 pc:gap-12 pc:pb-32">
       <h1 className="h-24 text-20 font-600 pc:text-[2.8rem] pc:leading-[2.4rem]">{placeName}</h1>
-      <div className="flex gap-8">
+      <div className="flex items-center gap-8">
         <span className="text-16 font-600 pc:max-w-308 pc:text-20">{formattedArtist}</span>
         <Chip kind="event" label={eventType} />
       </div>
