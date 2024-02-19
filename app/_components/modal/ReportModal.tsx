@@ -2,12 +2,12 @@ import { useParams } from "next/navigation";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { instance } from "@/api/api";
-import { useSession } from "@/store/session/cookies";
+import { getSession } from "@/store/session/cookies";
 import { ModalBaseType } from "@/types/index";
 import TextModal from "./TextModal";
 
 const ReportModal = ({ closeModal }: ModalBaseType) => {
-  const session = useSession();
+  const session = getSession();
   const { eventId } = useParams();
   const eventIdStr: string = Array.isArray(eventId) ? eventId[0] : eventId;
 
