@@ -23,7 +23,7 @@ const MyArtistTab = ({ userId }: Props) => {
 
   if (!isSuccess) return;
   return (
-    <div className="flex flex-col items-start gap-16 px-20 py-24 pc:gap-24 pc:p-32">
+    <div className="flex flex-col items-start gap-16 px-20 py-24 pb-88 pc:gap-24 pc:p-32 pc:pb-16">
       <button className="text-14 font-500 text-blue" onClick={() => router.push("/setting/favorite")}>
         팔로우 아티스트 수정하기
       </button>
@@ -32,7 +32,6 @@ const MyArtistTab = ({ userId }: Props) => {
           {Array.isArray(myArtistsData) ? (
             myArtistsData.map((cardList: MyArtistsType) => (
               <ArtistCard
-                isSmall
                 key={cardList.artistId}
                 profileImage={cardList.artistImage}
                 onClick={() => {

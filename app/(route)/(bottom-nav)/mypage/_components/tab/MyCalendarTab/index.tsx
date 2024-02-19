@@ -26,7 +26,6 @@ const MyCalendarTab = ({ userId }: Props) => {
   const [statue, setStatus] = useState<StatueType>("");
   const [calendarStyle, setCalendarStyle] = useState("");
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  let lastDay: (EventCardType | "blank")[] = [];
 
   const { data: myEventsData, isSuccess } = useQuery({
     queryKey: ["events", statue],
@@ -63,7 +62,7 @@ const MyCalendarTab = ({ userId }: Props) => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-stretch gap-16 px-20 pb-16 pt-72">
+    <div className="flex flex-col items-center justify-stretch gap-16 px-20 pb-88 pt-72 pc:pb-16">
       <div className="flex-center flex-col gap-8 rounded-sm border border-gray-50 pb-8 pt-16">
         <style>{calendarStyle}</style>
         {calendarStyle === "" ? (
@@ -72,7 +71,7 @@ const MyCalendarTab = ({ userId }: Props) => {
           </div>
         ) : (
           <>
-            <MyCalendar setSelectedDate={setSelectedDate} selectedDate={selectedDate} data={data} isFold={isFold} lastDay={lastDay} />
+            <MyCalendar setSelectedDate={setSelectedDate} selectedDate={selectedDate} data={data} isFold={isFold} />
             <FoldButton setIsFold={setIsFold} isFold={isFold} />
           </>
         )}
