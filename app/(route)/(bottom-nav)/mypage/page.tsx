@@ -9,7 +9,7 @@ import MyEventTab from "./_components/tab/MyEventTab";
 import MyReviewTab from "./_components/tab/MyReviewTab";
 
 const MyPage = () => {
-  const session = getSession()!;
+  const session = getSession();
 
   return (
     <DottedLayout size="extrawide">
@@ -17,9 +17,9 @@ const MyPage = () => {
         <UserProfile />
         <div className="h-full pc:w-[83.4rem]">
           <Tabs names={["행사", "아티스트", "후기"]} isNarrow>
-            <MyEventTab userId={session.user.userId} />
-            <MyArtistTab userId={session.user.userId} />
-            <MyReviewTab userId={session.user.userId} />
+            <MyEventTab userId={session?.user?.userId ?? ""} />
+            <MyArtistTab userId={session?.user?.userId ?? ""} />
+            <MyReviewTab userId={session?.user?.userId ?? ""} />
           </Tabs>
         </div>
       </div>

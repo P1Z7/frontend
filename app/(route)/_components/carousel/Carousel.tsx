@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import VerticalEventCard from "@/components/card/VerticalEventCard";
 import { Res_Get_Type } from "@/types/getResType";
@@ -14,7 +16,7 @@ const Carousel = ({ cards }: Props) => {
   const [slideIndex, setSlideIndex] = useState(0);
   const [isPrevDisabled, setIsPrevDisabled] = useState(true);
   const [isNextDisabled, setIsNextDisabled] = useState(false);
-  const [isPc, setIsPc] = useState(window.innerWidth >= 1200);
+  const [isPc, setIsPc] = useState<boolean>(false);
 
   useEffect(() => {
     const handleResize = () => {
