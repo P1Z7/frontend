@@ -1,8 +1,10 @@
 "use client";
 
+import LoadingDot from "@/(route)/(bottom-nav)/signin/_components/LoadingDot";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import ArtistCard from "@/components/ArtistCard";
+import DeferredSuspense from "@/components/skeleton/DeferredSuspense";
 import { instance } from "@/api/api";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { Res_Get_Type } from "@/types/getResType";
@@ -43,7 +45,6 @@ const ArtistList = () => {
       <div className="flex flex-col items-center">
         <div className="flex w-full max-w-[52rem] flex-col items-center pc:max-w-full">
           <ul className="flex flex-wrap justify-center gap-20 pc:gap-32">
-            {isLoading && <div>로딩중</div>}
             {artistData?.pages.map((page) =>
               page.artistAndGroupList.map((artist) => (
                 <li key={artist.id} className="w-88 pc:w-120">
@@ -53,6 +54,7 @@ const ArtistList = () => {
                 </li>
               )),
             )}
+            <DeferredSuspense fallback={<LoadingDot />} isFetching={isFetching} />
             <div ref={containerRef} className="h-16 w-full" />
           </ul>
         </div>

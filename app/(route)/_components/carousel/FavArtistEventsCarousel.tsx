@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import HeroSkeleton from "@/components/skeleton/HeroSkeleton";
 import { useSession } from "@/store/session/cookies";
 import { Res_Get_Type } from "@/types/getResType";
 import Carousel from "./Carousel";
@@ -89,7 +90,7 @@ const RenderContent = ({ status, hasFavoriteEvents, isLoading, isSuccess, favArt
 
   return (
     <>
-      {isLoading && <div>로딩중</div>}
+      <div className="flex-center">{isLoading && <HeroSkeleton />}</div>
       {isSuccess && (
         <>
           {!hasFavoriteArtists && <FollowArtistHero />}
