@@ -21,7 +21,7 @@ const ReviewTab = ({ eventId }: Props) => {
   const userId = session?.user.userId ?? DEFAULT_USER_ID;
 
   const getReviews = async ({ pageParam = 1 }) => {
-    const data: Res_Get_Type["eventReviews"] = await instance.get(`/reviews/${eventId}`, { size: SIZE, cursorId: pageParam == 1 ? INITIAL_CURSOR_ID : pageParam });
+    const data: Res_Get_Type["eventReviews"] = await instance.get(`/reviews/${eventId}`, { userId, size: SIZE, cursorId: pageParam == 1 ? INITIAL_CURSOR_ID : pageParam });
     return data;
   };
 

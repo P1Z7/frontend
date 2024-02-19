@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ReactNode, useEffect } from "react";
 import Chip from "@/components/chip/Chip";
 import { useStore } from "@/store/index";
@@ -32,14 +33,15 @@ const IconStyleProps = {
 };
 interface Props {
   data: EventCardType;
-  eventId: string;
 }
 
-const Banner = ({ data, eventId }: Props) => {
+const Banner = ({ data }: Props) => {
   const { setEventHeader } = useStore((state) => ({ setEventHeader: state.setEventHeader }));
   useEffect(() => {
     setEventHeader(data.placeName);
   }, []);
+
+  const pathname = usePathname();
 
   const formattedDate = formatDate(data.startDate, data.endDate, true);
   const bannerImage = data.eventImages.find((images) => images.isMain);
@@ -110,7 +112,7 @@ const Banner = ({ data, eventId }: Props) => {
           </SubDescription>
         </div>
         <div className="absolute bottom-0 right-0 text-14 font-400">
-          <Link href="edit" className="mr-16 text-blue">
+          <Link href={pathname + "edit"} className="mr-16 text-blue">
             수정하기
           </Link>
           <button className="text-gray-400">신고하기</button>
