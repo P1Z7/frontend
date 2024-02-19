@@ -1,4 +1,6 @@
 import ArtistList from "@/(route)/_components/artist-list/ArtistList";
+import { Session } from "inspector";
+import { cookies } from "next/headers";
 import DottedLayout from "@/components/layout/DottedLayout";
 import { getSession } from "@/store/session/cookies";
 import Logo from "@/public/icon/logo.svg";
@@ -8,8 +10,6 @@ import NewestEventsCarousel from "../_components/carousel/NewestEventsCarousel";
 import PopularEventsCarousel from "../_components/carousel/PopularEventsCarousel";
 
 const Home = () => {
-  const session = getSession();
-  console.log(session);
   return (
     <DottedLayout size="wide">
       <header className="sticky left-0 top-0 z-nav h-88 w-full bg-white-black px-20 pb-16 pt-48 pc:hidden">

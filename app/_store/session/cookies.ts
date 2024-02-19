@@ -1,5 +1,4 @@
 import { Cookies } from "react-cookie";
-import { serverSession } from "@/store/session/serverCookies";
 
 export type Session = {
   isAuth: boolean;
@@ -28,6 +27,6 @@ export const deleteCookies: typeof cookies.remove = (name, options) => {
 
 export const setSession = (newSession: Session) => (deleteCookies("session"), setCookies("session", newSession, { path: "/" }));
 
-export const getSession = (): Session | undefined => (typeof window !== "undefined" ? getCookies("session") : serverSession());
+export const getSession = (): Session | undefined => getCookies("session");
 
 export const outSession = () => cookies.remove("session", { path: "/" });

@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import toast from "react-hot-toast";
-import { serverSession } from "@/store/session/serverCookies";
 
 export const middleware = async (req: NextRequest) => {
-  const session = serverSession();
+  const session = req.cookies.get("session");
   const pathname = req.nextUrl.pathname;
   const noNeedLogin = SIGNS.includes(pathname);
 
