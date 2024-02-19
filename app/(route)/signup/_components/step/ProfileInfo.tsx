@@ -4,9 +4,9 @@ import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import BottomButton from "@/components/button/BottomButton";
 import InputText from "@/components/input/InputText";
+import { checkEnterNextButton } from "@/hooks/checkEnterNextButton";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 import { SignUpFormType } from "@/types/index";
-import { checkEnterNextButton } from "../../../../_hooks/checkEnterNextButton";
 
 const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
   const { isError, handleEnterError } = checkEnterNextButton();

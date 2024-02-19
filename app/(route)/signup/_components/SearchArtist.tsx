@@ -76,24 +76,24 @@ const SearchArtist = ({ onClick, myArtists, myArtistsInfo }: Props) => {
 
   const onModalSubmit: SubmitHandler<{ name: string }> = async () => {
     if (name) {
-      // try {
-      //   const res = await instance.post("/artist/request", {
-      //     name: name,
-      //   });
-      //   if (res.error) {
-      //     throw new Error(res.error);
-      //   }
-      //   setValue("name", "");
-      //   closeModal();
-      //   notify();
-      // } catch (error: any) {
-      //   console.log(name);
-      //   console.log(error);
-      //   toast.error("죄송합니다. 잠시 후 시도해주세요", {
-      //     position: "bottom-center",
-      //     className: "text-16 font-600 px-28 py-16",
-      //   });
-      // }
+      try {
+        const res = await instance.post("/artist/request", {
+          name: name,
+        });
+        if (res.error) {
+          throw new Error(res.error);
+        }
+        setValue("name", "");
+        closeModal();
+        notify();
+      } catch (error: any) {
+        console.log(name);
+        console.log(error);
+        toast.error("죄송합니다. 잠시 후 시도해주세요", {
+          position: "bottom-center",
+          className: "text-16 font-600 px-28 py-16",
+        });
+      }
     }
   };
 

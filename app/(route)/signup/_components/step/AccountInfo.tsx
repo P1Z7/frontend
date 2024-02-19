@@ -4,7 +4,6 @@ import { useFormContext } from "react-hook-form";
 import Button from "@/components/button";
 import BottomButton from "@/components/button/BottomButton";
 import InputText from "@/components/input/InputText";
-import { handleEnterDown } from "@/utils/handleEnterDown";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 import { SignUpFormType } from "@/types/index";
 import { checkEnterNextButton } from "../../../../_hooks/checkEnterNextButton";
@@ -134,8 +133,8 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
         비밀번호 확인
       </InputText>
       <div className={`fixed bottom-0 left-0 w-full pc:sticky pc:mt-20 ${isError ? "animate-brrr" : ""}`}>
-        {/* <BottomButton onClick={onNext}> */}
-        <BottomButton onClick={onNext} isDisabled={isButtonDisabled}>
+        <BottomButton onClick={onNext}>
+          {/* <BottomButton onClick={onNext} isDisabled={isButtonDisabled}> */}
           다음으로
         </BottomButton>
       </div>

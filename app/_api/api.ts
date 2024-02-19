@@ -3,7 +3,7 @@ import { Req_Post_Type } from "@/types/postBodyType";
 import { Req_Put_Type } from "@/types/putBodyType";
 import { Req_Query_Type } from "@/types/queryType";
 
-const STR_RES_ENDPOINT = ["/file/upload", "/event/update/application"];
+const STR_RES_ENDPOINT = ["/file/upload", "/event/update/application", "/artist/request"];
 
 export class Api {
   private baseUrl;
