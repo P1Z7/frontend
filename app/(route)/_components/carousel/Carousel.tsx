@@ -49,7 +49,7 @@ const Carousel = ({ cards }: Props) => {
   return (
     <div className="flex flex-col gap-16 pc:gap-24">
       <div className="pc:flex pc:w-[112rem]">
-        <div onClick={handlePrevClick} className={`relative top-76 hidden h-100 w-[5rem] cursor-pointer pc:block ${isPrevDisabled ? "pointer-events-none opacity-50" : ""}`}>
+        <div onClick={handlePrevClick} className={`relative top-76 hidden h-100 w-[5rem] cursor-pointer pc:block ${isPrevDisabled ? "pointer-events-none opacity-30" : ""}`}>
           <PrevButtonIcon />
         </div>
         <div className="flex w-full gap-16 overflow-auto px-20 scrollbar-hide pc:gap-20 pc:overflow-hidden pc:p-0">
