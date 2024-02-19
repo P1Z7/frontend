@@ -58,11 +58,11 @@ const SignUp = () => {
     return (
       <PinkLayout size={pcWidth}>
         <Header onClick={handlePrevClick} />
-        <GenericFormProvider<SignUpFormType> formOptions={{ mode: "onBlur", defaultValues: DEFAULT_VALUES }}>
-          <div className="flex h-full flex-col px-20 ">
+        <div className="flex h-[calc(100%-13.8rem)] grow flex-col px-20">
+          <GenericFormProvider<SignUpFormType> formOptions={{ mode: "onBlur", defaultValues: DEFAULT_VALUES }}>
             <ProfileSetup steps={STEPS} handleNextClick={handleNextClick} Funnel={Funnel} Step={Step} />
-          </div>
-        </GenericFormProvider>
+          </GenericFormProvider>
+        </div>
       </PinkLayout>
     );
 };

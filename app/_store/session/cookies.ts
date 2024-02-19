@@ -3,8 +3,10 @@ import { Cookies } from "react-cookie";
 export type Session = {
   isAuth: boolean;
   user: {
+    email: string;
     userId: string;
     nickName: string;
+    signupMethod: "opener" | "naver" | "kakao";
     profileImage: string | null;
   };
 };

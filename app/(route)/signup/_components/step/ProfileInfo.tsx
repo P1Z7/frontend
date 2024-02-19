@@ -23,8 +23,8 @@ const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
   const isButtonDisabled = !!formState.errors.nickName || !formState.isValid;
 
   return (
-    <div className="pt-36">
-      <div className="pc:h-[37.3rem]">
+    <div className="flex h-full flex-col justify-between pt-36">
+      <div>
         <InputText
           control={control}
           onKeyDown={(e) => handleEnterError(e, !isButtonDisabled, onNext)}
@@ -44,7 +44,7 @@ const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
           닉네임
         </InputText>
       </div>
-      <div className={`fixed bottom-0 left-0 w-full ${isError ? "animate-brrr" : ""}`}>
+      <div className={`fixed bottom-0 left-0 w-full pc:sticky ${isError ? "animate-brrr" : ""}`}>
         <BottomButton onClick={onNext} isDisabled={isButtonDisabled}>
           다음으로
         </BottomButton>

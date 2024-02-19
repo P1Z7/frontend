@@ -12,13 +12,12 @@ import InputArea from "@/components/input/InputArea";
 import InputFile from "@/components/input/InputFile";
 import PinkLayout from "@/components/layout/PinkLayout";
 import { instance } from "@/api/api";
+import { useAuth } from "@/hooks/useAuth";
 import { useStore } from "@/store/index";
 import { makeImgUrlList } from "@/utils/changeImgUrl";
 import PartyIcon from "@/public/icon/party.svg";
 import SadIcon from "@/public/icon/sad.svg";
 import { MemoizedImageList } from "./_components/MemoizedImageList";
-
-const USER_ID = "4a256531-6f40-41de-aba2-d37d7507e5d7";
 
 interface FormValues {
   description: string;
@@ -26,6 +25,8 @@ interface FormValues {
 }
 
 const ReviewPostPage = () => {
+  const session = useAuth("/signin");
+
   const [evaluation, setEvaluation] = useState<boolean | null>(null);
   const [isPublic, setIsPublic] = useState<boolean | null>(null);
   const { isCheck, setIsCheck } = useStore((state) => ({ isCheck: state.isWarningCheck, setIsCheck: state.setIsWarningCheck }));
@@ -75,7 +76,7 @@ const ReviewPostPage = () => {
     const imagesUrl = await makeImgUrlList(imageList, instance);
     try {
       const res = await instance.post("/reviews", {
-        userId: USER_ID,
+        userId: session?.user.userId ?? "",
         eventId: Array.isArray(eventId) ? eventId[0] : eventId,
         isPublic: Boolean(isPublic),
         rating: Boolean(evaluation),
