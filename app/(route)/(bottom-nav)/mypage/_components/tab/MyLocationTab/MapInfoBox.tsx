@@ -35,7 +35,7 @@ const MapInfoBox = ({ locationInfo, closeMapBox }: { locationInfo: EventCardType
         onClick={(e: SyntheticEvent) => e.stopPropagation()}
         className="flex max-h-[55.6rem] w-full transform animate-slideUp flex-col overflow-hidden border-t bg-white-black px-20 transition duration-150 ease-out pc:px-8"
       >
-        <button onClick={handleRedirectToMap} className="flex-center w-fit gap-4 pt-20 text-14 font-500 text-gray-900 hover:underline">
+        <button onClick={handleRedirectToMap} className="flex-center w-fit gap-4 pt-20 text-14 font-500 text-gray-900 hover:underline" aria-label="카카오 맵으로 이동">
           <MapIcon width={20} height={20} viewBox="0 0 24 24" stroke="#A0A5B1" />
           {locationInfo.address}
         </button>

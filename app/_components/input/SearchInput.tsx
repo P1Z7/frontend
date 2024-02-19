@@ -20,7 +20,7 @@ const SearchInput = ({ keyword, setKeyword, initialKeyword, placeholder = "ê²€ìƒ
   const { search } = watch();
 
   const handleSearchEnter = (event: KeyboardEvent) => {
-    if (event.keyCode === 13) {
+    if (event.keyCode === 13 || event.key === "Enter") {
       setKeyword(getValues("search") ?? "");
     }
   };
