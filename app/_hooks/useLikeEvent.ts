@@ -4,7 +4,6 @@ import { instance } from "@/api/api";
 import { getSession } from "@/store/session/cookies";
 import { Res_Get_Type } from "@/types/getResType";
 
-const DEFAULT_USER_ID = "default";
 const QUERY_KEY = "like";
 
 interface Props {
@@ -17,7 +16,7 @@ const useLikeEvent = ({ eventId, initialLikeCount }: Props) => {
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  const userId = session?.user.userId ?? DEFAULT_USER_ID;
+  const userId = session?.user.userId ?? "";
 
   const { data: likeData } = useQuery<Res_Get_Type["eventLike"]>({
     queryKey: [QUERY_KEY, eventId, userId],
@@ -53,6 +52,7 @@ const useLikeEvent = ({ eventId, initialLikeCount }: Props) => {
   const handleLikeEvent = () => {
     if (!session) {
       router.push("/signin");
+      return;
     }
     likeMutation.mutate();
   };

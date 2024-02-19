@@ -12,7 +12,6 @@ import EventReview from "../EventReview";
 
 const SIZE = 10;
 const INITIAL_CURSOR_ID = 100000;
-const DEFAULT_USER_ID = "default";
 
 interface Props {
   eventId: string;
@@ -20,7 +19,7 @@ interface Props {
 
 const ReviewTab = ({ eventId }: Props) => {
   const session = getSession();
-  const userId = session?.user.userId ?? DEFAULT_USER_ID;
+  const userId = session?.user.userId ?? "";
 
   const getReviews = async ({ pageParam = 1 }) => {
     const data: Res_Get_Type["eventReviews"] = await instance.get(`/reviews/${eventId}`, { userId, size: SIZE, cursorId: pageParam == 1 ? INITIAL_CURSOR_ID : pageParam });
