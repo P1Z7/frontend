@@ -7,7 +7,9 @@ import { usePathname } from "next/navigation";
 import { ReactNode, useEffect } from "react";
 import Alert from "@/components/Alert";
 import Chip from "@/components/chip/Chip";
+import ReportModal from "@/components/modal/ReportModal";
 import { instance } from "@/api/api";
+import { useModal } from "@/hooks/useModal";
 import { useStore } from "@/store/index";
 import { formatDate } from "@/utils/formatString";
 import { Res_Get_Type } from "@/types/getResType";
@@ -41,6 +43,7 @@ interface Props {
 }
 
 const Banner = ({ data, eventId }: Props) => {
+  const { modal, openModal, closeModal } = useModal();
   const { setEventHeader } = useStore((state) => ({ setEventHeader: state.setEventHeader }));
   useEffect(() => {
     setEventHeader(data.placeName);
@@ -61,78 +64,83 @@ const Banner = ({ data, eventId }: Props) => {
   const hasEditApplication = !(editApplication && editApplication?.length === 0);
 
   return (
-    <section className="w-full pc:flex pc:gap-24 pc:pb-32 pc:pt-[7rem]">
-      <div className="relative h-[48rem] w-full pc:h-[55rem] pc:w-[40.5rem]">
-        <Image src={bannerImage?.imageUrl ?? DefaultImage} alt={"행사 포스터 썸네일"} priority fill sizes="100vw" className="object-cover" />
-      </div>
-      <div className="relative bottom-24 grow rounded-t-lg bg-white-black p-24 pb-0 pc:bottom-0 pc:p-0">
-        <HeartButton eventId={data.id} initialLikeCount={data.likeCount} />
-        <MainDescription placeName={data.placeName} artists={data.targetArtists} eventType={data.eventType} />
-        <div className="flex flex-col gap-8 pt-16 text-14 font-500 pc:gap-20 pc:pt-24">
-          <SubDescription>
-            <div className="pc:hidden">
-              <CalendarIcon {...IconStyleProps.mobile} />
-            </div>
-            <div className="hidden pc:block">
-              <CalendarIcon {...IconStyleProps.pc} />
-            </div>
-            {formattedDate}
-          </SubDescription>
-          <SubDescription>
-            <div className="pc:hidden">
-              <MapIcon {...IconStyleProps.mobile} />
-            </div>
-            <div className="hidden pc:block">
-              <MapIcon {...IconStyleProps.pc} />
-            </div>
-            {`${data.address} ${data.addressDetail}`}
-          </SubDescription>
-          <SubDescription isVisible={Boolean(data.eventTags.length !== 0)}>
-            <div className="pc:hidden">
-              <GiftIcon {...IconStyleProps.mobile} />
-            </div>
-            <div className="hidden pc:block">
-              <GiftIcon {...IconStyleProps.pc} />
-            </div>
-            <div className="flex flex-wrap items-center gap-4 pc:gap-8">
-              {data.eventTags.map((tag) => (
-                <Chip key={tag.tagId} kind="goods" label={tag.tagName} />
-              ))}
-            </div>
-          </SubDescription>
-          <SubDescription isVisible={Boolean(data.eventUrl)}>
-            <div className="pc:hidden">
-              <LinkIcon {...IconStyleProps.mobile} />
-            </div>
-            <div className="hidden pc:block">
-              <LinkIcon {...IconStyleProps.pc} />
-            </div>
-            <Link href={data?.eventUrl ?? ""} target="_blank" rel="noreferrer noopener" className="text-blue">
-              {data?.eventUrl}
+    <>
+      <section className="w-full pc:flex pc:gap-24 pc:pb-32 pc:pt-[7rem]">
+        <div className="relative h-[48rem] w-full pc:h-[55rem] pc:w-[40.5rem]">
+          <Image src={bannerImage?.imageUrl ?? DefaultImage} alt={"행사 포스터 썸네일"} priority fill sizes="100vw" className="object-cover" />
+        </div>
+        <div className="relative bottom-24 grow rounded-t-lg bg-white-black p-24 pb-0 pc:bottom-0 pc:p-0">
+          <HeartButton eventId={data.id} initialLikeCount={data.likeCount} />
+          <MainDescription placeName={data.placeName} artists={data.targetArtists} eventType={data.eventType} />
+          <div className="flex flex-col gap-8 pt-16 text-14 font-500 pc:gap-20 pc:pt-24">
+            <SubDescription>
+              <div className="pc:hidden">
+                <CalendarIcon {...IconStyleProps.mobile} />
+              </div>
+              <div className="hidden pc:block">
+                <CalendarIcon {...IconStyleProps.pc} />
+              </div>
+              {formattedDate}
+            </SubDescription>
+            <SubDescription>
+              <div className="pc:hidden">
+                <MapIcon {...IconStyleProps.mobile} />
+              </div>
+              <div className="hidden pc:block">
+                <MapIcon {...IconStyleProps.pc} />
+              </div>
+              {`${data.address} ${data.addressDetail}`}
+            </SubDescription>
+            <SubDescription isVisible={Boolean(data.eventTags.length !== 0)}>
+              <div className="pc:hidden">
+                <GiftIcon {...IconStyleProps.mobile} />
+              </div>
+              <div className="hidden pc:block">
+                <GiftIcon {...IconStyleProps.pc} />
+              </div>
+              <div className="flex flex-wrap items-center gap-4 pc:gap-8">
+                {data.eventTags.map((tag) => (
+                  <Chip key={tag.tagId} kind="goods" label={tag.tagName} />
+                ))}
+              </div>
+            </SubDescription>
+            <SubDescription isVisible={Boolean(data.eventUrl)}>
+              <div className="pc:hidden">
+                <LinkIcon {...IconStyleProps.mobile} />
+              </div>
+              <div className="hidden pc:block">
+                <LinkIcon {...IconStyleProps.pc} />
+              </div>
+              <Link href={data?.eventUrl ?? ""} target="_blank" rel="noreferrer noopener" className="text-blue">
+                {data?.eventUrl}
+              </Link>
+            </SubDescription>
+            <SubDescription isVisible={Boolean(data.organizerSns)}>
+              <div className="pc:hidden">
+                <UserIcon {...IconStyleProps.mobile} />
+              </div>
+              <div className="hidden pc:block">
+                <UserIcon {...IconStyleProps.pc} />
+              </div>
+              <div className="flex items-center gap-4">
+                {SnsIcon[data?.snsType ?? "기타"]}
+                <span>{formattedOrganizerSns}</span>
+              </div>
+            </SubDescription>
+            {hasEditApplication && <Alert href={pathname + "/approve"} message="수정요청 정보가 있습니다." />}
+          </div>
+          <div className="absolute bottom-0 right-0 hidden text-14 font-400 pc:block">
+            <Link href={pathname + "/edit"} className="mr-16 text-blue">
+              수정하기
             </Link>
-          </SubDescription>
-          <SubDescription isVisible={Boolean(data.organizerSns)}>
-            <div className="pc:hidden">
-              <UserIcon {...IconStyleProps.mobile} />
-            </div>
-            <div className="hidden pc:block">
-              <UserIcon {...IconStyleProps.pc} />
-            </div>
-            <div className="flex items-center gap-4">
-              {SnsIcon[data?.snsType ?? "기타"]}
-              <span>{formattedOrganizerSns}</span>
-            </div>
-          </SubDescription>
-          {hasEditApplication && <Alert href={pathname + "/approve"} message="수정요청 정보가 있습니다." />}
+            <button className="text-gray-400" onClick={() => openModal("report")}>
+              신고하기
+            </button>
+          </div>
         </div>
-        <div className="absolute bottom-0 right-0 hidden text-14 font-400 pc:block">
-          <Link href={pathname + "/edit"} className="mr-16 text-blue">
-            수정하기
-          </Link>
-          <button className="text-gray-400">신고하기</button>
-        </div>
-      </div>
-    </section>
+      </section>
+      {modal === "report" && <ReportModal closeModal={closeModal} />}
+    </>
   );
 };
 
