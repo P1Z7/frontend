@@ -13,8 +13,6 @@ const MyReview = ({ data }: Props) => {
   const formattedDate = formatDate(data.event.startDate, data.event.endDate);
   const formattedAddress = formatAddress(data.event.address);
 
-  console.log(data);
-
   return (
     <div className="flex w-full flex-col gap-16 border-b border-gray-50 px-20 py-16">
       <section>
