@@ -13,16 +13,20 @@ const DetailInfo = () => {
   const { description } = watch();
 
   return (
-    <PostFrame>
-      <div className="flex flex-col gap-28">
-        <ProgressBar ratio="full" />
-        <FunnelTitle step="상세 설명" />
+    <>
+      <PostFrame>
+        <div className="flex flex-col gap-28">
+          <ProgressBar ratio="full" />
+          <FunnelTitle step="상세 설명" />
+        </div>
+        <DetailInput />
+      </PostFrame>
+      <div className="fixed bottom-0 w-full bg-white-black px-20">
+        <BottomButton isSubmit isDisabled={!isCheck || description.length > 100}>
+          작성 완료
+        </BottomButton>
       </div>
-      <DetailInput />
-      <BottomButton isSubmit isDisabled={!isCheck || description.length > 100}>
-        작성 완료
-      </BottomButton>
-    </PostFrame>
+    </>
   );
 };
 

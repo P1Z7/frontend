@@ -35,11 +35,11 @@ const HorizontalEventCard = ({ data, onHeartClick, isGrow = false }: Props) => {
       href={`/event/${data.id}`}
       className={`relative flex w-full ${isGrow ? "" : "pc:max-w-[50.8rem]"} items-center gap-12 border-b border-gray-50 bg-white-black py-12 pc:gap-20 pc:py-20`}
     >
-      <div className="z-heart absolute right-0 top-[1.3rem] pc:top-[2.75rem]" onClick={(e: SyntheticEvent) => e.preventDefault()}>
+      <div className="absolute right-0 top-[1.3rem] z-heart pc:top-[2.75rem]" onClick={(e: SyntheticEvent) => e.preventDefault()}>
         <HeartButton isSmall isSelected={liked} onClick={handleClick} />
       </div>
       <div className="relative h-112 w-84 shrink-0 pc:h-152 pc:w-116">
-        <Image src={data.eventImages?.[0]?.imageUrl ?? NoImage} className="rounded-[0.4rem] object-cover" fill alt="행사 포스터" sizes="116px" />
+        <Image src={data.eventImages?.[0]?.imageUrl ?? NoImage} className="rounded-[0.4rem] object-cover" fill alt="행사 포스터" sizes="116px" priority />
       </div>
       <div className="relative flex w-full min-w-160 flex-col justify-center gap-4 pc:gap-28">
         <div className="flex flex-col gap-4">

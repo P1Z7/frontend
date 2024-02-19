@@ -1,6 +1,8 @@
 import InitButton from "@/(route)/event/[eventId]/edit/_components/InitButton";
+import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import CheckBox from "@/components/CheckBox";
 import ChipButton from "@/components/chip/ChipButton";
 import InputText from "@/components/input/InputText";
 import { checkArrUpdate } from "@/utils/checkArrUpdate";
@@ -19,6 +21,7 @@ const SubInput = () => {
   } = useFormContext<PostType>();
   const [snsType, setSnsType] = useState(getValues("snsType"));
   const [giftList, setGiftList] = useState<string[]>(getValues("tags") || []);
+  const [hasNotOrganizer, setHasNotOrganizer] = useState(getValues("organizerSns") ? false : true);
   const { organizerSns, eventUrl } = watch();
 
   const handleRadioChange = (event: any) => {
@@ -38,36 +41,54 @@ const SubInput = () => {
     setValue("snsType", snsType);
   }, [snsType]);
 
+  useEffect(() => {
+    if (hasNotOrganizer) {
+      setSnsType("트위터");
+      setValue("organizerSns", "");
+    }
+  }, [hasNotOrganizer]);
+
   return (
     <div>
-      <div className="flex flex-col gap-20">
-        <div className="flex flex-col gap-16">
-          <InputText
-            name="organizerSns"
-            placeholder="sns 계정을 입력해주세요."
-            isEdit={validateEdit(defaultValues?.organizerSns !== organizerSns || defaultValues.snsType !== snsType)}
-            onInit={() => {
-              setSnsType(defaultValues?.snsType || "트위터");
-              setValue("organizerSns", defaultValues?.organizerSns || "");
-            }}
-          >
-            주최자
-          </InputText>
-          <div className="flex gap-16">
-            {SNS_TYPE_LIST.map((type) => (
-              <label key={type} className="flex cursor-pointer items-center gap-4">
-                <input
-                  className="h-16 w-16 cursor-pointer appearance-none rounded-full border-2 border-gray-200 checked:border-[0.5rem] checked:border-main-pink-500 hover:bg-main-pink-50"
-                  name="sns"
-                  value={type}
-                  type="radio"
-                  onChange={handleRadioChange}
-                  checked={snsType === type}
+      <div className="flex flex-col gap-20 pc:gap-32">
+        <div className="flex flex-col gap-12">
+          <div className="relative flex flex-col gap-16 ">
+            <label className="flex items-center">
+              주최자 SNS
+              {validateEdit(defaultValues?.organizerSns !== organizerSns || defaultValues.snsType !== snsType) && (
+                <InitButton
+                  onClick={() => {
+                    setSnsType(defaultValues?.snsType || "트위터");
+                    setValue("organizerSns", defaultValues?.organizerSns || "");
+                    setHasNotOrganizer(defaultValues?.organizerSns ? false : true);
+                  }}
                 />
-                {type}
-              </label>
-            ))}
+              )}
+            </label>
+            <div className="flex gap-16">
+              {SNS_TYPE_LIST.map((type) => (
+                <label key={type} className={classNames("flex cursor-pointer items-center gap-4", { "!text-gray-400 hover:cursor-not-allowed": hasNotOrganizer })}>
+                  <input
+                    className={classNames(
+                      "h-16 w-16 cursor-pointer appearance-none rounded-full border-2 border-gray-200 checked:border-[0.5rem] checked:border-main-pink-500 hover:bg-main-pink-50",
+                      { "checked:border-gray-200 hover:cursor-not-allowed hover:bg-white-black": hasNotOrganizer },
+                    )}
+                    name="sns"
+                    value={type}
+                    type="radio"
+                    onChange={handleRadioChange}
+                    checked={snsType === type}
+                    disabled={hasNotOrganizer}
+                  />
+                  {type}
+                </label>
+              ))}
+            </div>
+            <InputText name="organizerSns" placeholder="sns 계정을 입력해주세요." disabled={hasNotOrganizer} />
           </div>
+          <CheckBox isCheck={hasNotOrganizer} setIsCheck={setHasNotOrganizer}>
+            주최자 입력안함
+          </CheckBox>
         </div>
         <InputText
           name="eventUrl"

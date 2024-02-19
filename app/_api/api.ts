@@ -3,7 +3,7 @@ import { Req_Post_Type } from "@/types/postBodyType";
 import { Req_Put_Type } from "@/types/putBodyType";
 import { Req_Query_Type } from "@/types/queryType";
 
-const STR_RES_ENDPOINT = ["/file/upload", "/event/update/application"];
+const STR_RES_ENDPOINT = ["/file/upload", "/event/update/application", "/artist/request"];
 
 export class Api {
   private baseUrl;
@@ -126,7 +126,8 @@ type PostEndPoint =
   | "/email"
   | "/email/verification"
   | "/event/update/application"
-  | "/event/update/approval";
+  | "/event/update/approval"
+  | "/artist/request";
 
 type PutEndPoint = `/event/${string}` | `/users/${string}/profile` | `/users/${string}/password`;
 type DeleteEndPoint = `/users/${string}/artists` | `/reviews/${string}/images` | `/users/${string}`;
@@ -160,7 +161,9 @@ type PostBodyType<T> = T extends "/event"
                           ? Req_Post_Type["edit"]
                           : T extends "/event/update/approval"
                             ? Req_Post_Type["approve"]
-                            : unknown;
+                            : T extends "/artist/request"
+                              ? Req_Post_Type["request"]
+                              : unknown;
 
 type GetQueryType<T> = T extends "/event"
   ? Req_Query_Type["행사목록"]

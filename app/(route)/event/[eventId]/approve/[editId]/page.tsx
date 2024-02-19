@@ -67,9 +67,9 @@ const EditDetailApprove = () => {
   };
 
   return (
-    <PinkLayout size="narrow">
+    <PinkLayout size="middle">
       <MobileHeader />
-      <div className="flex flex-col gap-20 px-20 py-16 pb-96 text-16 font-500 text-gray-900">
+      <div className="flex flex-col gap-20 px-20 py-16 pb-96 text-16 font-500 text-gray-900 pc:p-32">
         {isSuccess && (
           <>
             <section className="flex flex-col gap-4">
@@ -95,7 +95,7 @@ const EditDetailApprove = () => {
               </EditBox>
               {data.applicationDetail.updateCategory === "eventImages" && <p className="text-14 text-gray-400">사진을 클릭해 확인해 보세요.</p>}
             </section>
-            <section className="flex flex-col gap-4">
+            <section className="flex flex-col gap-4 pc:gap-12">
               승인 현황
               <div className="flex gap-24 py-8">
                 <div className="flex gap-8 text-14 font-500 text-gray-500">
