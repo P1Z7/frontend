@@ -36,9 +36,15 @@ const MyArtistList = () => {
       if (myArtistData?.some((item) => item.artistId === cur.id)) {
         setDeleteData((prev) => prev.add(cur.id));
       }
+      if (!myArtistData?.some((item) => item.artistId === cur.id)) {
+        setAddData((prev) => (prev.delete(cur.id), prev));
+      }
     } else {
       setSelected((prevSelected) => [...prevSelected, cur]);
 
+      if (myArtistData?.some((item) => item.artistId === cur.id)) {
+        setDeleteData((prev) => (prev.delete(cur.id), prev));
+      }
       if (!myArtistData?.some((item) => item.artistId === cur.id)) {
         setAddData((prev) => prev.add(cur.id));
       }

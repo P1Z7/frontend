@@ -85,6 +85,9 @@ export class Api {
     const res = await fetch(this.baseUrl, {
       method: "DELETE",
       body: JSON.stringify(body),
+      headers: {
+        "Content-type": "application/json",
+      },
     });
     if (!res.ok) {
       const result = await res.json();
@@ -198,4 +201,4 @@ type PutBodyType<T> = T extends `/event/${string}`
     : T extends `/users/${string}/password`
       ? Req_Put_Type["password"]
       : any;
-type DeleteBodyType<T> = T extends `/users/${string}` ? Req_Delete_Type["user"] : any;
+type DeleteBodyType<T> = T extends `/users/${string}/artists` ? Req_Delete_Type["myArtist"] : T extends `/users/${string}` ? Req_Delete_Type["user"] : any;
