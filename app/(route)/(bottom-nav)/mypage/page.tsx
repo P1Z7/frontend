@@ -1,4 +1,6 @@
 import Tabs from "@/components/Tabs";
+import DottedLayout from "@/components/layout/DottedLayout";
+import { useAuth } from "@/hooks/useAuth";
 import UserProfile from "./_components/UserProfile";
 import MyArtistTab from "./_components/tab/MyArtistTab";
 import MyEventTab from "./_components/tab/MyEventTab";

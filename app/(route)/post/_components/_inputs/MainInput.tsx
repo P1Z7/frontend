@@ -1,3 +1,4 @@
+import InitButton from "@/(route)/event/[eventId]/edit/_components/InitButton";
 import { useFormContext } from "react-hook-form";
 import AddressBottomSheet from "@/components/bottom-sheet/AddressBottomSheet";
 import CalenderBottomSheet from "@/components/bottom-sheet/CalendarBottomSheet";
@@ -19,7 +20,13 @@ const MainInput = () => {
 
   return (
     <>
-      <InputText name="placeName" placeholder="장소 이름을 입력하세요." rules={{ required: "제목을 입력해주세요." }} isEdit={validateEdit(defaultValues?.placeName !== placeName)}>
+      <InputText
+        name="placeName"
+        placeholder="장소 이름을 입력하세요."
+        rules={{ required: "제목을 입력해주세요." }}
+        isEdit={validateEdit(defaultValues?.placeName !== placeName)}
+        onInit={() => setValue("placeName", defaultValues?.placeName || "")}
+      >
         장소 이름
       </InputText>
       <div className="flex flex-col">
@@ -30,15 +37,26 @@ const MainInput = () => {
           onKeyDown={(event) => handleEnterDown(event, () => openBottomSheet("address"))}
           onClick={() => openBottomSheet("address")}
           isEdit={validateEdit(defaultValues?.address !== address || defaultValues?.addressDetail !== addressDetail)}
+          onInit={() => {
+            setValue("address", defaultValues?.address || "");
+            setValue("addressDetail", defaultValues?.addressDetail || "");
+          }}
         >
           주소
         </InputText>
         <InputText name="addressDetail" placeholder="상세 주소 입력" />
       </div>
       <div className="flex flex-col">
-        <div className="flex items-center gap-4">
+        <div className="relative flex items-center gap-4">
           기간
-          {validateEdit(defaultValues?.startDate !== startDate || defaultValues?.endDate !== endDate) && <p className="text-12 font-600 text-blue">수정됨</p>}
+          {validateEdit(defaultValues?.startDate !== startDate || defaultValues?.endDate !== endDate) && (
+            <InitButton
+              onClick={() => {
+                setValue("startDate", defaultValues?.startDate || "");
+                setValue("endDate", defaultValues?.endDate || "");
+              }}
+            />
+          )}
         </div>
         <div className="flex">
           <div className="w-1/2">

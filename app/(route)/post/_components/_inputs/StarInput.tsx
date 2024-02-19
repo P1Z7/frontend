@@ -1,3 +1,4 @@
+import InitButton from "@/(route)/event/[eventId]/edit/_components/InitButton";
 import { useFormContext } from "react-hook-form";
 import EventTypeBottomSheet from "@/components/bottom-sheet/EventTypeBottomSheet";
 import StarBottomSheet from "@/components/bottom-sheet/StarBottomSheet";
@@ -12,20 +13,28 @@ const StarInput = () => {
   const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
 
   const {
+    setValue,
     formState: { defaultValues },
     watch,
   } = useFormContext<PostType>();
   const { eventType, groupId, artistNames, artists } = watch();
   const isNotMember = groupId && artistNames.length === 0;
 
+  const handleArtistInit = () => {
+    setValue("groupId", defaultValues?.groupId || "");
+    setValue("groupName", defaultValues?.groupName || "");
+    setValue("artists", defaultValues?.artists as string[]);
+    setValue("artistNames", defaultValues?.artistNames as string[]);
+  };
+
   return (
     <>
-      <div className="flex-item flex flex-col gap-20">
-        <div className="flex flex-col">
+      <div className="flex-item flex flex-col gap-20 pc:h-[30rem]">
+        <div className="relative flex flex-col">
           <label className="flex items-center gap-4">
             아티스트
             {validateEdit(typeof defaultValues?.artists !== "undefined" && (checkArrUpdate(defaultValues?.artists, artists) || defaultValues?.groupId !== groupId)) && (
-              <p className="text-12 font-600 text-blue">수정됨</p>
+              <InitButton onClick={() => handleArtistInit()} />
             )}
           </label>
           <div className="grid grid-cols-2 gap-8">
@@ -54,6 +63,8 @@ const StarInput = () => {
           onClick={() => openBottomSheet("event")}
           onKeyDown={(event) => handleEnterDown(event, () => openBottomSheet("event"))}
           isEdit={validateEdit(defaultValues?.eventType !== eventType)}
+          onInit={() => setValue("eventType", defaultValues?.eventType || "카페")}
+          noButton
         >
           행사 유형
         </InputText>

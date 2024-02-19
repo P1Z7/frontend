@@ -1,30 +1,62 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ReactElement, cloneElement } from "react";
+import { ReactElement, cloneElement, useEffect, useState } from "react";
+import { Session, useSession } from "@/store/session/cookies";
 import PostIcon from "@/public/icon/add-outline.svg";
 import HomeIcon from "@/public/icon/home.svg";
 import LogoIcon from "@/public/icon/logo.svg";
 import SearchIcon from "@/public/icon/search_black.svg";
-import UserIcon from "@/public/icon/user.svg";
-
-// TODO: 로그인 여부에 따라 로그인 버튼 표시
 
 const PcHeader = () => {
   const pathname = usePathname();
+  const [session, setSession] = useState<Session>();
+
+  const [profileImage, setProfileImage] = useState("");
+
+  const navButtons = [
+    { href: "/", icon: <HomeIcon />, label: "홈" },
+    { href: "/search", icon: <SearchIcon />, label: "둘러보기" },
+    { href: "/post", icon: <PostIcon />, label: "등록하기" },
+  ];
+  useEffect(() => {
+    const session = useSession();
+    setSession(session);
+    if (session?.user.profileImage) {
+      setProfileImage(session?.user.profileImage);
+      return;
+    }
+    setProfileImage("");
+  }, [pathname]);
 
   return (
     <header className="sticky top-0 z-nav hidden h-72 w-full bg-white-black px-24 pc:block">
       <div className="mx-auto flex h-full max-w-[104rem] items-center justify-between">
-        <Link href="/">
+        <Link href="/" scroll={false}>
           <LogoIcon />
         </Link>
         <div className="flex gap-16">
-          <NavButton icon={<HomeIcon />} label="홈" href={"/"} isActive={pathname === "/"} />
-          <NavButton icon={<SearchIcon />} label="둘러보기" href={"/search"} isActive={pathname === "/search"} />
-          <NavButton icon={<PostIcon />} label="등록하기" href={"/post"} isActive={pathname === "/post"} />
-          <NavButton icon={<UserIcon width={24} />} label="마이페이지" href={"/mypage"} isActive={pathname === "/mypage"} />
+          {navButtons.map((item, index) => (
+            <NavButton key={index} href={item.href} icon={item.icon} label={item.label} isActive={pathname === item.href} />
+          ))}
+          {session ? (
+            <NavButton
+              href="/mypage"
+              icon={<Image src={profileImage || "/icon/no-profile.svg"} alt="프로필 이미지" width={24} height={24} className="h-24 w-24 rounded-full object-cover" />}
+              label="마이페이지"
+              isActive={pathname === "/mypage"}
+            />
+          ) : (
+            <Link
+              href="/signin"
+              scroll={false}
+              className="flex-center h-full w-[12.2rem] rounded-sm border border-main-pink-300 bg-main-pink-50 p-8 text-16 font-600 text-main-pink-white"
+            >
+              로그인
+            </Link>
+          )}
         </div>
       </div>
     </header>
@@ -46,7 +78,7 @@ const NavButton = ({ href, icon, label, isActive }: NavButtonProps) => {
   });
 
   return (
-    <Link href={href} className="flex h-full w-[12.2rem] items-center gap-8 p-8">
+    <Link href={href} scroll={false} className="flex h-full w-[12.2rem] items-center gap-8 p-8">
       {clonedIcon}
       <span className={`text-16 font-500 ${isActive ? "text-main-pink-500" : "text-gray-700"}`}>{label}</span>
     </Link>

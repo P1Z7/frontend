@@ -8,12 +8,10 @@ const STR_RES_ENDPOINT = ["/file/upload", "/event/update/application"];
 export class Api {
   private baseUrl;
   private queryString;
-  private accessToken;
 
-  constructor(token?: string) {
+  constructor() {
     this.baseUrl = "";
     this.queryString = "";
-    this.accessToken = token;
   }
 
   private makeError(result: any) {
@@ -40,7 +38,7 @@ export class Api {
     if (queryObj) {
       this.makeQueryString<T>(queryObj);
     }
-    const res = await fetch(queryObj ? this.baseUrl + this.queryString : this.baseUrl, {});
+    const res = await fetch(queryObj ? this.baseUrl + this.queryString : this.baseUrl);
     const result = await res.json();
     this.makeError(result);
 

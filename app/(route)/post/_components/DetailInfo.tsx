@@ -19,7 +19,9 @@ const DetailInfo = () => {
         <FunnelTitle step="상세 설명" />
       </div>
       <DetailInput />
-      <BottomButton isDisabled={!isCheck || description.length > 100}>작성 완료</BottomButton>
+      <BottomButton isSubmit isDisabled={!isCheck || description.length > 100}>
+        작성 완료
+      </BottomButton>
     </PostFrame>
   );
 };

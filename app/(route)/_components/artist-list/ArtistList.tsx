@@ -24,6 +24,7 @@ const ArtistList = () => {
     data: artistData,
     fetchNextPage,
     isFetching,
+    isLoading,
   } = useInfiniteQuery({
     initialPageParam: 1,
     queryKey: ["artist"],
@@ -37,15 +38,16 @@ const ArtistList = () => {
   });
 
   return (
-    <div className="flex flex-col gap-16 px-20">
+    <div className="flex flex-col gap-16 px-20 pc:px-40">
       <h2 className="text-20 font-700 text-gray-900">아티스트로 찾아보기</h2>
       <div className="flex flex-col items-center">
-        <div className="flex w-full max-w-[52rem] flex-col items-center">
-          <ul className="flex flex-wrap justify-center gap-20">
+        <div className="flex w-full max-w-[52rem] flex-col items-center pc:max-w-full">
+          <ul className="flex flex-wrap justify-center gap-20 pc:gap-32">
+            {isLoading && <div>로딩중</div>}
             {artistData?.pages.map((page) =>
               page.artistAndGroupList.map((artist) => (
-                <li key={artist.id} className="w-88">
-                  <ArtistCard profileImage={artist.image} onClick={() => router.push(`/search?keyword=${artist.name}`)}>
+                <li key={artist.id} className="w-88 pc:w-120">
+                  <ArtistCard profileImage={artist.image} onClick={() => router.push(`/search?keyword=${artist.name}&sort=최신순`)}>
                     {artist.name}
                   </ArtistCard>
                 </li>

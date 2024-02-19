@@ -10,6 +10,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import Button from "@/components/button";
 import InputText from "@/components/input/InputText";
+import PinkLayout from "@/components/layout/PinkLayout";
 import useEnterNext from "@/hooks/useEnterNext";
 import { setSession } from "@/store/session/cookies";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
@@ -85,7 +86,7 @@ const SignInPage = () => {
   };
 
   return (
-    <>
+    <PinkLayout size="narrow">
       <header className="flex h-72 w-full justify-between bg-white-white px-20 pb-12 pt-36">
         <button onClick={() => router.back()}>
           <ArrowLeft />
@@ -144,7 +145,7 @@ const SignInPage = () => {
           </Link>
         </div>
       </div>
-    </>
+    </PinkLayout>
   );
 };
 export default SignInPage;

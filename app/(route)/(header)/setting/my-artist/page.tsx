@@ -1,14 +1,11 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { Suspense } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import MyArtistList from "@/components/MyArtistList";
 import AlertModal from "@/components/modal/AlertModal";
 import InputModal from "@/components/modal/InputModal";
 import { instance } from "@/api/api";
 import { useModal } from "@/hooks/useModal";
-import { getSession } from "@/store/session/cookies";
 
 const FavoritePage = () => {
   const { modal, openModal, closeModal } = useModal();

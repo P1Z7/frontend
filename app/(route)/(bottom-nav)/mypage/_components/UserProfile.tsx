@@ -18,7 +18,7 @@ const UserProfile = () => {
   }, []);
 
   return (
-    <div className="flex items-center justify-between px-20 pt-48">
+    <div className="flex items-center justify-between px-20 pt-48 pc:h-fit pc:w-[26.2rem]">
       <div className="flex items-center gap-12">
         <Image
           src={session?.user.profileImage ? session?.user.profileImage : "/icon/no-profile.svg"}

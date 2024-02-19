@@ -47,7 +47,7 @@ const OAuth = () => {
   };
 
   return (
-    <div className="flex-center h-dvh w-dvw gap-12">
+    <div className="flex-center fixed bottom-0 left-0 right-0 top-0 z-floating gap-12 bg-white-black">
       <SocialLogo />
       <FadingDot />
       <Logo />
