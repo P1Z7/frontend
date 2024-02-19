@@ -18,7 +18,6 @@ const StarInput = () => {
   const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
   const { modal, openModal, closeModal } = useModal();
   const { isPc } = useGetWindowWidth();
-  const [isOpenEventType, setIsOpenEventType] = useState(false);
 
   const {
     setValue,
@@ -36,13 +35,15 @@ const StarInput = () => {
   };
 
   useEffect(() => {
-    if (isOpenEventType) {
-      // 스크롤 위치 바꾸고 싶다
-      // console.log(document?.querySelector("#layout_base")?.scrollBy(0, 30));
-      // const s = document.querySelector("#layout_base");
-      // if (s) s.scrollTop = 30;
+    if (isPc && bottomSheet) {
+      openModal(bottomSheet);
+      closeBottomSheet();
     }
-  }, [isOpenEventType]);
+    if (!isPc && modal) {
+      openBottomSheet(modal);
+      closeModal();
+    }
+  }, [isPc]);
 
   return (
     <>
@@ -77,15 +78,15 @@ const StarInput = () => {
           readOnly
           placeholder="행사 유형을 선택하세요."
           tabIndex={0}
-          onClick={() => (isPc ? setIsOpenEventType(true) : openBottomSheet("event"))}
-          onKeyDown={(event) => handleEnterDown(event, () => openBottomSheet("event"))}
+          onClick={() => (isPc ? openModal("event") : openBottomSheet("event"))}
+          onKeyDown={(event) => handleEnterDown(event, () => (isPc ? openModal("event") : openBottomSheet("event")))}
           isEdit={validateEdit(defaultValues?.eventType !== eventType)}
           onInit={() => setValue("eventType", defaultValues?.eventType || "카페")}
           noButton
         >
           행사 유형
         </InputText>
-        {isOpenEventType && <EventTypeList type="dropDown" handleClickFunc={() => setIsOpenEventType(false)} />}
+        {modal === "event" && <EventTypeList type="dropDown" handleClickFunc={closeModal} />}
         <InputText name="groupId" hidden />
         <InputText name="artists" hidden />
       </div>
