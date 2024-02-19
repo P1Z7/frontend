@@ -27,8 +27,8 @@ const MyCalendar = ({ setSelectedDate, selectedDate, data, isFold, lastDay }: Pr
       onChange={handleClickToday}
       value={selectedDate}
       tileContent={({ date }) => tileContent({ date, data, isFold, lastDay })}
-      nextLabel={<PrevIcon onClick={() => (lastDay = [])} width={32} height={16} viewBox="0 0 24 24" stroke="#A2A5AA" />}
-      prevLabel={<NextIcon onClick={() => (lastDay = [])} width={32} height={16} viewBox="0 0 24 24" stroke="#A2A5AA" />}
+      nextLabel={<PrevIcon onClick={() => (lastDay = [])} width={32} height={16} viewBox="0 0 24 24" stroke="#A2A5AA" aria-label="이전 달로 이동" />}
+      prevLabel={<NextIcon onClick={() => (lastDay = [])} width={32} height={16} viewBox="0 0 24 24" stroke="#A2A5AA" aria-label="다음 달로 이동" />}
       next2Label={null}
       prev2Label={null}
       formatDay={(locale, date) => date.getDate().toString()}
