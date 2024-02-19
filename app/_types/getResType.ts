@@ -19,6 +19,11 @@ type Res_Get_Event_Search = {
 type Res_Get_EventReviews = EventReviewType[];
 
 type Res_Get_Artist_Group = ArtistAndGroupListType;
+type Res_Get_myArtist = {
+  artistId: string;
+  artistName: string;
+  asrtistImage: string;
+};
 
 type Res_Get_Edit_Application = EditApplicationType[];
 
@@ -36,6 +41,7 @@ export type Res_Get_Type = {
   eventSearch: Res_Get_Event_Search;
   eventReviews: Res_Get_EventReviews;
   artistGroup: Res_Get_Artist_Group;
+  myArtist: Res_Get_myArtist;
   editApplication: Res_Get_Edit_Application;
   artistEvent: Res_Get_Artist_Event;
 };

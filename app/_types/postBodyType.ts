@@ -59,6 +59,14 @@ type Req_Post_Group = {
   groupImage?: string;
 };
 
+type Req_Post_MyArtist = {
+  artistIds: string[];
+};
+
+type Req_Post_ArtistRequest = {
+  name: string;
+};
+
 type Req_Post_Review = {
   userId: string;
   eventId: string;
@@ -109,6 +117,8 @@ export type Req_Post_Type = {
   token: Req_Post_Token;
   artist: Req_Post_Artist;
   group: Req_Post_Group;
+  myArtist: Req_Post_MyArtist;
+  artistRequest: Req_Post_ArtistRequest;
   review: Req_Post_Review;
   reviewLike: Req_Post_Review_Like;
   email: Req_Post_Email;

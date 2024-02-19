@@ -3,7 +3,7 @@ import Image from "next/image";
 import { ChangeEvent, KeyboardEvent, ReactNode, useState } from "react";
 import { FieldPath, FieldValues, UseControllerProps, useController } from "react-hook-form";
 import toast from "react-hot-toast";
-import { useSession } from "@/store/session/cookies";
+import { getSession } from "@/store/session/cookies";
 import EditIcon from "@/public/icon/pencil.svg";
 
 interface Props {
@@ -18,7 +18,7 @@ type Function = <TFieldValues extends FieldValues = FieldValues, TName extends F
 const InputProfileImg: Function = ({ children, hasProfile, ...props }) => {
   const { field, fieldState } = useController(props);
 
-  const session = useSession();
+  const session = getSession();
   const [thumbnail, setThumbnail] = useState(session?.user.profileImage ?? "");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

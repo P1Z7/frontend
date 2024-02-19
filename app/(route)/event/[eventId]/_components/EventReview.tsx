@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Evaluation from "@/components/Evaluation";
 import { instance } from "@/api/api";
-import { useSession } from "@/store/session/cookies";
+import { getSession } from "@/store/session/cookies";
 import { EventReviewType } from "@/types/index";
 import HeartIcon from "@/public/icon/heart.svg";
 
@@ -18,7 +18,7 @@ const EventReview = ({ data }: Props) => {
   const [liked, setLiked] = useState(data.isLike);
   const [likeCount, setLikeCount] = useState(data.likeCount);
 
-  const session = useSession();
+  const session = getSession();
   const router = useRouter();
 
   const likeMutation = useMutation({

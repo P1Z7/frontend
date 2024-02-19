@@ -3,7 +3,7 @@ import { Req_Post_Type } from "@/types/postBodyType";
 import { Req_Put_Type } from "@/types/putBodyType";
 import { Req_Query_Type } from "@/types/queryType";
 
-const STR_RES_ENDPOINT = ["/file/upload", "/event/update/application", "/artist/request", "/reviews"];
+const STR_RES_ENDPOINT = ["/file/upload", "/artist/request", "/reviews"];
 
 export class Api {
   private baseUrl;
@@ -14,9 +14,27 @@ export class Api {
     this.queryString = "";
   }
 
+  private async updateToken(res: any, config: any) {
+    if (res.status === 401) {
+      const tokenRes = await fetch("/auth/token");
+      if (tokenRes.ok) {
+        return true;
+      }
+      throw new Error("토큰 갱신 과정에서 서버 문제가 있습니다.");
+    }
+    return false;
+  }
+
+  private async refetch(config: [string]) {
+    const updateRes = await fetch(...config);
+    const updateResult = await updateRes.json();
+    this.makeError(updateResult);
+    return updateResult;
+  }
+
   private makeError(result: any) {
     if (result.message) {
-      throw new Error(result.message);
+      throw new Error(result.error + "/" + result.message);
     }
   }
 
@@ -41,7 +59,6 @@ export class Api {
     const res = await fetch(queryObj ? this.baseUrl + this.queryString : this.baseUrl);
     const result = await res.json();
     this.makeError(result);
-
     return result;
   }
 
@@ -55,7 +72,6 @@ export class Api {
       body: endPoint === "/file/upload" ? (body as any) : JSON.stringify(body),
       headers: {
         ...(endPoint === "/file/upload" ? {} : { "Content-Type": "application/json" }),
-        credentials: "include",
       },
     });
     const result = STR_RES_ENDPOINT.includes(endPoint) ? await res.text() : await res.json();
@@ -84,11 +100,16 @@ export class Api {
     const res = await fetch(this.baseUrl, {
       method: "DELETE",
       body: JSON.stringify(body),
+      headers: {
+        "Content-type": "application/json",
+      },
     });
-    const result = await res.json();
-    this.makeError(result);
-
-    return result;
+    if (!res.ok) {
+      const result = await res.json();
+      this.makeError(result);
+      return result;
+    }
+    return res;
   }
 }
 
@@ -116,10 +137,12 @@ type PostEndPoint =
   | "/event"
   | "/event/like"
   | "/users"
+  | `/users/${string}/artists`
   | "/auth"
   | "/auth/token"
   | "/artist"
   | "/group"
+  | "/artist/request"
   | "/file/upload"
   | "/reviews"
   | `/reviews/${string}/like`
@@ -202,4 +225,4 @@ type PutBodyType<T> = T extends `/event/${string}`
     : T extends `/users/${string}/password`
       ? Req_Put_Type["password"]
       : any;
-type DeleteBodyType<T> = T extends `/users/${string}` ? Req_Delete_Type["user"] : any;
+type DeleteBodyType<T> = T extends `/users/${string}/artists` ? Req_Delete_Type["myArtist"] : T extends `/users/${string}` ? Req_Delete_Type["user"] : any;
