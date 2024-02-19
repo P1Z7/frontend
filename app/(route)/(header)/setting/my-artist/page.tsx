@@ -14,8 +14,15 @@ const FavoritePage = () => {
   const { modal, openModal, closeModal } = useModal();
   const { control, handleSubmit, setValue } = useForm({ defaultValues: { request: "" } });
 
-  const onSubmit: SubmitHandler<{ request: string }> = ({ request }) => {
-    if (request) {
+  const onSubmit: SubmitHandler<{ request: string }> = async ({ request }) => {
+    try {
+      if (request) {
+        const res = await instance.post("/artist/request", {
+          name: request,
+        });
+      }
+    } catch (e) {
+    } finally {
       openModal("confirm");
       setValue("request", "");
     }

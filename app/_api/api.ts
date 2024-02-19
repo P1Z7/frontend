@@ -124,6 +124,7 @@ type PostEndPoint =
   | "/auth/token"
   | "/artist"
   | "/group"
+  | "/artist/request"
   | "/file/upload"
   | "/reviews"
   | `/reviews/${string}/like`
@@ -152,21 +153,23 @@ type PostBodyType<T> = T extends "/event"
               ? Req_Post_Type["group"]
               : T extends `/users/${string}/artists`
                 ? Req_Post_Type["myArtist"]
-                : T extends "/file/upload"
-                  ? FormData
-                  : T extends "/reviews"
-                    ? Req_Post_Type["review"]
-                    : T extends `/reviews/${string}/like`
-                      ? Req_Post_Type["reviewLike"]
-                      : T extends `/email`
-                        ? Req_Post_Type["email"]
-                        : T extends `/email/verification`
-                          ? Req_Post_Type["verification"]
-                          : T extends "/event/update/application"
-                            ? Req_Post_Type["edit"]
-                            : T extends "/event/update/approval"
-                              ? Req_Post_Type["approve"]
-                              : unknown;
+                : T extends "/artist/request"
+                  ? Req_Post_Type["artistRequest"]
+                  : T extends "/file/upload"
+                    ? FormData
+                    : T extends "/reviews"
+                      ? Req_Post_Type["review"]
+                      : T extends `/reviews/${string}/like`
+                        ? Req_Post_Type["reviewLike"]
+                        : T extends `/email`
+                          ? Req_Post_Type["email"]
+                          : T extends `/email/verification`
+                            ? Req_Post_Type["verification"]
+                            : T extends "/event/update/application"
+                              ? Req_Post_Type["edit"]
+                              : T extends "/event/update/approval"
+                                ? Req_Post_Type["approve"]
+                                : unknown;
 
 type GetQueryType<T> = T extends "/event"
   ? Req_Query_Type["행사목록"]

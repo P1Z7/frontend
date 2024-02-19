@@ -1,4 +1,5 @@
 import { keepPreviousData, useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import BottomButton from "@/components/button/BottomButton";
 import { instance } from "@/api/api";
@@ -13,13 +14,14 @@ import SearchInput from "./input/SearchInput";
 const SIZE = 12;
 
 const MyArtistList = () => {
+  const router = useRouter();
   const [keyword, setKeyword] = useState("");
+
   const session = getSession();
   const userId = session?.user.userId;
   const { data: myArtistData } = useQuery({ queryKey: ["myArtist"], queryFn: async (): Promise<Res_Get_Type["myArtist"][]> => await instance.get(`/users/${userId}/artists`) });
 
   const [selected, setSelected] = useState<ArtistType[]>([]);
-
   useEffect(() => {
     if (myArtistData) {
       setSelected(myArtistData.map((item) => ({ id: item.artistId, name: item.artistName, image: item.asrtistImage, type: "" })));
@@ -54,21 +56,30 @@ const MyArtistList = () => {
   const handleSubmit = async () => {
     const session = getSession();
     if (addData.size) {
-      const res = await instance.post(`/users/${session?.user.userId}/artists`, {
-        artistIds: [...addData],
-      });
+      try {
+        const res = await instance.post(`/users/${session?.user.userId}/artists`, {
+          artistIds: [...addData],
+        });
+        router.push("/mypage");
+      } catch (e) {
+        console.log(e);
+      }
     }
     if (deleteData.size) {
       const deleteRes = await instance.delete(`/users/${session?.user.userId}/artists`, {
         artistIds: [...deleteData],
       });
+      router.push("/mypage");
     }
   };
 
   const queryClient = useQueryClient();
   const artistMutation = useMutation({
     mutationFn: handleSubmit,
-    onSuccess: () => queryClient.refetchQueries({ queryKey: ["myArtist"] }),
+    onSuccess: () => {
+      router.push("/mypage");
+      queryClient.refetchQueries({ queryKey: ["myArtist"] });
+    },
   });
 
   const {
@@ -83,6 +94,10 @@ const MyArtistList = () => {
     getNextPageParam: (lastPage) => (lastPage.page * SIZE < lastPage.totalCount ? lastPage.page + 1 : null),
     placeholderData: keepPreviousData,
   });
+
+  useEffect(() => {
+    refetch();
+  }, [keyword]);
 
   const containerRef = useInfiniteScroll({
     handleScroll: fetchNextPage,
