@@ -5,22 +5,21 @@ import { instance } from "app/_api/api";
 import DeferredSuspense from "@/components/skeleton/DeferredSuspense";
 import ReviewSkeleton from "@/components/skeleton/ReviewSkeleton";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
-import { useSession } from "@/store/session/cookies";
+import { getSession } from "@/store/session/cookies";
 import { Res_Get_Type } from "@/types/getResType";
 import BottomButton from "../BottomButton";
 import EventReview from "../EventReview";
 
 const SIZE = 10;
 const INITIAL_CURSOR_ID = 100000;
-const DEFAULT_USER_ID = "default";
 
 interface Props {
   eventId: string;
 }
 
 const ReviewTab = ({ eventId }: Props) => {
-  const session = useSession();
-  const userId = session?.user.userId ?? DEFAULT_USER_ID;
+  const session = getSession();
+  const userId = session?.user.userId ?? "";
 
   const getReviews = async ({ pageParam = 1 }) => {
     const data: Res_Get_Type["eventReviews"] = await instance.get(`/reviews/${eventId}`, { userId, size: SIZE, cursorId: pageParam == 1 ? INITIAL_CURSOR_ID : pageParam });

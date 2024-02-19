@@ -1,16 +1,18 @@
 import { instance } from "app/_api/api";
+import dynamic from "next/dynamic";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import React from "react";
 import { FieldValues, FormProvider, UseFormProps, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useModal } from "@/hooks/useModal";
-import { useSession } from "@/store/session/cookies";
+import { getSession } from "@/store/session/cookies";
 import { handleSignupSubmit } from "@/utils/handleSignupSubmit";
 import { handlePostSubmit, submitEditApplication, submitEditWriter } from "@/utils/submitPost";
 import { EditErrMsgType, PostErrMsgType } from "@/types/errorMsgType";
 import { EDIT_ERR_MSG, POST_ERR_MSG } from "@/constants/errorMsg";
 import { useStore } from "../_store";
-import AlertModal from "./modal/AlertModal";
+
+const AlertModal = dynamic(() => import("@/components/modal/AlertModal"), { ssr: false });
 
 interface GenericFormProps<T extends FieldValues> {
   children: React.ReactNode;
@@ -28,7 +30,7 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
   const onSubmit = async () => {
     const userInputValue = methods.getValues();
     const defaultValue = methods.formState.defaultValues;
-    const session = useSession();
+    const session = getSession();
 
     if (path === "/post") {
       try {

@@ -4,14 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactElement, cloneElement, useEffect, useState } from "react";
-import { useSession } from "@/store/session/cookies";
+import { getSession } from "@/store/session/cookies";
 import PostIcon from "@/public/icon/add-outline.svg";
 import HomeIcon from "@/public/icon/home.svg";
 import SearchIcon from "@/public/icon/search_black.svg";
 
 const BottomNav = () => {
   const pathname = usePathname();
-  const session = useSession();
+  const session = getSession();
   const [profileImage, setProfileImage] = useState("");
 
   const navButtons = [
@@ -33,7 +33,7 @@ const BottomNav = () => {
   }, [session]);
 
   return (
-    <nav className="fixed bottom-0 left-0 z-nav flex h-72 w-full items-center justify-evenly gap-28 border-t border-gray-50 bg-white-black py-8 shadow-top tablet:hidden">
+    <nav className="fixed bottom-0 left-0 z-nav flex h-72 w-full items-center justify-evenly gap-28 border-t border-gray-50 bg-white-black py-8 shadow-top pc:hidden">
       {navButtons.map((item, index) => (
         <NavButton key={index} href={item.href} icon={item.icon} label={item.label} isActive={pathname === item.href} />
       ))}

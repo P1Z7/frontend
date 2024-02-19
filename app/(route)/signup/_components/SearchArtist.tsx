@@ -1,5 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { instance } from "app/_api/api";
+import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -10,7 +11,8 @@ import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { useModal } from "@/hooks/useModal";
 import { Res_Get_Type } from "@/types/getResType";
 import { ArtistType } from "@/types/index";
-import InputModal from "../../../_components/modal/InputModal";
+
+const InputModal = dynamic(() => import("@/components/modal/InputModal"), { ssr: false });
 
 interface Props {
   onClick: (name: string, id: string, isChecked: boolean) => void;

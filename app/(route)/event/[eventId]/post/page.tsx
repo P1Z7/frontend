@@ -1,6 +1,7 @@
 "use client";
 
 import LoadingDot from "@/(route)/(bottom-nav)/signin/_components/LoadingDot";
+import { useQueryClient } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
 import { ButtonHTMLAttributes, ChangeEvent, InputHTMLAttributes, ReactNode, useCallback, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -69,6 +70,7 @@ const ReviewPostPage = () => {
 
   const { eventId } = useParams();
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [isLoading, setIsLoading] = useState(false);
 
   const postReview: SubmitHandler<FormValues> = async (form) => {
@@ -87,6 +89,9 @@ const ReviewPostPage = () => {
       if (res.error) {
         throw new Error(res.error);
       }
+      queryClient.invalidateQueries({
+        predicate: (query) => query.queryKey[0] === "eventReviews",
+      });
       router.push(`/event/${eventId}`);
     } catch (e) {
       console.error(e);

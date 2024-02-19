@@ -1,12 +1,9 @@
 "use client";
 
 import { keepPreviousData, useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import dynamic from "next/dynamic";
 import { ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useEffect, useState } from "react";
-import BigRegionBottomSheet from "@/components/bottom-sheet/BigRegionBottomSheet";
-import CalenderBottomSheet from "@/components/bottom-sheet/CalendarBottomSheet";
-import GiftBottomSheet from "@/components/bottom-sheet/GiftsBottomSheet";
-import SmallRegionBottomSheet from "@/components/bottom-sheet/SmallRegionBottomSheet";
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
 import SearchInput from "@/components/input/SearchInput";
 import DottedLayout from "@/components/layout/DottedLayout";
@@ -25,6 +22,11 @@ import ResetIcon from "@/public/icon/reset.svg";
 import SortIcon from "@/public/icon/sort.svg";
 import FilterButton from "./_components/FilterButton";
 import SortButton from "./_components/SortButton";
+
+const BigRegionBottomSheet = dynamic(() => import("@/components/bottom-sheet/BigRegionBottomSheet"), { ssr: false });
+const CalenderBottomSheet = dynamic(() => import("@/components/bottom-sheet/CalendarBottomSheet"), { ssr: false });
+const GiftBottomSheet = dynamic(() => import("@/components/bottom-sheet/GiftsBottomSheet"), { ssr: false });
+const SmallRegionBottomSheet = dynamic(() => import("@/components/bottom-sheet/SmallRegionBottomSheet"), { ssr: false });
 
 interface FilterType {
   bigRegion: (typeof BIG_REGIONS)[number] | "";
