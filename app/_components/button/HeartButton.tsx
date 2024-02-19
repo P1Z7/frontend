@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { MouseEvent, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useSession } from "@/store/session/cookies";
 import HeartIcon from "./HeartIcon";
@@ -16,6 +16,10 @@ const HeartButton = ({ isSmall = false, isSelected = false, onClick, ...props }:
   const session = useSession();
   const route = useRouter();
   const [selected, setSelected] = useState(isSelected);
+
+  useEffect(() => {
+    setSelected(isSelected);
+  }, [isSelected]);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     if (!session) {

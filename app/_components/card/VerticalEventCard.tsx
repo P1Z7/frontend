@@ -21,7 +21,7 @@ const VerticalEventCard = ({ data }: Props) => {
   return (
     <Link href={`/event/${data.id}`} className="flex w-148 cursor-pointer flex-col gap-12 pc:w-188">
       <div className="relative h-196 w-148 pc:h-244 pc:w-188">
-        <div className="z-heart absolute right-8 top-8" onClick={(e: SyntheticEvent) => e.preventDefault()}>
+        <div className="absolute right-8 top-8 z-heart" onClick={(e: SyntheticEvent) => e.preventDefault()}>
           <HeartButton isSelected={liked} onClick={handleLikeEvent} />
         </div>
         <Image
