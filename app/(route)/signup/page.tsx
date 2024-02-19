@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import PinkLayout from "@/components/layout/PinkLayout";
 import { useAuth } from "@/hooks/useAuth";
 import { useFunnel } from "@/hooks/useFunnel";
-import { useSession } from "@/store/session/cookies";
+import { getSession } from "@/store/session/cookies";
 import { SignUpFormType, SignupStepNameType } from "@/types/index";
 import ArrowLeft from "@/public/icon/arrow-left_lg.svg";
 import GenericFormProvider from "../../_components/GenericFormProvider";
@@ -26,16 +26,7 @@ const DEFAULT_VALUES = {
 
 const SignUp = () => {
   const router = useRouter();
-  const [isLogin, setIsLogin] = useState(false);
   const [pcWidth, setPcWidth] = useState<"narrow" | "wide">("narrow");
-  const session = useSession();
-
-  useEffect(() => {
-    if (session) {
-      router.push("/mypage");
-      setIsLogin(true);
-    }
-  }, []);
 
   const { Funnel, Step, setStep, currentStep } = useFunnel(STEPS);
 
@@ -54,17 +45,16 @@ const SignUp = () => {
     setStep(STEPS[stepIndex - 1]);
   };
 
-  if (!isLogin)
-    return (
-      <PinkLayout size={pcWidth}>
-        <Header onClick={handlePrevClick} />
-        <GenericFormProvider<SignUpFormType> formOptions={{ mode: "onBlur", defaultValues: DEFAULT_VALUES }}>
-          <div className="flex h-full flex-col px-20 ">
-            <ProfileSetup steps={STEPS} handleNextClick={handleNextClick} Funnel={Funnel} Step={Step} />
-          </div>
-        </GenericFormProvider>
-      </PinkLayout>
-    );
+  return (
+    <PinkLayout size={pcWidth}>
+      <Header onClick={handlePrevClick} />
+      <GenericFormProvider<SignUpFormType> formOptions={{ mode: "onBlur", defaultValues: DEFAULT_VALUES }}>
+        <div className="flex h-full flex-col px-20 ">
+          <ProfileSetup steps={STEPS} handleNextClick={handleNextClick} Funnel={Funnel} Step={Step} />
+        </div>
+      </GenericFormProvider>
+    </PinkLayout>
+  );
 };
 
 export default SignUp;

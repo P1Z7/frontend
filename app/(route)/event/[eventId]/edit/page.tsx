@@ -8,21 +8,17 @@ import { useEffect, useState } from "react";
 import GenericFormProvider from "@/components/GenericFormProvider";
 import MobileHeader from "@/components/header/MobileHeader";
 import PinkLayout from "@/components/layout/PinkLayout";
-import { useAuth } from "@/hooks/useAuth";
 import { useStore } from "@/store/index";
 import EditContent from "./_components/EditContent";
 
 let INITIAL_DATA: PostType;
 
 const Edit = () => {
-  const session = useAuth("/signin");
   const { eventId } = useParams();
   const [init, setInit] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
   const { setWriterId } = useStore((state) => ({ setWriterId: state.setWriterId }));
 
   useEffect(() => {
-    if (session) setIsLogin(true);
     const fetchData = async () => {
       const data = await instance.get(`/event/${eventId}`);
       const { address, addressDetail, description, endDate, startDate, eventImages, eventTags, eventUrl, eventType, organizerSns, placeName, snsType, targetArtists, userId } =
@@ -57,20 +53,16 @@ const Edit = () => {
   }, []);
 
   return (
-    <>
-      {isLogin && (
-        <PinkLayout size="narrow">
-          <MobileHeader />
-          <div className="p-20 pb-116 text-16 pc:p-32 pc:pb-0">
-            {init && (
-              <GenericFormProvider formOptions={{ mode: "onChange", defaultValues: INITIAL_DATA, shouldFocusError: true }}>
-                <EditContent />
-              </GenericFormProvider>
-            )}
-          </div>
-        </PinkLayout>
-      )}
-    </>
+    <PinkLayout size="narrow">
+      <MobileHeader />
+      <div className="p-20 pb-116 text-16 pc:p-32 pc:pb-0">
+        {init && (
+          <GenericFormProvider formOptions={{ mode: "onChange", defaultValues: INITIAL_DATA, shouldFocusError: true }}>
+            <EditContent />
+          </GenericFormProvider>
+        )}
+      </div>
+    </PinkLayout>
   );
 };
 

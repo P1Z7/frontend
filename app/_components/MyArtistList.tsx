@@ -2,6 +2,7 @@ import FadingDot from "@/(route)/(bottom-nav)/signin/_components/FadingDot";
 import { keepPreviousData, useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 import BottomButton from "@/components/button/BottomButton";
 import { instance } from "@/api/api";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
@@ -69,6 +70,9 @@ const MyArtistList = () => {
         });
         if (addRes) {
           router.push("/mypage");
+          toast.success("아티스트와 가까워진 기분이에요!", {
+            className: "text-16 font-600",
+          });
         }
       }
       if (deleteData.size) {
@@ -77,11 +81,17 @@ const MyArtistList = () => {
         });
         if (deleteRes) {
           router.push("/mypage");
+          toast.success("아티스트와 조금 멀어졌어요...", {
+            className: "text-16 font-600",
+          });
         }
       }
     } catch (e) {
       setIsError(true);
       setSelected(myArtistData!.map((item) => ({ id: item.artistId, name: item.artistName, image: item.asrtistImage, type: "" })));
+      toast.error("앗! 다시 시도해 볼까요?", {
+        className: "text-16 font-600",
+      });
     } finally {
       setDeleteData(new Set());
       setAddData(new Set());

@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { instance } from "@/api/api";
-import { useSession } from "@/store/session/cookies";
+import { getSession } from "@/store/session/cookies";
 import { Res_Get_Type } from "@/types/getResType";
 
 const DEFAULT_USER_ID = "default";
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const useLikeEvent = ({ eventId, initialLikeCount }: Props) => {
-  const session = useSession();
+  const session = getSession();
   const queryClient = useQueryClient();
   const router = useRouter();
 

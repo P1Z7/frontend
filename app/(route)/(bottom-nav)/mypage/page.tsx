@@ -1,24 +1,15 @@
-import { Suspense, useEffect, useState } from "react";
+"use client";
+
 import Tabs from "@/components/Tabs";
 import DottedLayout from "@/components/layout/DottedLayout";
-import { useAuth } from "@/hooks/useAuth";
+import { getSession } from "@/store/session/cookies";
 import UserProfile from "./_components/UserProfile";
 import MyArtistTab from "./_components/tab/MyArtistTab";
 import MyEventTab from "./_components/tab/MyEventTab";
 import MyReviewTab from "./_components/tab/MyReviewTab";
 
 const MyPage = () => {
-  const [isLogin, setIsLogin] = useState(false);
-  const session = useAuth("/signin");
-
-  useEffect(() => {
-    if (!session) {
-      return;
-    }
-    setIsLogin(true);
-  }, []);
-
-  if (!isLogin || !session) return <Suspense />;
+  const session = getSession()!;
 
   return (
     <DottedLayout size="extrawide">
