@@ -55,7 +55,7 @@ const FavArtistEventsCarousel = () => {
           <>
             <h2 className="text-20 font-700 text-gray-900">내 아티스트의 새 행사</h2>
             {!!favArtistEvent?.length && (
-              <Link href="/my-artist-event?sort=최신순" className="text-12 font-600 text-blue">
+              <Link href="/my-artist-event" className="text-12 font-600 text-blue">
                 전체보기
               </Link>
             )}

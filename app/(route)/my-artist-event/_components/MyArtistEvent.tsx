@@ -53,12 +53,8 @@ const MyArtistEvent = () => {
     deps: [artistEvents],
   });
 
-  const pathname = usePathname();
-  const router = useRouter();
-
   useEffect(() => {
     refetch();
-    router.push(`${pathname}?sort=${sort}`);
   }, [sort]);
 
   return (
