@@ -9,8 +9,6 @@ export type Session = {
     nickName: string;
     signupMethod: "opener" | "naver" | "kakao";
     profileImage: string | null;
-    email: string;
-    signupMethod: "opener" | "kakao" | "naver";
   };
 };
 
