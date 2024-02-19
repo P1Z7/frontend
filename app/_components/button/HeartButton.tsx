@@ -1,6 +1,9 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { MouseEvent, useState } from "react";
+import toast from "react-hot-toast";
+import { useSession } from "@/store/session/cookies";
 import HeartIcon from "./HeartIcon";
 
 interface Props {
@@ -10,9 +13,16 @@ interface Props {
 }
 
 const HeartButton = ({ isSmall = false, isSelected = false, onClick, ...props }: Props) => {
+  const session = useSession();
+  const route = useRouter();
   const [selected, setSelected] = useState(isSelected);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    if (!session) {
+      toast("로그인한 후 좋아하는 행사를 저장해보세요!", { className: "text-16 font-500", position: "bottom-center" });
+      route.push("/signin");
+      return;
+    }
     setSelected((prev) => !prev);
     onClick?.(event);
   };
