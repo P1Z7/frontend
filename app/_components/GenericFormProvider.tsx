@@ -4,7 +4,7 @@ import React from "react";
 import { FieldValues, FormProvider, UseFormProps, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useModal } from "@/hooks/useModal";
-import { useSession } from "@/store/session/cookies";
+import { getSession } from "@/store/session/cookies";
 import { handleSignupSubmit } from "@/utils/handleSignupSubmit";
 import { handlePostSubmit, submitEditApplication, submitEditWriter } from "@/utils/submitPost";
 import { EditErrMsgType, PostErrMsgType } from "@/types/errorMsgType";
@@ -28,7 +28,7 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
   const onSubmit = async () => {
     const userInputValue = methods.getValues();
     const defaultValue = methods.formState.defaultValues;
-    const session = useSession();
+    const session = getSession();
 
     if (path === "/post") {
       try {

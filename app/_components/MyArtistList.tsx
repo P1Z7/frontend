@@ -1,6 +1,7 @@
+import FadingDot from "@/(route)/(bottom-nav)/signin/_components/FadingDot";
 import { keepPreviousData, useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import BottomButton from "@/components/button/BottomButton";
 import { instance } from "@/api/api";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
@@ -19,7 +20,11 @@ const MyArtistList = () => {
 
   const session = getSession();
   const userId = session?.user.userId;
-  const { data: myArtistData } = useQuery({ queryKey: ["myArtist"], queryFn: async (): Promise<Res_Get_Type["myArtist"][]> => await instance.get(`/users/${userId}/artists`) });
+  const { data: myArtistData } = useQuery({
+    queryKey: ["myArtist"],
+    queryFn: async (): Promise<Res_Get_Type["myArtist"][]> => await instance.get(`/users/${userId}/artists`),
+    placeholderData: keepPreviousData,
+  });
 
   const [selected, setSelected] = useState<ArtistType[]>([]);
   useEffect(() => {
@@ -42,7 +47,7 @@ const MyArtistList = () => {
         setAddData((prev) => (prev.delete(cur.id), prev));
       }
     } else {
-      setSelected((prevSelected) => [...prevSelected, cur]);
+      setSelected((prevSelected) => [cur, ...prevSelected]);
 
       if (myArtistData?.some((item) => item.artistId === cur.id)) {
         setDeleteData((prev) => (prev.delete(cur.id), prev));
@@ -53,39 +58,46 @@ const MyArtistList = () => {
     }
   };
 
+  const [isError, setIsError] = useState(false);
+
   const handleSubmit = async () => {
     const session = getSession();
-    if (addData.size) {
-      try {
-        const res = await instance.post(`/users/${session?.user.userId}/artists`, {
+    try {
+      if (addData.size) {
+        const addRes = await instance.post(`/users/${session?.user.userId}/artists`, {
           artistIds: [...addData],
         });
-        router.push("/mypage");
-      } catch (e) {
-        console.log(e);
+        if (addRes) {
+          router.push("/mypage");
+        }
       }
-    }
-    if (deleteData.size) {
-      const deleteRes = await instance.delete(`/users/${session?.user.userId}/artists`, {
-        artistIds: [...deleteData],
-      });
-      router.push("/mypage");
+      if (deleteData.size) {
+        const deleteRes = await instance.delete(`/users/${session?.user.userId}/artists`, {
+          artistIds: [...deleteData],
+        });
+        if (deleteRes) {
+          router.push("/mypage");
+        }
+      }
+    } catch (e) {
+      setIsError(true);
+      setSelected(myArtistData!.map((item) => ({ id: item.artistId, name: item.artistName, image: item.asrtistImage, type: "" })));
+    } finally {
+      setDeleteData(new Set());
+      setAddData(new Set());
     }
   };
 
   const queryClient = useQueryClient();
   const artistMutation = useMutation({
     mutationFn: handleSubmit,
-    onSuccess: () => {
-      router.push("/mypage");
-      queryClient.refetchQueries({ queryKey: ["myArtist"] });
-    },
+    onSuccess: () => queryClient.refetchQueries({ queryKey: ["myArtist"] }),
+    onError: () => queryClient.refetchQueries({ queryKey: ["myArtist"] }),
   });
 
   const {
     data: artistData,
     fetchNextPage,
-    isFetching,
     refetch,
   } = useInfiniteQuery({
     initialPageParam: 1,
@@ -105,30 +117,32 @@ const MyArtistList = () => {
   });
 
   return (
-    <div className="flex flex-col gap-24 ">
+    <div className="flex h-auto flex-col gap-24">
       <section className="flex flex-col gap-16">
         <SearchInput setKeyword={setKeyword} placeholder="최애의 행사를 찾아보세요!" />
-        <div className="flex w-full gap-12 overflow-auto">
-          {selected.map((artist) => (
-            <ChipButton label={artist.name} key={artist.id} onClick={() => handleArtistClick(artist)} canDelete />
+        <div className="flex w-full snap-x snap-mandatory gap-12 overflow-auto">
+          {selected.map((artist, idx) => (
+            <div key={artist.id} className="snap-end">
+              <ChipButton label={artist.name} onClick={() => handleArtistClick(artist)} canDelete />
+            </div>
           ))}
         </div>
       </section>
-      <section className="m-auto w-320">
+      <section className="m-auto h-400 snap-y snap-mandatory">
         <ul className="grid grid-cols-3 gap-x-16 gap-y-20 px-8">
           {artistData?.pages.map((page, index) =>
             page.artistAndGroupList.map((artist) => (
-              <li key={artist.id}>
+              <li key={artist.id} className="snap-start">
                 <ArtistCard onClick={() => handleArtistClick(artist)} isChecked={selected.map((item) => item.id).includes(artist.id)} profileImage={artist.image}>
                   {artist.name}
                 </ArtistCard>
               </li>
             )),
           )}
-          <div ref={containerRef} />
+          <div className="h-[1px]" ref={containerRef} />
         </ul>
       </section>
-      <BottomButton onClick={() => artistMutation.mutate()}>변경 내용 저장</BottomButton>
+      <BottomButton onClick={() => artistMutation.mutate()}>{isError ? "다시 시도하기" : "변경 내용 저장"}</BottomButton>
     </div>
   );
 };

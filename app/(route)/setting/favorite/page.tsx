@@ -1,22 +1,32 @@
 "use client";
 
 import { SubmitHandler, useForm } from "react-hook-form";
+import MyArtistList from "@/components/MyArtistList";
 import MobileHeader from "@/components/header/MobileHeader";
 import PinkLayout from "@/components/layout/PinkLayout";
 import AlertModal from "@/components/modal/AlertModal";
 import InputModal from "@/components/modal/InputModal";
+import { instance } from "@/api/api";
 import { useModal } from "@/hooks/useModal";
 
 const FavoritePage = () => {
   const { modal, openModal, closeModal } = useModal();
   const { control, handleSubmit, setValue } = useForm({ defaultValues: { request: "" } });
 
-  const onSubmit: SubmitHandler<{ request: string }> = ({ request }) => {
-    if (request) {
+  const onSubmit: SubmitHandler<{ request: string }> = async ({ request }) => {
+    try {
+      if (request) {
+        const res = await instance.post("/artist/request", {
+          name: request,
+        });
+      }
+    } catch (e) {
+    } finally {
       openModal("confirm");
       setValue("request", "");
     }
   };
+
   return (
     <PinkLayout size="wide">
       <MobileHeader />
@@ -27,7 +37,7 @@ const FavoritePage = () => {
             찾으시는 아티스트가 없으신가요?
           </button>
         </section>
-        {/* <MyArtistList data={MOCK} /> */}
+        <MyArtistList />
       </div>
       {modal === "noArtist" && (
         <InputModal

@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import MobileHeader from "@/components/header/MobileHeader";
 import PinkLayout from "@/components/layout/PinkLayout";
 import { instance } from "@/api/api";
-import { useSession } from "@/store/session/cookies";
+import { getSession } from "@/store/session/cookies";
 import { EditErrMsgType } from "@/types/errorMsgType";
 import { CategoryType, EditContentType, LabelType, PostValueType } from "@/types/index";
 import { EDIT_ERR_MSG } from "@/constants/errorMsg";
@@ -33,7 +33,7 @@ const EditDetailApprove = () => {
       return instance.get(`/event/update/application/${editId}`, { eventUpdateApplicationId: String(editId) });
     },
   });
-  const session = useSession();
+  const session = getSession();
 
   useEffect(() => {
     if (isSuccess) {

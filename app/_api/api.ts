@@ -14,6 +14,13 @@ export class Api {
     this.queryString = "";
   }
 
+  private async updateToken(res: any) {
+    if (res.status === 401) {
+      const newToken = await fetch("/auth/token");
+      console.log(newToken);
+    }
+  }
+
   private makeError(result: any) {
     if (result.message) {
       throw new Error(result.error + "/" + result.message);

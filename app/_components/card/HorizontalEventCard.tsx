@@ -4,7 +4,7 @@ import { SyntheticEvent, useState } from "react";
 import HeartButton from "@/components/button/HeartButton";
 import Chip from "@/components/chip/Chip";
 import { instance } from "@/api/api";
-import { useSession } from "@/store/session/cookies";
+import { getSession } from "@/store/session/cookies";
 import { formatAddress, formatDate } from "@/utils/formatString";
 import { EventCardType } from "@/types/index";
 import { TAG_ORDER } from "@/constants/data";
@@ -17,7 +17,7 @@ interface Props {
 }
 
 const HorizontalEventCard = ({ data, onHeartClick, isGrow = false }: Props) => {
-  const session = useSession();
+  const session = getSession();
   const formattedDate = formatDate(data.startDate, data.endDate);
   const formattedAddress = formatAddress(data.address);
   const [selected, setSelected] = useState(data.isLike);
@@ -47,7 +47,7 @@ const HorizontalEventCard = ({ data, onHeartClick, isGrow = false }: Props) => {
       href={`/event/${data.id}`}
       className={`relative flex w-full ${isGrow ? "" : "pc:max-w-[50.8rem]"} items-center gap-12 border-b border-gray-50 bg-white-black py-12 pc:gap-20 pc:py-20`}
     >
-      <div className="z-heart absolute right-0 top-[1.3rem] pc:top-[2.75rem]" onClick={(e: SyntheticEvent) => e.preventDefault()}>
+      <div className="absolute right-0 top-[1.3rem] z-heart pc:top-[2.75rem]" onClick={(e: SyntheticEvent) => e.preventDefault()}>
         <HeartButton isSmall isSelected={selected} onClick={handleClick} />
       </div>
       <div className="relative h-112 w-84 shrink-0 pc:h-152 pc:w-116">

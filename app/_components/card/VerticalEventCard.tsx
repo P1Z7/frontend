@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { MouseEvent, SyntheticEvent, useState } from "react";
 import { instance } from "@/api/api";
-import { useSession } from "@/store/session/cookies";
+import { getSession } from "@/store/session/cookies";
 import { formatAddress, formatDate } from "@/utils/formatString";
 import { Res_Get_Type } from "@/types/getResType";
 import HeartButton from "../button/HeartButton";
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const VerticalEventCard = ({ data }: Props) => {
-  const session = useSession();
+  const session = getSession();
   const [selected, setSelected] = useState(data.isLike);
   const formattedDate = formatDate(data.startDate, data.endDate);
   const formattedAddress = formatAddress(data.address);
