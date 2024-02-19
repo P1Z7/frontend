@@ -42,6 +42,7 @@ type Req_Query_Group_And_Solo = {
 type Req_Query_Review = {
   size: number;
   cursorId: number;
+  userId?: string;
 };
 
 type Req_Query_User_Review = {

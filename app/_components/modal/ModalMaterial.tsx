@@ -16,7 +16,7 @@ const ModalFrame = ({ children, closeModal, hasNotCloseBtn = false }: ModalFrame
   return (
     <ModalPortal>
       <div onClick={closeModal} className="fixed left-0 top-0 z-popup flex h-screen w-full items-center justify-center bg-gray-900 bg-opacity-70 text-center">
-        <div className="relative w-[308px] rounded-md bg-white-black px-20 pb-20 pt-40 text-16">
+        <div className="relative w-[30.8rem] rounded-md bg-white-black px-20 pb-20 pt-40 text-16">
           {hasNotCloseBtn || (
             <button onClick={closeModal} className="absolute right-12 top-12">
               <CloseIcon stroke="#C1C5CC" width={24} height={24} />

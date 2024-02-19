@@ -22,23 +22,25 @@ const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
 
   return (
     <div className="pt-36">
-      <InputText
-        control={control}
-        name="nickName"
-        placeholder="닉네임을 입력해주세요"
-        rules={{
-          required: ERROR_MESSAGES.nickName.nickNameField,
-          pattern: { value: REG_EXP.CHECK_NICKNAME, message: ERROR_MESSAGES.nickName.nickNamePattern },
-          validate: {
-            isDuplicated: (value) => {
-              setCurrent(value);
-              return data?.isDuplicated ? "이미 사용중인 닉네임입니다." : true;
+      <div className="pc:h-[37.3rem]">
+        <InputText
+          control={control}
+          name="nickName"
+          placeholder="닉네임을 입력해주세요"
+          rules={{
+            required: ERROR_MESSAGES.nickName.nickNameField,
+            pattern: { value: REG_EXP.CHECK_NICKNAME, message: ERROR_MESSAGES.nickName.nickNamePattern },
+            validate: {
+              isDuplicated: (value) => {
+                setCurrent(value);
+                return data?.isDuplicated ? "이미 사용중인 닉네임입니다." : true;
+              },
             },
-          },
-        }}
-      >
-        닉네임
-      </InputText>
+          }}
+        >
+          닉네임
+        </InputText>
+      </div>
       <BottomButton onClick={onNext} isDisabled={isButtonDisabled}>
         다음으로
       </BottomButton>

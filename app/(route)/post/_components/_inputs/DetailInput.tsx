@@ -1,4 +1,4 @@
-import InitButton from "@/(route)/(header)/event/[eventId]/edit/_components/InitButton";
+import InitButton from "@/(route)/event/[eventId]/edit/_components/InitButton";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import WarningCheck from "@/components/WarningCheck";

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { MouseEvent } from "react";
+import { SyntheticEvent } from "react";
+import useLikeEvent from "@/hooks/useLikeEvent";
 import { formatAddress, formatDate } from "@/utils/formatString";
 import { Res_Get_Type } from "@/types/getResType";
 import HeartButton from "../button/HeartButton";
@@ -15,18 +16,13 @@ const VerticalEventCard = ({ data }: Props) => {
   const formattedAddress = formatAddress(data.address);
   const bannerImage = data.eventImages.find((images) => images.isMain);
 
-  const handleHeartClick = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-
-    // 추가 동작 나중에 구현
-    console.log("하트 눌렀습니당");
-  };
+  const { liked, handleLikeEvent } = useLikeEvent({ eventId: data.id, initialLikeCount: data.likeCount });
 
   return (
     <Link href={`/event/${data.id}`} className="flex w-148 cursor-pointer flex-col gap-12 pc:w-188">
       <div className="relative h-196 w-148 pc:h-244 pc:w-188">
-        <div className="absolute right-8 top-8 z-heart">
-          <HeartButton isSelected={!!data.likeCount} onClick={handleHeartClick} />
+        <div className="z-heart absolute right-8 top-8" onClick={(e: SyntheticEvent) => e.preventDefault()}>
+          <HeartButton isSelected={liked} onClick={handleLikeEvent} />
         </div>
         <Image
           src={bannerImage?.imageUrl ?? "/image/no-profile.png"}
