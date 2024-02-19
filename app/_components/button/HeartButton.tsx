@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { MouseEvent, useState } from "react";
 import toast from "react-hot-toast";
-import { useSession } from "@/store/session/cookies";
+import { getSession } from "@/store/session/cookies";
 import HeartIcon from "./HeartIcon";
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const HeartButton = ({ isSmall = false, isSelected = false, onClick, ...props }: Props) => {
-  const session = useSession();
+  const session = getSession();
   const route = useRouter();
   const [selected, setSelected] = useState(isSelected);
 
