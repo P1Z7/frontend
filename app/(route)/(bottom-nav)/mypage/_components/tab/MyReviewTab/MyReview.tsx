@@ -1,17 +1,32 @@
+import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
+import { useState } from "react";
 import Evaluation from "@/components/Evaluation";
 import Chip from "@/components/chip/Chip";
+import { instance } from "@/api/api";
 import { formatAddress, formatDate } from "@/utils/formatString";
 import { MyReviewType } from "@/types/index";
 import HeartIcon from "@/public/icon/heart.svg";
 
 interface Props {
   data: MyReviewType;
+  userId: string;
 }
 
-const MyReview = ({ data }: Props) => {
+const MyReview = ({ data, userId }: Props) => {
   const formattedDate = formatDate(data.event.startDate, data.event.endDate);
   const formattedAddress = formatAddress(data.event.address);
+
+  const [liked, setLiked] = useState(data.isLike);
+  const [likeCount, setLikeCount] = useState(data.likeCount);
+
+  const likeMutation = useMutation({
+    mutationFn: () => instance.post(`/reviews/${data.id}/like`, { reviewId: data.id, userId: userId, isLike: data.isLike }),
+    onSuccess: () => {
+      setLikeCount((prev) => (liked ? prev - 1 : prev + 1));
+      setLiked((prev) => !prev);
+    },
+  });
 
   return (
     <div className="flex w-full flex-col gap-16 border-b border-gray-50 px-20 py-16">
@@ -37,9 +52,9 @@ const MyReview = ({ data }: Props) => {
         ))}
       </ul>
       <div className="flex justify-between">
-        <button className="flex items-center gap-[0.65rem] text-12 font-500 text-gray-500">
-          <HeartIcon stroke="#7E8695" width={20} height={20} viewBox="0 0 24 24" />
-          {data.likeCount}
+        <button onClick={() => likeMutation.mutate()} className="flex items-center gap-[0.65rem] text-12 font-500 text-gray-500">
+          <HeartIcon stroke={liked ? "#FF50AA" : "#A0A5B1"} fill={liked ? "#FF50AA" : "none"} width={20} height={20} viewBox="0 0 24 24" />
+          {likeCount}
         </button>
       </div>
     </div>

@@ -101,6 +101,12 @@ type Req_Post_Request = {
   name: string;
 };
 
+type Req_Post_Claim = {
+  eventId: string;
+  userId: string;
+  description: string;
+};
+
 export type Req_Post_Type = {
   event: Req_Post_Event;
   eventLike: Req_Post_Event_Like;
@@ -116,4 +122,5 @@ export type Req_Post_Type = {
   edit: Req_Post_Edit_Application;
   approve: Req_Post_Approval;
   request: Req_Post_Request;
+  claim: Req_Post_Claim;
 };

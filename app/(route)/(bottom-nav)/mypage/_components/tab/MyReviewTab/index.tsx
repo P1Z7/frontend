@@ -21,7 +21,7 @@ const MyReviewTab = ({ userId }: Props) => {
       {myReviewsData.length > 0 ? (
         myReviewsData.map((review: MyReviewType) => (
           <li key={review.id} className="w-full">
-            <MyReview data={review} />
+            <MyReview data={review} userId={userId} />
           </li>
         ))
       ) : (
