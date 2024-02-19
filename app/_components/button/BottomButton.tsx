@@ -17,7 +17,7 @@ const BottomButton = ({ onClick, children, isDisabled, isSkip = false, isSubmit 
   return (
     <div
       className={classNames("fixed bottom-0 left-0 z-nav flex w-full flex-col items-center gap-12 border-t border-gray-50 bg-white-black px-20 pb-24 pt-12 pc:sticky pc:mt-20", {
-        "pc:!fixed": path === "/post",
+        "pc:!mt-0": path === "/post",
       })}
     >
       <Button size="xl" onClick={onClick} isDisabled={isDisabled} isSubmit={isSubmit}>

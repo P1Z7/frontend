@@ -1,5 +1,5 @@
 import InitButton from "@/(route)/event/[eventId]/edit/_components/InitButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import EventTypeBottomSheet from "@/components/bottom-sheet/EventTypeBottomSheet";
 import StarBottomSheet from "@/components/bottom-sheet/StarBottomSheet";
@@ -34,6 +34,15 @@ const StarInput = () => {
     setValue("artists", defaultValues?.artists as string[]);
     setValue("artistNames", defaultValues?.artistNames as string[]);
   };
+
+  useEffect(() => {
+    if (isOpenEventType) {
+      // 스크롤 위치 바꾸고 싶다
+      // console.log(document?.querySelector("#layout_base")?.scrollBy(0, 30));
+      // const s = document.querySelector("#layout_base");
+      // if (s) s.scrollTop = 30;
+    }
+  }, [isOpenEventType]);
 
   return (
     <>
