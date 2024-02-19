@@ -1,7 +1,9 @@
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import WithdrawModal from "@/components/modal/WithdrawModal";
 import { useModal } from "@/hooks/useModal";
 import { outSession } from "@/store/session/cookies";
+
+const WithdrawModal = dynamic(() => import("@/components/modal/WithdrawModal"), { ssr: false });
 
 const EditUserInfo = {
   profile: "프로필수정",

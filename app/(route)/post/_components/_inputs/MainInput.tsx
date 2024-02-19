@@ -1,9 +1,8 @@
 import InitButton from "@/(route)/event/[eventId]/edit/_components/InitButton";
+import dynamic from "next/dynamic";
 import { useState } from "react";
 import DaumPostcodeEmbed from "react-daum-postcode";
 import { useFormContext } from "react-hook-form";
-import AddressBottomSheet from "@/components/bottom-sheet/AddressBottomSheet";
-import CalenderBottomSheet from "@/components/bottom-sheet/CalendarBottomSheet";
 import CalendarContent from "@/components/bottom-sheet/content/CalendarContent";
 import InputText from "@/components/input/InputText";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
@@ -11,6 +10,9 @@ import useGetWindowWidth from "@/hooks/useGetWindowWidth";
 import { validateEdit } from "@/utils/editValidate";
 import { handleEnterDown } from "@/utils/handleEnterDown";
 import { PostType } from "../../page";
+
+const AddressBottomSheet = dynamic(() => import("@/components/bottom-sheet/AddressBottomSheet"), { ssr: false });
+const CalenderBottomSheet = dynamic(() => import("@/components/bottom-sheet/CalendarBottomSheet"), { ssr: false });
 
 const MainInput = () => {
   const { isPc } = useGetWindowWidth();

@@ -1,4 +1,5 @@
 import { instance } from "app/_api/api";
+import dynamic from "next/dynamic";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import React from "react";
 import { FieldValues, FormProvider, UseFormProps, useForm } from "react-hook-form";
@@ -10,7 +11,8 @@ import { handlePostSubmit, submitEditApplication, submitEditWriter } from "@/uti
 import { EditErrMsgType, PostErrMsgType } from "@/types/errorMsgType";
 import { EDIT_ERR_MSG, POST_ERR_MSG } from "@/constants/errorMsg";
 import { useStore } from "../_store";
-import AlertModal from "./modal/AlertModal";
+
+const AlertModal = dynamic(() => import("@/components/modal/AlertModal"), { ssr: false });
 
 interface GenericFormProps<T extends FieldValues> {
   children: React.ReactNode;

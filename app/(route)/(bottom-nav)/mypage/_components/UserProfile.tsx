@@ -1,11 +1,13 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import MyPageBottomSheet from "@/components/bottom-sheet/MyPageBottomSheet";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
 import { Session, getSession } from "@/store/session/cookies";
 import SettingList from "./SettingList";
+
+const MyPageBottomSheet = dynamic(() => import("@/components/bottom-sheet/MyPageBottomSheet"), { ssr: false });
 
 const UserProfile = () => {
   const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();

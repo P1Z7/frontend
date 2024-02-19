@@ -1,13 +1,15 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { SubmitHandler, useForm } from "react-hook-form";
 import MyArtistList from "@/components/MyArtistList";
 import MobileHeader from "@/components/header/MobileHeader";
 import PinkLayout from "@/components/layout/PinkLayout";
-import AlertModal from "@/components/modal/AlertModal";
-import InputModal from "@/components/modal/InputModal";
 import { instance } from "@/api/api";
 import { useModal } from "@/hooks/useModal";
+
+const AlertModal = dynamic(() => import("@/components/modal/AlertModal"), { ssr: false });
+const InputModal = dynamic(() => import("@/components/modal/InputModal"), { ssr: false });
 
 const FavoritePage = () => {
   const { modal, openModal, closeModal } = useModal();

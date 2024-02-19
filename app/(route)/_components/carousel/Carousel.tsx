@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import VerticalEventCard from "@/components/card/VerticalEventCard";
+import useGetWindowWidth from "@/hooks/useGetWindowWidth";
 import { Res_Get_Type } from "@/types/getResType";
 import PrevButtonIcon from "@/public/icon/arrow-left_xl.svg";
 import NextButtonIcon from "@/public/icon/arrow-right_xl.svg";
@@ -16,18 +17,7 @@ const Carousel = ({ cards }: Props) => {
   const [slideIndex, setSlideIndex] = useState(0);
   const [isPrevDisabled, setIsPrevDisabled] = useState(true);
   const [isNextDisabled, setIsNextDisabled] = useState(false);
-  const [isPc, setIsPc] = useState<boolean>(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsPc(window.innerWidth >= 1200);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  const { isPc } = useGetWindowWidth();
 
   const handlePrevClick = () => {
     if (!isPc) return;
