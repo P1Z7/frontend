@@ -22,7 +22,7 @@ const MyArtistTab = () => {
   if (!isSuccess) return;
   return (
     <div className="flex flex-col items-start gap-16 px-20 py-24">
-      <button className="text-14 font-500 text-blue" onClick={() => router.push("/setting/favorite")}>
+      <button className="text-14 font-500 text-blue" onClick={() => router.push("/setting/my-artist")}>
         팔로우 아티스트 수정하기
       </button>
       <div className="flex w-full flex-col items-center">
