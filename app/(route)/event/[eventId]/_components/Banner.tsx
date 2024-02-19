@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode, useEffect } from "react";
+import Alert from "@/components/Alert";
 import Chip from "@/components/chip/Chip";
 import { instance } from "@/api/api";
 import { useStore } from "@/store/index";
@@ -51,12 +52,13 @@ const Banner = ({ data, eventId }: Props) => {
   const bannerImage = data.eventImages.find((images) => images.isMain);
   const formattedOrganizerSns = data.organizerSns[0] === "@" ? data.organizerSns : `@${data.organizerSns}`;
 
-  const { data: edit } = useQuery<Res_Get_Type["editApplication"]>({
+  const { data: editApplication } = useQuery<Res_Get_Type["editApplication"]>({
     queryKey: ["approve", eventId],
     queryFn: async () => {
       return instance.get(`/event/${eventId}/update/application`);
     },
   });
+  const hasEditApplication = !(editApplication && editApplication?.length === 0);
 
   return (
     <section className="w-full pc:flex pc:gap-24 pc:pb-32 pc:pt-[7rem]">
@@ -121,8 +123,9 @@ const Banner = ({ data, eventId }: Props) => {
               <span>{formattedOrganizerSns}</span>
             </div>
           </SubDescription>
+          {hasEditApplication && <Alert href={pathname + "/approve"} message="수정요청 정보가 있습니다." />}
         </div>
-        <div className="absolute bottom-0 right-0 text-14 font-400">
+        <div className="absolute bottom-0 right-0 hidden text-14 font-400 pc:block">
           <Link href={pathname + "/edit"} className="mr-16 text-blue">
             수정하기
           </Link>
