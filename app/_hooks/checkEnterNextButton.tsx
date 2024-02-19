@@ -1,10 +1,10 @@
 import { KeyboardEvent, useState } from "react";
 
 // brrr 적용
-export const checkEnterENextStep = () => {
+export const checkEnterNextButton = () => {
   const [isError, setIsError] = useState(false);
 
-  const handleNextEnterError = (e: KeyboardEvent, rule: boolean, onNext: () => void) => {
+  const handleEnterError = (e: KeyboardEvent, rule: boolean, onNext: () => void) => {
     if (e.key === "Enter") {
       e.preventDefault();
       if (rule) {
@@ -17,5 +17,5 @@ export const checkEnterENextStep = () => {
     }
   };
 
-  return { isError, handleNextEnterError };
+  return { isError, handleEnterError };
 };

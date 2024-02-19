@@ -7,14 +7,14 @@ import InputText from "@/components/input/InputText";
 import { handleEnterDown } from "@/utils/handleEnterDown";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 import { SignUpFormType } from "@/types/index";
-import { checkEnterENextStep } from "../checkEnterENextStep";
+import { checkEnterNextButton } from "../../../../_hooks/checkEnterNextButton";
 
 const AccountInfo = ({ onNext }: { onNext: () => void }) => {
   const { formState, control, getValues, watch, setError } = useFormContext<SignUpFormType>();
   const { email, password, passwordCheck, code } = watch();
   const [canWrite, setCanWrite] = useState(false);
   const [isVerification, setIsVerification] = useState(false);
-  const { isError, handleNextEnterError } = checkEnterENextStep();
+  const { isError, handleEnterError } = checkEnterNextButton();
 
   const isButtonDisabled = !!(formState.errors.password || formState.errors.passwordCheck) || !(password && passwordCheck) || !isVerification;
 
@@ -61,7 +61,7 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
           isSuccess={canWrite}
           noButton
           control={control}
-          onKeyDown={(e) => handleNextEnterError(e, !isButtonDisabled, onNext)}
+          onKeyDown={(e) => handleEnterError(e, !isButtonDisabled, onNext)}
           name="email"
           autoComplete="email"
           placeholder="이메일을 입력해 주세요"
@@ -82,7 +82,7 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
       <div className="flex items-end gap-8">
         <InputText
           isSuccess={isVerification}
-          onKeyDown={(e) => handleNextEnterError(e, !isButtonDisabled, onNext)}
+          onKeyDown={(e) => handleEnterError(e, !isButtonDisabled, onNext)}
           noButton
           control={control}
           name="code"
@@ -104,7 +104,7 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
       </div>
       <InputText
         control={control}
-        onKeyDown={(e) => handleNextEnterError(e, !isButtonDisabled, onNext)}
+        onKeyDown={(e) => handleEnterError(e, !isButtonDisabled, onNext)}
         name="password"
         type="password"
         placeholder="비밀번호를 입력해주세요"
@@ -116,7 +116,7 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
       </InputText>
       <InputText
         control={control}
-        onKeyDown={(e) => handleNextEnterError(e, !isButtonDisabled, onNext)}
+        onKeyDown={(e) => handleEnterError(e, !isButtonDisabled, onNext)}
         name="passwordCheck"
         type="password"
         autoComplete="new-password"

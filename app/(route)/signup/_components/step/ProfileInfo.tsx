@@ -6,10 +6,10 @@ import BottomButton from "@/components/button/BottomButton";
 import InputText from "@/components/input/InputText";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 import { SignUpFormType } from "@/types/index";
-import { checkEnterENextStep } from "../checkEnterENextStep";
+import { checkEnterNextButton } from "../../../../_hooks/checkEnterNextButton";
 
 const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
-  const { isError, handleNextEnterError } = checkEnterENextStep();
+  const { isError, handleEnterError } = checkEnterNextButton();
   const { formState, control } = useFormContext<SignUpFormType>();
   const [current, setCurrent] = useState("");
 
@@ -27,7 +27,7 @@ const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
       <div className="pc:h-[37.3rem]">
         <InputText
           control={control}
-          onKeyDown={(e) => handleNextEnterError(e, !isButtonDisabled, onNext)}
+          onKeyDown={(e) => handleEnterError(e, !isButtonDisabled, onNext)}
           name="nickName"
           placeholder="닉네임을 입력해주세요"
           rules={{
