@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Script from "next/script";
 import { Suspense } from "react";
 import { Toaster } from "react-hot-toast";
@@ -7,11 +6,6 @@ import PcHeader from "@/components/header/PcHeader";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import "@/public/font/pretendard/font.css";
 import "./globals.css";
-
-export const metadata: Metadata = {
-  title: "K-POP",
-  description: "K-POP 정보 공유 서비스",
-};
 
 declare global {
   interface Window {
