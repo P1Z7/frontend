@@ -2,9 +2,11 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import MetaTag from "@/components/MetaTag";
 import PinkLayout from "@/components/layout/PinkLayout";
 import { useFunnel } from "@/hooks/useFunnel";
 import { SignUpFormType, SignupStepNameType } from "@/types/index";
+import { META_TAG } from "@/constants/metaTag";
 import ArrowLeft from "@/public/icon/arrow-left_lg.svg";
 import GenericFormProvider from "../../_components/GenericFormProvider";
 import ProfileSetup from "./_components/ProfileSetup";
@@ -44,14 +46,17 @@ const SignUp = () => {
   };
 
   return (
-    <PinkLayout size={pcWidth}>
-      <Header onClick={handlePrevClick} />
-      <div className="flex h-[calc(100%-13.8rem)] grow flex-col px-20">
-        <GenericFormProvider<SignUpFormType> formOptions={{ mode: "onBlur", defaultValues: DEFAULT_VALUES }}>
-          <ProfileSetup steps={STEPS} handleNextClick={handleNextClick} Funnel={Funnel} Step={Step} />
-        </GenericFormProvider>
-      </div>
-    </PinkLayout>
+    <>
+      <MetaTag title={META_TAG.signup["title"]} description={META_TAG.signup["description"]} />
+      <PinkLayout size={pcWidth}>
+        <Header onClick={handlePrevClick} />
+        <div className="flex h-[calc(100%-13.8rem)] grow flex-col px-20">
+          <GenericFormProvider<SignUpFormType> formOptions={{ mode: "onBlur", defaultValues: DEFAULT_VALUES }}>
+            <ProfileSetup steps={STEPS} handleNextClick={handleNextClick} Funnel={Funnel} Step={Step} />
+          </GenericFormProvider>
+        </div>
+      </PinkLayout>
+    </>
   );
 };
 
