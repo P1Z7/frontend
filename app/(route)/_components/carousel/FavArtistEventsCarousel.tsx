@@ -45,11 +45,11 @@ const FavArtistEventsCarousel = () => {
 
   useEffect(() => {
     if (session?.isAuth) setIsSignin(true);
-  }, []);
+  }, [session]);
 
   return (
     <div className="flex flex-col gap-16 pc:gap-24">
-      <div className="flex items-center justify-between self-stretch px-20 pc:px-48">
+      <div className="flex h-32 items-center justify-between self-stretch px-20 pc:px-48">
         {isSignin && (
           <>
             <h2 className="text-20 font-700 text-gray-900">내 아티스트의 새 행사</h2>
