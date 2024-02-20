@@ -5,7 +5,7 @@ interface Props {
 }
 
 const PostFrame = ({ children }: Props) => {
-  return <div className="flex flex-col gap-24 px-20">{children}</div>;
+  return <div className="flex flex-col gap-24">{children}</div>;
 };
 
 export default PostFrame;

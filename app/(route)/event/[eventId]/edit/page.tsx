@@ -55,7 +55,7 @@ const Edit = () => {
   return (
     <PinkLayout size="narrow">
       <MobileHeader />
-      <div className="p-20 pb-116 text-16 pc:p-0">
+      <div className="p-20 pb-120 text-16 pc:p-0">
         {init && (
           <GenericFormProvider formOptions={{ mode: "onChange", defaultValues: INITIAL_DATA, shouldFocusError: true }}>
             <EditContent />
