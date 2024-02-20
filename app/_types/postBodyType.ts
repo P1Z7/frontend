@@ -109,8 +109,13 @@ type Req_Post_Request = {
   name: string;
 };
 
-type Req_Post_Claim = {
+type Req_Post_Event_Claim = {
   eventId: string;
+  userId: string;
+  description: string;
+};
+
+type Req_Post_Review_Claim = {
   userId: string;
   description: string;
 };
@@ -132,5 +137,6 @@ export type Req_Post_Type = {
   edit: Req_Post_Edit_Application;
   approve: Req_Post_Approval;
   request: Req_Post_Request;
-  claim: Req_Post_Claim;
+  eventClaim: Req_Post_Event_Claim;
+  reviewClaim: Req_Post_Review_Claim;
 };

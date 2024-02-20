@@ -45,7 +45,7 @@ const EditContent = () => {
   }, []);
 
   return (
-    <div className="flex h-[calc(80vh-7.2rem)] flex-col justify-between">
+    <div className="flex flex-col justify-between pc:h-[calc(80vh-7.2rem)]">
       <div className="flex flex-col gap-20 pc:gap-32 pc:p-32">
         <StarInput />
         <MainInput />
