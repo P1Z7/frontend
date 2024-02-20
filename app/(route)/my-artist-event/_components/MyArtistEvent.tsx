@@ -5,6 +5,8 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
+import DeferredSuspense from "@/components/skeleton/DeferredSuspense";
+import HorizontalEventCardSkeleton from "@/components/skeleton/HorizontalEventCardSkeleton";
 import { instance } from "@/api/api";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { getSession } from "@/store/session/cookies";
@@ -38,6 +40,7 @@ const MyArtistEvent = () => {
     data: artistEvents,
     fetchNextPage,
     refetch,
+    isFetching,
   } = useInfiniteQuery({
     initialPageParam: 1,
     queryKey: ["artistEvent"],
@@ -50,12 +53,8 @@ const MyArtistEvent = () => {
     deps: [artistEvents],
   });
 
-  const pathname = usePathname();
-  const router = useRouter();
-
   useEffect(() => {
     refetch();
-    router.push(`${pathname}?sort=${sort}`);
   }, [sort]);
 
   return (
@@ -72,6 +71,7 @@ const MyArtistEvent = () => {
       </div>
       <div className="flex flex-wrap items-center gap-x-24">
         {artistEvents?.pages.map((page) => page?.eventList.map((event) => <HorizontalEventCard key={event.id} data={event} />))}
+        <DeferredSuspense fallback={<HorizontalEventCardSkeleton />} isFetching={isFetching} />
         <div ref={containerRef} className="h-16 w-full" />
       </div>
     </div>
