@@ -103,7 +103,7 @@ const SignInPage = () => {
             <ArrowLeft />
           </button>
         </header>
-        <div className="flex-center flex-col px-20 pt-80 pc:pb-20">
+        <div className="flex-center h-[calc(100%-13.8rem)] grow flex-col px-20 pt-80 pc:pb-20">
           <Link href="/">
             <Logo />
           </Link>
