@@ -1,3 +1,4 @@
+import MetaTag from "@/components/MetaTag";
 import Tabs from "@/components/Tabs";
 import MobileHeader from "@/components/header/MobileHeader";
 import DottedLayout from "@/components/layout/DottedLayout";
@@ -21,15 +22,22 @@ const EventInfoPage = async ({ params }: Props) => {
   const eventInfo = await getEventInfo(params.eventId);
 
   return (
-    <DottedLayout size="narrow">
-      <MobileHeader />
-      <Banner data={eventInfo} eventId={params.eventId} />
-      <Tabs names={["행사정보", "위치", "후기"]} topOffset="event">
-        <DescriptionTab images={eventInfo.eventImages} description={eventInfo.description} />
-        <LocationTab name={eventInfo.placeName} address={eventInfo.address} />
-        <ReviewTab eventId={params.eventId} />
-      </Tabs>
-    </DottedLayout>
+    <>
+      <MetaTag
+        title={eventInfo.placeName}
+        description={`${eventInfo.placeName}에서 열리는 ${eventInfo.eventType} 정보를 확인해 보세요.`}
+        imgUrl={eventInfo.eventImages[0].imageUrl}
+      />
+      <DottedLayout size="narrow">
+        <MobileHeader />
+        <Banner data={eventInfo} eventId={params.eventId} />
+        <Tabs names={["행사정보", "위치", "후기"]} topOffset="event">
+          <DescriptionTab images={eventInfo.eventImages} description={eventInfo.description} />
+          <LocationTab name={eventInfo.placeName} address={eventInfo.address} />
+          <ReviewTab eventId={params.eventId} />
+        </Tabs>
+      </DottedLayout>
+    </>
   );
 };
 
