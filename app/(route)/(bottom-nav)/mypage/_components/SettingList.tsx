@@ -29,7 +29,7 @@ const SettingList = ({ isOpener }: { isOpener: boolean }) => {
             {EditUserInfo.password}
           </li>
         )}
-        <li onClick={() => (outSession(), router.push("/signin"))} className={ButtonStyle}>
+        <li onClick={() => (outSession(), router.push("/"), router.refresh())} className={ButtonStyle}>
           {EditUserInfo.logOut}
         </li>
         <li onClick={() => openModal("withdraw")} className={ButtonStyle}>
