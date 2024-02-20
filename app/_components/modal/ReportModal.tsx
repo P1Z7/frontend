@@ -6,7 +6,12 @@ import { getSession } from "@/store/session/cookies";
 import { ModalBaseType } from "@/types/index";
 import TextModal from "./TextModal";
 
-const ReportModal = ({ closeModal }: ModalBaseType) => {
+interface Props extends ModalBaseType {
+  type: "event" | "review";
+  reviewId?: string;
+}
+
+const ReportModal = ({ closeModal, type, reviewId }: Props) => {
   const session = getSession();
   const { eventId } = useParams();
   const eventIdStr: string = Array.isArray(eventId) ? eventId[0] : eventId;
@@ -19,7 +24,13 @@ const ReportModal = ({ closeModal }: ModalBaseType) => {
       return;
     }
     try {
-      const res = await instance.post("/event/claim", { eventId: eventIdStr, userId: session.user.userId, description: form.description });
+      let res;
+
+      if (type === "event") {
+        res = await instance.post("/event/claim", { eventId: eventIdStr, userId: session.user.userId, description: form.description });
+      } else if (type === "review") {
+        res = await instance.post(`/reviews/${reviewId}/claims`, { userId: session.user.userId, description: form.description });
+      }
 
       if (res.error) {
         throw new Error(res.error);

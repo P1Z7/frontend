@@ -61,7 +61,7 @@ const Banner = ({ data, eventId }: Props) => {
       return instance.get(`/event/${eventId}/update/application`);
     },
   });
-  const hasEditApplication = !(editApplication && editApplication?.length === 0);
+  const hasEditApplication = editApplication ? editApplication?.length !== 0 : false;
 
   return (
     <>
@@ -139,7 +139,7 @@ const Banner = ({ data, eventId }: Props) => {
           </div>
         </div>
       </section>
-      {modal === "report" && <ReportModal closeModal={closeModal} />}
+      {modal === "report" && <ReportModal closeModal={closeModal} type="event" />}
     </>
   );
 };

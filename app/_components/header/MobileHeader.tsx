@@ -48,7 +48,7 @@ const MobileHeader = ({ handleClick }: Props) => {
         )}
       </header>
       {bottomSheet === "event-kebab" && <EventKebabBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} openReportModal={openKebabModal} />}
-      {modal === "report" && <ReportModal closeModal={closeModal} />}
+      {modal === "report" && <ReportModal closeModal={closeModal} type="event" />}
     </>
   );
 };
