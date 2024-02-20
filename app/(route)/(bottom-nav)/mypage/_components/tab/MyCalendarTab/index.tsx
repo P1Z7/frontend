@@ -66,7 +66,7 @@ const MyCalendarTab = ({ userId }: Props) => {
       <div className="flex-center flex-col gap-8 rounded-sm border border-gray-50 pb-8 pt-16">
         <style>{calendarStyle}</style>
         {calendarStyle === "" ? (
-          <div className="flex-center h-332 w-[90vw]">
+          <div className="flex-center h-308 w-308 pc:h-400 pc:w-[75.8rem]">
             <FadingDot />
           </div>
         ) : (

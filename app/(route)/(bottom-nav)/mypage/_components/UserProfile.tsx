@@ -33,7 +33,7 @@ const UserProfile = () => {
             priority
           />
         </div>
-        <div className="flex flex-col gap-4 pc:items-center">
+        <div className="flex-center h-56 flex-col gap-4 pc:items-center">
           <p className="text-16 font-600 pc:text-20">{session.user.nickName}</p>
           <p className="font-12 font-500 text-gray-400 pc:text-14">{session.user.email}</p>
         </div>
