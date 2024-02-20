@@ -34,12 +34,12 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
 
     if (path === "/post") {
       try {
-        if (!session) throw Error("Unauthorized");
+        if (!session) throw Error(" /Unauthorized");
         const res = await handlePostSubmit(userInputValue, instance, session.user.userId);
         router.push(`/event/${res.eventId}`);
       } catch (err: any) {
-        toast.error(POST_ERR_MSG[err.message as PostErrMsgType], { className: "text-16 font-500 !text-red" });
-        if (err.message === "Unauthorized") {
+        toast.error(POST_ERR_MSG[err.message.split("/")[1] as PostErrMsgType], { className: "text-16 font-500 !text-red" });
+        if (err.message.split("/")[1] === "Unauthorized") {
           return router.push("/signin");
         }
       }

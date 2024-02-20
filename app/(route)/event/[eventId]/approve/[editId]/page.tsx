@@ -51,8 +51,8 @@ const EditDetailApprove = () => {
 
   const handleApplicationSubmit = async (isApproved: boolean) => {
     try {
-      if (!session) throw Error("Unauthorized");
-      if (session.user.userId === data.applicationDetail.userId) throw Error("the applicant is the author");
+      if (!session) throw Error(" /Unauthorized");
+      if (session.user.userId === data.applicationDetail.userId) throw Error(" /the applicant is the author");
       const res = await instance.post("/event/update/approval", { eventUpdateApplicationId: String(editId), isApproved, userId: "edit-api" });
       refetch();
       toast(EDIT_ERR_MSG[isApproved ? "approve" : "reject"], {
@@ -61,8 +61,8 @@ const EditDetailApprove = () => {
       });
       router.replace(`/event/${eventId}/approve`);
     } catch (err: any) {
-      toast.error(EDIT_ERR_MSG[err.message as EditErrMsgType], { className: "text-16 !text-red font-500" });
-      if (err.message === "Unauthorized") router.push("/signin");
+      toast.error(EDIT_ERR_MSG[err.message.split("/")[1] as EditErrMsgType], { className: "text-16 !text-red font-500" });
+      if (err.message.split("/")[1] === "Unauthorized") router.push("/signin");
     }
   };
 
