@@ -4,7 +4,7 @@ import FeelMyRhythm from "@/(route)/(bottom-nav)/signin/_components/Confetti";
 import LoadingDot from "@/(route)/(bottom-nav)/signin/_components/LoadingDot";
 import { instance } from "app/_api/api";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -13,7 +13,7 @@ import Button from "@/components/button";
 import InputText from "@/components/input/InputText";
 import PinkLayout from "@/components/layout/PinkLayout";
 import useEnterNext from "@/hooks/useEnterNext";
-import { setSession } from "@/store/session/cookies";
+import { deleteCookies, setCookies, setSession } from "@/store/session/cookies";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 import { SHOT_SIGNIN } from "@/constants/confetti";
 import { META_TAG } from "@/constants/metaTag";
@@ -34,6 +34,7 @@ const SIGNIN_DEFAULT = {
 type DefaultValues = (typeof SIGNIN_DEFAULT)["defaultValues"];
 
 const SignInPage = () => {
+  const pathname = usePathname();
   const router = useRouter();
   const { formSection, handleEnterNext } = useEnterNext();
 
@@ -62,7 +63,13 @@ const SignInPage = () => {
 
         setSession({ isAuth: true, user: res });
 
-        router.push("/");
+        if (pathname === "/signin") {
+          router.push("/");
+          router.refresh();
+          return;
+        }
+
+        router.refresh();
       } catch (e: any) {
         const message = e.message.split("/")[0] as string;
         setSubmitState((prev) => ({ ...prev, isError: true }));
@@ -139,11 +146,19 @@ const SignInPage = () => {
             <Link href="">비밀번호 찾기</Link>
           </div>
           <div className="flex w-full flex-col gap-20">
-            <Link href={OAUTH.kakao()} className="flex-center w-full gap-8 rounded-sm bg-[#FEE500] py-16 text-16 font-500">
+            <Link
+              href={OAUTH.kakao()}
+              onClick={() => setCookies("pathname", pathname, { path: "/" })}
+              className="flex-center w-full gap-8 rounded-sm bg-[#FEE500] py-16 text-16 font-500"
+            >
               <KakaoLogo />
               <p>카카오 계정으로 로그인</p>
             </Link>
-            <Link href={OAUTH.naver()} className="flex-center w-full gap-8 rounded-sm bg-[#03CF5D] py-16 text-16 font-500 text-white-white">
+            <Link
+              href={OAUTH.naver()}
+              onClick={() => setCookies("pathname", pathname, { path: "/" })}
+              className="flex-center w-full gap-8 rounded-sm bg-[#03CF5D] py-16 text-16 font-500 text-white-white"
+            >
               <NaverLogo fill="white" />
               <p>네이버 계정으로 로그인</p>
             </Link>
