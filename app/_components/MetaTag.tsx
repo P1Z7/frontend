@@ -7,7 +7,7 @@ interface Props {
 const MetaTag = ({ title, description, imgUrl }: Props) => {
   return (
     <>
-      <title>{`${title} | Opener` || "Opener"}</title>
+      <title>{title ? `${title} | Opener` : "Opener"}</title>
       <meta
         name="description"
         content={
@@ -16,7 +16,7 @@ const MetaTag = ({ title, description, imgUrl }: Props) => {
         }
       />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      <meta property="og:title" content={`${title} | Opener` || "Opener"} />
+      <meta property="og:title" content={title ? `${title} | Opener` : "Opener"} />
       <meta
         property="og:description"
         content={
