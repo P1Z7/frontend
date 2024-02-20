@@ -6,7 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import HeroSkeleton from "@/components/skeleton/HeroSkeleton";
 import { getSession } from "@/store/session/cookies";
 import { Res_Get_Type } from "@/types/getResType";
 import Carousel from "./Carousel";
@@ -90,7 +89,7 @@ const RenderContent = ({ status, hasFavoriteEvents, isLoading, isSuccess, favArt
 
   return (
     <>
-      <div className="flex-center">{isLoading && <HeroSkeleton />}</div>
+      {isLoading && <LoginHero />}
       {isSuccess && (
         <>
           {!hasFavoriteArtists && <FollowArtistHero />}
