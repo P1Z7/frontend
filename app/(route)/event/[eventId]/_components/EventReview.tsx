@@ -38,6 +38,8 @@ const EventReview = ({ data }: Props) => {
     likeMutation.mutate();
   };
 
+  const isMyReview = !!session && session?.user.userId === data?.user?.id;
+  const publicText = data.isPublic ? "공개" : "비공개";
   const { modal, openModal, closeModal } = useModal();
 
   return (
@@ -48,9 +50,7 @@ const EventReview = ({ data }: Props) => {
             <Image src={data.user?.profileImage ?? DEFAULT_PROFILE_IMAGE} alt="프로필 이미지" fill className="rounded-full object-cover" sizes="3.2rem" />
           </div>
           <div className="text-16 font-500">{data.user?.nickName}</div>
-          <button onClick={() => openModal("report")} className="ml-auto text-12 font-500 text-gray-400">
-            신고하기
-          </button>
+          <div className="ml-auto text-12 font-500 text-gray-400">{isMyReview ? publicText : <button onClick={() => openModal("report")}>신고하기</button>}</div>
         </div>
         <Evaluation rating={data.rating} />
         {data.isPublic && (
