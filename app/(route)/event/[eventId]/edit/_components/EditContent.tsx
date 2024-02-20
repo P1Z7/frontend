@@ -45,11 +45,13 @@ const EditContent = () => {
   }, []);
 
   return (
-    <div className="flex flex-col gap-20 pc:gap-32">
-      <StarInput />
-      <MainInput />
-      <SubInput />
-      <DetailInput />
+    <div className="flex h-[calc(80vh-7.2rem)] flex-col justify-between">
+      <div className="flex flex-col gap-20 pc:gap-32 pc:p-32">
+        <StarInput />
+        <MainInput />
+        <SubInput />
+        <DetailInput />
+      </div>
       <BottomButton isDisabled={!isValid} isSubmit>
         수정사항 등록
       </BottomButton>

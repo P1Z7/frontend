@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
 
 const WIDTH = {
-  narrow: "pc:w-[25vw]",
-  middle: "pc:w-[28vw]",
+  narrow: "pc:w-[32vw]",
+  middle: "pc:w-[36vw]",
   wide: "pc:w-[40vw]",
 };
 

@@ -1,6 +1,6 @@
 import InitButton from "@/(route)/event/[eventId]/edit/_components/InitButton";
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DaumPostcodeEmbed from "react-daum-postcode";
 import { useFormContext } from "react-hook-form";
 import CalendarContent from "@/components/bottom-sheet/content/CalendarContent";
@@ -24,6 +24,17 @@ const MainInput = () => {
     setValue,
   } = useFormContext<PostType>();
   const { placeName, address, addressDetail, startDate, endDate } = watch();
+
+  useEffect(() => {
+    if (isPc && bottomSheet) {
+      setDropDown(bottomSheet);
+      closeBottomSheet();
+    }
+    if (!isPc && dropDown) {
+      openBottomSheet(dropDown);
+      setDropDown("");
+    }
+  }, [isPc]);
 
   return (
     <>
@@ -52,7 +63,7 @@ const MainInput = () => {
           주소
         </InputText>
         {dropDown === "address" && (
-          <div className="shadow-postBox my-24 overflow-hidden rounded-md">
+          <div className="my-24 overflow-hidden rounded-md shadow-postBox">
             <DaumPostcodeEmbed
               className="!h-[48rem]"
               animation
@@ -84,8 +95,8 @@ const MainInput = () => {
               name="startDate"
               placeholder="날짜 선택"
               readOnly
-              onKeyDown={(event) => handleEnterDown(event, () => (isPc ? setDropDown("calendar") : openBottomSheet("date")))}
-              onClick={() => (isPc ? setDropDown("calendar") : openBottomSheet("date"))}
+              onKeyDown={(event) => handleEnterDown(event, () => (isPc ? setDropDown("date") : openBottomSheet("date")))}
+              onClick={() => (isPc ? setDropDown("date") : openBottomSheet("date"))}
             />
           </div>
           <div className="flex items-center px-4">~</div>
@@ -94,13 +105,13 @@ const MainInput = () => {
               name="endDate"
               placeholder="날짜 선택"
               readOnly
-              onKeyDown={(event) => handleEnterDown(event, () => (isPc ? setDropDown("calendar") : openBottomSheet("date")))}
-              onClick={() => (isPc ? setDropDown("calendar") : openBottomSheet("date"))}
+              onKeyDown={(event) => handleEnterDown(event, () => (isPc ? setDropDown("date") : openBottomSheet("date")))}
+              onClick={() => (isPc ? setDropDown("date") : openBottomSheet("date"))}
             />
           </div>
         </div>
       </div>
-      {dropDown === "calendar" && (
+      {dropDown === "date" && (
         <CalendarContent
           type="dropDown"
           setEndDateFilter={(date: string) => setValue("endDate", date)}
