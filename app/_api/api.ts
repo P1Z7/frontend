@@ -74,7 +74,7 @@ export class Api {
         ...(endPoint === "/file/upload" ? {} : { "Content-Type": "application/json" }),
       },
     });
-    const result = STR_RES_ENDPOINT.includes(endPoint) ? await res.text() : await res.json();
+    const result = STR_RES_ENDPOINT.includes(endPoint) || endPoint.split("/").includes("claims") ? await res.text() : await res.json();
     this.makeError(result);
 
     return result;
@@ -151,7 +151,8 @@ type PostEndPoint =
   | "/event/update/application"
   | "/event/update/approval"
   | "/artist/request"
-  | "/event/claim";
+  | "/event/claim"
+  | `/reviews/${string}/claims`;
 
 type PutEndPoint = `/event/${string}` | `/users/${string}/profile` | `/users/${string}/password`;
 type DeleteEndPoint = `/users/${string}/artists` | `/reviews/${string}/images` | `/users/${string}`;
@@ -188,8 +189,10 @@ type PostBodyType<T> = T extends "/event"
                             : T extends "/artist/request"
                               ? Req_Post_Type["request"]
                               : T extends "/event/claim"
-                                ? Req_Post_Type["claim"]
-                                : unknown;
+                                ? Req_Post_Type["eventClaim"]
+                                : T extends `/reviews/${string}/claims`
+                                  ? Req_Post_Type["reviewClaim"]
+                                  : unknown;
 
 type GetQueryType<T> = T extends "/event"
   ? Req_Query_Type["행사목록"]
