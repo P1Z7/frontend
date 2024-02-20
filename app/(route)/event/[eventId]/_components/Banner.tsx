@@ -111,7 +111,7 @@ const Banner = ({ data, eventId }: Props) => {
               <div className="hidden pc:block">
                 <LinkIcon {...IconStyleProps.pc} />
               </div>
-              <Link href={data?.eventUrl ?? ""} target="_blank" rel="noreferrer noopener" className="text-wrap text-blue">
+              <Link href={data?.eventUrl ?? ""} target="_blank" rel="noreferrer noopener" className="text-blue">
                 {data?.eventUrl}
               </Link>
             </SubDescription>
