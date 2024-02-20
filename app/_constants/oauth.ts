@@ -1,8 +1,8 @@
 class Oauth {
-  #CLIENT_ID_NAVER = "EmSmSG9VPVMXUCg7PNva";
-  #CLIENT_ID_KAKAO = "099d6b163e8aa68cff0c93909cfb7603";
-  #REDIRECT_URI_NAVER = "http://localhost:3000/oauth/callback/naver";
-  #REDIRECT_URI_KAKAO = "http://localhost:3000/oauth/callback/kakao";
+  #CLIENT_ID_NAVER = process.env.NEXT_PUBLIC_CLIENT_ID_NAVER;
+  #CLIENT_ID_KAKAO = process.env.NEXT_PUBLIC_CLIENT_ID_KAKAO;
+  #REDIRECT_URI_NAVER = process.env.NEXT_PUBLIC_REDIRECT_URI_NAVER;
+  #REDIRECT_URI_KAKAO = process.env.NEXT_PUBLIC_REDIRECT_URI_KAKAO;
   kakao() {
     return `https://kauth.kakao.com/oauth/authorize?client_id=${this.#CLIENT_ID_KAKAO}&redirect_uri=${this.#REDIRECT_URI_KAKAO}&response_type=code`;
   }
