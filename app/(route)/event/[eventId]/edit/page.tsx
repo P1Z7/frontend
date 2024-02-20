@@ -1,5 +1,6 @@
 "use client";
 
+import LoadingDot from "@/(route)/(bottom-nav)/signin/_components/LoadingDot";
 import { PostType } from "@/(route)/post/page";
 import { instance } from "app/_api/api";
 import { format } from "date-fns";
@@ -55,11 +56,15 @@ const Edit = () => {
   return (
     <PinkLayout size="narrow">
       <MobileHeader />
-      <div className="p-20 pb-116 text-16 pc:p-0">
-        {init && (
+      <div className="p-20 pb-120 text-16 pc:p-0">
+        {init ? (
           <GenericFormProvider formOptions={{ mode: "onChange", defaultValues: INITIAL_DATA, shouldFocusError: true }}>
             <EditContent />
           </GenericFormProvider>
+        ) : (
+          <div className="flex h-[10vh] w-full items-center justify-center">
+            <LoadingDot />
+          </div>
         )}
       </div>
     </PinkLayout>
