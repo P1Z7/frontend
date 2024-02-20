@@ -71,7 +71,7 @@ const SubInput = () => {
                   <input
                     className={classNames(
                       "h-16 w-16 cursor-pointer appearance-none rounded-full border-2 border-gray-200 checked:border-[0.5rem] checked:border-main-pink-500 hover:bg-main-pink-50",
-                      { "checked:border-gray-200 hover:cursor-not-allowed hover:bg-white-black": hasNotOrganizer },
+                      { "checked:!border-gray-200 hover:cursor-not-allowed hover:!bg-white-black": hasNotOrganizer },
                     )}
                     name="sns"
                     value={type}
