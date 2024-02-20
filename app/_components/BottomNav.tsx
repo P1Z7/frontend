@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ReactElement, cloneElement, useEffect, useState } from "react";
+import { ReactElement, cloneElement, useEffect, useMemo, useState } from "react";
 import { getSession } from "@/store/session/cookies";
 import PostIcon from "@/public/icon/add-outline.svg";
 import HomeIcon from "@/public/icon/home.svg";
@@ -14,23 +14,28 @@ const BottomNav = () => {
   const session = getSession();
   const [profileImage, setProfileImage] = useState("");
 
-  const navButtons = [
-    { href: "/", icon: <HomeIcon />, label: "홈" },
-    { href: "/search", icon: <SearchIcon />, label: "둘러보기" },
-    { href: "/post", icon: <PostIcon />, label: "등록하기" },
-    {
-      href: "/mypage",
-      icon: <Image src={profileImage || "/icon/no-profile.svg"} alt="프로필 이미지" width={24} height={24} className="h-24 w-24 rounded-full object-cover" />,
-      label: "마이페이지",
-    },
-  ];
+  const navButtons = useMemo(
+    () => [
+      { href: "/", icon: <HomeIcon />, label: "홈" },
+      { href: "/search", icon: <SearchIcon />, label: "둘러보기" },
+      { href: "/post", icon: <PostIcon />, label: "등록하기" },
+      {
+        href: "/mypage",
+        icon: <Image src={profileImage || "/icon/no-profile.svg"} alt="프로필 이미지" width={24} height={24} className="h-24 w-24 rounded-full object-cover" />,
+        label: "마이페이지",
+      },
+    ],
+    [profileImage],
+  );
+
   useEffect(() => {
-    if (session?.user.profileImage) {
-      setProfileImage(session?.user.profileImage);
+    const image = session?.user.profileImage;
+    if (image) {
+      setProfileImage(image);
       return;
     }
     setProfileImage("");
-  }, [session]);
+  }, [session?.isAuth]);
 
   return (
     <nav className="fixed bottom-0 left-0 z-nav flex h-72 w-full items-center justify-evenly gap-28 border-t border-gray-50 bg-white-black py-8 shadow-top pc:hidden">
