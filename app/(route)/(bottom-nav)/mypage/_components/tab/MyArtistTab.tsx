@@ -1,6 +1,6 @@
 "use client";
 
-import { NoFavCard } from "@/(route)/_components/carousel/FavArtistEventsCarousel";
+import { FollowArtistHero } from "@/(route)/_components/carousel/FavArtistEventsCarousel";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import ArtistCard from "@/components/ArtistCard";
@@ -42,7 +42,7 @@ const MyArtistTab = ({ userId }: Props) => {
               </ArtistCard>
             ))
           ) : (
-            <NoFavCard buttonName="아티스트 둘러보기" href={"/setting/artist"} />
+            <FollowArtistHero />
           )}
         </div>
       </div>
