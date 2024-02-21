@@ -8,44 +8,48 @@ const QUERY_KEY = "like";
 
 interface Props {
   eventId: string;
+  initialLike: boolean;
   initialLikeCount: number;
 }
 
-const useLikeEvent = ({ eventId, initialLikeCount }: Props) => {
+const useLikeEvent = ({ eventId, initialLike, initialLikeCount }: Props) => {
   const session = getSession();
   const queryClient = useQueryClient();
   const router = useRouter();
 
   const userId = session?.user.userId ?? "";
 
-  const { data: likeData } = useQuery<Res_Get_Type["eventLike"]>({
+  const { data: likeData, refetch } = useQuery<Res_Get_Type["eventLike"]>({
     queryKey: [QUERY_KEY, eventId, userId],
     queryFn: () => instance.get("/event/like", { eventId, userId }),
+    enabled: false,
   });
 
   const likeMutation = useMutation({
     mutationFn: () => instance.post("/event/like", { eventId, userId }),
     onMutate: async () => {
-      await queryClient.cancelQueries({
-        queryKey: [QUERY_KEY, eventId, userId],
-      });
-
       const prevStatus = queryClient.getQueryData([QUERY_KEY, eventId, userId]);
 
-      queryClient.setQueryData([QUERY_KEY, eventId, userId], (prev: Res_Get_Type["eventLike"]) => ({
-        status: !prev.status,
-        likeCount: prev.status ? prev.likeCount - 1 : prev.likeCount + 1,
-      }));
+      if (prevStatus) {
+        await queryClient.cancelQueries({
+          queryKey: [QUERY_KEY, eventId, userId],
+        });
 
-      return prevStatus;
+        queryClient.setQueryData([QUERY_KEY, eventId, userId], (prev: Res_Get_Type["eventLike"]) => ({
+          status: !prev.status,
+          likeCount: prev.status ? prev.likeCount - 1 : prev.likeCount + 1,
+        }));
+
+        return prevStatus;
+      }
+
+      return { status: initialLike, likeCount: initialLikeCount };
     },
     onError: (error, _, context) => {
       queryClient.setQueryData([QUERY_KEY, eventId, userId], context);
     },
     onSettled: () => {
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEY, eventId, userId],
-      });
+      refetch();
     },
   });
 
@@ -57,7 +61,7 @@ const useLikeEvent = ({ eventId, initialLikeCount }: Props) => {
     likeMutation.mutate();
   };
 
-  const liked = likeData?.status ?? false;
+  const liked = likeData?.status ?? initialLike;
   const likeCount = likeData?.likeCount ?? initialLikeCount;
 
   return { liked, likeCount, handleLikeEvent };

@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import MetaTag from "@/components/MetaTag";
 import Tabs from "@/components/Tabs";
 import MobileHeader from "@/components/header/MobileHeader";
@@ -13,7 +14,9 @@ interface Props {
 }
 
 const getEventInfo = async (eventId: string) => {
-  const data = await fetch(`https://${process.env.NEXT_PUBLIC_BASE_URL}/event/${eventId}`, { cache: "no-store" });
+  const cookieStore = cookies();
+  const session = JSON.parse(cookieStore.get("session")?.value ?? "");
+  const data = await fetch(`https://${process.env.NEXT_PUBLIC_BASE_URL}/event/${eventId}?userId=${session?.user.userId}`, { cache: "no-store" });
   const res: Res_Get_Type["event"] = await data.json();
   return res;
 };
