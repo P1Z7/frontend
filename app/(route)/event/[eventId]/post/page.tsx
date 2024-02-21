@@ -28,7 +28,7 @@ interface FormValues {
 }
 
 const ReviewPostPage = () => {
-  const session = useAuth("/signin");
+  const { session } = useAuth();
 
   const [evaluation, setEvaluation] = useState<boolean | null>(null);
   const [isPublic, setIsPublic] = useState<boolean | null>(null);

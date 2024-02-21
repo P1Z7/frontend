@@ -13,7 +13,7 @@ interface Props {
 }
 
 const getEventInfo = async (eventId: string) => {
-  const data = await fetch(`http://${process.env.NEXT_PUBLIC_BASE_URL}/event/${eventId}`, { cache: "no-store" });
+  const data = await fetch(`https://${process.env.NEXT_PUBLIC_BASE_URL}/event/${eventId}`, { cache: "no-store" });
   const res: Res_Get_Type["event"] = await data.json();
   return res;
 };

@@ -15,7 +15,7 @@ const MyArtistTab = ({ userId }: Props) => {
   const router = useRouter();
 
   const { data: myArtistsData, isSuccess } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["myArtist"],
     queryFn: async () => {
       return instance.get(`/users/${userId}/artists`);
     },
@@ -32,17 +32,22 @@ const MyArtistTab = ({ userId }: Props) => {
       <div className="flex w-full flex-col items-center">
         <div className="flex w-full flex-wrap justify-center gap-20 pc:justify-start pc:gap-32">
           {myArtistsData.length ? (
-            myArtistsData.map((cardList: MyArtistsType) => (
-              <ArtistCard
-                key={cardList.artistId}
-                profileImage={cardList.artistImage}
-                onClick={() => {
-                  router.push(`/search?keyword=${cardList.artistName}`);
-                }}
-              >
-                {cardList.artistName}
-              </ArtistCard>
-            ))
+            myArtistsData.map((cardList: MyArtistsType) => {
+              if (!cardList) {
+                return null;
+              }
+              return (
+                <ArtistCard
+                  key={cardList.artistId}
+                  profileImage={cardList.artistImage}
+                  onClick={() => {
+                    router.push(`/search?keyword=${cardList.artistName}`);
+                  }}
+                >
+                  {cardList.artistName}
+                </ArtistCard>
+              );
+            })
           ) : (
             <FollowArtistHero />
           )}

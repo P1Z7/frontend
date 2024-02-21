@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { SubmitHandler, useForm } from "react-hook-form";
 import MetaTag from "@/components/MetaTag";
 import MyArtistList from "@/components/MyArtistList";
+import BottomButton from "@/components/button/BottomButton";
 import MobileHeader from "@/components/header/MobileHeader";
 import PinkLayout from "@/components/layout/PinkLayout";
 import { instance } from "@/api/api";
@@ -36,7 +37,7 @@ const MyArtistEditPage = () => {
       <MetaTag title={META_TAG.myArtist["title"]} description={META_TAG.myArtist["title"]} />
       <PinkLayout size="wide">
         <MobileHeader />
-        <div className="flex flex-col gap-24 px-20 py-36">
+        <div className="flex h-auto flex-col gap-24 px-20 pt-36">
           <section className="flex flex-col gap-12">
             <h2 className="text-20 font-700 text-gray-900">좋아하는 아티스트를 알려주세요!</h2>
             <button onClick={() => openModal("noArtist")} className="w-188 text-14 text-gray-500 underline underline-offset-2">

@@ -1,7 +1,6 @@
-import FadingDot from "@/(route)/(bottom-nav)/signin/_components/FadingDot";
 import { keepPreviousData, useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import BottomButton from "@/components/button/BottomButton";
 import { instance } from "@/api/api";
@@ -13,7 +12,7 @@ import ArtistCard from "./ArtistCard";
 import ChipButton from "./chip/ChipButton";
 import SearchInput from "./input/SearchInput";
 
-const SIZE = 12;
+const SIZE = 24;
 
 const MyArtistList = () => {
   const router = useRouter();
@@ -21,39 +20,42 @@ const MyArtistList = () => {
 
   const session = getSession();
   const userId = session?.user.userId;
-  const { data: myArtistData } = useQuery({
+  const { data: myArtistData } = useQuery<ArtistType[]>({
     queryKey: ["myArtist"],
-    queryFn: async (): Promise<Res_Get_Type["myArtist"][]> => await instance.get(`/users/${userId}/artists`),
+    queryFn: async () => await instance.get(`/users/${userId}/artists`),
     placeholderData: keepPreviousData,
   });
 
   const [selected, setSelected] = useState<ArtistType[]>([]);
   useEffect(() => {
     if (myArtistData) {
-      setSelected(myArtistData.map((item) => ({ id: item.artistId, name: item.artistName, image: item.asrtistImage, type: "" })));
+      setSelected(myArtistData);
     }
   }, [myArtistData]);
 
   const [deleteData, setDeleteData] = useState<Set<string>>(new Set());
   const [addData, setAddData] = useState<Set<string>>(new Set());
 
-  const handleArtistClick = (cur: ArtistType) => {
-    if (selected.some((item) => item.id === cur.id)) {
-      setSelected((prevSelected) => prevSelected.filter((item) => item.id !== cur.id));
+  console.log(deleteData);
+  console.log(addData);
 
-      if (myArtistData?.some((item) => item.artistId === cur.id)) {
+  const handleArtistClick = (cur: ArtistType) => {
+    if (selected.some((item) => item?.id === cur.id)) {
+      setSelected((prevSelected) => prevSelected.filter((item) => item?.id !== cur.id));
+
+      if (myArtistData?.some((item) => item?.id === cur.id)) {
         setDeleteData((prev) => prev.add(cur.id));
       }
-      if (!myArtistData?.some((item) => item.artistId === cur.id)) {
+      if (!myArtistData?.some((item) => item?.id === cur.id)) {
         setAddData((prev) => (prev.delete(cur.id), prev));
       }
     } else {
       setSelected((prevSelected) => [cur, ...prevSelected]);
 
-      if (myArtistData?.some((item) => item.artistId === cur.id)) {
+      if (myArtistData?.some((item) => item?.id === cur.id)) {
         setDeleteData((prev) => (prev.delete(cur.id), prev));
       }
-      if (!myArtistData?.some((item) => item.artistId === cur.id)) {
+      if (!myArtistData?.some((item) => item?.id === cur.id)) {
         setAddData((prev) => prev.add(cur.id));
       }
     }
@@ -63,6 +65,7 @@ const MyArtistList = () => {
 
   const handleSubmit = async () => {
     const session = getSession();
+
     try {
       if (addData.size) {
         const addRes = await instance.post(`/users/${session?.user.userId}/artists`, {
@@ -88,7 +91,7 @@ const MyArtistList = () => {
       }
     } catch (e) {
       setIsError(true);
-      setSelected(myArtistData!.map((item) => ({ id: item.artistId, name: item.artistName, image: item.asrtistImage, type: "" })));
+      setSelected(myArtistData!.map((item) => ({ id: item.id, name: item.name, image: item.image, type: "" })));
       toast.error("앗! 다시 시도해 볼까요?", {
         className: "text-16 font-600",
       });
@@ -127,23 +130,28 @@ const MyArtistList = () => {
   });
 
   return (
-    <div className="flex h-auto flex-col gap-24">
+    <div className="flex flex-col gap-24">
       <section className="flex flex-col gap-16">
         <SearchInput setKeyword={setKeyword} placeholder="최애의 행사를 찾아보세요!" />
-        <div className="flex w-full snap-x snap-mandatory gap-12 overflow-auto">
-          {selected.map((artist, idx) => (
-            <div key={artist.id} className="snap-end">
-              <ChipButton label={artist.name} onClick={() => handleArtistClick(artist)} canDelete />
-            </div>
-          ))}
+        <div className="flex w-full max-w-[52rem] snap-x snap-mandatory gap-12 overflow-auto">
+          {selected.map((artist) => {
+            if (!artist) {
+              return null;
+            }
+            return (
+              <div key={artist?.id} className="snap-end">
+                <ChipButton label={artist?.name} onClick={() => handleArtistClick(artist)} canDelete />
+              </div>
+            );
+          })}
         </div>
       </section>
-      <section className="m-auto h-400 snap-y snap-mandatory">
-        <ul className="grid grid-cols-3 gap-x-16 gap-y-20 px-8">
-          {artistData?.pages.map((page, index) =>
+      <section className="m-auto flex snap-y snap-mandatory">
+        <ul className="flex-center max-w-[52rem] flex-wrap gap-x-16 gap-y-20 px-8 pc:max-w-[76rem]">
+          {artistData?.pages.map((page) =>
             page.artistAndGroupList.map((artist) => (
               <li key={artist.id} className="snap-start">
-                <ArtistCard onClick={() => handleArtistClick(artist)} isChecked={selected.map((item) => item.id).includes(artist.id)} profileImage={artist.image}>
+                <ArtistCard isSmall onClick={() => handleArtistClick(artist)} isChecked={selected.map((item) => item?.id).includes(artist.id)} profileImage={artist.image}>
                   {artist.name}
                 </ArtistCard>
               </li>
