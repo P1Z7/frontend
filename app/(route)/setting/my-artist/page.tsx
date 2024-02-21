@@ -6,6 +6,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import MetaTag from "@/components/MetaTag";
 import MyArtistList from "@/components/MyArtistList";
+import ToTopButton from "@/components/button/ToTopButton";
 import MobileHeader from "@/components/header/MobileHeader";
 import PinkLayout from "@/components/layout/PinkLayout";
 import { instance } from "@/api/api";
@@ -59,6 +60,7 @@ const MyArtistEditPage = () => {
           </section>
           <MyArtistList />
         </div>
+        <ToTopButton className="fixed bottom-120 right-40 rounded-full p-12 text-[3rem] hover:bg-sub-pink-bg">↑</ToTopButton>
         {modal === "noArtist" && (
           <InputModal
             title="아티스트 등록 요청"

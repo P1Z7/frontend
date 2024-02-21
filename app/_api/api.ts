@@ -1,3 +1,4 @@
+import { getSession } from "@/store/session/cookies";
 import { Req_Delete_Type } from "@/types/deleteBodyType";
 import { Req_Post_Type } from "@/types/postBodyType";
 import { Req_Put_Type } from "@/types/putBodyType";
@@ -16,7 +17,15 @@ export class Api {
 
   private async updateToken(res: any) {
     if (res.status === 401) {
-      const tokenRes = await fetch("/auth/token");
+      const session = getSession();
+      const userId = session?.user.userId;
+      const tokenRes = await fetch("/api/auth/token", {
+        method: "POST",
+        body: JSON.stringify({ userId }),
+        headers: {
+          "Content-type": "application/json",
+        },
+      });
       if (tokenRes.ok) {
         return true;
       }
