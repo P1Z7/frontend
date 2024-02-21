@@ -14,7 +14,7 @@ const useHeaderTitle = () => {
     case "/setting/profile":
       title = "프로필 수정";
       break;
-    case "/setting/favorite":
+    case "/setting/my-artist":
       title = "팔로우 아티스트 수정";
       break;
     case "/my-artist-event":

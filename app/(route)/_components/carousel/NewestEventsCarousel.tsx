@@ -27,7 +27,7 @@ const NewestEventsCarousel = () => {
           <Carousel cards={newestEvents} />
         ) : (
           <div className="flex-center h-272">
-            <p className="text-16 font-600 text-gray-400">현재 행사 정보가 없습니다.</p>
+            <p className="text-16 font-600 text-gray-500">현재 행사 정보가 없습니다.</p>
           </div>
         ))}
     </div>

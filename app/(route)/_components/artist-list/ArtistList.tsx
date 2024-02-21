@@ -9,7 +9,7 @@ import { instance } from "@/api/api";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { Res_Get_Type } from "@/types/getResType";
 
-const SIZE = 12;
+const SIZE = 24;
 
 const ArtistList = () => {
   const router = useRouter();
@@ -54,9 +54,9 @@ const ArtistList = () => {
                 </li>
               )),
             )}
-            <DeferredSuspense fallback={<LoadingDot />} isFetching={isFetching} />
             <div ref={containerRef} className="h-16 w-full" />
           </ul>
+          <DeferredSuspense fallback={<LoadingDot />} isFetching={isFetching} />
         </div>
       </div>
     </div>

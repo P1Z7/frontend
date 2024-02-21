@@ -89,8 +89,6 @@ const SearchArtist = ({ onClick, myArtists, myArtistsInfo }: Props) => {
         closeModal();
         notify();
       } catch (error: any) {
-        console.log(name);
-        console.log(error);
         toast.error("죄송합니다. 잠시 후 시도해주세요", {
           position: "bottom-center",
           className: "text-16 font-600 px-28 py-16",

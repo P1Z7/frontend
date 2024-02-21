@@ -2,28 +2,24 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { instance } from "app/_api/api";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { getSession } from "@/store/session/cookies";
+import { useAuth } from "@/hooks/useAuth";
 import { Res_Get_Type } from "@/types/getResType";
 import Carousel from "./Carousel";
 
-const FavArtistEventsCarousel = () => {
-  const session = getSession();
-
-  const [isSignin, setIsSignin] = useState(false);
+const MyArtistEventsCarousel = () => {
+  const { session, isLogin } = useAuth();
 
   const {
-    data: favArtistEvent,
+    data: myArtistEvent,
     isSuccess,
     isLoading,
   } = useQuery<Res_Get_Type["eventList"]>({
     queryKey: ["artistNewEvent"],
     queryFn: async () => {
       if (!session) {
-        return;
+        return null;
       }
       return instance.get(`/event/new/${session.user.userId}/artist`, {
         userId: session.user.userId,
@@ -31,11 +27,11 @@ const FavArtistEventsCarousel = () => {
     },
   });
 
-  const { data: favArtist } = useQuery({
-    queryKey: ["favArtist"],
+  const { data: myArtist } = useQuery({
+    queryKey: ["myArtist"],
     queryFn: async () => {
       if (!session) {
-        return;
+        return null;
       }
       return instance.get(`/users/${session.user.userId}/artists`, {
         userId: session.user.userId,
@@ -43,17 +39,13 @@ const FavArtistEventsCarousel = () => {
     },
   });
 
-  useEffect(() => {
-    if (session?.isAuth) setIsSignin(true);
-  }, [session]);
-
   return (
     <div className="flex flex-col gap-16 pc:gap-24">
       <div className="flex h-32 items-center justify-between self-stretch px-20 pc:px-48">
-        {isSignin && (
+        {isLogin && (
           <>
             <h2 className="text-20 font-700 text-gray-900">내 아티스트의 새 행사</h2>
-            {!!favArtistEvent?.length && (
+            {!!myArtistEvent?.length && (
               <Link href="/my-artist-event" className="text-12 font-600 text-blue">
                 전체보기
               </Link>
@@ -62,12 +54,12 @@ const FavArtistEventsCarousel = () => {
         )}
       </div>
       <RenderContent
-        status={isSignin}
-        hasFavoriteEvents={!!favArtistEvent?.length}
-        hasFavoriteArtists={!!favArtist?.length}
+        status={isLogin}
+        hasMyArtistEvents={!!myArtistEvent?.length}
+        hasMyArtist={!!myArtist?.length}
         isLoading={isLoading}
         isSuccess={isSuccess}
-        favArtistEvent={favArtistEvent}
+        myArtistEvent={myArtistEvent}
       />
     </div>
   );
@@ -75,14 +67,14 @@ const FavArtistEventsCarousel = () => {
 
 interface RenderContentProps {
   status?: boolean;
-  hasFavoriteEvents: boolean;
+  hasMyArtistEvents: boolean;
   isLoading: boolean;
   isSuccess: boolean;
-  favArtistEvent?: Res_Get_Type["eventList"];
-  hasFavoriteArtists: boolean;
+  myArtistEvent?: Res_Get_Type["eventList"];
+  hasMyArtist: boolean;
 }
 
-const RenderContent = ({ status, hasFavoriteEvents, isLoading, isSuccess, favArtistEvent, hasFavoriteArtists }: RenderContentProps) => {
+const RenderContent = ({ status, hasMyArtistEvents, isLoading, isSuccess, myArtistEvent, hasMyArtist }: RenderContentProps) => {
   if (!status) {
     return <LoginHero />;
   }
@@ -92,9 +84,9 @@ const RenderContent = ({ status, hasFavoriteEvents, isLoading, isSuccess, favArt
       {isLoading && <LoginHero />}
       {isSuccess && (
         <>
-          {!hasFavoriteArtists && <FollowArtistHero />}
-          {hasFavoriteArtists && !hasFavoriteEvents && <NoNewCard />}
-          {hasFavoriteEvents && <Carousel cards={favArtistEvent} />}
+          {!hasMyArtist && <FollowArtistHero />}
+          {hasMyArtist && !hasMyArtistEvents && <NoNewCard />}
+          {hasMyArtistEvents && <Carousel cards={myArtistEvent} />}
         </>
       )}
     </>
@@ -132,7 +124,7 @@ export const FollowArtistHero = () => {
             원하는 행사만 더 빠르게 확인해 보세요!
           </p>
           <button
-            onClick={() => router.push("/setting/favorite")}
+            onClick={() => router.push("/setting/my-artist")}
             className="h-32 rounded-full bg-main-pink-500 px-16 text-14 font-600 leading-loose text-white-white pc:h-40 pc:text-18"
           >
             설정하러 가기
@@ -156,4 +148,4 @@ const NoNewCard = () => {
   );
 };
 
-export default FavArtistEventsCarousel;
+export default MyArtistEventsCarousel;

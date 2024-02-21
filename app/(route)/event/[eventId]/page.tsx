@@ -13,7 +13,7 @@ interface Props {
 }
 
 const getEventInfo = async (eventId: string) => {
-  const data = await fetch(`http://${process.env.NEXT_PUBLIC_BASE_URL}/event/${eventId}`, { cache: "no-store" });
+  const data = await fetch(`https://${process.env.NEXT_PUBLIC_BASE_URL}/event/${eventId}`, { cache: "no-store" });
   const res: Res_Get_Type["event"] = await data.json();
   return res;
 };
@@ -27,7 +27,7 @@ const EventInfoPage = async ({ params }: Props) => {
       <DottedLayout size="narrow">
         <MobileHeader />
         <Banner data={eventInfo} eventId={params.eventId} />
-        <Tabs names={["행사정보", "위치", "후기"]} topOffset="event">
+        <Tabs names={["행사정보", "위치", "후기"]} topOffset="event" eventId={params.eventId}>
           <DescriptionTab images={eventInfo.eventImages} description={eventInfo.description} />
           <LocationTab name={eventInfo.placeName} address={eventInfo.address} />
           <ReviewTab eventId={params.eventId} />
