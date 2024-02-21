@@ -18,7 +18,7 @@ const MyArtistEventsCarousel = () => {
     isSuccess,
     isLoading,
   } = useQuery<Res_Get_Type["eventList"]>({
-    queryKey: ["artistNewEvent"],
+    queryKey: ["myArtistEvent"],
     queryFn: async () => {
       if (!session) {
         return null;
