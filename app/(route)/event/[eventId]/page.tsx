@@ -15,8 +15,8 @@ interface Props {
 
 const getEventInfo = async (eventId: string) => {
   const cookieStore = cookies();
-  const session = cookieStore.get("session")?.value ? JSON.parse(cookieStore.get("session")?.value as string) : null;
-  const data = await fetch(`https://${process.env.NEXT_PUBLIC_BASE_URL}/event/${eventId}${session ? `?userId=${session?.user.userId}` : ""}`, { cache: "no-store" });
+  const session = JSON.parse(cookieStore.get("session")?.value ?? "{}");
+  const data = await fetch(`https://${process.env.NEXT_PUBLIC_BASE_URL}/event/${eventId}?userId=${session?.user?.userId ?? ""}`, { cache: "no-store" });
   const res: Res_Get_Type["event"] = await data.json();
   return res;
 };

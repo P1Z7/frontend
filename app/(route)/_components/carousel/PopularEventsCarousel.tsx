@@ -3,12 +3,15 @@
 import { useQuery } from "@tanstack/react-query";
 import { instance } from "app/_api/api";
 import dynamic from "next/dynamic";
+import { getSession } from "@/store/session/cookies";
 import { Res_Get_Type } from "@/types/getResType";
 
 const Carousel = dynamic(() => import("./Carousel"), { ssr: false });
 const VerticalEventCardSkeleton = dynamic(() => import("@/components/skeleton/VerticalEventCardSkeleton"), { ssr: false });
 
 const PopularEventsCarousel = () => {
+  const session = getSession();
+
   const {
     data: popularEvents,
     isLoading,
@@ -16,7 +19,7 @@ const PopularEventsCarousel = () => {
   } = useQuery<Res_Get_Type["eventList"]>({
     queryKey: ["event", "popular"],
     queryFn: async () => {
-      return instance.get("/event/popularity");
+      return instance.get("/event/popularity", { userId: session?.user.userId });
     },
   });
 

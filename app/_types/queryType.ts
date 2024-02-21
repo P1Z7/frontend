@@ -20,6 +20,10 @@ type Req_Query_Event_Like = {
   eventId: string;
 };
 
+type Req_Query_Event_Carousel = {
+  userId?: string;
+};
+
 type Req_Query_Event_User_Like = {
   status: "" | "예정" | "종료" | "진행중" | "종료제외";
 };
@@ -77,6 +81,7 @@ type Req_Query_Artist_New_Event = {
 
 export type Req_Query_Type = {
   행사목록: Req_Query_Event;
+  행사캐러셀: Req_Query_Event_Carousel;
   행사상세: Req_Query_Event_Detail;
   행사좋아요: Req_Query_Event_Like;
   유저좋아요: Req_Query_Event_User_Like;
