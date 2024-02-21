@@ -35,7 +35,7 @@ const InputArea: Function = ({ children, placeholder, onKeyDown, isEdit, hasLimi
           "outline outline-1 outline-blue": isEdit,
         })}
       />
-      {hasLimit && <div className={classNames("pt-4 text-12 font-500 text-gray-500", { "text-red": field.value.length > 100 })}>{field.value.length} / 100</div>}
+      {hasLimit && <div className={classNames("pt-4 text-12 font-500 text-gray-500", { "text-red": field.value.length > 300 })}>{field.value.length} / 300</div>}
     </div>
   );
 };
