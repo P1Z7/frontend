@@ -1,3 +1,4 @@
+import LoadingDot from "@/(route)/(bottom-nav)/signin/_components/LoadingDot";
 import DetailInput from "@/(route)/post/_components/_inputs/DetailInput";
 import MainInput from "@/(route)/post/_components/_inputs/MainInput";
 import StarInput from "@/(route)/post/_components/_inputs/StarInput";
@@ -17,7 +18,7 @@ const EditContent = () => {
     watch,
     formState: { defaultValues },
   } = useFormContext<PostType>();
-  const { isCheck, setCheck } = useStore((state) => ({ isCheck: state.isWarningCheck, setCheck: state.setIsWarningCheck }));
+  const { isCheck, setCheck, isLoading } = useStore((state) => ({ isCheck: state.isWarningCheck, setCheck: state.setIsWarningCheck, isLoading: state.postLoading }));
   const watchedValue = watch();
 
   const checkUpdated = () => {
@@ -52,8 +53,8 @@ const EditContent = () => {
         <SubInput />
         <DetailInput />
       </div>
-      <BottomButton isDisabled={!isValid} isSubmit>
-        수정사항 등록
+      <BottomButton isDisabled={!isValid || isLoading} isSubmit>
+        {isLoading ? <LoadingDot /> : "수정사항 등록"}
       </BottomButton>
     </div>
   );
