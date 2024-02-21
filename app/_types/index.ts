@@ -196,6 +196,12 @@ export interface MyReviewType {
     endDate: string;
   };
   reviewImages: { url: string; createdAt: string }[];
+  reviewArtists: {
+    artistId: string;
+    artistName: string;
+    groupId: string;
+    groupName: string;
+  }[];
 }
 
 export type PostValueType =

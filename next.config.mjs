@@ -14,11 +14,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**",
-      },
-      {
-        protocol: "http",
-        hostname: "**",
+        hostname: "nest-app-file-upload.s3.ap-northeast-2.amazonaws.com",
       },
     ],
   },

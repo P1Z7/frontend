@@ -224,11 +224,11 @@ const SearchPage = () => {
           </section>
           <section className="flex flex-wrap items-center gap-x-24">
             {isEmpty ? (
-              <div className="pt-36 text-14 font-500 text-gray-500">검색 결과가 없습니다.</div>
+              <div className="flex-center w-full pt-36 text-14 font-500">검색 결과가 없습니다.</div>
             ) : (
               events?.pages.map((page) => page.eventList.map((event) => <HorizontalEventCard key={event.id} data={event} />))
             )}
-            <DeferredSuspense fallback={<HorizontalEventCardSkeleton />} isFetching={isFetching} />
+            {/* <DeferredSuspense fallback={<HorizontalEventCardSkeleton />} isFetching={isFetching} /> */}
             <div ref={containerRef} className="h-20 w-full" />
           </section>
         </main>

@@ -37,10 +37,10 @@ export default function RootLayout({
           <div id="bottom-sheet" />
           <div id="modal" />
         </ReactQueryProvider>
+        <Suspense>
+          <Analytics />
+        </Suspense>
       </body>
-      <Suspense>
-        <Analytics />
-      </Suspense>
       <Script src="https://developers.kakao.com/sdk/js/kakao.js" async />
       <Script type="text/javascript" src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_API_KEY}&autoload=false&libraries=services`} />
     </html>
