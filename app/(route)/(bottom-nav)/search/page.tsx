@@ -13,6 +13,7 @@ import HorizontalEventCardSkeleton from "@/components/skeleton/HorizontalEventCa
 import { instance } from "@/api/api";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import { getSession } from "@/store/session/cookies";
 import { formatDate } from "@/utils/formatString";
 import { createQueryString } from "@/utils/handleQueryString";
 import { Res_Get_Type } from "@/types/getResType";
@@ -121,6 +122,7 @@ const SearchPage = () => {
   }, [keyword, sort, filter]);
 
   const queryClient = useQueryClient();
+  const session = getSession();
 
   const getEvents = async ({ pageParam = 1 }) => {
     const data: Res_Get_Type["eventSearch"] = await instance.get("/event", {
@@ -133,6 +135,7 @@ const SearchPage = () => {
       ...{ startDate: filter.startDate || "" },
       ...{ endDate: filter.endDate || "" },
       tags: filter.gifts.map((gift) => TAG[gift]).join(","),
+      userId: session?.user.userId ?? "",
     });
     return data;
   };
@@ -174,7 +177,7 @@ const SearchPage = () => {
 
   const handleScroll = useCallback(() => {
     const moving = window.scrollY;
-    setVisible(position < 100 || position > moving);
+    setVisible(position < 110 || position > moving);
     setPosition(moving);
   }, [position]);
 
@@ -187,7 +190,7 @@ const SearchPage = () => {
       <DottedLayout size="wide">
         <main className="relative w-full px-20 pb-84 pt-160 pc:p-0 pc:pb-84">
           <section className="fixed left-0 right-0 top-0 z-nav flex w-full flex-col bg-white-black text-14 text-gray-500 shadow-top pc:static pc:shadow-none">
-            <div className="bg-white-black px-20 pb-8 pt-40 pc:px-0 pc:pb-20 pc:pt-[7rem]">
+            <div className="bg-white-black px-20 pb-8 pt-32 pc:px-0 pc:pb-20 pc:pt-[7rem]">
               <SearchInput keyword={keyword} setKeyword={setKeyword} initialKeyword={initialKeyword} placeholder="최애의 이름으로 행사를 찾아보세요!" />
             </div>
             <div className={`animate-fadeIn px-20 pb-8 pc:p-0 ${visible ? "block" : "hidden pc:block"}`}>
@@ -226,7 +229,12 @@ const SearchPage = () => {
             {isEmpty ? (
               <div className="flex-center w-full pt-36 text-14 font-500">검색 결과가 없습니다.</div>
             ) : (
-              events?.pages.map((page) => page.eventList.map((event) => <HorizontalEventCard key={event.id} data={event} />))
+              <>
+                {events?.pages[0].totalCount && (
+                  <div className="w-full pt-12 text-12 font-500 text-gray-800 pc:pt-[2.2rem] pc:text-14">{events?.pages[0].totalCount}개의 검색결과가 있습니다.</div>
+                )}
+                {events?.pages.map((page) => page.eventList.map((event) => <HorizontalEventCard key={event.id} data={event} />))}
+              </>
             )}
             {/* <DeferredSuspense fallback={<HorizontalEventCardSkeleton />} isFetching={isFetching} /> */}
             <div ref={containerRef} className="h-20 w-full" />

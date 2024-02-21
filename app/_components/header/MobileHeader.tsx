@@ -35,12 +35,12 @@ const MobileHeader = ({ handleClick }: Props) => {
   return (
     <>
       <header
-        className={`sticky left-0 top-0 z-nav flex h-72 w-full justify-between border-b border-gray-50 bg-white-white px-20 pb-12 pt-36 ${pathname === `/event/${eventId}` || pathname === "/my-artist-event" ? "pc:hidden" : ""}`}
+        className={`sticky left-0 top-0 z-nav flex h-60 w-full justify-between border-b border-gray-50 bg-white-white px-20 pb-12 pt-24 ${pathname === `/event/${eventId}` || pathname === "/my-artist-event" ? "pc:hidden" : ""}`}
       >
         <button onClick={handleClick || (() => router.back())} className="z-nav">
           <ArrowLeft />
         </button>
-        <h1 className="absolute left-0 w-full text-center text-16 font-600 text-gray-900">{title}</h1>
+        <h1 className="absolute left-0 w-full truncate px-60 text-center text-16 font-600 text-gray-900">{title}</h1>
         {pathname === `/event/${eventId}` && (
           <button onClick={openKebabBottomSheet} className="z-nav">
             <KebabButton />

@@ -8,6 +8,7 @@ type Req_Query_Event = {
   sort?: "최신순" | "인기순";
   page?: number;
   size?: number;
+  userId?: string;
 };
 
 type Req_Query_Event_Detail = {
@@ -17,6 +18,10 @@ type Req_Query_Event_Detail = {
 type Req_Query_Event_Like = {
   userId: string;
   eventId: string;
+};
+
+type Req_Query_Event_Carousel = {
+  userId?: string;
 };
 
 type Req_Query_Event_User_Like = {
@@ -64,7 +69,7 @@ type Req_Query_Approve = {
 };
 
 type Req_Query_Artist_Event = {
-  sort: "최신순" | "인기순"
+  sort: "최신순" | "인기순";
   size?: number;
   page?: number;
   userId: string;
@@ -72,10 +77,11 @@ type Req_Query_Artist_Event = {
 
 type Req_Query_Artist_New_Event = {
   userId: string;
-}
+};
 
 export type Req_Query_Type = {
   행사목록: Req_Query_Event;
+  행사캐러셀: Req_Query_Event_Carousel;
   행사상세: Req_Query_Event_Detail;
   행사좋아요: Req_Query_Event_Like;
   유저좋아요: Req_Query_Event_User_Like;
@@ -88,5 +94,5 @@ export type Req_Query_Type = {
   멤버조회: Req_Query_Artist;
   수정상세: Req_Query_Approve;
   아티스트행사: Req_Query_Artist_Event;
-  아티스트새행사: Req_Query_Artist_New_Event
+  아티스트새행사: Req_Query_Artist_New_Event;
 };

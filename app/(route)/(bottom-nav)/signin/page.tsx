@@ -98,7 +98,7 @@ const SignInPage = () => {
     <>
       <MetaTag title={META_TAG.signin["title"]} description={META_TAG.signin["description"]} />
       <PinkLayout size="narrow">
-        <header className="flex h-72 w-full justify-between bg-white-white px-20 pb-12 pt-36">
+        <header className="flex h-72 w-full justify-between bg-white-white px-20 pb-12 pt-28">
           <button onClick={() => router.back()}>
             <ArrowLeft />
           </button>
@@ -145,7 +145,7 @@ const SignInPage = () => {
             <div className="h-16 border" />
             <Link href="">비밀번호 찾기</Link>
           </div>
-          <div className="flex w-full flex-col gap-20">
+          <div className="flex w-full flex-col gap-20 pb-100">
             <Link
               href={OAUTH.kakao()}
               onClick={() => setCookies("pathname", pathname, { path: "/" })}

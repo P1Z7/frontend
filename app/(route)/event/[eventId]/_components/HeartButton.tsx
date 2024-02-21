@@ -6,11 +6,12 @@ import HeartIcon from "@/public/icon/heart.svg";
 
 interface HeartButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   eventId: string;
+  initialLike: boolean;
   initialLikeCount: number;
 }
 
-const HeartButton = ({ eventId, initialLikeCount }: HeartButtonProps) => {
-  const { liked, likeCount, handleLikeEvent } = useLikeEvent({ eventId, initialLikeCount });
+const HeartButton = ({ eventId, initialLike, initialLikeCount }: HeartButtonProps) => {
+  const { liked, likeCount, handleLikeEvent } = useLikeEvent({ eventId, initialLike, initialLikeCount });
 
   return (
     <button onClick={handleLikeEvent} className="absolute right-20 top-24 text-center text-12 font-600 pc:right-0 pc:top-0 pc:text-14">

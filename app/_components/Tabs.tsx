@@ -5,7 +5,7 @@ import { Tab } from "@/store/tab/cookies";
 
 const TOP_OFFSET = {
   mypage: "top-0",
-  event: "top-72",
+  event: "top-60",
 };
 
 interface Props {

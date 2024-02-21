@@ -13,7 +13,7 @@ const UserProfile = () => {
   const { session } = useAuth();
 
   return (
-    <div className="flex items-center justify-between px-20 pt-48 pc:h-fit pc:w-[26.2rem] pc:flex-col pc:gap-28">
+    <div className="flex items-center justify-between px-20 pt-44 pc:h-fit pc:w-[26.2rem] pc:flex-col pc:gap-28">
       <div className="flex items-center justify-center gap-12 pc:flex-col">
         <div className="relative h-56 w-56 pc:h-80 pc:w-80">
           <Image
