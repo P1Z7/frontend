@@ -1,7 +1,7 @@
 export const REG_EXP = {
   CHECK_EMAIL: /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
   CHECK_NICKNAME: /^(?=.*[가-힣A-Za-z])[가-힣A-Za-z0-9-]{2,10}$/,
-  CHECK_PASSWORD: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/,
+  CHECK_PASSWORD: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$#!%*?&]{8,}$/,
 };
 
 export const ERROR_MESSAGES = {
