@@ -15,6 +15,9 @@ export const makeImgUrlList = async (eventImages: (string | File)[], instance: A
   for (const image of eventImages) {
     if (typeof image !== "string") {
       const res = await uploadImg(image, instance);
+      if (res.includes("Request Entity Too Large")) {
+        throw Error(" /Request Entity Too Large");
+      }
       imageUrlList.push(res);
     } else {
       imageUrlList.push(image);
