@@ -14,7 +14,7 @@ const UserProfile = () => {
 
   return (
     <div className="flex items-center justify-between px-20 pt-48 pc:h-fit pc:w-[26.2rem] pc:flex-col pc:gap-28">
-      <div className="flex items-center gap-12 pc:flex-col">
+      <div className="flex items-center justify-center gap-12 pc:flex-col">
         <div className="relative h-56 w-56 pc:h-80 pc:w-80">
           <Image
             src={session?.user.profileImage ? session?.user.profileImage : "/icon/no-profile.svg"}
@@ -25,7 +25,7 @@ const UserProfile = () => {
             priority
           />
         </div>
-        <div className="flex-center h-56 flex-col gap-4 pc:items-center">
+        <div className="flex h-56 flex-col justify-center gap-4 pc:items-center">
           <p className="text-16 font-600 pc:text-20">{session?.user.nickName}</p>
           <p className="font-12 font-500 text-gray-400 pc:text-14">{session?.user.email}</p>
         </div>
