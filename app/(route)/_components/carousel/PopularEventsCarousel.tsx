@@ -24,7 +24,7 @@ const PopularEventsCarousel = () => {
   });
 
   return (
-    <div className="flex h-280 flex-col gap-16 pc:h-344 pc:gap-24">
+    <div className="flex h-328 flex-col gap-16 pc:h-400 pc:gap-24">
       <h2 className="px-20 text-20 font-700 text-gray-900 pc:px-48">지금 가장 인기 있는 행사</h2>
       {isLoading && <VerticalEventCardSkeleton />}
       {isSuccess &&
