@@ -1,8 +1,13 @@
+import { useEffect } from "react";
 import { useStore } from "@/store/index";
 import CheckBox from "./CheckBox";
 
 const WarningCheck = () => {
   const { isCheck, setIsCheck } = useStore((state) => ({ isCheck: state.isWarningCheck, setIsCheck: state.setIsWarningCheck }));
+
+  useEffect(() => {
+    setIsCheck(false);
+  }, []);
 
   return (
     <div className="flex flex-col gap-8 pt-20">

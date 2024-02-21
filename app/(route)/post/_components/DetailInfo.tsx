@@ -10,7 +10,7 @@ import DetailInput from "./_inputs/DetailInput";
 const DetailInfo = () => {
   const { isCheck } = useStore((state) => ({ isCheck: state.isWarningCheck }));
   const { watch } = useFormContext<PostType>();
-  const { description } = watch();
+  const { description, eventImages } = watch();
 
   return (
     <div className="flex h-full flex-col justify-between">
@@ -21,7 +21,7 @@ const DetailInfo = () => {
         </div>
         <DetailInput />
       </PostFrame>
-      <BottomButton isSubmit isDisabled={!isCheck || description.length > 300}>
+      <BottomButton isSubmit isDisabled={!isCheck || description.length > 300 || eventImages.length > 5}>
         작성 완료
       </BottomButton>
     </div>

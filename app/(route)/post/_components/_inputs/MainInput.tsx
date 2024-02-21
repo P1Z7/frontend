@@ -41,7 +41,7 @@ const MainInput = () => {
       <InputText
         name="placeName"
         placeholder="장소 이름을 입력하세요."
-        rules={{ required: "제목을 입력해주세요." }}
+        rules={{ required: "장소 이름을 입력해주세요." }}
         isEdit={validateEdit(defaultValues?.placeName !== placeName)}
         onInit={() => setValue("placeName", defaultValues?.placeName || "")}
       >
