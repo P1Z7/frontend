@@ -175,5 +175,5 @@ interface SubDescriptionProps {
 }
 
 const SubDescription = ({ isVisible = true, children }: SubDescriptionProps) => {
-  return <>{isVisible && <div className="flex gap-12 text-14 pc:gap-16 pc:text-16">{children}</div>}</>;
+  return <>{isVisible && <div className="flex gap-12 break-all text-14 pc:gap-16 pc:text-16">{children}</div>}</>;
 };

@@ -18,19 +18,19 @@ interface Props {
   userId: string;
 }
 
-type StatueType = "" | "예정" | "종료" | "진행중" | "종료제외";
+type StatusType = "" | "예정" | "종료" | "진행중" | "종료제외";
 
 const MyCalendarTab = ({ userId }: Props) => {
   const [data, setData] = useState<EventCardType[] | []>([]);
   const [isFold, setIsFold] = useState(true);
-  const [statue, setStatus] = useState<StatueType>("");
+  const [status, setStatus] = useState<StatusType>("");
   const [calendarStyle, setCalendarStyle] = useState("");
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const { data: myEventsData, isSuccess } = useQuery({
-    queryKey: ["events", statue],
+    queryKey: ["events", status],
     queryFn: async () => {
-      return instance.get(`/event/${userId}/like`, { status: statue });
+      return instance.get(`/event/${userId}/like`, { status });
     },
   });
 
@@ -77,7 +77,7 @@ const MyCalendarTab = ({ userId }: Props) => {
         )}
       </div>
       <div className="w-full">
-        <ChipButtons setStatus={setStatus} statue={statue} />
+        <ChipButtons setStatus={setStatus} status={status} />
         <section>
           {data
             .filter(
