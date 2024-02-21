@@ -26,7 +26,11 @@ const EventInfoPage = async ({ params }: Props) => {
 
   return (
     <>
-      <MetaTag title={eventInfo.placeName} description={`${eventInfo.placeName}에서 열리는 행사 정보를 확인해 보세요.`} imgUrl={eventInfo.eventImages[0].imageUrl} />
+      <MetaTag
+        title={eventInfo.placeName}
+        description={`${eventInfo.placeName}에서 열리는 행사 정보를 확인해 보세요.`}
+        imgUrl={eventInfo?.eventImages?.[0]?.imageUrl ?? "/image/no-profile.png"}
+      />
       <DottedLayout size="narrow">
         <MobileHeader />
         <Banner data={eventInfo} eventId={params.eventId} />
