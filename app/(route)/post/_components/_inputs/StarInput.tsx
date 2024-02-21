@@ -2,7 +2,6 @@ import InitButton from "@/(route)/event/[eventId]/edit/_components/InitButton";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import EventTypeList from "@/components/bottom-sheet/content/EventTypeList";
 import InputText from "@/components/input/InputText";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
 import useGetWindowWidth from "@/hooks/useGetWindowWidth";
@@ -37,7 +36,7 @@ const StarInput = () => {
   };
 
   useEffect(() => {
-    if (isPc && bottomSheet) {
+    if (isPc && bottomSheet && bottomSheet !== "event") {
       openModal(bottomSheet);
       closeBottomSheet();
     }
@@ -81,15 +80,14 @@ const StarInput = () => {
           readOnly
           placeholder="행사 유형을 선택하세요."
           tabIndex={0}
-          onClick={() => (isPc ? openModal("event") : openBottomSheet("event"))}
-          onKeyDown={(event) => handleEnterDown(event, () => (isPc ? openModal("event") : openBottomSheet("event")))}
+          onClick={() => openBottomSheet("event")}
+          onKeyDown={(event) => handleEnterDown(event, () => openBottomSheet("event"))}
           isEdit={validateEdit(defaultValues?.eventType !== eventType)}
           onInit={() => setValue("eventType", defaultValues?.eventType || "카페")}
           noButton
         >
           행사 유형
         </InputText>
-        {modal === "event" && <EventTypeList type="dropDown" handleClickFunc={closeModal} />}
         <InputText name="groupId" hidden />
         <InputText name="artists" hidden />
       </div>

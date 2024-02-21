@@ -33,17 +33,17 @@ export default function RootLayout({
         <meta name="google-site-verification" content="baJ8sFSbwa2owl2MQogf1J5sX4CEPSTg5NipfOsFIIU" />
       </head>
       <body>
-        <Toaster containerClassName="toast" />
-        <ReactQueryProvider>
-          <Suspense fallback={<PageLoading />}>
+        <Suspense fallback={<PageLoading />}>
+          <Toaster containerClassName="toast" />
+          <ReactQueryProvider>
             <PcHeader />
             {children}
             <div id="bottom-sheet" />
             <div id="modal" />
+          </ReactQueryProvider>
+          <Suspense>
+            <Analytics />
           </Suspense>
-        </ReactQueryProvider>
-        <Suspense>
-          <Analytics />
         </Suspense>
       </body>
       <Script src="https://developers.kakao.com/sdk/js/kakao.js" async />
