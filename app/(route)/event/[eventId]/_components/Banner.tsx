@@ -70,7 +70,7 @@ const Banner = ({ data, eventId }: Props) => {
           <Image src={bannerImage?.imageUrl ?? DefaultImage} alt={"행사 포스터 썸네일"} priority fill sizes="250px" className="object-cover" />
         </div>
         <div className="relative bottom-24 grow rounded-t-lg bg-white-black p-24 pb-0 pc:bottom-0 pc:p-0">
-          <HeartButton eventId={data.id} initialLikeCount={data.likeCount} />
+          <HeartButton eventId={data.id} initialLike={data.isLike} initialLikeCount={data.likeCount} />
           <MainDescription placeName={data.placeName} artists={data.targetArtists} eventType={data.eventType} />
           <div className="flex flex-col gap-8 pt-16 text-14 font-500 pc:gap-20 pc:pt-24">
             <SubDescription>

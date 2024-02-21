@@ -19,7 +19,7 @@ const HorizontalEventCard = ({ data, onHeartClick, isGrow = false }: Props) => {
   const formattedDate = formatDate(data.startDate, data.endDate);
   const formattedAddress = formatAddress(data.address);
 
-  const { liked, handleLikeEvent } = useLikeEvent({ eventId: data.id, initialLikeCount: data.likeCount });
+  const { liked, handleLikeEvent } = useLikeEvent({ eventId: data.id, initialLike: data.isLike, initialLikeCount: data.likeCount });
 
   const handleClick = async () => {
     if (onHeartClick) {

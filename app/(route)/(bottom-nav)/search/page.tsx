@@ -13,6 +13,7 @@ import HorizontalEventCardSkeleton from "@/components/skeleton/HorizontalEventCa
 import { instance } from "@/api/api";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import { getSession } from "@/store/session/cookies";
 import { formatDate } from "@/utils/formatString";
 import { createQueryString } from "@/utils/handleQueryString";
 import { Res_Get_Type } from "@/types/getResType";
@@ -121,6 +122,7 @@ const SearchPage = () => {
   }, [keyword, sort, filter]);
 
   const queryClient = useQueryClient();
+  const session = getSession();
 
   const getEvents = async ({ pageParam = 1 }) => {
     const data: Res_Get_Type["eventSearch"] = await instance.get("/event", {
@@ -133,6 +135,7 @@ const SearchPage = () => {
       ...{ startDate: filter.startDate || "" },
       ...{ endDate: filter.endDate || "" },
       tags: filter.gifts.map((gift) => TAG[gift]).join(","),
+      userId: session?.user.userId ?? "",
     });
     return data;
   };

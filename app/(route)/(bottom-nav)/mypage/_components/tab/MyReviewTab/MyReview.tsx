@@ -27,7 +27,6 @@ const MyReview = ({ data, userId }: Props) => {
       setLiked((prev) => !prev);
     },
   });
-  console.log(data.reviewArtists);
 
   return (
     <div className="flex w-full flex-col gap-16 border-b border-gray-50 px-20 py-16">
