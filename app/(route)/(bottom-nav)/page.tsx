@@ -12,7 +12,7 @@ const Home = () => {
     <>
       <MetaTag />
       <DottedLayout size="wide">
-        <header className="sticky left-0 top-0 z-nav h-88 w-full bg-white-black px-20 pb-16 pt-48 pc:hidden">
+        <header className="sticky left-0 top-0 z-nav h-68 w-full bg-white-black px-20 pb-16 pt-24 pc:hidden">
           <Logo />
         </header>
         <div className="flex flex-col gap-40 pb-72 pc:items-center pc:pb-0 pc:pt-52">
