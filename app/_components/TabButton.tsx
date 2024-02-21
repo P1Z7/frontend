@@ -2,7 +2,7 @@
 
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { ButtonHTMLAttributes } from "react";
-import { Tab, setTabCookie } from "@/store/mypage-tab/cookies";
+import { Tab, setTabCookie } from "@/store/tab/cookies";
 
 interface TabButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   tab: Tab;

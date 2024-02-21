@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { ReactNode } from "react";
 import TabButton from "@/components/TabButton";
-import { Tab } from "@/store/mypage-tab/cookies";
+import { Tab } from "@/store/tab/cookies";
 
 const TOP_OFFSET = {
   mypage: "top-0",

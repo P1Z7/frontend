@@ -24,7 +24,7 @@ const MyArtistTab = ({ userId }: Props) => {
   if (!isSuccess) return;
   return (
     <div className="flex flex-col items-start gap-16 px-20 py-24 pb-88 pc:gap-24 pc:p-32 pc:pb-16">
-      {!!myArtistsData.length && (
+      {!!myArtistsData?.length && (
         <button className="pl- text-14 font-500 text-blue" onClick={() => router.push("/setting/my-artist")}>
           팔로우 아티스트 수정하기
         </button>
