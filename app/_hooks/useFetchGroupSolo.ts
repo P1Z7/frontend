@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Api } from "@/api/api";
 import useInfiniteScroll from "./useInfiniteScroll";
 
-const SIZE = 9;
+const SIZE = 24;
 
 export const useFetchGroupSolo = (instance: Api) => {
   const [groupList, setGroupList] = useState<any[]>([]);
