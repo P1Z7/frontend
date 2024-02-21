@@ -40,7 +40,7 @@ const MobileHeader = ({ handleClick }: Props) => {
         <button onClick={handleClick || (() => router.back())} className="z-nav">
           <ArrowLeft />
         </button>
-        <h1 className="absolute left-0 w-full text-center text-16 font-600 text-gray-900">{title}</h1>
+        <h1 className="absolute left-0 w-full truncate px-60 text-center text-16 font-600 text-gray-900">{title}</h1>
         {pathname === `/event/${eventId}` && (
           <button onClick={openKebabBottomSheet} className="z-nav">
             <KebabButton />
