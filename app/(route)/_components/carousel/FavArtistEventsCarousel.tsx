@@ -19,7 +19,7 @@ const MyArtistEventsCarousel = () => {
     queryKey: ["artistNewEvent"],
     queryFn: async () => {
       if (!session) {
-        return;
+        return null;
       }
       return instance.get(`/event/new/${session.user.userId}/artist`, {
         userId: session.user.userId,
@@ -31,7 +31,7 @@ const MyArtistEventsCarousel = () => {
     queryKey: ["myArtist"],
     queryFn: async () => {
       if (!session) {
-        return;
+        return null;
       }
       return instance.get(`/users/${session.user.userId}/artists`, {
         userId: session.user.userId,
@@ -56,7 +56,7 @@ const MyArtistEventsCarousel = () => {
       <RenderContent
         status={isLogin}
         hasMyArtistEvents={!!myArtistEvent?.length}
-        hasMyArtistArtists={!!myArtist?.length}
+        hasMyArtist={!!myArtist?.length}
         isLoading={isLoading}
         isSuccess={isSuccess}
         myArtistEvent={myArtistEvent}
@@ -71,10 +71,10 @@ interface RenderContentProps {
   isLoading: boolean;
   isSuccess: boolean;
   myArtistEvent?: Res_Get_Type["eventList"];
-  hasMyArtistArtists: boolean;
+  hasMyArtist: boolean;
 }
 
-const RenderContent = ({ status, hasMyArtistEvents, isLoading, isSuccess, myArtistEvent, hasMyArtistArtists }: RenderContentProps) => {
+const RenderContent = ({ status, hasMyArtistEvents, isLoading, isSuccess, myArtistEvent, hasMyArtist }: RenderContentProps) => {
   if (!status) {
     return <LoginHero />;
   }
@@ -84,8 +84,8 @@ const RenderContent = ({ status, hasMyArtistEvents, isLoading, isSuccess, myArti
       {isLoading && <LoginHero />}
       {isSuccess && (
         <>
-          {!hasMyArtistArtists && <FollowArtistHero />}
-          {hasMyArtistArtists && !hasMyArtistEvents && <NoNewCard />}
+          {!hasMyArtist && <FollowArtistHero />}
+          {hasMyArtist && !hasMyArtistEvents && <NoNewCard />}
           {hasMyArtistEvents && <Carousel cards={myArtistEvent} />}
         </>
       )}
