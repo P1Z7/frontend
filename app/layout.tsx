@@ -26,6 +26,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
+      <head>
+        <meta name="google-site-verification" content="baJ8sFSbwa2owl2MQogf1J5sX4CEPSTg5NipfOsFIIU" />
+      </head>
       <body>
         <Toaster containerClassName="toast" />
         <ReactQueryProvider>
