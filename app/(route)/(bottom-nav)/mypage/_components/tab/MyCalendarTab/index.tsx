@@ -62,7 +62,7 @@ const MyCalendarTab = ({ userId }: Props) => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-stretch gap-16 px-20 pb-88 pt-72 tablet:pb-16">
+    <div className="flex flex-col items-center justify-stretch gap-16 px-20 pb-88 pt-72 tablet:pb-88 pc:pb-16">
       <div className="flex-center flex-col gap-8 rounded-sm border border-gray-50 pb-8 pt-16">
         <style>{calendarStyle}</style>
         {calendarStyle === "" ? (

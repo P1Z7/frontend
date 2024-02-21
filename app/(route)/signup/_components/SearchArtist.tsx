@@ -72,7 +72,6 @@ const SearchArtist = ({ onClick, myArtists, myArtistsInfo }: Props) => {
 
   const notify = () =>
     toast.success("등록 요청이 제출되었습니다.", {
-      position: "bottom-center",
       className: "text-16 font-600 px-28 py-16",
     });
 
@@ -90,7 +89,6 @@ const SearchArtist = ({ onClick, myArtists, myArtistsInfo }: Props) => {
         notify();
       } catch (error: any) {
         toast.error("죄송합니다. 잠시 후 시도해주세요", {
-          position: "bottom-center",
           className: "text-16 font-600 px-28 py-16",
         });
       }

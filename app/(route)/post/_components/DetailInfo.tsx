@@ -1,3 +1,4 @@
+import LoadingDot from "@/(route)/(bottom-nav)/signin/_components/LoadingDot";
 import { useFormContext } from "react-hook-form";
 import ProgressBar from "@/components/ProgressBar";
 import BottomButton from "@/components/button/BottomButton";
@@ -8,9 +9,9 @@ import PostFrame from "./PostFrame";
 import DetailInput from "./_inputs/DetailInput";
 
 const DetailInfo = () => {
-  const { isCheck } = useStore((state) => ({ isCheck: state.isWarningCheck }));
+  const { isCheck, postLoading } = useStore((state) => ({ isCheck: state.isWarningCheck, postLoading: state.postLoading }));
   const { watch } = useFormContext<PostType>();
-  const { description } = watch();
+  const { description, eventImages } = watch();
 
   return (
     <div className="flex h-full flex-col justify-between">
@@ -21,8 +22,8 @@ const DetailInfo = () => {
         </div>
         <DetailInput />
       </PostFrame>
-      <BottomButton isSubmit isDisabled={!isCheck || description.length > 300}>
-        작성 완료
+      <BottomButton isSubmit isDisabled={!isCheck || description.length > 300 || eventImages.length > 5 || postLoading}>
+        {postLoading ? <LoadingDot /> : "작성 완료"}
       </BottomButton>
     </div>
   );

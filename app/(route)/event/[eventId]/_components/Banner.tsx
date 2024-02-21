@@ -14,6 +14,7 @@ import { useStore } from "@/store/index";
 import { formatDate } from "@/utils/formatString";
 import { Res_Get_Type } from "@/types/getResType";
 import { EventCardType, EventType, TargetArtistType } from "@/types/index";
+import { TAG_ORDER } from "@/constants/data";
 import { SnsIcon } from "@/constants/snsIcon";
 import CalendarIcon from "@/public/icon/calendar.svg";
 import GiftIcon from "@/public/icon/gift.svg";
@@ -63,14 +64,27 @@ const Banner = ({ data, eventId }: Props) => {
   });
   const hasEditApplication = editApplication ? editApplication?.length !== 0 : false;
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <section className="w-full pc:flex pc:gap-24 pc:pb-32 pc:pt-[7rem]">
-        <div className="relative h-[48rem] w-full pc:h-[55rem] pc:w-[40.5rem]">
-          <Image src={bannerImage?.imageUrl ?? DefaultImage} alt={"행사 포스터 썸네일"} priority fill sizes="(max-width: 1200px) 250px, 500px" className="object-cover" />
+        <div className="relative h-[48rem] w-full tablet:inline-block tablet:h-[72.8rem] pc:h-[55rem] pc:w-[40.5rem]">
+          <Image
+            src={bannerImage?.imageUrl ?? DefaultImage}
+            alt={"행사 포스터 썸네일"}
+            priority
+            width={460}
+            height={644}
+            sizes="(max-width: 1200px) 250px, 500px"
+            className="absolute-center z-base hidden object-cover tablet:block pc:hidden"
+          />
+          <Image src={bannerImage?.imageUrl ?? DefaultImage} alt={"행사 포스터 썸네일"} priority fill sizes="250px" className="object-cover tablet:blur-xl pc:blur-0" />
         </div>
         <div className="relative bottom-24 grow rounded-t-lg bg-white-black p-24 pb-0 pc:bottom-0 pc:p-0">
-          <HeartButton eventId={data.id} initialLikeCount={data.likeCount} />
+          <HeartButton eventId={data.id} initialLike={data.isLike} initialLikeCount={data.likeCount} />
           <MainDescription placeName={data.placeName} artists={data.targetArtists} eventType={data.eventType} />
           <div className="flex flex-col gap-8 pt-16 text-14 font-500 pc:gap-20 pc:pt-24">
             <SubDescription>
@@ -99,9 +113,11 @@ const Banner = ({ data, eventId }: Props) => {
                 <GiftIcon {...IconStyleProps.pc} />
               </div>
               <div className="flex flex-wrap items-center gap-4 pc:gap-8">
-                {data.eventTags.map((tag) => (
-                  <Chip key={tag.tagId} kind="goods" label={tag.tagName} />
-                ))}
+                {data.eventTags
+                  .sort((a, b) => TAG_ORDER[a.tagId].order - TAG_ORDER[b.tagId].order)
+                  .map((tag) => (
+                    <Chip key={tag.tagId} kind="goods" label={tag.tagName} />
+                  ))}
               </div>
             </SubDescription>
             <SubDescription isVisible={Boolean(data.eventUrl)}>
@@ -160,7 +176,7 @@ const MainDescription = ({ placeName, artists, eventType }: MainDescriptionProps
 
   return (
     <div className="flex flex-col gap-8 border-b border-gray-100 pb-16 pc:gap-12 pc:pb-32">
-      <h1 className="h-24 text-20 font-600 pc:text-[2.8rem] pc:leading-[2.4rem]">{placeName}</h1>
+      <h1 className="pr-20 text-20 font-600 pc:text-[2.8rem] pc:leading-[2.4rem]">{placeName}</h1>
       <div className="flex items-center gap-8">
         <span className="text-16 font-600 pc:max-w-308 pc:text-20">{formattedArtist}</span>
         <Chip kind="event" label={eventType} />
