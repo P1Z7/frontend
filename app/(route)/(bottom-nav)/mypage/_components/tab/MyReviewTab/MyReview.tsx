@@ -27,6 +27,7 @@ const MyReview = ({ data, userId }: Props) => {
       setLiked((prev) => !prev);
     },
   });
+  console.log(data.reviewArtists);
 
   return (
     <div className="flex w-full flex-col gap-16 border-b border-gray-50 px-20 py-16">
@@ -36,7 +37,7 @@ const MyReview = ({ data, userId }: Props) => {
           <span className="text-12 font-500 text-gray-400">{data.isPublic ? "공개" : "비공개"}</span>
         </div>
         <div className="flex items-center gap-8">
-          <span className="text-16 font-600">{data.event.placeName}</span>
+          <span className="text-16 font-600">{data.reviewArtists.map((artist) => artist.artistName).join(", ")}</span>
           <Chip kind="event" label={data.event.eventType} />
           <div className="border-r border-gray-400 pr-8 text-12 font-600 text-gray-400">{formattedDate}</div>
           <span className="text-12 font-600 text-gray-400">{formattedAddress}</span>
