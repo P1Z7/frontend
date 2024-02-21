@@ -7,6 +7,12 @@ import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import "@/public/font/pretendard/font.css";
 import "./globals.css";
 
+export const metadata = {
+  icons: {
+    icon: "/icon/favicon.svg",
+  },
+};
+
 declare global {
   interface Window {
     kakao: any;
