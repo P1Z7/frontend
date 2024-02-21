@@ -5,6 +5,7 @@ import { Analytics } from "@/components/Analytics";
 import PcHeader from "@/components/header/PcHeader";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import "@/public/font/pretendard/font.css";
+import PageLoading from "./_components/PageLoading";
 import "./globals.css";
 
 export const metadata = {
@@ -34,10 +35,12 @@ export default function RootLayout({
       <body>
         <Toaster containerClassName="toast" />
         <ReactQueryProvider>
-          <PcHeader />
-          {children}
-          <div id="bottom-sheet" />
-          <div id="modal" />
+          <Suspense fallback={<PageLoading />}>
+            <PcHeader />
+            {children}
+            <div id="bottom-sheet" />
+            <div id="modal" />
+          </Suspense>
         </ReactQueryProvider>
         <Suspense>
           <Analytics />

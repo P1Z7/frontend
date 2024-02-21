@@ -1,7 +1,7 @@
 import { instance } from "app/_api/api";
 import dynamic from "next/dynamic";
 import { useParams, usePathname, useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { FieldValues, FormProvider, UseFormProps, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useModal } from "@/hooks/useModal";
@@ -25,7 +25,7 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
   const router = useRouter();
   const methods = useForm<T>(formOptions);
   const path = usePathname();
-  const { writerId } = useStore((state) => ({ writerId: state.writerId }));
+  const { writerId, setPostLoading } = useStore((state) => ({ writerId: state.writerId, setPostLoading: state.setPostLoading }));
 
   const onSubmit = async () => {
     const userInputValue = methods.getValues();
@@ -35,6 +35,7 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
     if (path === "/post") {
       try {
         if (!session) throw Error(" /Unauthorized");
+        setPostLoading(true);
         const res = await handlePostSubmit(userInputValue, instance, session.user.userId);
         router.replace(`/event/${res.eventId}`);
       } catch (err: any) {
@@ -42,6 +43,8 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
         if (err.message.split("/")[1] === "Unauthorized") {
           return router.push("/signin");
         }
+      } finally {
+        setPostLoading(false);
       }
     }
     if (path === `/event/${eventId}/edit`) {
