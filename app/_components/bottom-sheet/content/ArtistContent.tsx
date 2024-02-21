@@ -71,7 +71,7 @@ const ArtistContent = ({ isFirst, contentRef }: Props) => {
               <div>아직 데이터가 없어요💦</div>
             ) : (
               <div className="h-[34rem] overflow-y-scroll pc:h-[40rem]">
-                <div className="flex flex-wrap justify-center gap-16 px-8 pc:grid pc:grid-cols-5 pc:gap-x-20 pc:gap-y-24">
+                <div className="flex flex-wrap justify-center gap-16 px-8 tablet:gap-x-32 pc:grid pc:grid-cols-5 pc:gap-x-20 pc:gap-y-24">
                   {memberData.map(({ id, artistName, artistImage }: MemberDataType) => (
                     <ArtistCard key={id} profileImage={artistImage} isPost isChecked={getValues("artists").includes(id)} onClick={() => handleMemberClick(id, artistName)}>
                       {artistName}
@@ -91,7 +91,7 @@ const ArtistContent = ({ isFirst, contentRef }: Props) => {
           )}
           {isSuccess && (
             <div ref={containerRef} className="flex h-[34rem] overflow-y-scroll pc:h-[40rem]">
-              <div className="flex flex-wrap justify-center gap-x-16 gap-y-20 px-8 pc:grid pc:grid-cols-5 pc:gap-x-20 pc:gap-y-24">
+              <div className="flex flex-wrap justify-center gap-x-16 gap-y-20 px-8 tablet:gap-x-32 pc:grid pc:grid-cols-5 pc:gap-x-20 pc:gap-y-24">
                 {groupList.map(({ id, image, name, type }: GroupAndSoloType) => (
                   <ArtistCard
                     key={id}
