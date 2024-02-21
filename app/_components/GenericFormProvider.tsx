@@ -1,7 +1,6 @@
 import { instance } from "app/_api/api";
 import dynamic from "next/dynamic";
 import { useParams, usePathname, useRouter } from "next/navigation";
-import React, { useState } from "react";
 import { FieldValues, FormProvider, UseFormProps, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useModal } from "@/hooks/useModal";
@@ -39,11 +38,13 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
         const res = await handlePostSubmit(userInputValue, instance, session.user.userId);
         router.replace(`/event/${res.eventId}`);
       } catch (err: any) {
+        sessionStorage.setItem("post", JSON.stringify(userInputValue));
         toast.error(POST_ERR_MSG[err.message.split("/")[1] as PostErrMsgType], { className: "text-16 font-500 !text-red" });
         if (err.message.split("/")[1] === "Unauthorized") {
           return router.push("/signin");
         }
       } finally {
+        sessionStorage.clear();
         setPostLoading(false);
       }
     }
