@@ -9,6 +9,7 @@ export const EDIT_ERR_MSG = {
 };
 
 export const POST_ERR_MSG = {
+  "Request Entity Too Large": "이미지 용량이 너무 큽니다.",
   "Internal Server Error": "등록에 실패하였습니다.",
   Unauthorized: "로그인이 필요한 서비스입니다.",
 };

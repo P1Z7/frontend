@@ -21,7 +21,7 @@ const DetailInfo = () => {
         </div>
         <DetailInput />
       </PostFrame>
-      <BottomButton isSubmit isDisabled={!isCheck || description.length > 100}>
+      <BottomButton isSubmit isDisabled={!isCheck || description.length > 300}>
         작성 완료
       </BottomButton>
     </div>

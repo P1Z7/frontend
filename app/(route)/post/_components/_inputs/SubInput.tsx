@@ -10,7 +10,7 @@ import { validateEdit } from "@/utils/editValidate";
 import { PostType } from "../../page";
 
 const SNS_TYPE_LIST = ["트위터", "인스타그램", "유튜브", "기타"];
-const GIFT_LIST = ["컵홀더", "포스터", "포토카드", "굿즈", "엽서", "스티커", "티켓", "기타"];
+const GIFT_LIST = ["컵/컵홀더", "포스터", "포토카드", "포토굿즈", "엽서", "스티커", "키링", "기타"];
 
 const SubInput = () => {
   const {

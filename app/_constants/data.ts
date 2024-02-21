@@ -10,7 +10,7 @@ export const TAG_ORDER: {
     order: 1,
   },
   "b4ade0be-df52-4623-ba9e-cdbd099eb7b8": {
-    name: "컵홀더",
+    name: "컵/컵홀더",
     order: 2,
   },
   "c2258461-9219-4635-b033-9cd9a890b36a": {
@@ -18,11 +18,11 @@ export const TAG_ORDER: {
     order: 3,
   },
   "3a571952-1c80-4224-9da4-f1d2cc2ef8e3": {
-    name: "티켓",
+    name: "키링",
     order: 4,
   },
   "0405719b-cbff-44d9-9f6e-d2538bf3b0c8": {
-    name: "굿즈",
+    name: "포토굿즈",
     order: 5,
   },
   "bc8785ff-a2d1-4882-9a7e-1448c82a05b0": {

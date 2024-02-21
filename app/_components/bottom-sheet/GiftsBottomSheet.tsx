@@ -2,7 +2,7 @@ import { BottomSheetBaseType, GiftType } from "@/types/index";
 import ChipButton from "../chip/ChipButton";
 import BottomSheet from "./BottomSheetMaterial";
 
-const GIFTS = ["컵홀더", "포스터", "포토카드", "굿즈", "엽서", "스티커", "티켓", "기타"] as const;
+const GIFTS = ["컵/컵홀더", "포스터", "포토카드", "포토굿즈", "엽서", "스티커", "키링", "기타"] as const;
 
 interface Props extends BottomSheetBaseType {
   setGiftsFilter: (gift: GiftType) => void;

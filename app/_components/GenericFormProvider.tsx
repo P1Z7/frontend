@@ -36,7 +36,7 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
       try {
         if (!session) throw Error(" /Unauthorized");
         const res = await handlePostSubmit(userInputValue, instance, session.user.userId);
-        router.push(`/event/${res.eventId}`);
+        router.replace(`/event/${res.eventId}`);
       } catch (err: any) {
         toast.error(POST_ERR_MSG[err.message.split("/")[1] as PostErrMsgType], { className: "text-16 font-500 !text-red" });
         if (err.message.split("/")[1] === "Unauthorized") {
@@ -46,7 +46,7 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
     }
     if (path === `/event/${eventId}/edit`) {
       try {
-        if (!session) throw Error("Unauthorized");
+        if (!session) throw Error(" /Unauthorized");
         if (writerId === session.user.userId) {
           await submitEditWriter(methods.getValues(), instance, session.user.userId, eventId);
           openModal("editWriter");
@@ -55,8 +55,8 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
           openModal("editApprove");
         }
       } catch (err: any) {
-        toast.error(EDIT_ERR_MSG[err.message as EditErrMsgType], { className: "text-16 font-500 !text-red" });
-        if (err.message === "Unauthorized") {
+        toast.error(EDIT_ERR_MSG[err.message.split("/")[1] as EditErrMsgType], { className: "text-16 font-500 !text-red" });
+        if (err.message.split("/")[1] === "Unauthorized") {
           return router.push("/signin");
         }
       }
