@@ -9,7 +9,7 @@ import PageLoading from "./_components/PageLoading";
 import "./globals.css";
 
 export const metadata = {
-  title: "Opener",
+  title: "Opener | K-pop 행사를 한 눈에",
   description: "K-pop 팬을 위한 오프라인 행사 정보를 한 곳에서 쉽게 확인할 수 있는 웹사이트. 각종 카페 이벤트부터 팬광고, 팝업스토어 등 다양한 이벤트 정보를 한눈에 찾아보세요!",
   icons: {
     icon: "/icon/favicon.svg",
