@@ -64,6 +64,7 @@ const StarInput = () => {
               readOnly
               onClick={() => (isPc ? openModal("firstArtist") : openBottomSheet("firstArtist"))}
               onKeyDown={(event) => handleEnterDown(event, () => (isPc ? openModal("firstArtist") : openBottomSheet("firstArtist")))}
+              noButton
             />
             <InputText
               name="artistNames"
