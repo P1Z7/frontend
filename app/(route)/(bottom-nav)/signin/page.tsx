@@ -145,7 +145,7 @@ const SignInPage = () => {
             <div className="h-16 border" />
             <Link href="">비밀번호 찾기</Link>
           </div>
-          <div className="flex w-full flex-col gap-20">
+          <div className="flex w-full flex-col gap-20 pb-100">
             <Link
               href={OAUTH.kakao()}
               onClick={() => setCookies("pathname", pathname, { path: "/" })}
