@@ -71,8 +71,17 @@ const Banner = ({ data, eventId }: Props) => {
   return (
     <>
       <section className="w-full pc:flex pc:gap-24 pc:pb-32 pc:pt-[7rem]">
-        <div className="relative h-[48rem] w-full pc:h-[55rem] pc:w-[40.5rem]">
-          <Image src={bannerImage?.imageUrl ?? DefaultImage} alt={"행사 포스터 썸네일"} priority fill sizes="250px" className="object-cover" />
+        <div className="relative h-[48rem] w-full tablet:inline-block tablet:h-[72.8rem] pc:h-[55rem] pc:w-[40.5rem]">
+          <Image
+            src={bannerImage?.imageUrl ?? DefaultImage}
+            alt={"행사 포스터 썸네일"}
+            priority
+            width={460}
+            height={644}
+            sizes="250px"
+            className="absolute-center z-base hidden object-cover tablet:block pc:hidden"
+          />
+          <Image src={bannerImage?.imageUrl ?? DefaultImage} alt={"행사 포스터 썸네일"} priority fill sizes="250px" className="object-cover tablet:blur-xl pc:blur-0" />
         </div>
         <div className="relative bottom-24 grow rounded-t-lg bg-white-black p-24 pb-0 pc:bottom-0 pc:p-0">
           <HeartButton eventId={data.id} initialLike={data.isLike} initialLikeCount={data.likeCount} />
