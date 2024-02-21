@@ -49,7 +49,7 @@ const DetailInput = () => {
       <InputArea
         name="description"
         placeholder="이벤트 설명을 입력하세요."
-        rules={{ maxLength: 100 }}
+        rules={{ maxLength: 300 }}
         hasLimit
         isEdit={validateEdit(defaultValues?.description !== getValues("description"))}
         onInit={() => setValue("description", defaultValues?.description || "")}

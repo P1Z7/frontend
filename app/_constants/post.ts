@@ -3,10 +3,10 @@ import { LabelType } from "../_types";
 export const TAG = {
   엽서: "5d414e82-0dd4-40bb-916b-ca7364c5178d",
   스티커: "c9072d9a-ab08-45af-ae09-d2febfaeba32",
-  컵홀더: "b4ade0be-df52-4623-ba9e-cdbd099eb7b8",
+  "컵/컵홀더": "b4ade0be-df52-4623-ba9e-cdbd099eb7b8",
   포토카드: "c2258461-9219-4635-b033-9cd9a890b36a",
-  티켓: "3a571952-1c80-4224-9da4-f1d2cc2ef8e3",
-  굿즈: "0405719b-cbff-44d9-9f6e-d2538bf3b0c8",
+  키링: "3a571952-1c80-4224-9da4-f1d2cc2ef8e3",
+  포토굿즈: "0405719b-cbff-44d9-9f6e-d2538bf3b0c8",
   포스터: "bc8785ff-a2d1-4882-9a7e-1448c82a05b0",
   기타: "167e6c4f-68e4-4f35-847c-f1c95984879d",
 };
