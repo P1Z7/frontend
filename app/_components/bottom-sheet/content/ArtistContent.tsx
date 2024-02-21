@@ -89,23 +89,26 @@ const ArtistContent = ({ isFirst, contentRef }: Props) => {
               <LoadingDot />
             </div>
           )}
-          {isSuccess && (
-            <div ref={containerRef} className="flex h-[34rem] overflow-y-scroll pc:h-[40rem]">
-              <div className="flex flex-wrap justify-center gap-x-16 gap-y-20 px-8 tablet:gap-x-32 pc:grid pc:grid-cols-5 pc:gap-x-20 pc:gap-y-24">
-                {groupList.map(({ id, image, name, type }: GroupAndSoloType) => (
-                  <ArtistCard
-                    key={id}
-                    profileImage={image}
-                    isChecked={getValues("groupId") === id || getValues("artists").includes(id)}
-                    onClick={() => handleFirstDepthClick(type, id, name)}
-                    isPost
-                  >
-                    {name}
-                  </ArtistCard>
-                ))}
+          {isSuccess &&
+            (groupList.length === 0 ? (
+              <div className="flex h-[34rem] w-full justify-center">검색 결과가 없어요💦</div>
+            ) : (
+              <div ref={containerRef} className="flex h-[34rem] overflow-y-scroll pc:h-[40rem]">
+                <div className="flex flex-wrap justify-center gap-x-16 gap-y-20 px-8 tablet:gap-x-32 pc:grid pc:grid-cols-5 pc:gap-x-20 pc:gap-y-24">
+                  {groupList.map(({ id, image, name, type }: GroupAndSoloType) => (
+                    <ArtistCard
+                      key={id}
+                      profileImage={image}
+                      isChecked={getValues("groupId") === id || getValues("artists").includes(id)}
+                      onClick={() => handleFirstDepthClick(type, id, name)}
+                      isPost
+                    >
+                      {name}
+                    </ArtistCard>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            ))}
         </>
       )}
     </div>
