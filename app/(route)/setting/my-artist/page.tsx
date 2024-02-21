@@ -13,7 +13,7 @@ import { META_TAG } from "@/constants/metaTag";
 const AlertModal = dynamic(() => import("@/components/modal/AlertModal"), { ssr: false });
 const InputModal = dynamic(() => import("@/components/modal/InputModal"), { ssr: false });
 
-const FavoritePage = () => {
+const MyArtistEditPage = () => {
   const { modal, openModal, closeModal } = useModal();
   const { control, handleSubmit, setValue } = useForm({ defaultValues: { request: "" } });
 
@@ -33,7 +33,7 @@ const FavoritePage = () => {
 
   return (
     <>
-      <MetaTag title={META_TAG.favorite["title"]} description={META_TAG.favorite["title"]} />
+      <MetaTag title={META_TAG.myArtist["title"]} description={META_TAG.myArtist["title"]} />
       <PinkLayout size="wide">
         <MobileHeader />
         <div className="flex flex-col gap-24 px-20 py-36">
@@ -59,4 +59,4 @@ const FavoritePage = () => {
     </>
   );
 };
-export default FavoritePage;
+export default MyArtistEditPage;

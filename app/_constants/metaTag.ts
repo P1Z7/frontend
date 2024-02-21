@@ -22,7 +22,7 @@ export const META_TAG = {
     title: "비밀번호 변경",
     description: "비밀번호 정보를 변경해 보세요.",
   },
-  favorite: {
+  myArtist: {
     title: "팔로우 아티스트 수정",
     description: "팔로우하는 아티스트 정보를 수정해 보세요.",
   },
