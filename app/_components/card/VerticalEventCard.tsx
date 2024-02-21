@@ -24,17 +24,7 @@ const VerticalEventCard = ({ data }: Props) => {
         <div className="absolute right-8 top-8 z-heart" onClick={(e: SyntheticEvent) => e.preventDefault()}>
           <HeartButton isSelected={liked} onClick={handleLikeEvent} />
         </div>
-        <Image
-          src={bannerImage?.imageUrl ?? "/image/no-profile.png"}
-          fill
-          sizes="100%"
-          style={{
-            objectFit: "cover",
-          }}
-          alt="행사 포스터"
-          className="rounded-sm bg-gray-400"
-          priority
-        />
+        <Image src={bannerImage?.imageUrl ?? "/image/no-profile.png"} fill sizes="250px" alt="행사 포스터" className="rounded-sm bg-gray-400 object-cover" priority />
       </div>
       <div className="flex flex-col gap-4 pc:gap-8">
         <p className="truncate text-16 font-600 text-gray-900">{data.placeName}</p>

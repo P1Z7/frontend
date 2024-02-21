@@ -31,7 +31,7 @@ const MyArtistTab = ({ userId }: Props) => {
       )}
       <div className="flex w-full flex-col items-center">
         <div className="flex w-full flex-wrap justify-center gap-20 pc:justify-start pc:gap-32">
-          {myArtistsData.length ? (
+          {myArtistsData?.length ? (
             myArtistsData.map((cardList: MyArtistsType) => {
               if (!cardList) {
                 return null;

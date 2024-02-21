@@ -18,7 +18,7 @@ const ArtistCard = ({ children, onClick, profileImage, isChecked = false, isSmal
           src={profileImage ? profileImage : "/image/no-profile.png"}
           alt="아티스트 이미지"
           fill
-          sizes="100%"
+          sizes="150px"
           className={`rounded-full object-cover ${isChecked ? "border-2 border-main-pink-500" : "border border-gray-100"}`}
         />
       </div>
