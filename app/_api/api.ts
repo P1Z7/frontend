@@ -14,7 +14,7 @@ export class Api {
     this.queryString = "";
   }
 
-  private async updateToken(res: any, config: any) {
+  private async updateToken(res: any) {
     if (res.status === 401) {
       const tokenRes = await fetch("/auth/token");
       if (tokenRes.ok) {
@@ -25,9 +25,9 @@ export class Api {
     return false;
   }
 
-  private async refetch(config: [string]) {
-    const updateRes = await fetch(...config);
-    const updateResult = await updateRes.json();
+  private async refetch(endPoint: string, config?: any) {
+    const updateRes = await fetch(endPoint, config);
+    const updateResult = STR_RES_ENDPOINT.includes(endPoint) || endPoint.split("/").includes("claims") ? await updateRes.text() : await updateRes.json();
     this.makeError(updateResult);
     return updateResult;
   }
@@ -56,7 +56,14 @@ export class Api {
     if (queryObj) {
       this.makeQueryString<T>(queryObj);
     }
-    const res = await fetch(queryObj ? this.baseUrl + this.queryString : this.baseUrl);
+    const newEndPoint = queryObj ? this.baseUrl + this.queryString : this.baseUrl;
+    const res = await fetch(newEndPoint);
+
+    if (await this.updateToken(res)) {
+      const refetchResult = await this.refetch(newEndPoint);
+      return refetchResult;
+    }
+
     const result = await res.json();
     this.makeError(result);
     return result;
@@ -67,48 +74,73 @@ export class Api {
     if (queryObj) {
       this.makeQueryString<T>(queryObj);
     }
-    const res = await fetch(queryObj ? this.baseUrl + this.queryString : this.baseUrl, {
+
+    const newEndPoint = queryObj ? this.baseUrl + this.queryString : this.baseUrl;
+    const config = {
       method: "POST",
       body: endPoint === "/file/upload" ? (body as any) : JSON.stringify(body),
       headers: {
         ...(endPoint === "/file/upload" ? {} : { "Content-Type": "application/json" }),
       },
-    });
+    };
+    const res = await fetch(newEndPoint, config);
+
+    if (await this.updateToken(res)) {
+      const refetchResult = await this.refetch(newEndPoint, config);
+      return refetchResult;
+    }
+
     const result = STR_RES_ENDPOINT.includes(endPoint) || endPoint.split("/").includes("claims") ? await res.text() : await res.json();
     this.makeError(result);
-
     return result;
   }
 
   async put<T extends PutEndPoint>(endPoint: T, body: PutBodyType<T>) {
     this.baseUrl = "/api" + endPoint;
-    const res = await fetch(this.baseUrl, {
+
+    const newEndPoint = this.baseUrl;
+    const config = {
       method: endPoint.includes("event") ? "PUT" : "PATCH",
       body: JSON.stringify(body),
       headers: {
         "Content-type": "application/json",
       },
-    });
+    };
+    const res = await fetch(newEndPoint, config);
+
+    if (await this.updateToken(res)) {
+      const refetchResult = await this.refetch(newEndPoint, config);
+      return refetchResult;
+    }
+
     const result = await res.json();
     this.makeError(result);
-
     return result;
   }
 
   async delete<T extends DeleteEndPoint>(endPoint: T, body: DeleteBodyType<T>) {
     this.baseUrl = "/api" + endPoint;
-    const res = await fetch(this.baseUrl, {
+
+    const newEndPoint = this.baseUrl;
+    const config = {
       method: "DELETE",
       body: JSON.stringify(body),
       headers: {
         "Content-type": "application/json",
       },
-    });
+    };
+    const res = await fetch(newEndPoint);
+    if (await this.updateToken(res)) {
+      const refetchResult = await this.refetch(newEndPoint, config);
+      return refetchResult;
+    }
+
     if (!res.ok) {
       const result = await res.json();
       this.makeError(result);
       return result;
     }
+
     return res;
   }
 }

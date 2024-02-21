@@ -14,7 +14,6 @@ interface Props {
 const DottedLayout = ({ children, size }: Props) => {
   return (
     <>
-      {/* <div className="pc:hidden">{children}</div> */}
       <div className="w-full pc:min-h-dvh pc:bg-[url('/image/dotted-background.png')] pc:bg-[length:100%_auto] pc:bg-top pc:bg-repeat-y pc:px-20">
         <div className={`pc:mx-auto ${MAX_W[size]} pc:bg-white-black`}>{children}</div>
       </div>

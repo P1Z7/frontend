@@ -2,9 +2,11 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { instance } from "app/_api/api";
-import VerticalEventCardSkeleton from "@/components/skeleton/VerticalEventCardSkeleton";
+import dynamic from "next/dynamic";
 import { Res_Get_Type } from "@/types/getResType";
-import Carousel from "./Carousel";
+
+const Carousel = dynamic(() => import("./Carousel"), { ssr: false });
+const VerticalEventCardSkeleton = dynamic(() => import("@/components/skeleton/VerticalEventCardSkeleton"), { ssr: false });
 
 const PopularEventsCarousel = () => {
   const {

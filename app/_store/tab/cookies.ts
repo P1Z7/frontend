@@ -11,9 +11,9 @@ export const setTabCookie = (tab: Tab, page: TabPage) => {
   deleteTabCookie(page);
 
   const expires = new Date(Date.now() + 30 * 1000);
-  setCookies(page, tab, { path: page, expires });
+  setCookies(page, tab, { path: "/", expires });
 };
 
-export const getTabCookie = (page: TabPage): Tab => getCookies(page) ?? { name: "", index: 0 };
+export const getTabCookie = (page: TabPage): Tab => getCookies(page);
 
-export const deleteTabCookie = (page: TabPage) => deleteCookies(page, { path: page });
+export const deleteTabCookie = (page: TabPage) => deleteCookies(page, { path: "/" });

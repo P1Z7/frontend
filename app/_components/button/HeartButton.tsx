@@ -23,7 +23,7 @@ const HeartButton = ({ isSmall = false, isSelected = false, onClick, ...props }:
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     if (!session) {
-      toast("로그인한 후 좋아하는 행사를 저장해보세요!", { className: "text-16 font-500", position: "bottom-center" });
+      toast("로그인하고 좋아하는 행사를 저장해보세요!", { className: "text-16 font-600" });
       route.push("/signin");
       return;
     }

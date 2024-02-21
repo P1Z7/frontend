@@ -11,7 +11,7 @@ import MyReviewTab from "./_components/tab/MyReviewTab";
 const MYPAGE_TABLIST = ["행사", "아티스트", "후기"];
 
 const MyPage = () => {
-  const session = JSON.parse(cookies().get("session")?.value ?? "{}");
+  const session = JSON.parse(cookies().get("session")?.value ?? "");
   const userId = session?.user.userId ?? "";
 
   return (

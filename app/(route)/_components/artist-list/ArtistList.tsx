@@ -26,7 +26,6 @@ const ArtistList = () => {
     data: artistData,
     fetchNextPage,
     isFetching,
-    isLoading,
   } = useInfiniteQuery({
     initialPageParam: 1,
     queryKey: ["artist"],

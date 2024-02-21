@@ -36,9 +36,6 @@ const MyArtistList = () => {
   const [deleteData, setDeleteData] = useState<Set<string>>(new Set());
   const [addData, setAddData] = useState<Set<string>>(new Set());
 
-  console.log(deleteData);
-  console.log(addData);
-
   const handleArtistClick = (cur: ArtistType) => {
     if (selected.some((item) => item?.id === cur.id)) {
       setSelected((prevSelected) => prevSelected.filter((item) => item?.id !== cur.id));
@@ -160,7 +157,9 @@ const MyArtistList = () => {
           <div className="h-[1px]" ref={containerRef} />
         </ul>
       </section>
-      <BottomButton onClick={() => artistMutation.mutate()}>{isError ? "다시 시도하기" : "변경 내용 저장"}</BottomButton>
+      <BottomButton onClick={() => artistMutation.mutate()} isDisabled={artistMutation.isPending}>
+        {isError ? "다시 시도하기" : "변경 내용 저장"}
+      </BottomButton>
     </div>
   );
 };

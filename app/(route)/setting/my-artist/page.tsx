@@ -1,10 +1,11 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import MetaTag from "@/components/MetaTag";
 import MyArtistList from "@/components/MyArtistList";
-import BottomButton from "@/components/button/BottomButton";
 import MobileHeader from "@/components/header/MobileHeader";
 import PinkLayout from "@/components/layout/PinkLayout";
 import { instance } from "@/api/api";
@@ -17,18 +18,30 @@ const InputModal = dynamic(() => import("@/components/modal/InputModal"), { ssr:
 const MyArtistEditPage = () => {
   const { modal, openModal, closeModal } = useModal();
   const { control, handleSubmit, setValue } = useForm({ defaultValues: { request: "" } });
+  const [isPending, setIsPending] = useState(false);
 
   const onSubmit: SubmitHandler<{ request: string }> = async ({ request }) => {
+    if (isPending) {
+      return;
+    }
+
+    setIsPending(true);
     try {
       if (request) {
         const res = await instance.post("/artist/request", {
           name: request,
         });
+        if (res) {
+          openModal("confirm");
+        }
       }
     } catch (e) {
+      toast("다시 시도해 주십시오.", {
+        className: "text-16 font-600",
+      });
     } finally {
-      openModal("confirm");
       setValue("request", "");
+      setIsPending(false);
     }
   };
 
