@@ -229,7 +229,12 @@ const SearchPage = () => {
             {isEmpty ? (
               <div className="flex-center w-full pt-36 text-14 font-500">검색 결과가 없습니다.</div>
             ) : (
-              events?.pages.map((page) => page.eventList.map((event) => <HorizontalEventCard key={event.id} data={event} />))
+              <>
+                {events?.pages[0].totalCount && (
+                  <div className="w-full pt-12 text-12 font-500 text-gray-800 pc:pt-[2.2rem] pc:text-14">{events?.pages[0].totalCount}개의 검색결과가 있습니다.</div>
+                )}
+                {events?.pages.map((page) => page.eventList.map((event) => <HorizontalEventCard key={event.id} data={event} />))}
+              </>
             )}
             {/* <DeferredSuspense fallback={<HorizontalEventCardSkeleton />} isFetching={isFetching} /> */}
             <div ref={containerRef} className="h-20 w-full" />

@@ -14,6 +14,7 @@ import { useStore } from "@/store/index";
 import { formatDate } from "@/utils/formatString";
 import { Res_Get_Type } from "@/types/getResType";
 import { EventCardType, EventType, TargetArtistType } from "@/types/index";
+import { TAG_ORDER } from "@/constants/data";
 import { SnsIcon } from "@/constants/snsIcon";
 import CalendarIcon from "@/public/icon/calendar.svg";
 import GiftIcon from "@/public/icon/gift.svg";
@@ -99,9 +100,11 @@ const Banner = ({ data, eventId }: Props) => {
                 <GiftIcon {...IconStyleProps.pc} />
               </div>
               <div className="flex flex-wrap items-center gap-4 pc:gap-8">
-                {data.eventTags.map((tag) => (
-                  <Chip key={tag.tagId} kind="goods" label={tag.tagName} />
-                ))}
+                {data.eventTags
+                  .sort((a, b) => TAG_ORDER[a.tagId].order - TAG_ORDER[b.tagId].order)
+                  .map((tag) => (
+                    <Chip key={tag.tagId} kind="goods" label={tag.tagName} />
+                  ))}
               </div>
             </SubDescription>
             <SubDescription isVisible={Boolean(data.eventUrl)}>
