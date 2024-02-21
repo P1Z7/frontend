@@ -1,30 +1,54 @@
 import { CSSProperties, ReactNode, useEffect, useState } from "react";
 
 interface Props {
+  containerId?: string;
   scrollPoint?: number;
   className: CSSProperties & string;
   children?: ReactNode;
 }
 
-const ToTopButton = ({ scrollPoint = 250, className, children }: Props) => {
-  const [toggle, setToggle] = useState(true);
+const ToTopButton = ({ containerId, scrollPoint = 250, className, children }: Props) => {
+  const [toggle, setToggle] = useState(false);
+  let container: Element | null | (Window & typeof globalThis);
 
   const handleScroll = () => {
-    const { scrollY } = window;
+    if (!container) {
+      return;
+    }
 
-    scrollY > scrollPoint ? setToggle(true) : setToggle(false);
+    let scroll: number;
+    if ("scrollY" in container) {
+      scroll = container.scrollY;
+    } else {
+      scroll = container.scrollTop;
+    }
+
+    scroll > scrollPoint ? setToggle(true) : setToggle(false);
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+    if (containerId) {
+      container = document.querySelector(`#${containerId}`);
+    }
+
+    if (!container) {
+      container = window;
+      return;
+    }
+
+    container.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      container?.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   const goToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (!container) {
+      return;
+    }
+
+    container.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return toggle ? (

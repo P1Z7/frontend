@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import BottomButton from "@/components/button/BottomButton";
+import ToTopButton from "@/components/button/ToTopButton";
 import DeferredSuspense from "@/components/skeleton/DeferredSuspense";
 import { instance } from "@/api/api";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
@@ -144,14 +145,14 @@ const MyArtistList = () => {
             return null;
           }
           return (
-            <div key={artist?.id} ref={selected.length - 1 === idx ? lastItemRef : null} className="snap-start">
-              <ChipButton label={artist?.name} onClick={() => handleArtistClick(artist)} canDelete />
+            <div key={artist.id} ref={selected.length - 1 === idx ? lastItemRef : null} className="snap-start">
+              <ChipButton label={artist.name} onClick={() => handleArtistClick(artist)} canDelete />
             </div>
           );
         })}
       </div>
       <section className="flex-center m-auto flex-col">
-        <ul className="flex-center  max-w-[52rem] flex-wrap gap-x-16 gap-y-20 px-8 pc:max-w-[76rem]">
+        <ul className="flex-center max-w-[52rem] flex-wrap gap-x-16 gap-y-20 px-8 pc:max-w-[76rem]">
           {artistData?.pages.map((page) =>
             page.artistAndGroupList.map((artist) => (
               <li key={artist.id}>

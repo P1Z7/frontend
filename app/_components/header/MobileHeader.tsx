@@ -2,7 +2,10 @@
 
 import dynamic from "next/dynamic";
 import { useParams, usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import ToTopButton from "@/components/button/ToTopButton";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
+import useGetWindowWidth from "@/hooks/useGetWindowWidth";
 import useHeaderTitle from "@/hooks/useHeaderTitle";
 import { useModal } from "@/hooks/useModal";
 import ArrowLeft from "@/public/icon/arrow-left_lg.svg";
@@ -13,9 +16,10 @@ const ReportModal = dynamic(() => import("../modal/ReportModal"), { ssr: false }
 
 interface Props {
   handleClick?: () => void;
+  topButton?: boolean;
 }
 
-const MobileHeader = ({ handleClick }: Props) => {
+const MobileHeader = ({ handleClick, topButton }: Props) => {
   const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
   const { modal, openModal, closeModal } = useModal();
 
@@ -32,6 +36,8 @@ const MobileHeader = ({ handleClick }: Props) => {
   const { eventId } = useParams();
   const title = useHeaderTitle();
 
+  const { isPc } = useGetWindowWidth();
+
   return (
     <>
       <header
@@ -45,6 +51,14 @@ const MobileHeader = ({ handleClick }: Props) => {
           <button onClick={openKebabBottomSheet} className="z-nav">
             <KebabButton />
           </button>
+        )}
+        {topButton && (
+          <ToTopButton
+            containerId={isPc ? "pinkContainer" : undefined}
+            className="right-24 top-36 z-nav rounded-full bg-white-white px-12 text-16 text-gray-600 hover:bg-sub-pink hover:text-white-white"
+          >
+            위로 가기 ↑
+          </ToTopButton>
         )}
       </header>
       {bottomSheet === "event-kebab" && <EventKebabBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} openReportModal={openKebabModal} />}
