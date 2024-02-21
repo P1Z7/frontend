@@ -64,6 +64,10 @@ const Banner = ({ data, eventId }: Props) => {
   });
   const hasEditApplication = editApplication ? editApplication?.length !== 0 : false;
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <section className="w-full pc:flex pc:gap-24 pc:pb-32 pc:pt-[7rem]">
