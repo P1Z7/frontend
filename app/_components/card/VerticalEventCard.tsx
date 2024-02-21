@@ -16,7 +16,7 @@ const VerticalEventCard = ({ data }: Props) => {
   const formattedAddress = formatAddress(data.address);
   const bannerImage = data.eventImages.find((images) => images.isMain);
 
-  const { liked, handleLikeEvent } = useLikeEvent({ eventId: data.id, initialLikeCount: data.likeCount });
+  const { liked, handleLikeEvent } = useLikeEvent({ eventId: data.id, initialLike: data.isLike, initialLikeCount: data.likeCount });
 
   return (
     <Link href={`/event/${data.id}`} className="flex w-148 cursor-pointer flex-col gap-12 pc:w-188">
