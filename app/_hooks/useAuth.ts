@@ -1,18 +1,23 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { getSession } from "@/store/session/cookies";
+import { useEffect, useState } from "react";
+import { Session, getSession } from "@/store/session/cookies";
 
-export const useAuth = (href: string) => {
-  const router = useRouter();
-  const session = getSession();
+export const useAuth = () => {
+  const newSession = getSession();
+  const isAuth = newSession?.isAuth;
+  const [session, setSession] = useState<Session>();
+  const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
-    if (!session) {
-      router.push(href);
+    if (isAuth) {
+      setSession(newSession);
+      setIsLogin(true);
+      return;
     }
-  }, [session]);
+    setSession(newSession);
+    setIsLogin(false);
+  }, [isAuth]);
 
-  return session;
+  return { session, isLogin };
 };

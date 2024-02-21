@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ReactElement, cloneElement, useEffect, useState } from "react";
+import { ReactElement, cloneElement, useEffect, useMemo, useState } from "react";
 import { Session, getSession } from "@/store/session/cookies";
 import PostIcon from "@/public/icon/add-outline.svg";
 import HomeIcon from "@/public/icon/home.svg";
@@ -12,24 +12,25 @@ import SearchIcon from "@/public/icon/search_black.svg";
 
 const PcHeader = () => {
   const pathname = usePathname();
+  const newSession = getSession();
   const [session, setSession] = useState<Session>();
 
-  const [profileImage, setProfileImage] = useState("");
+  const navButtons = useMemo(
+    () => [
+      { href: "/", icon: <HomeIcon />, label: "홈" },
+      { href: "/search", icon: <SearchIcon />, label: "둘러보기" },
+      { href: "/post", icon: <PostIcon />, label: "등록하기" },
+    ],
+    [],
+  );
 
-  const navButtons = [
-    { href: "/", icon: <HomeIcon />, label: "홈" },
-    { href: "/search", icon: <SearchIcon />, label: "둘러보기" },
-    { href: "/post", icon: <PostIcon />, label: "등록하기" },
-  ];
   useEffect(() => {
-    const session = getSession();
-    setSession(session);
-    if (session?.user.profileImage) {
-      setProfileImage(session?.user.profileImage);
+    if (newSession) {
+      setSession(newSession);
       return;
     }
-    setProfileImage("");
-  }, [pathname]);
+    setSession(undefined);
+  }, [newSession?.isAuth]);
 
   return (
     <header className="sticky top-0 z-nav hidden h-72 w-full bg-white-black px-24 pc:block">
@@ -44,7 +45,7 @@ const PcHeader = () => {
           {session ? (
             <NavButton
               href="/mypage"
-              icon={<Image src={profileImage || "/icon/no-profile.svg"} alt="프로필 이미지" width={24} height={24} className="h-24 w-24 rounded-full object-cover" />}
+              icon={<Image src={session.user.profileImage || "/icon/no-profile.svg"} alt="프로필 이미지" width={24} height={24} className="h-24 w-24 rounded-full object-cover" />}
               label="마이페이지"
               isActive={pathname === "/mypage"}
             />

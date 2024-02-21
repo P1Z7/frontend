@@ -30,6 +30,7 @@
     "react-hook-form": "^7.49.3",
     "react-hot-toast": "^2.4.1",
     "react-infinite-scroller": "^1.2.6",
+    "sharp": "^0.33.2",
     "tailwind-scrollbar-hide": "^1.1.7",
     "zustand": "^4.5.0"
   },
