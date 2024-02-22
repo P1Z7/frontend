@@ -43,7 +43,7 @@ const MyArtistEventsCarousel = () => {
   });
 
   return (
-    <div className="flex flex-col gap-16 pc:gap-24">
+    <div className="flex h-328 flex-col gap-16 pc:h-400 pc:gap-24">
       <div className="flex h-32 items-center justify-between self-stretch px-20 pc:px-48">
         {isLogin && (
           <>
@@ -70,12 +70,12 @@ interface RenderContentProps {
 }
 
 const RenderContent = ({ status, hasMyArtistEvents, isLoading, myArtistEvent, hasMyArtist }: RenderContentProps) => {
-  if (!status) {
-    return <LoginHero />;
-  }
-
   if (isLoading) {
     return null;
+  }
+
+  if (!status) {
+    return <LoginHero />;
   }
 
   if (!hasMyArtist) {
@@ -94,9 +94,9 @@ const LoginHero = () => {
 
   return (
     <div className="w-full px-20 pc:px-40">
-      <div className="flex-center relative h-160 overflow-hidden rounded-lg border border-main-pink-50 pc:h-232">
+      <div className="flex-center relative h-232 overflow-hidden rounded-lg border border-main-pink-50 bg-[#FFF2F7] pc:h-280">
         <img src="/image/hero.avif" className="min-h-180 object-cover pc:h-full" alt="배너이미지" />
-        <div className="flex-center absolute top-96 w-full flex-col gap-16 pc:top-152">
+        <div className="flex-center absolute top-160 w-full flex-col gap-16 pc:top-188">
           <button onClick={() => router.push("/signin")} className="h-32 rounded-full bg-gray-900 px-16 text-14 font-600 leading-loose text-white-white pc:h-40 pc:text-18">
             로그인 하기
           </button>
@@ -111,8 +111,8 @@ export const FollowArtistHero = () => {
 
   return (
     <div className="w-full px-20 pc:px-40">
-      <div className="flex-center relative h-160 overflow-hidden rounded-lg border border-main-pink-50 pc:h-232">
-        <img src="/image/pink-hero.webp" className="absolute min-h-200 object-cover pc:h-full" alt="배너이미지" />
+      <div className="flex-center relative h-232 overflow-hidden rounded-lg border border-main-pink-50 pc:h-280">
+        <img src="/image/pink-hero.webp" className="absolute min-h-280 object-cover pc:h-full" alt="배너이미지" />
         <div className="flex-center z-heart w-full flex-col gap-16">
           <p className="text-center text-18 font-700 text-main-pink-500 pc:text-20">
             좋아하는 아티스트를 설정하여
@@ -134,10 +134,10 @@ export const FollowArtistHero = () => {
 const NoNewCard = () => {
   return (
     <div className="w-full px-20 pc:px-40">
-      <div className="flex-center relative h-160 overflow-hidden rounded-lg border border-gray-200 pc:h-232">
-        <img src="/image/gray-hero.webp" className="absolute min-h-180 object-cover pc:h-full" alt="배너이미지" />
+      <div className="flex-center relative h-232 overflow-hidden rounded-lg border border-gray-200 pc:h-280">
+        <img src="/image/gray-hero.webp" className="absolute min-h-240 object-cover pc:h-full" alt="배너이미지" />
         <div className="flex-center z-heart w-full flex-col gap-16">
-          <p className="text-center text-18 font-600 text-gray-500 pc:text-20">팔로우한 아티스트의 예정된 새 행사가 없습니다.</p>
+          <p className="text-center text-14 font-600 text-gray-500 pc:text-20">팔로우한 아티스트의 예정된 새 행사가 없습니다.</p>
         </div>
       </div>
     </div>
