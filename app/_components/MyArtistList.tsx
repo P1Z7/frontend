@@ -67,28 +67,19 @@ const MyArtistList = () => {
     const session = getSession();
 
     try {
-      if (addData.size) {
-        const addRes = await instance.post(`/users/${session?.user.userId}/artists`, {
-          artistIds: [...addData],
+      if (addData.size || deleteData.size) {
+        await instance.put(`/users/${session?.user.userId}/artists`, {
+          addArtistIds: [...addData],
+          deleteArtistIds: [...deleteData],
         });
-        if (addRes) {
-          router.push("/mypage");
-          toast.success("아티스트와 가까워진 기분이에요!", {
-            className: "text-16 font-600",
-          });
-        }
-      }
-      if (deleteData.size) {
-        const deleteRes = await instance.delete(`/users/${session?.user.userId}/artists`, {
-          artistIds: [...deleteData],
+
+        toast.success("아티스트와 관계가 달라졌어요...", {
+          className: "text-16 font-600",
         });
-        if (deleteRes) {
-          router.push("/mypage");
-          toast.success("아티스트와 조금 멀어졌어요...", {
-            className: "text-16 font-600",
-          });
-        }
       }
+      toast("변경 사항이 없습니다.", {
+        className: "text-16 font-600",
+      });
     } catch (e) {
       setIsError(true);
       setSelected(myArtistData!.map((item) => ({ id: item.id, name: item.name, image: item.image, type: "" })));
@@ -139,7 +130,7 @@ const MyArtistList = () => {
   return (
     <div className="flex h-full flex-col gap-12">
       <SearchInput setKeyword={setKeyword} placeholder="최애의 행사를 찾아보세요!" />
-      <div className="sticky top-72 z-nav flex w-full snap-x snap-mandatory gap-12 overflow-x-scroll bg-white-white pt-12">
+      <div className="sticky top-60 z-nav flex w-full snap-x snap-mandatory gap-12 overflow-x-scroll bg-white-white pt-12">
         {selected.map((artist, idx) => {
           if (!artist) {
             return null;
@@ -162,9 +153,9 @@ const MyArtistList = () => {
               </li>
             )),
           )}
-          <li className="h-[1px]" ref={containerRef} />
+          <li ref={containerRef} />
         </ul>
-        <div className="mb-100 mt-12">
+        <div className="mb-120 mt-12">
           <DeferredSuspense fallback={<FadingDot />} isFetching={isFetching} />
         </div>
       </section>

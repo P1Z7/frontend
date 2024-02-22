@@ -37,6 +37,7 @@ const MobileHeader = ({ handleClick, topButton }: Props) => {
   const title = useHeaderTitle();
 
   const { isPc } = useGetWindowWidth();
+  console.log(isPc);
 
   return (
     <>
@@ -52,14 +53,15 @@ const MobileHeader = ({ handleClick, topButton }: Props) => {
             <KebabButton />
           </button>
         )}
-        {topButton && (
+        {
           <ToTopButton
+            deps={[isPc]}
             containerId={isPc ? "pinkContainer" : undefined}
-            className="right-24 top-36 z-nav rounded-full bg-white-white px-12 text-16 text-gray-600 hover:bg-sub-pink hover:text-white-white"
+            className="right-24 top-36 z-floating rounded-full bg-white-white px-12 text-16 text-gray-600 hover:bg-sub-pink hover:text-white-white"
           >
             위로 가기 ↑
           </ToTopButton>
-        )}
+        }
       </header>
       {bottomSheet === "event-kebab" && <EventKebabBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} openReportModal={openKebabModal} />}
       {modal === "report" && <ReportModal closeModal={closeModal} type="event" />}
