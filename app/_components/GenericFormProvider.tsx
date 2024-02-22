@@ -50,6 +50,7 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
     }
     if (path === `/event/${eventId}/edit`) {
       try {
+        setPostLoading(true);
         if (!session) throw Error(" /Unauthorized");
         if (writerId === session.user.userId) {
           await submitEditWriter(methods.getValues(), instance, session.user.userId, eventId);
@@ -63,6 +64,8 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
         if (err.message.split("/")[1] === "Unauthorized") {
           return router.push("/signin");
         }
+      } finally {
+        setPostLoading(false);
       }
     }
     if (path === "/signup") {

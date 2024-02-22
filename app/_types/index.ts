@@ -55,7 +55,7 @@ export interface UserType {
 }
 
 export type LabelType = "아티스트" | "행사 유형" | "장소 이름" | "주소" | "기간" | "주최자" | "링크" | "특전" | "이미지" | "상세 내용";
-export type EventType = "카페" | "나눔" | "팬광고" | "팝업스토어" | "상영회" | "기타";
+export type EventType = "카페" | "꽃집" | "팬광고" | "포토부스" | "상영회" | "기타";
 export type GiftType = "컵/컵홀더" | "포스터" | "스티커" | "키링" | "포토카드" | "엽서" | "포토굿즈" | "기타";
 export type SnsType = "트위터" | "인스타그램" | "유튜브" | "기타";
 
@@ -191,7 +191,7 @@ export interface MyReviewType {
   event: {
     id: string;
     placeName: string;
-    eventType: "카페" | "나눔" | "팬광고" | "팝업스토어" | "상영회" | "기타";
+    eventType: "카페" | "꽃집" | "팬광고" | "포토부스" | "상영회" | "기타";
     address: string;
     startDate: string;
     endDate: string;
