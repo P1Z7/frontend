@@ -5,48 +5,42 @@ import { instance } from "app/_api/api";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { useAuth } from "@/hooks/useAuth";
+import { useEffect, useState } from "react";
+import { getSession } from "@/store/session/cookies";
 import { Res_Get_Type } from "@/types/getResType";
 
 const Carousel = dynamic(() => import("./Carousel"), { ssr: false });
 
 const MyArtistEventsCarousel = () => {
-  const { session, isLogin } = useAuth();
+  const [isLogin, setIsLogin] = useState(false);
+  const session = getSession();
+  useEffect(() => {
+    if (session) {
+      setIsLogin(true);
+    }
+  }, [session]);
 
-  const {
-    data: myArtistEvent,
-    isSuccess,
-    isLoading,
-    refetch: refetchMyArtistEvent,
-  } = useQuery<Res_Get_Type["eventList"]>({
+  const { data: myArtistEvent, isLoading } = useQuery<Res_Get_Type["eventList"]>({
     queryKey: ["myArtistEvent"],
     queryFn: async () => {
       if (!session) {
         return null;
       }
-      return instance.get(`/event/new/${session.user.userId}/artist`, {
-        userId: session.user.userId,
-      });
+      return instance.get(`/event/new/${session?.user.userId}/artist`);
     },
+    enabled: isLogin,
   });
 
-  const { data: myArtist, refetch: refetchMyArtist } = useQuery({
+  const { data: myArtist } = useQuery({
     queryKey: ["myArtist"],
     queryFn: async () => {
       if (!session) {
         return null;
       }
-      return instance.get(`/users/${session.user.userId}/artists`, {
-        userId: session.user.userId,
-      });
+      return instance.get(`/users/${session?.user.userId}/artists`);
     },
+    enabled: isLogin,
   });
-
-  useEffect(() => {
-    refetchMyArtistEvent();
-    refetchMyArtist();
-  }, [session, isLogin, refetchMyArtistEvent, refetchMyArtist]);
 
   return (
     <div className="flex flex-col gap-16 pc:gap-24">
@@ -62,14 +56,7 @@ const MyArtistEventsCarousel = () => {
           </>
         )}
       </div>
-      <RenderContent
-        status={isLogin}
-        hasMyArtistEvents={!!myArtistEvent?.length}
-        hasMyArtist={!!myArtist?.length}
-        isLoading={isLoading}
-        isSuccess={isSuccess}
-        myArtistEvent={myArtistEvent}
-      />
+      <RenderContent status={isLogin} hasMyArtistEvents={!!myArtistEvent?.length} hasMyArtist={!!myArtist?.length} isLoading={isLoading} myArtistEvent={myArtistEvent} />
     </div>
   );
 };
@@ -78,28 +65,28 @@ interface RenderContentProps {
   status?: boolean;
   hasMyArtistEvents: boolean;
   isLoading: boolean;
-  isSuccess: boolean;
   myArtistEvent?: Res_Get_Type["eventList"];
   hasMyArtist: boolean;
 }
 
-const RenderContent = ({ status, hasMyArtistEvents, isLoading, isSuccess, myArtistEvent, hasMyArtist }: RenderContentProps) => {
+const RenderContent = ({ status, hasMyArtistEvents, isLoading, myArtistEvent, hasMyArtist }: RenderContentProps) => {
   if (!status) {
     return <LoginHero />;
   }
 
-  return (
-    <>
-      {isLoading && <LoginHero />}
-      {isSuccess && (
-        <>
-          {!hasMyArtist && <FollowArtistHero />}
-          {hasMyArtist && !hasMyArtistEvents && <NoNewCard />}
-          {hasMyArtistEvents && <Carousel cards={myArtistEvent} />}
-        </>
-      )}
-    </>
-  );
+  if (isLoading) {
+    return null;
+  }
+
+  if (!hasMyArtist) {
+    return <FollowArtistHero />;
+  }
+
+  if (hasMyArtist && !hasMyArtistEvents) {
+    return <NoNewCard />;
+  }
+
+  return <Carousel cards={myArtistEvent} />;
 };
 
 const LoginHero = () => {
