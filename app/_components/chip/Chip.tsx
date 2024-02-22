@@ -46,7 +46,7 @@ const COLOR_GOODS = {
   키링: `bg-sub-green-bg text-sub-green`,
   포토카드: `bg-sub-skyblue-bg text-sub-skyblue`,
   엽서: `bg-sub-blue-bg text-sub-blue`,
-  포토굿즈: `bg-sub-pink-bg text-sub-pink`,
+  포토굿즈: `bg-sub-purple-bg text-sub-purple`,
   기타: `bg-gray-50 text-gray-700`,
 };
 
