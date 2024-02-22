@@ -33,9 +33,9 @@ const blackBG = "bg-gray-700 text-gray-50";
 const grayBG = "bg-gray-50 text-gray-700";
 const COLOR_EVENT = {
   카페: `bg-sub-pink ${textWhite}`,
-  나눔: `bg-sub-yellow ${textWhite}`,
+  꽃집: `bg-sub-yellow ${textWhite}`,
   팬광고: `bg-sub-skyblue ${textWhite}`,
-  팝업스토어: `bg-sub-blue ${textWhite}`,
+  포토부스: `bg-sub-blue ${textWhite}`,
   상영회: `bg-sub-purple ${textWhite}`,
   기타: `bg-sub-red ${textWhite}`,
 };
