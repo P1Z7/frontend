@@ -36,27 +36,29 @@ const MyArtistList = () => {
     }
   }, [myArtistData]);
 
-  const [deleteData, setDeleteData] = useState<Set<string>>(new Set());
-  const [addData, setAddData] = useState<Set<string>>(new Set());
+  const [deleteMember, setDeleteMember] = useState<Set<string>>(new Set());
+  const [deleteGroup, setDeleteGroup] = useState<Set<string>>(new Set());
+  const [addMember, setAddMember] = useState<Set<string>>(new Set());
+  const [addGroup, setAddGroup] = useState<Set<string>>(new Set());
 
   const handleArtistClick = (cur: ArtistType) => {
-    if (selected.some((item) => item?.id === cur.id)) {
-      setSelected((prevSelected) => prevSelected.filter((item) => item?.id !== cur.id));
+    if (selected.some((item) => item.id === cur.id)) {
+      setSelected((prevSelected) => prevSelected.filter((item) => item.id !== cur.id));
 
-      if (myArtistData?.some((item) => item?.id === cur.id)) {
-        setDeleteData((prev) => prev.add(cur.id));
+      if (myArtistData?.some((item) => item.id === cur.id)) {
+        cur.type === "group" ? setDeleteGroup((prev) => prev.add(cur.id)) : setDeleteMember((prev) => prev.add(cur.id));
       }
-      if (!myArtistData?.some((item) => item?.id === cur.id)) {
-        setAddData((prev) => (prev.delete(cur.id), prev));
+      if (!myArtistData?.some((item) => item.id === cur.id)) {
+        cur.type === "group" ? setAddGroup((prev) => (prev.delete(cur.id), prev)) : setAddMember((prev) => (prev.delete(cur.id), prev));
       }
     } else {
       setSelected((prevSelected) => [...prevSelected, cur]);
 
-      if (myArtistData?.some((item) => item?.id === cur.id)) {
-        setDeleteData((prev) => (prev.delete(cur.id), prev));
+      if (myArtistData?.some((item) => item.id === cur.id)) {
+        cur.type === "group" ? setDeleteGroup((prev) => (prev.delete(cur.id), prev)) : setDeleteMember((prev) => (prev.delete(cur.id), prev));
       }
-      if (!myArtistData?.some((item) => item?.id === cur.id)) {
-        setAddData((prev) => prev.add(cur.id));
+      if (!myArtistData?.some((item) => item.id === cur.id)) {
+        cur.type === "group" ? setAddGroup((prev) => prev.add(cur.id)) : setAddMember((prev) => prev.add(cur.id));
       }
     }
   };
@@ -67,15 +69,21 @@ const MyArtistList = () => {
     const session = getSession();
 
     try {
-      if (addData.size || deleteData.size) {
-        await instance.put(`/users/${session?.user.userId}/artists`, {
-          addArtistIds: [...addData],
-          deleteArtistIds: [...deleteData],
+      if (deleteGroup.size || deleteMember.size || addGroup.size || addMember.size) {
+        const res = await instance.put(`/users/${session?.user.userId}/artists`, {
+          deleteGroupIds: [...deleteGroup],
+          deleteArtistIds: [...deleteMember],
+          addGroupIds: [...addGroup],
+          addArtistIds: [...addMember],
         });
 
-        toast.success("아티스트와 관계가 달라졌어요...", {
-          className: "text-16 font-600",
-        });
+        if (res.ok) {
+          toast.success("아티스트와 관계가 달라졌어요...", {
+            className: "text-16 font-600",
+          });
+          router.push("/mypage");
+        }
+        return;
       }
       toast("변경 사항이 없습니다.", {
         className: "text-16 font-600",
@@ -87,8 +95,10 @@ const MyArtistList = () => {
         className: "text-16 font-600",
       });
     } finally {
-      setDeleteData(new Set());
-      setAddData(new Set());
+      setDeleteGroup(new Set());
+      setDeleteMember(new Set());
+      setAddGroup(new Set());
+      setAddMember(new Set());
     }
   };
 
@@ -147,7 +157,7 @@ const MyArtistList = () => {
           {artistData?.pages.map((page) =>
             page.artistAndGroupList.map((artist) => (
               <li key={artist.id}>
-                <ArtistCard isSmall onClick={() => handleArtistClick(artist)} isChecked={selected.map((item) => item?.id).includes(artist.id)} profileImage={artist.image}>
+                <ArtistCard isSmall onClick={() => handleArtistClick(artist)} isChecked={selected.map((item) => item.id).includes(artist.id)} profileImage={artist.image}>
                   {artist.name}
                 </ArtistCard>
               </li>

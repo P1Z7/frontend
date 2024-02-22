@@ -122,9 +122,7 @@ export class Api {
       return refetchResult;
     }
 
-    const result = await res.json();
-    this.makeError(result);
-    return result;
+    return res;
   }
 
   async delete<T extends DeleteEndPoint>(endPoint: T, body: DeleteBodyType<T>) {
@@ -142,12 +140,6 @@ export class Api {
     if (await this.updateToken(res)) {
       const refetchResult = await this.refetch(newEndPoint, config);
       return refetchResult;
-    }
-
-    if (!res.ok) {
-      const result = await res.json();
-      this.makeError(result);
-      return result;
     }
 
     return res;

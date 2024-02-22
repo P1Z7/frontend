@@ -10,7 +10,9 @@ type Req_Put_Profile = {
 
 type Req_Put_Artists = {
   deleteArtistIds: string[];
+  deleteGroupIds: string[];
   addArtistIds: string[];
+  addGroupIds: string[];
 };
 
 export type Req_Put_Type = {

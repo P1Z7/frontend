@@ -1,4 +1,5 @@
 import { CSSProperties, ReactNode, useEffect, useRef, useState } from "react";
+import ArrowUp from "@/public/icon/arrow-up_full.svg";
 
 interface Props {
   deps?: any[];
@@ -50,7 +51,8 @@ const ToTopButton = ({ deps = [], containerId, scrollPoint = 250, className, chi
   };
 
   return toggle ? (
-    <button onClick={goToTop} className={className}>
+    <button onClick={goToTop} className={`bg-main-pink-500 p-12 ${className}`}>
+      <ArrowUp />
       {children}
     </button>
   ) : null;

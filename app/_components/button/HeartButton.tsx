@@ -1,6 +1,5 @@
 "use client";
 
-import confetti from "canvas-confetti";
 import { MouseEvent, useEffect, useState } from "react";
 import HeartIcon from "./HeartIcon";
 
@@ -49,7 +48,3 @@ const HeartButton = ({ isSmall = false, isSelected = false, onClick, ...props }:
 };
 
 export default HeartButton;
-
-const heart = confetti.shapeFromPath({
-  path: "M167 72c19,-38 37,-56 75,-56 42,0 76,33 76,75 0,76 -76,151 -151,227 -76,-76 -151,-151 -151,-227 0,-42 33,-75 75,-75 38,0 57,18 76,56z",
-});
