@@ -1,7 +1,7 @@
 import { PostType } from "@/(route)/post/page";
 import { useFormContext } from "react-hook-form";
 
-const EVENT_TYPE_LIST = ["카페", "나눔", "팬광고", "팝업스토어", "상영회", "기타"];
+const EVENT_TYPE_LIST = ["카페", "꽃집", "팬광고", "포토부스", "상영회", "기타"];
 
 interface Props {
   handleClickFunc: () => void;
