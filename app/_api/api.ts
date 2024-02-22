@@ -109,7 +109,7 @@ export class Api {
 
     const newEndPoint = this.baseUrl;
     const config = {
-      method: endPoint.includes("event") ? "PUT" : "PATCH",
+      method: endPoint.includes("event") || endPoint.includes("artists") ? "PUT" : "PATCH",
       body: JSON.stringify(body),
       headers: {
         "Content-type": "application/json",
@@ -122,9 +122,7 @@ export class Api {
       return refetchResult;
     }
 
-    const result = await res.json();
-    this.makeError(result);
-    return result;
+    return res;
   }
 
   async delete<T extends DeleteEndPoint>(endPoint: T, body: DeleteBodyType<T>) {
@@ -142,12 +140,6 @@ export class Api {
     if (await this.updateToken(res)) {
       const refetchResult = await this.refetch(newEndPoint, config);
       return refetchResult;
-    }
-
-    if (!res.ok) {
-      const result = await res.json();
-      this.makeError(result);
-      return result;
     }
 
     return res;
@@ -195,7 +187,7 @@ type PostEndPoint =
   | "/event/claim"
   | `/reviews/${string}/claims`;
 
-type PutEndPoint = `/event/${string}` | `/users/${string}/profile` | `/users/${string}/password`;
+type PutEndPoint = `/event/${string}` | `/users/${string}/profile` | `/users/${string}/password` | `/users/${string}/artists`;
 type DeleteEndPoint = `/users/${string}/artists` | `/reviews/${string}/images` | `/users/${string}`;
 type PostQueryType<T> = T extends "/file/upload" ? { category: "event" | "artist" | "user" } : unknown;
 
@@ -273,5 +265,7 @@ type PutBodyType<T> = T extends `/event/${string}`
     ? Req_Put_Type["profile"]
     : T extends `/users/${string}/password`
       ? Req_Put_Type["password"]
-      : any;
+      : T extends `/users/${string}/artists`
+        ? Req_Put_Type["artists"]
+        : any;
 type DeleteBodyType<T> = T extends `/users/${string}/artists` ? Req_Delete_Type["myArtist"] : T extends `/users/${string}` ? Req_Delete_Type["user"] : any;

@@ -1,12 +1,11 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import MetaTag from "@/components/MetaTag";
 import MyArtistList from "@/components/MyArtistList";
-import ToTopButton from "@/components/button/ToTopButton";
 import MobileHeader from "@/components/header/MobileHeader";
 import PinkLayout from "@/components/layout/PinkLayout";
 import { instance } from "@/api/api";

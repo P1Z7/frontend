@@ -1,26 +1,28 @@
-import { CSSProperties, ReactNode, useEffect, useState } from "react";
+import { CSSProperties, ReactNode, useEffect, useRef, useState } from "react";
+import ArrowUp from "@/public/icon/arrow-up_full.svg";
 
 interface Props {
+  deps?: any[];
   containerId?: string;
   scrollPoint?: number;
   className: CSSProperties & string;
   children?: ReactNode;
 }
 
-const ToTopButton = ({ containerId, scrollPoint = 250, className, children }: Props) => {
+const ToTopButton = ({ deps = [], containerId, scrollPoint = 250, className, children }: Props) => {
   const [toggle, setToggle] = useState(false);
-  let container: Element | null | (Window & typeof globalThis);
+  const container = useRef<Element | null | (Window & typeof globalThis)>();
 
   const handleScroll = () => {
-    if (!container) {
+    if (!container.current) {
       return;
     }
 
     let scroll: number;
-    if ("scrollY" in container) {
-      scroll = container.scrollY;
+    if ("scrollY" in container.current) {
+      scroll = container.current.scrollY;
     } else {
-      scroll = container.scrollTop;
+      scroll = container.current.scrollTop;
     }
 
     scroll > scrollPoint ? setToggle(true) : setToggle(false);
@@ -28,31 +30,29 @@ const ToTopButton = ({ containerId, scrollPoint = 250, className, children }: Pr
 
   useEffect(() => {
     if (containerId) {
-      container = document.querySelector(`#${containerId}`);
+      container.current = document.querySelector(`#${containerId}`);
+    } else {
+      container.current = window;
     }
 
-    if (!container) {
-      container = window;
-      return;
-    }
-
-    container.addEventListener("scroll", handleScroll);
+    container.current?.addEventListener("scroll", handleScroll);
 
     return () => {
-      container?.removeEventListener("scroll", handleScroll);
+      container.current?.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, deps);
 
   const goToTop = () => {
-    if (!container) {
+    if (!container.current) {
       return;
     }
 
-    container.scrollTo({ top: 0, behavior: "smooth" });
+    container.current?.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return toggle ? (
-    <button onClick={goToTop} className={className}>
+    <button onClick={goToTop} className={`bg-main-pink-500 p-12 ${className}`}>
+      <ArrowUp />
       {children}
     </button>
   ) : null;
