@@ -24,10 +24,10 @@ const CalendarContent = ({ contentRef, type, setStartDateFilter, setEndDateFilte
   useEffect(() => {
     if (range?.from) {
       if (!range.to) {
-        setStartDateFilter(format(range.from, "yyyy.MM.dd", { locale: ko }));
+        setStartDateFilter(format(range.from, "yyyy-MM-dd", { locale: ko }));
       } else if (range.to) {
-        setStartDateFilter(format(range.from, "yyyy.MM.dd", { locale: ko }));
-        setEndDateFilter(format(range.to, "yyyy.MM.dd", { locale: ko }));
+        setStartDateFilter(format(range.from, "yyyy-MM-dd", { locale: ko }));
+        setEndDateFilter(format(range.to, "yyyy-MM-dd", { locale: ko }));
         if (endFunc) endFunc();
       }
     }
