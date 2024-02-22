@@ -5,6 +5,7 @@ import { instance } from "app/_api/api";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { Res_Get_Type } from "@/types/getResType";
 
@@ -17,6 +18,7 @@ const MyArtistEventsCarousel = () => {
     data: myArtistEvent,
     isSuccess,
     isLoading,
+    refetch: refetchMyArtistEvent,
   } = useQuery<Res_Get_Type["eventList"]>({
     queryKey: ["myArtistEvent"],
     queryFn: async () => {
@@ -29,7 +31,7 @@ const MyArtistEventsCarousel = () => {
     },
   });
 
-  const { data: myArtist } = useQuery({
+  const { data: myArtist, refetch: refetchMyArtist } = useQuery({
     queryKey: ["myArtist"],
     queryFn: async () => {
       if (!session) {
@@ -40,6 +42,11 @@ const MyArtistEventsCarousel = () => {
       });
     },
   });
+
+  useEffect(() => {
+    refetchMyArtistEvent();
+    refetchMyArtist();
+  }, [session, isLogin, refetchMyArtistEvent, refetchMyArtist]);
 
   return (
     <div className="flex flex-col gap-16 pc:gap-24">
