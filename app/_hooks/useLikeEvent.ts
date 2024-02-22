@@ -1,5 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useRef } from "react";
+import toast from "react-hot-toast";
 import { instance } from "@/api/api";
 import { getSession } from "@/store/session/cookies";
 import { Res_Get_Type } from "@/types/getResType";
@@ -16,6 +18,7 @@ const useLikeEvent = ({ eventId, initialLike, initialLikeCount }: Props) => {
   const session = getSession();
   const queryClient = useQueryClient();
   const router = useRouter();
+  const debouncingRef = useRef<NodeJS.Timeout>();
 
   const userId = session?.user.userId ?? "";
 
@@ -55,10 +58,20 @@ const useLikeEvent = ({ eventId, initialLike, initialLikeCount }: Props) => {
 
   const handleLikeEvent = () => {
     if (!session) {
+      toast("로그인 후 좋아하는 행사를 저장 해보세요!", {
+        className: "text-16 font-600",
+      });
       router.push("/signin");
       return;
     }
-    likeMutation.mutate();
+
+    const timerId = debouncingRef.current;
+
+    if (timerId) {
+      clearTimeout(timerId);
+    }
+
+    debouncingRef.current = setTimeout(() => likeMutation.mutate(), 300);
   };
 
   const liked = likeData?.status ?? initialLike;

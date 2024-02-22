@@ -1,11 +1,7 @@
 "use client";
 
 import confetti from "canvas-confetti";
-import { useRouter } from "next/navigation";
-import { MouseEvent, useEffect, useRef, useState } from "react";
-import toast from "react-hot-toast";
-import useGetWindowWidth from "@/hooks/useGetWindowWidth";
-import { getSession } from "@/store/session/cookies";
+import { MouseEvent, useEffect, useState } from "react";
 import HeartIcon from "./HeartIcon";
 
 interface Props {
@@ -15,8 +11,6 @@ interface Props {
 }
 
 const HeartButton = ({ isSmall = false, isSelected = false, onClick, ...props }: Props) => {
-  const session = getSession();
-  const route = useRouter();
   const [selected, setSelected] = useState(isSelected);
 
   useEffect(() => {
@@ -24,11 +18,6 @@ const HeartButton = ({ isSmall = false, isSelected = false, onClick, ...props }:
   }, [isSelected]);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    if (!session) {
-      toast("로그인하고 좋아하는 행사를 저장해보세요!", { className: "text-16 font-600" });
-      route.push("/signin");
-      return;
-    }
     setSelected((prev) => !prev);
     onClick?.(event);
   };
