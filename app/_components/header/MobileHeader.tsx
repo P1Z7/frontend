@@ -37,7 +37,6 @@ const MobileHeader = ({ handleClick, topButton }: Props) => {
   const title = useHeaderTitle();
 
   const { isPc } = useGetWindowWidth();
-  console.log(isPc);
 
   return (
     <>
