@@ -79,7 +79,7 @@ const Banner = ({ data, eventId }: Props) => {
             width={460}
             height={644}
             sizes="(max-width: 1200px) 250px, 500px"
-            className="absolute-center z-base hidden object-cover tablet:block pc:hidden"
+            className="absolute-center z-base hidden object-cover tablet:block tablet:max-h-[65rem] pc:hidden"
           />
           <Image src={bannerImage?.imageUrl ?? DefaultImage} alt={"행사 포스터 썸네일"} priority fill sizes="250px" className="object-cover tablet:blur-xl pc:blur-0" />
         </div>
