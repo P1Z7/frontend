@@ -1,11 +1,12 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import MetaTag from "@/components/MetaTag";
 import MyArtistList from "@/components/MyArtistList";
+import ToTopButton from "@/components/button/ToTopButton";
 import MobileHeader from "@/components/header/MobileHeader";
 import PinkLayout from "@/components/layout/PinkLayout";
 import { instance } from "@/api/api";
@@ -49,7 +50,7 @@ const MyArtistEditPage = () => {
     <>
       <MetaTag title={META_TAG.myArtist["title"]} description={META_TAG.myArtist["title"]} />
       <PinkLayout size="wide">
-        <MobileHeader />
+        <MobileHeader topButton />
         <div className="flex h-auto flex-col gap-24 px-20 pt-36">
           <section className="flex flex-col gap-12">
             <h2 className="text-20 font-700 text-gray-900">좋아하는 아티스트를 알려주세요!</h2>

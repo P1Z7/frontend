@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import ArtistCard from "@/components/ArtistCard";
 import { instance } from "@/api/api";
-import { MyArtistsType } from "@/types/index";
+import { ArtistType } from "@/types/index";
 
 interface Props {
   userId: string;
@@ -14,7 +14,7 @@ interface Props {
 const MyArtistTab = ({ userId }: Props) => {
   const router = useRouter();
 
-  const { data: myArtistsData, isSuccess } = useQuery({
+  const { data: myArtistsData, isSuccess } = useQuery<ArtistType[]>({
     queryKey: ["myArtist"],
     queryFn: async () => {
       return instance.get(`/users/${userId}/artists`);
@@ -32,19 +32,19 @@ const MyArtistTab = ({ userId }: Props) => {
       <div className="flex w-full flex-col items-center">
         <div className="flex w-full flex-wrap justify-center gap-20 pc:justify-start pc:gap-32">
           {myArtistsData?.length ? (
-            myArtistsData.map((cardList: MyArtistsType) => {
-              if (!cardList) {
+            myArtistsData.map((artist) => {
+              if (!artist) {
                 return null;
               }
               return (
                 <ArtistCard
-                  key={cardList.artistId}
-                  profileImage={cardList.artistImage}
+                  key={artist.id}
+                  profileImage={artist.image}
                   onClick={() => {
-                    router.push(`/search?keyword=${cardList.artistName}`);
+                    router.push(`/search?keyword=${artist.name}`);
                   }}
                 >
-                  {cardList.artistName}
+                  {artist.name}
                 </ArtistCard>
               );
             })

@@ -35,7 +35,7 @@ const PcHeader = () => {
   return (
     <header className="sticky top-0 z-nav hidden h-72 w-full bg-white-black px-24 pc:block">
       <div className="mx-auto flex h-full max-w-[104rem] items-center justify-between">
-        <Link href="/" scroll={false}>
+        <Link href="/" scroll={false} aria-label="홈페이지로 돌아갑니다.">
           <LogoIcon />
         </Link>
         <div className="flex gap-16">

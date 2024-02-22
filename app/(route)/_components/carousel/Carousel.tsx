@@ -49,24 +49,22 @@ const Carousel = ({ cards }: Props) => {
   }, [cards]);
 
   return (
-    <div className="flex flex-col gap-16 pc:gap-24">
-      <div className="pc:flex pc:w-[112rem]">
-        <div onClick={handlePrevClick} className={`relative top-76 hidden h-100 w-[5rem] cursor-pointer pc:block ${isPrevDisabled ? "pointer-events-none opacity-30" : ""}`}>
-          <PrevButtonIcon />
-        </div>
-        <div className="flex w-full gap-16 overflow-auto px-20 scrollbar-hide pc:gap-20 pc:overflow-hidden pc:p-0">
-          {cards?.map((event) => (
-            <div key={event.id} className="pc:transition-transform pc:duration-500 pc:ease-in-out" style={{ transform: `translateX(-${slideIndex * SCROLLX}rem)` }}>
-              <VerticalEventCard data={event} />
-            </div>
-          ))}
-        </div>
-        <div
-          onClick={handleNextClick}
-          className={`relative top-76 hidden h-100 w-[5rem] cursor-pointer pc:flex pc:justify-end ${isNextDisabled ? "pointer-events-none opacity-50" : ""}`}
-        >
-          <NextButtonIcon />
-        </div>
+    <div className="pc:flex pc:w-[112rem]">
+      <div onClick={handlePrevClick} className={`relative top-76 hidden h-100 w-[5rem] cursor-pointer pc:block ${isPrevDisabled ? "pointer-events-none opacity-30" : ""}`}>
+        <PrevButtonIcon />
+      </div>
+      <div className="flex w-full gap-16 overflow-auto px-20 scrollbar-hide pc:gap-20 pc:overflow-hidden pc:p-0">
+        {cards?.map((event) => (
+          <div key={event.id} className="pc:transition-transform pc:duration-500 pc:ease-in-out" style={{ transform: `translateX(-${slideIndex * SCROLLX}rem)` }}>
+            <VerticalEventCard data={event} />
+          </div>
+        ))}
+      </div>
+      <div
+        onClick={handleNextClick}
+        className={`relative top-76 hidden h-100 w-[5rem] cursor-pointer pc:flex pc:justify-end ${isNextDisabled ? "pointer-events-none opacity-50" : ""}`}
+      >
+        <NextButtonIcon />
       </div>
     </div>
   );

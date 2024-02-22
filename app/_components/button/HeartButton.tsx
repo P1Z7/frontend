@@ -43,7 +43,7 @@ const HeartButton = ({ isSmall = false, isSelected = false, onClick, ...props }:
           isSelected={selected ? true : false}
         />
       </button>
-      <button className="hidden w-fit pc:inline" onClick={handleClick} {...props}>
+      <button className="hidden w-fit pc:inline" onClick={handleClick} aria-label="이 행사를 마이페이지에 저장/삭제" {...props}>
         <HeartIcon
           width={isSmall ? "24" : "32"}
           height={isSmall ? "24" : "32"}

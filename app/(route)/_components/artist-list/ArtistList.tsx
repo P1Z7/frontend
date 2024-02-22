@@ -53,7 +53,7 @@ const ArtistList = () => {
                 </li>
               )),
             )}
-            <div ref={containerRef} className="h-16 w-full" />
+            <li ref={containerRef} className="h-16 w-full" />
           </ul>
           <DeferredSuspense fallback={<LoadingDot />} isFetching={isFetching} />
         </div>

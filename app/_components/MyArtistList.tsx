@@ -1,8 +1,11 @@
+import FadingDot from "@/(route)/(bottom-nav)/signin/_components/FadingDot";
 import { keepPreviousData, useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import BottomButton from "@/components/button/BottomButton";
+import ToTopButton from "@/components/button/ToTopButton";
+import DeferredSuspense from "@/components/skeleton/DeferredSuspense";
 import { instance } from "@/api/api";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { getSession } from "@/store/session/cookies";
@@ -47,7 +50,7 @@ const MyArtistList = () => {
         setAddData((prev) => (prev.delete(cur.id), prev));
       }
     } else {
-      setSelected((prevSelected) => [cur, ...prevSelected]);
+      setSelected((prevSelected) => [...prevSelected, cur]);
 
       if (myArtistData?.some((item) => item?.id === cur.id)) {
         setDeleteData((prev) => (prev.delete(cur.id), prev));
@@ -109,6 +112,7 @@ const MyArtistList = () => {
     data: artistData,
     fetchNextPage,
     refetch,
+    isFetching,
   } = useInfiniteQuery({
     initialPageParam: 1,
     queryKey: ["artist"],
@@ -126,36 +130,43 @@ const MyArtistList = () => {
     deps: [artistData],
   });
 
+  const lastItemRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    lastItemRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+  }, [lastItemRef.current]);
+
   return (
-    <div className="flex flex-col gap-24">
-      <section className="flex flex-col gap-16">
-        <SearchInput setKeyword={setKeyword} placeholder="최애의 행사를 찾아보세요!" />
-        <div className="flex w-full max-w-[52rem] snap-x snap-mandatory gap-12 overflow-auto">
-          {selected.map((artist) => {
-            if (!artist) {
-              return null;
-            }
-            return (
-              <div key={artist?.id} className="snap-end">
-                <ChipButton label={artist?.name} onClick={() => handleArtistClick(artist)} canDelete />
-              </div>
-            );
-          })}
-        </div>
-      </section>
-      <section className="m-auto flex snap-y snap-mandatory">
+    <div className="flex h-full flex-col gap-12">
+      <SearchInput setKeyword={setKeyword} placeholder="최애의 행사를 찾아보세요!" />
+      <div className="sticky top-72 z-nav flex w-full snap-x snap-mandatory gap-12 overflow-x-scroll bg-white-white pt-12">
+        {selected.map((artist, idx) => {
+          if (!artist) {
+            return null;
+          }
+          return (
+            <div key={artist.id} ref={selected.length - 1 === idx ? lastItemRef : null} className="snap-start">
+              <ChipButton label={artist.name} onClick={() => handleArtistClick(artist)} canDelete />
+            </div>
+          );
+        })}
+      </div>
+      <section className="flex-center m-auto flex-col">
         <ul className="flex-center max-w-[52rem] flex-wrap gap-x-16 gap-y-20 px-8 pc:max-w-[76rem]">
           {artistData?.pages.map((page) =>
             page.artistAndGroupList.map((artist) => (
-              <li key={artist.id} className="snap-start">
+              <li key={artist.id}>
                 <ArtistCard isSmall onClick={() => handleArtistClick(artist)} isChecked={selected.map((item) => item?.id).includes(artist.id)} profileImage={artist.image}>
                   {artist.name}
                 </ArtistCard>
               </li>
             )),
           )}
-          <div className="h-[1px]" ref={containerRef} />
+          <li className="h-[1px]" ref={containerRef} />
         </ul>
+        <div className="mb-100 mt-12">
+          <DeferredSuspense fallback={<FadingDot />} isFetching={isFetching} />
+        </div>
       </section>
       <BottomButton onClick={() => artistMutation.mutate()} isDisabled={artistMutation.isPending}>
         {isError ? "다시 시도하기" : "변경 내용 저장"}
