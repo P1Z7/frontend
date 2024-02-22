@@ -48,8 +48,8 @@ const HorizontalEventCard = ({ data, onHeartClick, isGrow = false }: Props) => {
       <div className="relative flex w-full min-w-160 flex-col justify-center gap-4 pc:gap-28">
         <div className="flex flex-col gap-4">
           <h3 className="w-full truncate pr-[3rem] text-16 font-600 pc:text-20">{data.placeName}</h3>
-          <div className="flex w-full items-center gap-8 pc:gap-12">
-            <span className="text-16 font-600">{data.targetArtists?.map((artist) => artist.artistName).join(", ")}</span>
+          <div className="flex w-full items-center gap-8 pr-32 pc:gap-12">
+            <span className="truncate text-16 font-600">{data.targetArtists?.map((artist) => artist.artistName).join(", ")}</span>
             <Chip kind="event" label={data.eventType} />
           </div>
         </div>
