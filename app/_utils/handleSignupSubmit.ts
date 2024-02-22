@@ -1,5 +1,6 @@
 import toast from "react-hot-toast";
 import { Api } from "@/api/api";
+import { setSession } from "@/store/session/cookies";
 
 export const handleSignupSubmit = async (userInput: any, instance: Api) => {
   const { email, password, passwordCheck, nickName, myArtists } = userInput;
@@ -28,7 +29,9 @@ export const handleSignupSubmit = async (userInput: any, instance: Api) => {
       throw new Error(signinRes.error);
     }
 
-    toast(`어서오세요! ${signinRes?.nickName}님`, {
+    setSession({ isAuth: true, user: signinRes });
+
+    toast(`opener가 되셨습니다! ${signinRes?.nickName}님`, {
       className: "text-16 font-600",
     });
 
