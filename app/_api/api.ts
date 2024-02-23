@@ -125,7 +125,7 @@ export class Api {
     return res;
   }
 
-  async delete<T extends DeleteEndPoint>(endPoint: T, body: DeleteBodyType<T>) {
+  async delete<T extends DeleteEndPoint>(endPoint: T, body?: DeleteBodyType<T>) {
     this.baseUrl = "/api" + endPoint;
 
     const newEndPoint = this.baseUrl;
@@ -136,7 +136,7 @@ export class Api {
         "Content-type": "application/json",
       },
     };
-    const res = await fetch(newEndPoint);
+    const res = await fetch(newEndPoint, config);
     if (await this.updateToken(res)) {
       const refetchResult = await this.refetch(newEndPoint, config);
       return refetchResult;
@@ -255,7 +255,9 @@ type GetQueryType<T> = T extends "/event"
                           ? Req_Query_Type["그룹조회"]
                           : T extends "/artist"
                             ? Req_Query_Type["멤버조회"]
-                            : unknown;
+                            : T extends "/users/nickname"
+                              ? Req_Query_Type["닉네임"]
+                              : unknown;
 // 사용하실 때 직접 추가 부탁드립니다!
 type PutBodyType<T> = T extends `/event/${string}`
   ? Req_Post_Type["event"]

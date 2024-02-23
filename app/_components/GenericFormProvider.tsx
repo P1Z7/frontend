@@ -71,7 +71,7 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
     if (path === "/signup") {
       const res = await handleSignupSubmit(userInputValue, instance);
       if (!res.error) {
-        router.push("/");
+        router.refresh();
       }
     }
   };
