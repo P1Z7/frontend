@@ -33,10 +33,10 @@ const OAuth = () => {
         return;
       }
 
-      router.back();
+      router.push(pathname);
       router.refresh();
-    } catch {
-      toast("네트워크 오류! 다시 시도해 주십시오.", {
+    } catch (e) {
+      toast.error("이미 가입한 이메일입니다.", {
         className: "text-16 font-600",
       });
       router.push("/signin");
