@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
+import { openToast } from "@/utils/toast";
 import { MapType } from "@/types/index";
 import KakaoMap from "../KakaoMap";
 
@@ -20,9 +20,7 @@ const LocationTab = ({ name, address }: MapType) => {
   const handleRedirectToMap = async () => {
     const placeId = await getPlaceId(name, address);
     if (!placeId) {
-      toast.error("카카오 맵과 연동되지 않은 주소입니다🥹", {
-        className: "text-14 font-600",
-      });
+      openToast.error(TOAST_MESSAGE.kakaoMap);
       return;
     }
     router.push(`https://map.kakao.com/link/map/${placeId}`);

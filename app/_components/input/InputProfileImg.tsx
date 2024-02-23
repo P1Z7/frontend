@@ -2,8 +2,8 @@ import classNames from "classnames";
 import Image from "next/image";
 import { ChangeEvent, KeyboardEvent, ReactNode, useState } from "react";
 import { FieldPath, FieldValues, UseControllerProps, useController } from "react-hook-form";
-import toast from "react-hot-toast";
 import { getSession } from "@/store/session/cookies";
+import { openToast } from "@/utils/toast";
 import EditIcon from "@/public/icon/pencil.svg";
 
 interface Props {
@@ -27,11 +27,9 @@ const InputProfileImg: Function = ({ children, hasProfile, ...props }) => {
       return;
     }
 
-    const maxSize = 1024 * 1024 * 3;
+    const maxSize = 1024 * 1024 * 1;
     if (image && image.size > maxSize) {
-      toast("이미지 크기는 3MB 이하로 부탁드립니다!", {
-        className: "text-16 font-600",
-      });
+      openToast.error(TOAST_MESSAGE.profileLimit);
       return;
     }
 

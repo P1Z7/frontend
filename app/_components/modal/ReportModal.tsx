@@ -1,8 +1,8 @@
 import { useParams } from "next/navigation";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import { instance } from "@/api/api";
 import { getSession } from "@/store/session/cookies";
+import { openToast } from "@/utils/toast";
 import { ModalBaseType } from "@/types/index";
 import TextModal from "./TextModal";
 
@@ -20,7 +20,7 @@ const ReportModal = ({ closeModal, type, reviewId }: Props) => {
 
   const handleClick: SubmitHandler<FieldValues> = async (form) => {
     if (!session) {
-      toast.error("로그인 후 이용 가능한 기능입니다.", { className: "text-16 font-500" });
+      openToast.error(TOAST_MESSAGE.auth.report);
       return;
     }
     try {
@@ -37,9 +37,9 @@ const ReportModal = ({ closeModal, type, reviewId }: Props) => {
       }
       closeModal();
       setValue("description", "");
-      toast.success("접수가 완료되었습니다👍", { className: "text-16 font-500" });
+      openToast.success(TOAST_MESSAGE.report.success);
     } catch {
-      toast.error("죄송합니다. 잠시 후 다시 시도해주세요😶", { className: "text-16 font-500" });
+      openToast.error(TOAST_MESSAGE.report.error);
     }
   };
 

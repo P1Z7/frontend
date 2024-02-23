@@ -3,12 +3,12 @@ import { instance } from "app/_api/api";
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import ArtistCard from "@/components/ArtistCard";
 import ChipButton from "@/components/chip/ChipButton";
 import SearchInput from "@/components/input/SearchInput";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { useModal } from "@/hooks/useModal";
+import { openToast } from "@/utils/toast";
 import { Res_Get_Type } from "@/types/getResType";
 import { ArtistType } from "@/types/index";
 
@@ -70,10 +70,7 @@ const SearchArtist = ({ onClick, myArtists, myArtistsInfo }: Props) => {
   const { control, handleSubmit, setValue, watch } = useForm({ defaultValues: { name: "" } });
   const name = watch("name");
 
-  const notify = () =>
-    toast.success("등록 요청이 제출되었습니다.", {
-      className: "text-16 font-600 px-28 py-16",
-    });
+  const notify = () => openToast.success(TOAST_MESSAGE.request.success);
 
   const onModalSubmit: SubmitHandler<{ name: string }> = async () => {
     if (name) {
@@ -88,9 +85,7 @@ const SearchArtist = ({ onClick, myArtists, myArtistsInfo }: Props) => {
         closeModal();
         notify();
       } catch (error: any) {
-        toast.error("죄송합니다. 잠시 후 시도해주세요", {
-          className: "text-16 font-600 px-28 py-16",
-        });
+        openToast.error(TOAST_MESSAGE.request.error);
       }
     }
   };

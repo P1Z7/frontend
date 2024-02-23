@@ -2,13 +2,12 @@ import FadingDot from "@/(route)/(bottom-nav)/signin/_components/FadingDot";
 import { keepPreviousData, useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import toast from "react-hot-toast";
 import BottomButton from "@/components/button/BottomButton";
-import ToTopButton from "@/components/button/ToTopButton";
 import DeferredSuspense from "@/components/skeleton/DeferredSuspense";
 import { instance } from "@/api/api";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { getSession } from "@/store/session/cookies";
+import { openToast } from "@/utils/toast";
 import { Res_Get_Type } from "@/types/getResType";
 import { ArtistType } from "../_types";
 import ArtistCard from "./ArtistCard";
@@ -78,22 +77,16 @@ const MyArtistList = () => {
         });
 
         if (res.ok) {
-          toast.success("아티스트와 관계가 달라졌어요...", {
-            className: "text-16 font-600",
-          });
+          openToast.success(TOAST_MESSAGE.mutate.success);
           router.push("/mypage");
         }
         return;
       }
-      toast("변경 사항이 없습니다.", {
-        className: "text-16 font-600",
-      });
+      openToast(TOAST_MESSAGE.mutate.noChange);
     } catch (e) {
       setIsError(true);
       setSelected(myArtistData!.map((item) => ({ id: item.id, name: item.name, image: item.image, type: "" })));
-      toast.error("앗! 다시 시도해 볼까요?", {
-        className: "text-16 font-600",
-      });
+      openToast.error(TOAST_MESSAGE.mutate.error);
     } finally {
       setDeleteGroup(new Set());
       setDeleteMember(new Set());

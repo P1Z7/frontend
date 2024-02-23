@@ -1,6 +1,6 @@
 import { SyntheticEvent } from "react";
-import toast from "react-hot-toast";
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
+import { openToast } from "@/utils/toast";
 import { EventCardType } from "@/types/index";
 import MapIcon from "@/public/icon/map.svg";
 
@@ -21,9 +21,7 @@ const MapInfoBox = ({ locationInfo, closeMapBox }: { locationInfo: EventCardType
   const handleRedirectToMap = async () => {
     const placeId = await getPlaceId(locationInfo.address, locationInfo.placeName);
     if (!placeId) {
-      toast.error("카카오 맵과 연동되지 않은 주소입니다🥹", {
-        className: "text-14 font-600",
-      });
+      openToast.error(TOAST_MESSAGE.kakaoMap);
       return;
     }
     window.open(`https://map.kakao.com/link/map/${placeId}`);

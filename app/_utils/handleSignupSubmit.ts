@@ -1,6 +1,6 @@
-import toast from "react-hot-toast";
 import { Api } from "@/api/api";
 import { setSession } from "@/store/session/cookies";
+import { openToast } from "@/utils/toast";
 
 export const handleSignupSubmit = async (userInput: any, instance: Api) => {
   const { email, password, passwordCheck, nickName, myArtists } = userInput;
@@ -31,21 +31,15 @@ export const handleSignupSubmit = async (userInput: any, instance: Api) => {
 
     setSession({ isAuth: true, user: signinRes });
 
-    toast(`opener가 되셨습니다! ${signinRes?.nickName}님`, {
-      className: "text-16 font-600",
-    });
+    openToast.success(`opener가 되셨습니다! ${signinRes?.nickName}님`);
 
     return signinRes;
   } catch (error: any) {
     if (error.message === "exist user") {
-      toast.error("이미 존재하는 이메일입니다.", {
-        className: "text-16 font-600",
-      });
+      openToast.error(TOAST_MESSAGE.user.email);
     }
     if (error.message === "Bad Request") {
-      toast.error("가입 정보를 다시 한 번 확인해 주세요.", {
-        className: "text-16 font-600",
-      });
+      openToast.error(TOAST_MESSAGE.user.signupError);
     }
   }
 };

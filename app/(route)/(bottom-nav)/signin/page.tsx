@@ -13,8 +13,9 @@ import Button from "@/components/button";
 import InputText from "@/components/input/InputText";
 import PinkLayout from "@/components/layout/PinkLayout";
 import useEnterNext from "@/hooks/useEnterNext";
-import { deleteCookies, setCookies, setSession } from "@/store/session/cookies";
+import { setCookies, setSession } from "@/store/session/cookies";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
+import { openToast } from "@/utils/toast";
 import { SHOT_SIGNIN } from "@/constants/confetti";
 import { META_TAG } from "@/constants/metaTag";
 import { OAUTH } from "@/constants/oauth";
@@ -57,9 +58,7 @@ const SignInPage = () => {
         toast.custom(<FeelMyRhythm shotList={SHOT_SIGNIN} location={{ y: 0.5 }} />, {
           className: "z-popup",
         });
-        toast(`어서오세요! ${res.nickName}님`, {
-          className: "text-16 font-600",
-        });
+        openToast.success(`어서오세요! ${res.nickName}님`);
 
         setSession({ isAuth: true, user: res });
 
