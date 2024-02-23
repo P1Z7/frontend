@@ -125,7 +125,7 @@ export class Api {
     return res;
   }
 
-  async delete<T extends DeleteEndPoint>(endPoint: T, body: DeleteBodyType<T>) {
+  async delete<T extends DeleteEndPoint>(endPoint: T, body?: DeleteBodyType<T>) {
     this.baseUrl = "/api" + endPoint;
 
     const newEndPoint = this.baseUrl;
@@ -136,7 +136,7 @@ export class Api {
         "Content-type": "application/json",
       },
     };
-    const res = await fetch(newEndPoint);
+    const res = await fetch(newEndPoint, config);
     if (await this.updateToken(res)) {
       const refetchResult = await this.refetch(newEndPoint, config);
       return refetchResult;

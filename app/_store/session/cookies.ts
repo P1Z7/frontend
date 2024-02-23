@@ -25,7 +25,9 @@ export const deleteCookies: typeof cookies.remove = (name, options) => {
   return cookies.remove(name, options);
 };
 
-export const setSession = (newSession: Session) => (deleteCookies("session"), setCookies("session", newSession, { path: "/" }));
+export const setSession = (newSession: Session) => (
+  deleteCookies("session"), setCookies("session", newSession, { path: "/", expires: new Date(Date.now() + 24 * 60 * 60 * 1000) })
+);
 
 export const getSession = (): Session | undefined => getCookies("session");
 

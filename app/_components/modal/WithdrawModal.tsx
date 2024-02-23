@@ -18,7 +18,7 @@ const WithdrawModal = ({ closeModal }: Props) => {
       return;
     }
     try {
-      await instance.delete(`/users/${session.user.userId}`, undefined);
+      await instance.delete(`/users/${session.user.userId}`);
       toast("지금까지 Opener와 함께해 주셔서 감사합니다!", {
         className: "text-16 font-600",
       });
