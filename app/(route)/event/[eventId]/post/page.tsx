@@ -5,7 +5,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
 import { ButtonHTMLAttributes, ChangeEvent, InputHTMLAttributes, ReactNode, useCallback, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import MetaTag from "@/components/MetaTag";
 import WarningCheck from "@/components/WarningCheck";
 import Button from "@/components/button";
@@ -17,7 +16,9 @@ import { instance } from "@/api/api";
 import { useAuth } from "@/hooks/useAuth";
 import { useStore } from "@/store/index";
 import { makeImgUrlList } from "@/utils/changeImgUrl";
+import { openToast } from "@/utils/toast";
 import { META_TAG } from "@/constants/metaTag";
+import { TOAST_MESSAGE } from "@/constants/toast";
 import PartyIcon from "@/public/icon/party.svg";
 import SadIcon from "@/public/icon/sad.svg";
 import { MemoizedImageList } from "./_components/MemoizedImageList";
@@ -96,10 +97,7 @@ const ReviewPostPage = () => {
       });
       router.push(`/event/${eventId}`);
     } catch (e) {
-      console.error(e);
-      toast.error("후기 등록에 실패하였습니다", {
-        className: "text-14 font-600",
-      });
+      openToast.error(TOAST_MESSAGE.review);
     } finally {
       setIsLoading(false);
     }

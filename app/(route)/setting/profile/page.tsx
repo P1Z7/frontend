@@ -4,7 +4,6 @@ import FadingDot from "@/(route)/(bottom-nav)/signin/_components/FadingDot";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import MetaTag from "@/components/MetaTag";
 import BottomButton from "@/components/button/BottomButton";
 import MobileHeader from "@/components/header/MobileHeader";
@@ -14,7 +13,9 @@ import PinkLayout from "@/components/layout/PinkLayout";
 import { instance } from "@/api/api";
 import { getSession, setSession } from "@/store/session/cookies";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
+import { openToast } from "@/utils/toast";
 import { META_TAG } from "@/constants/metaTag";
+import { TOAST_MESSAGE } from "@/constants/toast";
 
 interface DefaultValues {
   profileImage: File | null | "";
@@ -42,11 +43,9 @@ const ProfilePage = () => {
 
     setTimeout(async () => {
       try {
-        const nickNameRes = await instance.get("/users/nickname");
+        const nickNameRes = await instance.get("/users/nickname", { search: nickName });
         if (nickNameRes.isDuplicated) {
-          toast.error("이미 사용 중인 닉네임입니다.", {
-            className: "text-16 font-600",
-          });
+          openToast.error(TOAST_MESSAGE.user.nickName);
           return;
         }
 
@@ -73,9 +72,7 @@ const ProfilePage = () => {
         }
       } catch {
         setSubmitState((prev) => ({ ...prev, isError: true }));
-        toast("다시 시도해 주십시오.", {
-          className: "text-16 font-600",
-        });
+        openToast.error(TOAST_MESSAGE.mutate.error);
       } finally {
         setSubmitState((prev) => ({ ...prev, isLoading: false }));
       }

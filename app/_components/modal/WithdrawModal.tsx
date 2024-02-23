@@ -1,9 +1,10 @@
 import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
 import Button from "@/components/button";
 import Modal from "@/components/modal/ModalMaterial";
 import { instance } from "@/api/api";
 import { getSession, outSession } from "@/store/session/cookies";
+import { openToast } from "@/utils/toast";
+import { TOAST_MESSAGE } from "@/constants/toast";
 
 interface Props {
   closeModal: () => void;
@@ -19,16 +20,12 @@ const WithdrawModal = ({ closeModal }: Props) => {
     }
     try {
       await instance.delete(`/users/${session.user.userId}`);
-      toast("지금까지 Opener와 함께해 주셔서 감사합니다!", {
-        className: "text-16 font-600",
-      });
+      openToast(TOAST_MESSAGE.user.withdrawal);
 
       outSession();
       router.refresh();
     } catch {
-      toast.error("다시 시도해 주십시오.", {
-        className: "text-16 font-600",
-      });
+      openToast.error(TOAST_MESSAGE.mutate.error);
     }
   };
 
