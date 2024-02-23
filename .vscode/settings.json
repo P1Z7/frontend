@@ -2,10 +2,13 @@
   "material-icon-theme.folders.associations": {
     "_components": "Components",
     "_hooks": "Hook",
-    "_service": "Api",
+    "_api": "Api",
     "_store": "Container",
     "_utils": "Utils",
     "_types": "Typescript",
+    "_constants": "Constant",
+    "_styles": "CSS",
     "(route)": "Routes"
-  }
+  },
+  "tailwindCSS.rootFontSize": 10
 }
