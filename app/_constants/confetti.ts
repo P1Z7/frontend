@@ -1,4 +1,5 @@
 import confetti, { Options } from "canvas-confetti";
+import { usePathname } from "next/navigation";
 import { RefObject } from "react";
 
 export const SHOT_SIGNIN: Options[] = [
@@ -27,14 +28,14 @@ const heart =
       })
     : "circle";
 
-export const confettiHeart = (ref: RefObject<HTMLElement>, selected: boolean) => {
+export const confettiHeart = (ref: RefObject<HTMLElement>, selected: boolean, pathname: string = "") => {
   const rect = ref.current?.getBoundingClientRect();
   const { innerWidth, innerHeight } = window;
 
   if (rect && selected === true) {
     confetti({
       particleCount: 1,
-      scalar: 3,
+      scalar: pathname.includes("event") && innerWidth < 1200 ? 2.5 : 3,
       spread: 50,
       startVelocity: 10,
       shapes: [heart],
