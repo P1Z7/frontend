@@ -1,4 +1,6 @@
-import { Options } from "canvas-confetti";
+import confetti, { Options } from "canvas-confetti";
+import { usePathname } from "next/navigation";
+import { RefObject } from "react";
 
 export const SHOT_SIGNIN: Options[] = [
   {
@@ -19,16 +21,26 @@ export const SHOT_SIGNIN: Options[] = [
   },
 ];
 
-// const heart = confetti.shapeFromPath({
-//   path: "M167 72c19,-38 37,-56 75,-56 42,0 76,33 76,75 0,76 -76,151 -151,227 -76,-76 -151,-151 -151,-227 0,-42 33,-75 75,-75 38,0 57,18 76,56z",
-// });
+const heart =
+  typeof window !== "undefined"
+    ? confetti.shapeFromPath({
+        path: "M167 72c19,-38 37,-56 75,-56 42,0 76,33 76,75 0,76 -76,151 -151,227 -76,-76 -151,-151 -151,-227 0,-42 33,-75 75,-75 38,0 57,18 76,56z",
+      })
+    : "circle";
 
-// export const SHOT_WITHDRAW: Options[] = Array<Options>(10).fill({
-//   particleCount: 15,
-//   scalar: 3,
-//   spread: 50,
-//   startVelocity: 30,
-//   shapes: [heart],
-//   colors: ["#EB278C", "#ff008480", "#e11e831f"],
-//   disableForReducedMotion: true,
-// });
+export const confettiHeart = (ref: RefObject<HTMLElement>, selected: boolean, pathname: string = "") => {
+  const rect = ref.current?.getBoundingClientRect();
+  const { innerWidth, innerHeight } = window;
+
+  if (rect && selected === true) {
+    confetti({
+      particleCount: 1,
+      scalar: pathname.includes("event") && innerWidth < 1200 ? 2.5 : 3,
+      spread: 50,
+      startVelocity: 10,
+      shapes: [heart],
+      colors: ["#EB278C", "#ff008480", "#e11e831f"],
+      origin: { x: (rect.left + rect.right) / 2 / innerWidth, y: (rect.top + rect.bottom) / 2 / innerHeight },
+    });
+  }
+};

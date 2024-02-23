@@ -4,7 +4,6 @@ import FadingDot from "@/(route)/(bottom-nav)/signin/_components/FadingDot";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import MetaTag from "@/components/MetaTag";
 import BottomButton from "@/components/button/BottomButton";
 import MobileHeader from "@/components/header/MobileHeader";
@@ -14,7 +13,9 @@ import { instance } from "@/api/api";
 import useEnterNext from "@/hooks/useEnterNext";
 import { getSession } from "@/store/session/cookies";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
+import { openToast } from "@/utils/toast";
 import { META_TAG } from "@/constants/metaTag";
+import { TOAST_MESSAGE } from "@/constants/toast";
 
 const PWCHANGE_DEFAULT = {
   mode: "onBlur",
@@ -46,9 +47,7 @@ const PasswordPage = () => {
         router.push("/mypage");
       } catch {
         setSubmitState((prev) => ({ ...prev, isError: true }));
-        toast("다시 시도해 주십시오.", {
-          className: "text-16 font-600",
-        });
+        openToast.error(TOAST_MESSAGE.mutate.error);
       } finally {
         setSubmitState((prev) => ({ ...prev, isLoading: false }));
       }

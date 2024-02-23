@@ -3,14 +3,15 @@
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import MetaTag from "@/components/MetaTag";
 import MyArtistList from "@/components/MyArtistList";
 import MobileHeader from "@/components/header/MobileHeader";
 import PinkLayout from "@/components/layout/PinkLayout";
 import { instance } from "@/api/api";
 import { useModal } from "@/hooks/useModal";
+import { openToast } from "@/utils/toast";
 import { META_TAG } from "@/constants/metaTag";
+import { TOAST_MESSAGE } from "@/constants/toast";
 
 const AlertModal = dynamic(() => import("@/components/modal/AlertModal"), { ssr: false });
 const InputModal = dynamic(() => import("@/components/modal/InputModal"), { ssr: false });
@@ -36,9 +37,7 @@ const MyArtistEditPage = () => {
         }
       }
     } catch (e) {
-      toast("다시 시도해 주십시오.", {
-        className: "text-16 font-600",
-      });
+      openToast.error(TOAST_MESSAGE.mutate.error);
     } finally {
       setValue("request", "");
       setIsPending(false);

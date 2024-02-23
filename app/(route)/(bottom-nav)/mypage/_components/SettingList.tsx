@@ -1,7 +1,10 @@
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
+import { instance } from "@/api/api";
 import { useModal } from "@/hooks/useModal";
 import { outSession } from "@/store/session/cookies";
+import { openToast } from "@/utils/toast";
+import { TOAST_MESSAGE } from "@/constants/toast";
 
 const WithdrawModal = dynamic(() => import("@/components/modal/WithdrawModal"), { ssr: false });
 
@@ -18,6 +21,17 @@ const SettingList = ({ isOpener }: { isOpener: boolean }) => {
   const router = useRouter();
   const { modal, openModal, closeModal } = useModal();
 
+  const handleLogout = async () => {
+    const res = await instance.delete("/auth");
+    if (res.ok) {
+      outSession();
+      router.push("/");
+      router.refresh();
+      openToast.success(TOAST_MESSAGE.auth.logout);
+      return;
+    }
+  };
+
   return (
     <>
       <ul className="flex h-fit w-full flex-col items-start text-16 text-gray-900 pc:text-14 pc:font-500" onClick={(event) => event.stopPropagation()}>
@@ -29,7 +43,7 @@ const SettingList = ({ isOpener }: { isOpener: boolean }) => {
             {EditUserInfo.password}
           </li>
         )}
-        <li onClick={() => (outSession(), router.push("/"), router.refresh())} className={ButtonStyle}>
+        <li onClick={handleLogout} className={ButtonStyle}>
           {EditUserInfo.logOut}
         </li>
         <li onClick={() => openModal("withdraw")} className={`rounded-b-lg ${ButtonStyle}`}>
