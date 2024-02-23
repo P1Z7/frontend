@@ -15,6 +15,7 @@ import { getSession, setSession } from "@/store/session/cookies";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 import { openToast } from "@/utils/toast";
 import { META_TAG } from "@/constants/metaTag";
+import { TOAST_MESSAGE } from "@/constants/toast";
 
 interface DefaultValues {
   profileImage: File | null | "";

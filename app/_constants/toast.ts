@@ -1,4 +1,4 @@
-const TOAST_MESSAGE = {
+export const TOAST_MESSAGE = {
   profileLimit: "프로필 이미지 크기는 1MB 이하로 부탁드립니다!",
   kakaoMap: "카카오 맵과 연동되지 않은 주소입니다.🥹",
   review: "후기 등록에 실패하였습니다",

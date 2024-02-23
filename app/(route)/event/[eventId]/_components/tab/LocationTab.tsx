@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { openToast } from "@/utils/toast";
 import { MapType } from "@/types/index";
+import { TOAST_MESSAGE } from "@/constants/toast";
 import KakaoMap from "../KakaoMap";
 
 const getPlaceId = async (name: string, address: string) => {

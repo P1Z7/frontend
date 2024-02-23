@@ -1,6 +1,7 @@
 import { Api } from "@/api/api";
 import { setSession } from "@/store/session/cookies";
 import { openToast } from "@/utils/toast";
+import { TOAST_MESSAGE } from "@/constants/toast";
 
 export const handleSignupSubmit = async (userInput: any, instance: Api) => {
   const { email, password, passwordCheck, nickName, myArtists } = userInput;

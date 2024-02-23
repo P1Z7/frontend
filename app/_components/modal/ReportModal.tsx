@@ -4,6 +4,7 @@ import { instance } from "@/api/api";
 import { getSession } from "@/store/session/cookies";
 import { openToast } from "@/utils/toast";
 import { ModalBaseType } from "@/types/index";
+import { TOAST_MESSAGE } from "@/constants/toast";
 import TextModal from "./TextModal";
 
 interface Props extends ModalBaseType {

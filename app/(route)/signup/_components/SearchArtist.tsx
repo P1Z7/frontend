@@ -11,6 +11,7 @@ import { useModal } from "@/hooks/useModal";
 import { openToast } from "@/utils/toast";
 import { Res_Get_Type } from "@/types/getResType";
 import { ArtistType } from "@/types/index";
+import { TOAST_MESSAGE } from "@/constants/toast";
 
 const InputModal = dynamic(() => import("@/components/modal/InputModal"), { ssr: false });
 

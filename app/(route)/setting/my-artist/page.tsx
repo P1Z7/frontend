@@ -11,6 +11,7 @@ import { instance } from "@/api/api";
 import { useModal } from "@/hooks/useModal";
 import { openToast } from "@/utils/toast";
 import { META_TAG } from "@/constants/metaTag";
+import { TOAST_MESSAGE } from "@/constants/toast";
 
 const AlertModal = dynamic(() => import("@/components/modal/AlertModal"), { ssr: false });
 const InputModal = dynamic(() => import("@/components/modal/InputModal"), { ssr: false });

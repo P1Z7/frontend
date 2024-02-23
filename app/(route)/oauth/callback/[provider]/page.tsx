@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { instance } from "@/api/api";
 import { deleteCookies, getCookies, setSession } from "@/store/session/cookies";
 import { openToast } from "@/utils/toast";
+import { TOAST_MESSAGE } from "@/constants/toast";
 import Logo from "@/public/icon/logo.svg";
 import KakaoLogo from "@/public/icon/logo_kakao.svg";
 import NaverLogo from "@/public/icon/logo_naver.svg";

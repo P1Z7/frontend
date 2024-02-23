@@ -18,6 +18,7 @@ import { useStore } from "@/store/index";
 import { makeImgUrlList } from "@/utils/changeImgUrl";
 import { openToast } from "@/utils/toast";
 import { META_TAG } from "@/constants/metaTag";
+import { TOAST_MESSAGE } from "@/constants/toast";
 import PartyIcon from "@/public/icon/party.svg";
 import SadIcon from "@/public/icon/sad.svg";
 import { MemoizedImageList } from "./_components/MemoizedImageList";

@@ -9,6 +9,7 @@ import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { getSession } from "@/store/session/cookies";
 import { openToast } from "@/utils/toast";
 import { Res_Get_Type } from "@/types/getResType";
+import { TOAST_MESSAGE } from "@/constants/toast";
 import { ArtistType } from "../_types";
 import ArtistCard from "./ArtistCard";
 import ChipButton from "./chip/ChipButton";

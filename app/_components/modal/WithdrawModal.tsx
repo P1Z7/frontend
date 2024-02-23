@@ -4,6 +4,7 @@ import Modal from "@/components/modal/ModalMaterial";
 import { instance } from "@/api/api";
 import { getSession, outSession } from "@/store/session/cookies";
 import { openToast } from "@/utils/toast";
+import { TOAST_MESSAGE } from "@/constants/toast";
 
 interface Props {
   closeModal: () => void;
@@ -19,7 +20,7 @@ const WithdrawModal = ({ closeModal }: Props) => {
     }
     try {
       await instance.delete(`/users/${session.user.userId}`);
-      openToast(TOAST_MESSAGE.withdrawal);
+      openToast(TOAST_MESSAGE.user.withdrawal);
 
       outSession();
       router.refresh();

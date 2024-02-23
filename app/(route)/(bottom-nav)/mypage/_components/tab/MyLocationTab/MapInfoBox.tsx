@@ -2,6 +2,7 @@ import { SyntheticEvent } from "react";
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
 import { openToast } from "@/utils/toast";
 import { EventCardType } from "@/types/index";
+import { TOAST_MESSAGE } from "@/constants/toast";
 import MapIcon from "@/public/icon/map.svg";
 
 const getPlaceId = async (address: string, placeName: string) => {

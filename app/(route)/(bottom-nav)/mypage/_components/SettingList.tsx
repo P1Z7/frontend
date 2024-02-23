@@ -4,6 +4,7 @@ import { instance } from "@/api/api";
 import { useModal } from "@/hooks/useModal";
 import { outSession } from "@/store/session/cookies";
 import { openToast } from "@/utils/toast";
+import { TOAST_MESSAGE } from "@/constants/toast";
 
 const WithdrawModal = dynamic(() => import("@/components/modal/WithdrawModal"), { ssr: false });
 
