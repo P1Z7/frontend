@@ -82,7 +82,7 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
         {children}
       </form>
       {modal === "editApprove" && (
-        <AlertModal closeModal={closeModal} handleBtnClick={() => router.replace(`/event/${eventId}/approve`)}>
+        <AlertModal closeModal={closeModal} handleBtnClick={() => (router.replace(`/event/${eventId}/approve`), router.refresh())}>
           수정사항은 사용자 3인 이상의
           <br /> 승인 후에 반영됩니다.
         </AlertModal>
