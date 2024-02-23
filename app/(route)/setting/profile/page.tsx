@@ -38,10 +38,18 @@ const ProfilePage = () => {
     if (!nickName || !session) {
       return;
     }
-    setSubmitState((prev) => ({ isError: false, isLoading: true }));
+    setSubmitState({ isError: false, isLoading: true });
 
     setTimeout(async () => {
       try {
+        const nickNameRes = await instance.get("/users/nickname");
+        if (nickNameRes.isDuplicated) {
+          toast.error("이미 사용 중인 닉네임입니다.", {
+            className: "text-16 font-600",
+          });
+          return;
+        }
+
         let url;
         if (!formState.dirtyFields.profileImage) {
           url = session.user.profileImage;

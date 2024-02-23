@@ -255,7 +255,9 @@ type GetQueryType<T> = T extends "/event"
                           ? Req_Query_Type["그룹조회"]
                           : T extends "/artist"
                             ? Req_Query_Type["멤버조회"]
-                            : unknown;
+                            : T extends "/users/nickname"
+                              ? Req_Query_Type["닉네임"]
+                              : unknown;
 // 사용하실 때 직접 추가 부탁드립니다!
 type PutBodyType<T> = T extends `/event/${string}`
   ? Req_Post_Type["event"]
