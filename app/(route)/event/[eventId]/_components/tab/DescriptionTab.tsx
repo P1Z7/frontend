@@ -13,7 +13,8 @@ const DescriptionTab = ({ images, description }: Props) => {
   const [sizes, setSizes] = useState("300px");
 
   useEffect(() => {
-    setSizes("1000px");
+    const viewportWidth = window.innerWidth;
+    viewportWidth > 768 ? setSizes("800px") : setSizes("500px");
   }, []);
 
   return (
