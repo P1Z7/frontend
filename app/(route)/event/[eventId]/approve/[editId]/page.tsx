@@ -55,7 +55,7 @@ const EditDetailApprove = () => {
     try {
       if (!session) throw Error(" /Unauthorized");
       if (session.user.userId === data.applicationDetail.userId) throw Error(" /the applicant is the author");
-      const res = await instance.post("/event/update/approval", { eventUpdateApplicationId: String(editId), isApproved, userId: "edit-api" });
+      const res = await instance.post("/event/update/approval", { eventUpdateApplicationId: String(editId), isApproved, userId: session.user.userId });
       refetch();
       toast(EDIT_ERR_MSG[isApproved ? "approve" : "reject"], {
         icon: isApproved ? <ApproveIcon width="20" height="20" /> : <DeclineIcon width="20" height="20" />,
