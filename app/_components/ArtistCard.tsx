@@ -12,7 +12,7 @@ interface Props {
 
 const ArtistCard = ({ children, onClick, profileImage, isChecked = false, isSmall = false, isPost = false }: Props) => {
   return (
-    <div className="flex-center h-fit w-fit flex-col gap-8 rounded-sm hover:cursor-pointer pc:gap-4" onClick={onClick}>
+    <div className="flex-center h-fit w-fit flex-col gap-8 rounded-sm hover:cursor-pointer hover:brightness-50 pc:gap-4" onClick={onClick}>
       <div className={classNames(`relative h-88 w-88 ${isSmall ? "pc:h-80 pc:w-80" : "pc:h-120 pc:w-120"}`, { "pc:!h-80 pc:!w-80 ": isPost })}>
         <Image
           src={profileImage ? profileImage : "/image/no-profile.png"}
