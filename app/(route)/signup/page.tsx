@@ -11,7 +11,7 @@ import ArrowLeft from "@/public/icon/arrow-left_lg.svg";
 import GenericFormProvider from "../../_components/GenericFormProvider";
 import ProfileSetup from "./_components/ProfileSetup";
 
-const STEPS: SignupStepNameType[] = ["계정 정보", "프로필 정보", "아티스트 선택"];
+const STEPS: SignupStepNameType[] = ["약관 동의", "계정 정보", "프로필 정보", "아티스트 선택"];
 
 const DEFAULT_VALUES = {
   email: "",

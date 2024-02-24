@@ -3,10 +3,15 @@ import SignupFunnelTitle from "./SignupFunnelTitle";
 import AccountInfo from "./step/AccountInfo";
 import MyArtistsInfo from "./step/MyArtistsInfo";
 import ProfileInfo from "./step/ProfileInfo";
+import TermsAgreement from "./step/TermsAgreement";
 
 const ProfileSetup = ({ steps, handleNextClick, Funnel, Step }: ProfileSetupType<SignupStepNameType>) => {
   return (
     <Funnel>
+      <Step name="약관 동의">
+        <SignupFunnelTitle name="약관 동의" />
+        <TermsAgreement onNext={() => handleNextClick(steps[1])} />
+      </Step>
       <Step name="계정 정보">
         <SignupFunnelTitle name="계정 정보" />
         <AccountInfo onNext={() => handleNextClick(steps[1])} />
