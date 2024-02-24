@@ -42,8 +42,15 @@ const HorizontalEventCard = ({ data, onHeartClick, isGrow = false }: Props) => {
         <HeartButton isSmall isSelected={liked} onClick={handleClick} />
         <div className="relative bottom-4">{likeCount}</div>
       </div>
-      <div className="relative h-112 w-84 shrink-0 pc:h-152 pc:w-116">
-        <Image src={data.eventImages?.[0]?.imageUrl ?? NoImage} className="rounded-[0.4rem] object-cover" fill alt="행사 포스터" sizes="116px" priority />
+      <div className="relative h-112 w-84 shrink-0 overflow-hidden pc:h-152 pc:w-116">
+        <Image
+          src={data.eventImages?.[0]?.imageUrl ?? NoImage}
+          className="rounded-[0.4rem] object-cover transition-all hover:scale-110"
+          fill
+          alt="행사 포스터"
+          sizes="116px"
+          priority
+        />
       </div>
       <div className="relative flex w-full min-w-160 flex-col justify-center gap-4 pc:gap-28">
         <div className="flex flex-col gap-4">
