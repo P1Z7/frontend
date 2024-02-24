@@ -133,7 +133,7 @@ const MyArtistList = () => {
 
   return (
     <div className="flex h-full flex-col gap-12">
-      <SearchInput setKeyword={setKeyword} placeholder="최애의 행사를 찾아보세요!" />
+      <SearchInput setKeyword={setKeyword} placeholder="최애를 검색해 보세요!" />
       <div className="sticky top-60 z-nav flex w-full snap-x snap-mandatory gap-12 overflow-x-scroll bg-white-white pt-12">
         {selected.map((artist, idx) => {
           if (!artist) {

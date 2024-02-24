@@ -43,10 +43,12 @@ const ProfilePage = () => {
 
     setTimeout(async () => {
       try {
-        const nickNameRes = await instance.get("/users/nickname", { search: nickName });
-        if (nickNameRes.isDuplicated) {
-          openToast.error(TOAST_MESSAGE.user.nickName);
-          return;
+        if(formState.dirtyFields.nickName) {
+          const nickNameRes = await instance.get("/users/nickname", { search: nickName });
+          if (nickNameRes.isDuplicated) {
+            openToast.error(TOAST_MESSAGE.user.nickName);
+            return;
+          }
         }
 
         let url;

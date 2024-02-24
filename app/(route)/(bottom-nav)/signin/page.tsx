@@ -113,6 +113,7 @@ const SignInPage = () => {
               name="email"
               placeholder="example@opener.com"
               control={control}
+              autoComplete="email"
               onKeyDown={handleEnterNext}
               rules={{ required: ERROR_MESSAGES.email.emailField, pattern: { value: REG_EXP.CHECK_EMAIL, message: ERROR_MESSAGES.email.emailPattern } }}
               noButton
