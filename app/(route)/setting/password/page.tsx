@@ -44,6 +44,7 @@ const PasswordPage = () => {
     setTimeout(async () => {
       try {
         await instance.put(`/users/${session.user.userId}/password`, { password: newPw, passwordCheck: newPwCheck });
+        openToast.success(TOAST_MESSAGE.mutate.success);
         router.push("/mypage");
       } catch {
         setSubmitState((prev) => ({ ...prev, isError: true }));
