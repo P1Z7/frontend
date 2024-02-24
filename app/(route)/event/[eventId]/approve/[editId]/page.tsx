@@ -55,13 +55,14 @@ const EditDetailApprove = () => {
     try {
       if (!session) throw Error(" /Unauthorized");
       if (session.user.userId === data.applicationDetail.userId) throw Error(" /the applicant is the author");
-      const res = await instance.post("/event/update/approval", { eventUpdateApplicationId: String(editId), isApproved, userId: "edit-api" });
+      const res = await instance.post("/event/update/approval", { eventUpdateApplicationId: String(editId), isApproved, userId: session.user.userId });
       refetch();
       toast(EDIT_ERR_MSG[isApproved ? "approve" : "reject"], {
         icon: isApproved ? <ApproveIcon width="20" height="20" /> : <DeclineIcon width="20" height="20" />,
         className: "text-16 font-500",
       });
       router.replace(`/event/${eventId}/approve`);
+        router.refresh();
     } catch (err: any) {
       toast.error(EDIT_ERR_MSG[err.message.split("/")[1] as EditErrMsgType], { className: "text-16 !text-red font-500" });
       if (err.message.split("/")[1] === "Unauthorized") router.push("/signin");
@@ -118,7 +119,9 @@ const EditDetailApprove = () => {
                   {originData.eventUrl && (
                     <div className="flex gap-12 text-blue">
                       <LinkIcon stroke="#A0A5B1" width="20" height="20" />
-                      <Link href={originData.eventUrl}>{originData.eventUrl}</Link>
+                      <Link href={originData.eventUrl} className="w-20 flex-grow break-words">
+                        {originData.eventUrl}
+                      </Link>
                     </div>
                   )}
                   {originData.organizerSns && (
