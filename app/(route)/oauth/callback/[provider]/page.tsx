@@ -21,7 +21,6 @@ const OAuth = () => {
     const pathname = getCookies("pathname");
     try {
       const res = await instance.post(`/auth`, { code, signinMethod, email: "", password: "" });
-      console.log(res);
       setSession({ isAuth: true, user: res });
       openToast.success(`${signinMethod} 계정으로 연동 되었습니다. ${res.nickName}님`);
 
