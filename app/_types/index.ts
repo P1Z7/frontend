@@ -39,6 +39,8 @@ export interface ProfileSetupType<T> {
 }
 
 export interface SignUpFormType {
+  termsAndConditions: boolean;
+  privacyPolicy: boolean;
   email: string;
   password: string;
   passwordCheck: string;

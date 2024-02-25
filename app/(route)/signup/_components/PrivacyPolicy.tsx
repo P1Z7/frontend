@@ -1,6 +1,6 @@
 const PrivacyPolicy = () => {
   return (
-    <p>
+    <p className="overflow-y-scroll">
       개인정보처리방침
       <br />
       1. 수집하는 개인정보 항목

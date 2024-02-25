@@ -1,6 +1,6 @@
 const TermsAndConditions = () => {
   return (
-    <p className="h-full">
+    <p className="overflow-y-scroll">
       제1장 총 칙<br />
       제1조(목적)
       <br />

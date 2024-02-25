@@ -13,11 +13,12 @@ import ProfileSetup from "./_components/ProfileSetup";
 
 const STEPS: SignupStepNameType[] = ["약관 동의", "계정 정보", "프로필 정보", "아티스트 선택"];
 
-const DEFAULT_VALUES = {
+const DEFAULT_VALUES: SignUpFormType = {
+  termsAndConditions: false,
+  privacyPolicy: false,
   email: "",
   password: "",
   passwordCheck: "",
-  profileImg: "",
   nickName: "",
   myArtists: [],
   myArtistsInfo: [],
