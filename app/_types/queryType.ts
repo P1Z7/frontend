@@ -75,8 +75,8 @@ type Req_Query_Artist_Event = {
   userId: string;
 };
 
-type Req_Query_Artist_New_Event = {
-  userId: string;
+type Req_Query_NickName = {
+  search: string;
 };
 
 export type Req_Query_Type = {
@@ -94,5 +94,5 @@ export type Req_Query_Type = {
   멤버조회: Req_Query_Artist;
   수정상세: Req_Query_Approve;
   아티스트행사: Req_Query_Artist_Event;
-  아티스트새행사: Req_Query_Artist_New_Event;
+  닉네임: Req_Query_NickName;
 };

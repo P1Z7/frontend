@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import MetaTag from "@/components/MetaTag";
 import PinkLayout from "@/components/layout/PinkLayout";
@@ -26,6 +26,7 @@ const DEFAULT_VALUES: SignUpFormType = {
 };
 
 const SignUp = () => {
+  const emailFromSignin = useSearchParams().get("email");
   const router = useRouter();
   const [pcWidth, setPcWidth] = useState<"narrow" | "wide">("narrow");
 
@@ -52,7 +53,7 @@ const SignUp = () => {
       <PinkLayout size={pcWidth}>
         <Header onClick={handlePrevClick} />
         <div className="flex h-[calc(100%-13.8rem)] grow flex-col px-20">
-          <GenericFormProvider<SignUpFormType> formOptions={{ mode: "onBlur", defaultValues: DEFAULT_VALUES }}>
+          <GenericFormProvider<SignUpFormType> formOptions={{ mode: "onBlur", defaultValues: { ...DEFAULT_VALUES, email: emailFromSignin ?? "" } }}>
             <ProfileSetup steps={STEPS} handleNextClick={handleNextClick} Funnel={Funnel} Step={Step} />
           </GenericFormProvider>
         </div>

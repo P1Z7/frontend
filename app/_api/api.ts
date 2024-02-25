@@ -125,7 +125,7 @@ export class Api {
     return res;
   }
 
-  async delete<T extends DeleteEndPoint>(endPoint: T, body: DeleteBodyType<T>) {
+  async delete<T extends DeleteEndPoint>(endPoint: T, body?: DeleteBodyType<T>) {
     this.baseUrl = "/api" + endPoint;
 
     const newEndPoint = this.baseUrl;
@@ -136,7 +136,7 @@ export class Api {
         "Content-type": "application/json",
       },
     };
-    const res = await fetch(newEndPoint);
+    const res = await fetch(newEndPoint, config);
     if (await this.updateToken(res)) {
       const refetchResult = await this.refetch(newEndPoint, config);
       return refetchResult;
@@ -188,7 +188,7 @@ type PostEndPoint =
   | `/reviews/${string}/claims`;
 
 type PutEndPoint = `/event/${string}` | `/users/${string}/profile` | `/users/${string}/password` | `/users/${string}/artists`;
-type DeleteEndPoint = `/users/${string}/artists` | `/reviews/${string}/images` | `/users/${string}`;
+type DeleteEndPoint = `/users/${string}/artists` | `/reviews/${string}/images` | `/users/${string}` | "/auth";
 type PostQueryType<T> = T extends "/file/upload" ? { category: "event" | "artist" | "user" } : unknown;
 
 type PostBodyType<T> = T extends "/event"
@@ -237,26 +237,26 @@ type GetQueryType<T> = T extends "/event"
         ? Req_Query_Type["행사캐러셀"]
         : T extends `/event/update/application/${string}`
           ? Req_Query_Type["수정상세"]
-          : T extends `/event/new/${string}/artist`
-            ? Req_Query_Type["아티스트새행사"]
-            : T extends `/event/${string}/artist`
-              ? Req_Query_Type["아티스트행사"]
-              : T extends `/event/${string}`
-                ? Req_Query_Type["행사상세"]
-                : T extends "/artist/group"
-                  ? Req_Query_Type["아티스트"]
-                  : T extends `/artist/${string}`
-                    ? Req_Query_Type["멤버"]
-                    : T extends "/group/solo"
-                      ? Req_Query_Type["그룹솔로"]
-                      : T extends `/reviews/user/${string}`
-                        ? Req_Query_Type["유저리뷰"]
-                        : T extends `/reviews/${string}`
-                          ? Req_Query_Type["리뷰"]
-                          : T extends "/group"
-                            ? Req_Query_Type["그룹조회"]
-                            : T extends "/artist"
-                              ? Req_Query_Type["멤버조회"]
+          : T extends `/event/${string}/artist`
+            ? Req_Query_Type["아티스트행사"]
+            : T extends `/event/${string}`
+              ? Req_Query_Type["행사상세"]
+              : T extends "/artist/group"
+                ? Req_Query_Type["아티스트"]
+                : T extends `/artist/${string}`
+                  ? Req_Query_Type["멤버"]
+                  : T extends "/group/solo"
+                    ? Req_Query_Type["그룹솔로"]
+                    : T extends `/reviews/user/${string}`
+                      ? Req_Query_Type["유저리뷰"]
+                      : T extends `/reviews/${string}`
+                        ? Req_Query_Type["리뷰"]
+                        : T extends "/group"
+                          ? Req_Query_Type["그룹조회"]
+                          : T extends "/artist"
+                            ? Req_Query_Type["멤버조회"]
+                            : T extends "/users/nickname"
+                              ? Req_Query_Type["닉네임"]
                               : unknown;
 // 사용하실 때 직접 추가 부탁드립니다!
 type PutBodyType<T> = T extends `/event/${string}`

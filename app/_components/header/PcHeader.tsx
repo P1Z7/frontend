@@ -30,7 +30,7 @@ const PcHeader = () => {
       return;
     }
     setSession(undefined);
-  }, [newSession?.isAuth]);
+  }, [newSession?.user.profileImage]);
 
   return (
     <header className="sticky top-0 z-nav hidden h-72 w-full bg-white-black px-24 pc:block">

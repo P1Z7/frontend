@@ -1,10 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
-import toast from "react-hot-toast";
 import { instance } from "@/api/api";
 import { getSession } from "@/store/session/cookies";
+import { openToast } from "@/utils/toast";
 import { Res_Get_Type } from "@/types/getResType";
+import { TOAST_MESSAGE } from "@/constants/toast";
 
 const QUERY_KEY = "like";
 
@@ -58,9 +59,7 @@ const useLikeEvent = ({ eventId, initialLike, initialLikeCount }: Props) => {
 
   const handleLikeEvent = () => {
     if (!session) {
-      toast("로그인 후 좋아하는 행사를 저장 해보세요!", {
-        className: "text-16 font-600",
-      });
+      openToast.error(TOAST_MESSAGE.auth.like);
       router.push("/signin");
       return;
     }

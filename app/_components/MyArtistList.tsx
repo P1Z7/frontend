@@ -2,14 +2,14 @@ import FadingDot from "@/(route)/(bottom-nav)/signin/_components/FadingDot";
 import { keepPreviousData, useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import toast from "react-hot-toast";
 import BottomButton from "@/components/button/BottomButton";
-import ToTopButton from "@/components/button/ToTopButton";
 import DeferredSuspense from "@/components/skeleton/DeferredSuspense";
 import { instance } from "@/api/api";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { getSession } from "@/store/session/cookies";
+import { openToast } from "@/utils/toast";
 import { Res_Get_Type } from "@/types/getResType";
+import { TOAST_MESSAGE } from "@/constants/toast";
 import { ArtistType } from "../_types";
 import ArtistCard from "./ArtistCard";
 import ChipButton from "./chip/ChipButton";
@@ -78,22 +78,16 @@ const MyArtistList = () => {
         });
 
         if (res.ok) {
-          toast.success("아티스트와 관계가 달라졌어요...", {
-            className: "text-16 font-600",
-          });
+          openToast.success(TOAST_MESSAGE.mutate.success);
           router.push("/mypage");
         }
         return;
       }
-      toast("변경 사항이 없습니다.", {
-        className: "text-16 font-600",
-      });
+      openToast(TOAST_MESSAGE.mutate.noChange);
     } catch (e) {
       setIsError(true);
       setSelected(myArtistData!.map((item) => ({ id: item.id, name: item.name, image: item.image, type: "" })));
-      toast.error("앗! 다시 시도해 볼까요?", {
-        className: "text-16 font-600",
-      });
+      openToast.error(TOAST_MESSAGE.mutate.error);
     } finally {
       setDeleteGroup(new Set());
       setDeleteMember(new Set());
@@ -139,7 +133,7 @@ const MyArtistList = () => {
 
   return (
     <div className="flex h-full flex-col gap-12">
-      <SearchInput setKeyword={setKeyword} placeholder="최애의 행사를 찾아보세요!" />
+      <SearchInput setKeyword={setKeyword} placeholder="최애를 검색해 보세요!" />
       <div className="sticky top-60 z-nav flex w-full snap-x snap-mandatory gap-12 overflow-x-scroll bg-white-white pt-12">
         {selected.map((artist, idx) => {
           if (!artist) {

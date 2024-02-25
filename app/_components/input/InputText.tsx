@@ -7,7 +7,7 @@ import ClearIcon from "@/public/icon/x_gray.svg";
 
 interface Prop extends InputHTMLAttributes<HTMLInputElement> {
   children?: ReactNode;
-  type?: "text" | "password";
+  type?: "text" | "password" | "email";
   horizontal?: boolean;
   hint?: string;
   onKeyDown?: (e: KeyboardEvent) => void;
@@ -117,8 +117,10 @@ const InputText: Function = ({
               onKeyDown={onKeyDown}
               {...field}
               className={classNames(
-                "focus:border-1 mt-8 h-48 w-full rounded-sm bg-gray-50 px-16 py-12 pr-36 text-16 text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-1 focus:outline-blue",
-                { "outline outline-1 outline-red": fieldState.error },
+                "mt-8 h-48 w-full rounded-sm bg-gray-50 px-16 py-12 pr-36 text-16 text-gray-900 outline-none placeholder:text-gray-400 focus:border focus:border-blue",
+                {
+                  "border border-red": fieldState.error,
+                },
               )}
             />
             <Button />
