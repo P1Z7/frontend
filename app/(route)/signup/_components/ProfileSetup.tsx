@@ -14,11 +14,11 @@ const ProfileSetup = ({ steps, handleNextClick, Funnel, Step }: ProfileSetupType
       </Step>
       <Step name="계정 정보">
         <SignupFunnelTitle name="계정 정보" />
-        <AccountInfo onNext={() => handleNextClick(steps[1])} />
+        <AccountInfo onNext={() => handleNextClick(steps[2])} />
       </Step>
       <Step name="프로필 정보">
         <SignupFunnelTitle name="프로필 정보" />
-        <ProfileInfo onNext={() => handleNextClick(steps[2])} />
+        <ProfileInfo onNext={() => handleNextClick(steps[3])} />
       </Step>
       <Step name="아티스트 선택">
         <SignupFunnelTitle name="아티스트 선택" />
