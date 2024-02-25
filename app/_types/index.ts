@@ -18,7 +18,7 @@ export interface MapType {
   addressDetail?: string;
 }
 
-export type SignupStepNameType = "계정 정보" | "프로필 정보" | "아티스트 선택";
+export type SignupStepNameType = "약관 동의" | "계정 정보" | "프로필 정보" | "아티스트 선택";
 
 export type PostStepNameType = "행사 대상" | "행사 정보" | "특전 정보" | "상세 설명";
 
@@ -39,6 +39,8 @@ export interface ProfileSetupType<T> {
 }
 
 export interface SignUpFormType {
+  termsAndConditions: boolean;
+  privacyPolicy: boolean;
   email: string;
   password: string;
   passwordCheck: string;
