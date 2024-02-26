@@ -1,4 +1,4 @@
-import FadingDot from "@/(route)/(bottom-nav)/signin/_components/FadingDot";
+import FadingDot from "@/(route)/signin/_components/FadingDot";
 import { keepPreviousData, useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";

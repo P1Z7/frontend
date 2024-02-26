@@ -8,7 +8,7 @@ import PinkLayout from "@/components/layout/PinkLayout";
 import { useFunnel } from "@/hooks/useFunnel";
 import { PostStepNameType } from "@/types/index";
 import { META_TAG } from "@/constants/metaTag";
-import LoadingDot from "../(bottom-nav)/signin/_components/LoadingDot";
+import LoadingDot from "../signin/_components/LoadingDot";
 import DetailInfo from "./_components/DetailInfo";
 import MainInfo from "./_components/MainInfo";
 import StarInfo from "./_components/StarInfo";

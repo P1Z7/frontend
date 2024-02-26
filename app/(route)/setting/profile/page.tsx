@@ -1,6 +1,6 @@
 "use client";
 
-import FadingDot from "@/(route)/(bottom-nav)/signin/_components/FadingDot";
+import FadingDot from "@/(route)/signin/_components/FadingDot";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -43,7 +43,7 @@ const ProfilePage = () => {
 
     setTimeout(async () => {
       try {
-        if(formState.dirtyFields.nickName) {
+        if (formState.dirtyFields.nickName) {
           const nickNameRes = await instance.get("/users/nickname", { search: nickName });
           if (nickNameRes.isDuplicated) {
             openToast.error(TOAST_MESSAGE.user.nickName);

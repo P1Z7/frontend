@@ -1,6 +1,6 @@
 "use client";
 
-import LoadingDot from "@/(route)/(bottom-nav)/signin/_components/LoadingDot";
+import LoadingDot from "@/(route)/signin/_components/LoadingDot";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import MetaTag from "@/components/MetaTag";

@@ -1,6 +1,6 @@
 "use client";
 
-import FadingDot from "@/(route)/(bottom-nav)/signin/_components/FadingDot";
+import FadingDot from "@/(route)/signin/_components/FadingDot";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { instance } from "@/api/api";

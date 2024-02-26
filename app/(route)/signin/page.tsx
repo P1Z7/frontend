@@ -1,6 +1,6 @@
 "use client";
 
-import LoadingDot from "@/(route)/(bottom-nav)/signin/_components/LoadingDot";
+import LoadingDot from "@/(route)/signin/_components/LoadingDot";
 import { instance } from "app/_api/api";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -24,7 +24,7 @@ import Logo from "@/public/icon/logo.svg";
 import KakaoLogo from "@/public/icon/logo_kakao.svg";
 import NaverLogo from "@/public/icon/logo_naver.svg";
 
-const FeelMyRhythm = dynamic(() => import("@/(route)/(bottom-nav)/signin/_components/Confetti"), { ssr: false });
+const FeelMyRhythm = dynamic(() => import("@/(route)/signin/_components/Confetti"), { ssr: false });
 
 const SIGNIN_DEFAULT = {
   mode: "onBlur",
