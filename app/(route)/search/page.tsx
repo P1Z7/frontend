@@ -161,6 +161,16 @@ const SearchPage = () => {
   const isEmpty = events?.pages[0].eventList.length === 0;
 
   useEffect(() => {
+    const { initialKeyword, initialSort, initialBigRegion, initialSmallRegion, initialStartDate, initialEndDate, initialGifts } = getInitialQuery(searchParams);
+    setFilter({
+      bigRegion: initialBigRegion,
+      smallRegion: initialSmallRegion,
+      startDate: initialStartDate,
+      endDate: initialEndDate,
+      gifts: initialGifts,
+    });
+    setKeyword(initialKeyword);
+    setSort(initialSort);
     queryClient.removeQueries({ queryKey: ["search"] });
     refetch();
   }, [searchParams]);
@@ -188,8 +198,8 @@ const SearchPage = () => {
         description={initialKeyword ? `${initialKeyword}의 Opener 행사 검색 결과입니다.` : "Opener에 등록된 각종 오프라인 행사들을 구경해 보세요."}
       />
       <DottedLayout size="wide">
-        <main className="relative w-full px-20 pb-84 pt-160 pc:p-0 pc:pb-84">
-          <section className="fixed left-0 right-0 top-0 z-nav flex w-full flex-col bg-white-black text-14 text-gray-500 shadow-top pc:static pc:shadow-none">
+        <main className={`relative w-full pb-84 [overflow-anchor:none] ${visible ? "" : "pt-72"}`}>
+          <section className="sticky left-0 right-0 top-68 z-nav flex w-full flex-col bg-white-black text-14 text-gray-500 shadow-top pc:static pc:shadow-none">
             <div className="bg-white-black px-20 pb-8 pt-32 pc:px-0 pc:pb-20 pc:pt-[7rem]">
               <SearchInput keyword={keyword} setKeyword={setKeyword} initialKeyword={initialKeyword} placeholder="최애의 이름으로 행사를 찾아보세요!" />
             </div>
@@ -225,7 +235,7 @@ const SearchPage = () => {
               </div>
             </div>
           </section>
-          <section className="flex flex-wrap items-center gap-x-24">
+          <section className="flex flex-wrap items-center gap-x-24 px-20 pc:px-0">
             {isEmpty ? (
               <div className="flex-center w-full pt-36 text-14 font-500">검색 결과가 없습니다.</div>
             ) : (

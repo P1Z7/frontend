@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import GenericFormProvider from "@/components/GenericFormProvider";
 import MetaTag from "@/components/MetaTag";
-import MobileHeader from "@/components/header/MobileHeader";
 import PinkLayout from "@/components/layout/PinkLayout";
 import { useFunnel } from "@/hooks/useFunnel";
 import { PostStepNameType } from "@/types/index";
@@ -63,7 +62,6 @@ const Post = () => {
       <MetaTag title={META_TAG.post["title"]} description={META_TAG.post["description"]} />
       <PinkLayout size="narrow">
         <div className="flex h-full flex-col">
-          <MobileHeader handleClick={handlePrevClick} />
           <div className="h-full p-20 pb-116 pt-36 text-16 pc:relative pc:min-h-[59.5vh] pc:px-0 pc:pb-0">
             {isInit ? (
               <GenericFormProvider formOptions={{ mode: "onBlur", defaultValues: defaultValue, shouldFocusError: true }}>

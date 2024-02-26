@@ -2,7 +2,7 @@ import Script from "next/script";
 import { Suspense } from "react";
 import { Toaster } from "react-hot-toast";
 import { Analytics } from "@/components/Analytics";
-import PcHeader from "@/components/header/PcHeader";
+import Header from "@/components/header/PcHeader";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import "@/public/font/pretendard/font.css";
 import PageLoading from "./_components/PageLoading";
@@ -36,7 +36,7 @@ export default function RootLayout({
         <Suspense fallback={<PageLoading />}>
           <Toaster containerClassName="toast" />
           <ReactQueryProvider>
-            <PcHeader />
+            <Header />
             {children}
             <div id="bottom-sheet" />
             <div id="modal" />

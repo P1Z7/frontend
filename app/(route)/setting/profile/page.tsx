@@ -6,7 +6,6 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import MetaTag from "@/components/MetaTag";
 import BottomButton from "@/components/button/BottomButton";
-import MobileHeader from "@/components/header/MobileHeader";
 import InputProfileImg from "@/components/input/InputProfileImg";
 import InputText from "@/components/input/InputText";
 import PinkLayout from "@/components/layout/PinkLayout";
@@ -93,7 +92,6 @@ const ProfilePage = () => {
     <>
       <MetaTag title={META_TAG.profile["title"]} description={META_TAG.profile["description"]} />
       <PinkLayout size="narrow">
-        <MobileHeader />
         <form onSubmit={handleSubmit(handleProfileSubmit)} className="flex flex-col gap-20 px-20 py-36">
           <InputProfileImg control={control} name="profileImage" />
           <InputText name="nickName" control={control} maxLength={10} rules={nickNameRules}>
