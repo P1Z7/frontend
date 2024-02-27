@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { instance } from "@/api/api";
 import { MyReviewType } from "@/types/index";
+import NoContent from "../../NoContent";
 import MyReview from "./MyReview";
 
 interface Props {
@@ -27,7 +28,7 @@ const MyReviewTab = ({ userId }: Props) => {
           </li>
         ))
       ) : (
-        <h1 className="p-40 text-16 font-500 text-gray-900">작성하신 후기가 없습니다.</h1>
+        <NoContent type="MyReview" />
       )}
     </ul>
   );
