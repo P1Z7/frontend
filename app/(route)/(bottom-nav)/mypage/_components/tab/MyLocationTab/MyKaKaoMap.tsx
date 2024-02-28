@@ -64,9 +64,33 @@ const MyKakaoMap = ({ scheduleData, setLocationInfo, openMapBox }: Props) => {
               });
 
               map.setCenter(coords);
+
+              clusterer.addMarker(marker);
             }
           });
         };
+
+        const clusterer = new window.kakao.maps.MarkerClusterer({
+          map: map,
+          gridSize: 50,
+          averageCenter: true,
+          minLevel: 4,
+          minClusterSize: 3,
+          styles: [
+            {
+              width: "48px",
+              height: "48px",
+              background: "url(cluster.png) no-repeat",
+              color: "#fff",
+              fontSize: "18px",
+              backgroundColor: "rgba(255,80,170, 0.85)",
+              borderRadius: "9999px",
+              textAlign: "center",
+              lineHeight: "48px",
+            },
+          ],
+        });
+
         for (let i = 0; i < scheduleData.length; i++) {
           myMarker(scheduleData[i]);
         }
