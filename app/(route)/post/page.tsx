@@ -72,13 +72,13 @@ const Post = () => {
                     <StarInfo onNextStep={() => setStep(POST_STEPS[1])} />
                   </Step>
                   <Step name={POST_STEPS[1]}>
-                    <MainInfo onNextStep={() => setStep(POST_STEPS[2])} />
+                    <MainInfo onNextStep={() => setStep(POST_STEPS[2])} onPrevStep={handlePrevClick} />
                   </Step>
                   <Step name={POST_STEPS[2]}>
-                    <SubInfo onNextStep={() => setStep(POST_STEPS[3])} />
+                    <SubInfo onNextStep={() => setStep(POST_STEPS[3])} onPrevStep={handlePrevClick} />
                   </Step>
                   <Step name={POST_STEPS[3]}>
-                    <DetailInfo />
+                    <DetailInfo onPrevStep={handlePrevClick} />
                   </Step>
                 </Funnel>
               </GenericFormProvider>
