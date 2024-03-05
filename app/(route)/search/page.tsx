@@ -199,7 +199,7 @@ const SearchPage = () => {
       />
       <DottedLayout size="wide">
         <main className={`relative w-full pb-84 [overflow-anchor:none] ${visible ? "" : "pt-72"}`}>
-          <section className="sticky left-0 right-0 top-68 z-nav flex w-full flex-col bg-white-black text-14 text-gray-500 shadow-top pc:static pc:shadow-none">
+          <section className="sticky left-0 right-0 top-72 z-nav flex w-full flex-col bg-white-black text-14 text-gray-500 shadow-top pc:static pc:shadow-none">
             <div className="bg-white-black px-20 pb-8 pt-32 pc:px-0 pc:pb-20 pc:pt-[7rem]">
               <SearchInput keyword={keyword} setKeyword={setKeyword} initialKeyword={initialKeyword} placeholder="최애의 이름으로 행사를 찾아보세요!" />
             </div>

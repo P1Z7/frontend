@@ -55,7 +55,7 @@ const MobileHeader = () => {
         </>
       )}
       <header
-        className={classNames("sticky top-0 z-floating flex h-72 w-full items-center justify-between bg-white-black px-20 pb-12 pt-32 pc:hidden", {
+        className={classNames("sticky top-0 z-popup flex h-72 w-full items-center justify-between bg-white-black px-20 pb-12 pt-32 pc:hidden", {
           "border-b border-gray-50": !isOpen,
         })}
       >

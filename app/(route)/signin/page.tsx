@@ -99,11 +99,6 @@ const SignInPage = () => {
     <>
       <MetaTag title={META_TAG.signin["title"]} description={META_TAG.signin["description"]} />
       <PinkLayout size="narrow">
-        <header className="flex h-72 w-full justify-between bg-white-white px-20 pb-12 pt-28">
-          <button onClick={() => router.back()}>
-            <ArrowLeft />
-          </button>
-        </header>
         <div className="flex-center h-[calc(100%-13.8rem)] grow flex-col px-20 pt-80 pc:pb-20">
           <Link href="/">
             <Logo />
