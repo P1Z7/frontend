@@ -42,7 +42,7 @@ const PcHeader = () => {
         </Link>
         <div className="flex items-center">
           <div className="w-320">
-            <SearchInput setKeyword={setKeyword} placeholder="최애의 행사를 찾아보세요!" size="sm" />
+            <SearchInput setKeyword={setKeyword} placeholder="최애의 행사를 찾아보세요!" size="sm" href="/search?sort=최신순" />
           </div>
           <Link href={"/post"} className="flex-center ml-20 mr-16 h-40 w-100 rounded-full bg-main-pink-500 text-14 font-600 text-white-black">
             <AddIcon stroke="#FFF" width={20} height={20} viewBox="0 0 24 24" />

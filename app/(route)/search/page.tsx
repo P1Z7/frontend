@@ -198,9 +198,9 @@ const SearchPage = () => {
         description={initialKeyword ? `${initialKeyword}의 Opener 행사 검색 결과입니다.` : "Opener에 등록된 각종 오프라인 행사들을 구경해 보세요."}
       />
       <DottedLayout size="wide">
-        <main className={`relative w-full pb-84 [overflow-anchor:none] ${visible ? "" : "pt-72"}`}>
+        <main className={`relative w-full pb-84 [overflow-anchor:none] ${visible ? "" : "pt-72 pc:pt-0"}`}>
           <section className="sticky left-0 right-0 top-72 z-nav flex w-full flex-col bg-white-black text-14 text-gray-500 shadow-top pc:static pc:shadow-none">
-            <div className="bg-white-black px-20 pb-8 pt-32 pc:px-0 pc:pb-20 pc:pt-[7rem]">
+            <div className="bg-white-black px-20 pb-8 pt-16 pc:px-0 pc:pb-20 pc:pt-[7rem]">
               <SearchInput keyword={keyword} setKeyword={setKeyword} initialKeyword={initialKeyword} placeholder="최애의 이름으로 행사를 찾아보세요!" />
             </div>
             <div className={`animate-fadeIn px-20 pb-8 pc:p-0 ${visible ? "block" : "hidden pc:block"}`}>

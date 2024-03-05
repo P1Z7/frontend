@@ -1,3 +1,4 @@
+import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { KeyboardEvent } from "react";
 import { useForm } from "react-hook-form";
@@ -10,9 +11,10 @@ interface Props {
   initialKeyword?: string;
   placeholder?: string;
   size?: "lg" | "sm";
+  href?: string;
 }
 
-const SearchInput = ({ keyword, setKeyword, initialKeyword, placeholder = "검색어를 입력하세요.", size = "lg" }: Props) => {
+const SearchInput = ({ keyword, setKeyword, initialKeyword, href, placeholder = "검색어를 입력하세요.", size = "lg" }: Props) => {
   const { register, getValues, setValue, watch } = useForm({
     defaultValues: {
       search: initialKeyword,
@@ -25,6 +27,16 @@ const SearchInput = ({ keyword, setKeyword, initialKeyword, placeholder = "검�
       event.preventDefault();
       setKeyword(getValues("search") ?? "");
     }
+  };
+
+  const router = useRouter();
+  const handleSearchClick = () => {
+    const newKeyword = getValues("search") ?? "";
+    if (!newKeyword && href) {
+      router.push(href);
+    }
+
+    setKeyword(newKeyword);
   };
 
   const handleCloseClick = () => {
@@ -51,11 +63,7 @@ const SearchInput = ({ keyword, setKeyword, initialKeyword, placeholder = "검�
         onKeyDown={handleSearchEnter}
         autoComplete="off"
       />
-      <button
-        className={`flex-center absolute right-12 top-4 h-36 w-36 rounded-full bg-gray-50 ${size === "lg" ? "pc:top-8" : ""}`}
-        type="button"
-        onClick={() => setKeyword(getValues("search") ?? "")}
-      >
+      <button className={`flex-center absolute right-12 top-4 h-36 w-36 rounded-full bg-gray-50 ${size === "lg" ? "pc:top-8" : ""}`} type="button" onClick={handleSearchClick}>
         <SearchIcon width="20" height="20" stroke="#494F5A" />
       </button>
       {search && (
