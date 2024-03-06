@@ -275,3 +275,12 @@ export type GroupAndSoloType = {
   name: string;
   type: string;
 };
+
+export type ArtistGroupMonthType = {
+  id: string;
+  name: string;
+  image: string;
+  birthday: string;
+  type: string;
+  eventStatus: boolean;
+};
