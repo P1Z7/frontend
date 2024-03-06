@@ -6,7 +6,6 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import MetaTag from "@/components/MetaTag";
-import MobileHeader from "@/components/header/MobileHeader";
 import PinkLayout from "@/components/layout/PinkLayout";
 import { instance } from "@/api/api";
 import { getSession } from "@/store/session/cookies";
@@ -62,7 +61,7 @@ const EditDetailApprove = () => {
         className: "text-16 font-500",
       });
       router.replace(`/event/${eventId}/approve`);
-        router.refresh();
+      router.refresh();
     } catch (err: any) {
       toast.error(EDIT_ERR_MSG[err.message.split("/")[1] as EditErrMsgType], { className: "text-16 !text-red font-500" });
       if (err.message.split("/")[1] === "Unauthorized") router.push("/signin");
@@ -73,7 +72,6 @@ const EditDetailApprove = () => {
     <>
       <MetaTag title={META_TAG.approveDetail["title"]} description={META_TAG.approveDetail["description"]} />
       <PinkLayout size="middle">
-        <MobileHeader />
         <div className="flex flex-col gap-20 px-20 py-16 pb-96 text-16 font-500 text-gray-900 pc:p-32">
           {isSuccess && (
             <>

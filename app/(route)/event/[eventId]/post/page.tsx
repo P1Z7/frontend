@@ -1,6 +1,6 @@
 "use client";
 
-import LoadingDot from "@/(route)/(bottom-nav)/signin/_components/LoadingDot";
+import LoadingDot from "@/(route)/signin/_components/LoadingDot";
 import { useQueryClient } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
 import { ButtonHTMLAttributes, ChangeEvent, InputHTMLAttributes, ReactNode, useCallback, useEffect, useState } from "react";
@@ -8,7 +8,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import MetaTag from "@/components/MetaTag";
 import WarningCheck from "@/components/WarningCheck";
 import Button from "@/components/button";
-import MobileHeader from "@/components/header/MobileHeader";
 import InputArea from "@/components/input/InputArea";
 import InputFile from "@/components/input/InputFile";
 import PinkLayout from "@/components/layout/PinkLayout";
@@ -112,7 +111,6 @@ const ReviewPostPage = () => {
     <>
       <MetaTag title={META_TAG.review["title"]} description={META_TAG.review["description"]} />
       <PinkLayout size="narrow">
-        <MobileHeader />
         <form noValidate onSubmit={handleSubmit(postReview)} className="relative w-full">
           <div className="flex w-full flex-col gap-16 px-20 py-16">
             <section>

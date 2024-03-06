@@ -1,4 +1,4 @@
-import SettingList from "@/(route)/(bottom-nav)/mypage/_components/SettingList";
+import SettingList from "@/(route)/mypage/_components/SettingList";
 import BottomSheet from "./BottomSheetMaterial";
 
 interface Props {

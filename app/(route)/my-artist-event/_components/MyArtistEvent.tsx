@@ -1,6 +1,6 @@
 "use client";
 
-import SortButton from "@/(route)/(bottom-nav)/search/_components/SortButton";
+import SortButton from "@/(route)/search/_components/SortButton";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";

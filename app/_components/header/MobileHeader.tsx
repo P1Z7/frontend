@@ -1,67 +1,76 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import classNames from "classnames";
+import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
-import ToTopButton from "@/components/button/ToTopButton";
-import { useBottomSheet } from "@/hooks/useBottomSheet";
-import useGetWindowWidth from "@/hooks/useGetWindowWidth";
-import useHeaderTitle from "@/hooks/useHeaderTitle";
-import { useModal } from "@/hooks/useModal";
-import ArrowLeft from "@/public/icon/arrow-left_lg.svg";
-import KebabButton from "@/public/icon/kebab.svg";
+import { Session, getSession } from "@/store/session/cookies";
+import AddIcon from "@/public/icon/add-outline.svg";
+import HamburgerIcon from "@/public/icon/hamburger.svg";
+import LogoIcon from "@/public/icon/logo.svg";
+import SearchIcon from "@/public/icon/search.svg";
 
-const EventKebabBottomSheet = dynamic(() => import("../bottom-sheet/EventKebabBottomSheet"), { ssr: false });
-const ReportModal = dynamic(() => import("../modal/ReportModal"), { ssr: false });
+const DEFAULT_PROFILE_SRC = "/icon/no-profile.svg";
 
-interface Props {
-  handleClick?: () => void;
-  topButton?: boolean;
-}
+const MobileHeader = () => {
+  const [isOpen, setIsOpen] = useState(false);
 
-const MobileHeader = ({ handleClick, topButton }: Props) => {
-  const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
-  const { modal, openModal, closeModal } = useModal();
+  useEffect(() => {
+    if (!isOpen) return;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
 
-  const openKebabBottomSheet = () => {
-    openBottomSheet("event-kebab");
-  };
+  const newSession = getSession();
+  const [session, setSession] = useState<Session>();
+  const profileHref = session ? "/mypage" : "/signin";
+  const profileSrc = session?.user.profileImage ?? DEFAULT_PROFILE_SRC;
 
-  const openKebabModal = () => {
-    openModal("report");
-  };
-
-  const router = useRouter();
-  const pathname = usePathname();
-  const { eventId } = useParams();
-  const title = useHeaderTitle();
-
-  const { isPc } = useGetWindowWidth();
+  useEffect(() => {
+    if (!newSession) {
+      setSession(undefined);
+      return;
+    }
+    setSession(newSession);
+  }, [newSession?.user.profileImage]);
 
   return (
     <>
+      {isOpen && (
+        <>
+          <div className="animate-slideDown fixed top-72 z-floating flex w-full flex-col items-start gap-20 bg-white-black px-20 pb-24 pt-12">
+            <Link href="/post" onClick={() => setIsOpen(false)} className="flex h-24 w-full items-center gap-12 text-16 font-500 text-gray-700">
+              <AddIcon />새 행사 등록
+            </Link>
+            <Link href={profileHref} onClick={() => setIsOpen(false)} className="flex h-24 w-full items-center gap-12 text-16 font-500 text-gray-700">
+              <div className="relative h-24 w-24 overflow-hidden rounded-full">
+                <Image src={profileSrc} fill className="object-cover" alt="프로필 이미지" />
+              </div>
+              {session ? "마이페이지" : "로그인"}
+            </Link>
+          </div>
+          <div onClick={() => setIsOpen(false)} className="fixed bottom-0 left-0 z-popup flex h-screen w-full items-end justify-center bg-gray-900 bg-opacity-70" />
+        </>
+      )}
       <header
-        className={`sticky left-0 top-0 z-nav flex h-60 w-full justify-between border-b border-gray-50 bg-white-white px-20 pb-12 pt-24 ${pathname === `/event/${eventId}` || pathname === "/my-artist-event" ? "pc:hidden" : ""}`}
+        className={classNames("sticky top-0 z-popup flex h-72 w-full items-center justify-between bg-white-black px-20 pb-12 pt-32 pc:hidden", {
+          "border-b border-gray-50": !isOpen,
+        })}
       >
-        <button onClick={handleClick || (() => router.back())} className="z-nav">
-          <ArrowLeft />
-        </button>
-        <h1 className="absolute left-0 w-full truncate px-60 text-center text-16 font-600 text-gray-900">{title}</h1>
-        {pathname === `/event/${eventId}` && (
-          <button onClick={openKebabBottomSheet} className="z-nav">
-            <KebabButton />
+        <Link href="/">
+          <LogoIcon />
+        </Link>
+        <div className="flex gap-12">
+          <Link href="/search?sort=최신순">
+            <SearchIcon width="24" height="24" stroke="#1C1E22" />
+          </Link>
+          <button onClick={() => setIsOpen((prev) => !prev)}>
+            <HamburgerIcon />
           </button>
-        )}
-        {topButton && (
-          <ToTopButton
-            deps={[isPc]}
-            containerId={isPc ? "pinkContainer" : undefined}
-            className="right-24 top-36 z-floating rounded-full bg-white-white px-12 text-16 text-gray-600 hover:bg-sub-pink hover:text-white-white"
-          />
-        )}
+        </div>
       </header>
-      {bottomSheet === "event-kebab" && <EventKebabBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} openReportModal={openKebabModal} />}
-      {modal === "report" && <ReportModal closeModal={closeModal} type="event" />}
     </>
   );
 };
