@@ -8,7 +8,6 @@ import DeferredSuspense from "@/components/skeleton/DeferredSuspense";
 import HorizontalEventCardSkeleton from "@/components/skeleton/HorizontalEventCardSkeleton";
 import { instance } from "@/api/api";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
-import { getSession } from "@/store/session/cookies";
 import { Res_Get_Type } from "@/types/getResType";
 import SortIcon from "@/public/icon/sort.svg";
 import NoContent from "../../NoContent";

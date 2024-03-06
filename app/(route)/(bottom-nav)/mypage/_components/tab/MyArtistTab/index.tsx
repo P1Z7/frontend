@@ -4,7 +4,6 @@ import { FollowArtistHero } from "@/(route)/_components/carousel/FavArtistEvents
 import { useQuery } from "@tanstack/react-query";
 import { instance } from "@/api/api";
 import { ArtistType } from "@/types/index";
-import NoContent from "../../NoContent";
 import MyArtistEvent from "./MyArtistEvent";
 import MyArtists from "./MyArtists";
 

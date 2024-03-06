@@ -3,19 +3,23 @@ import Link from "next/link";
 import { SyntheticEvent } from "react";
 import HeartButton from "@/components/button/HeartButton";
 import Chip from "@/components/chip/Chip";
+import { useBottomSheet } from "@/hooks/useBottomSheet";
 import useLikeEvent from "@/hooks/useLikeEvent";
 import { formatAddress, formatDate } from "@/utils/formatString";
 import { EventCardType } from "@/types/index";
 import { TAG_ORDER } from "@/constants/data";
+import KebabIcon from "@/public/icon/kebab.svg";
 import NoImage from "@/public/image/no-profile.png";
+import MyPostsBottomSheet from "../bottom-sheet/MyPostsBottomSheet";
 
 interface Props {
   data: EventCardType;
   onHeartClick?: () => void; //기본 동작 말고 다른 기능이 필요한 경우
   isGrow?: boolean;
+  isMypage?: boolean;
 }
 
-const HorizontalEventCard = ({ data, onHeartClick, isGrow = false }: Props) => {
+const HorizontalEventCard = ({ data, onHeartClick, isGrow = false, isMypage = false }: Props) => {
   const formattedDate = formatDate(data.startDate, data.endDate);
   const formattedAddress = formatAddress(data.address);
 
@@ -30,6 +34,8 @@ const HorizontalEventCard = ({ data, onHeartClick, isGrow = false }: Props) => {
     handleLikeEvent();
   };
 
+  const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
+
   return (
     <Link
       href={`/event/${data.id}`}
@@ -39,8 +45,14 @@ const HorizontalEventCard = ({ data, onHeartClick, isGrow = false }: Props) => {
         className="flex-center absolute right-0 top-[1.3rem] z-heart flex-col text-12 font-500 text-gray-500 pc:top-[2.75rem]"
         onClick={(e: SyntheticEvent) => e.preventDefault()}
       >
-        <HeartButton isSmall isSelected={liked} onClick={handleClick} />
-        <div className="relative bottom-4">{likeCount}</div>
+        {!isMypage ? (
+          <>
+            <HeartButton isSmall isSelected={liked} onClick={handleClick} />
+            <div className="relative bottom-4">{likeCount}</div>
+          </>
+        ) : (
+          <KebabIcon className="rotate-90 transform" fill="#7E8695" onClick={() => openBottomSheet("myPost")} />
+        )}
       </div>
       <div className="relative h-112 w-84 shrink-0 overflow-hidden pc:h-152 pc:w-116">
         <Image
@@ -74,6 +86,7 @@ const HorizontalEventCard = ({ data, onHeartClick, isGrow = false }: Props) => {
           </ul>
         </div>
       </div>
+      {bottomSheet === "myPost" && <MyPostsBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} />}
     </Link>
   );
 };

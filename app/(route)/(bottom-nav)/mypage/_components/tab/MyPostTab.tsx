@@ -12,16 +12,20 @@ interface Props {
 
 const MyPostTab = ({ userId }: Props) => {
   const { data: myEventsData, isSuccess } = useQuery({
-    queryKey: ["events", status],
+    queryKey: ["events"],
     queryFn: async () => {
-      return instance.get(`/event/${userId}/like`);
+      return instance.get(`/event/user/${userId}`, { userId: userId });
     },
   });
 
   if (!isSuccess) return;
   return (
     <ul className="flex-center w-full flex-col px-20 pb-88 pt-8 pc:pb-16">
-      {myEventsData.length ? myEventsData.map((event: EventCardType) => <HorizontalEventCard key={event.id} data={event} isGrow />) : <NoContent type="MyPost" />}
+      {myEventsData.totalCount ? (
+        myEventsData.eventList.map((event: EventCardType) => <HorizontalEventCard key={event.id} data={event} isGrow isMypage />)
+      ) : (
+        <NoContent type="MyPost" />
+      )}
     </ul>
   );
 };

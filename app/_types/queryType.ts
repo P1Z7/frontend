@@ -79,6 +79,12 @@ type Req_Query_NickName = {
   search: string;
 };
 
+type Req_Query_Event_Mine = {
+  size?: number;
+  page?: number;
+  userId: string;
+};
+
 export type Req_Query_Type = {
   행사목록: Req_Query_Event;
   행사캐러셀: Req_Query_Event_Carousel;
@@ -95,4 +101,5 @@ export type Req_Query_Type = {
   수정상세: Req_Query_Approve;
   아티스트행사: Req_Query_Artist_Event;
   닉네임: Req_Query_NickName;
+  내게시글: Req_Query_Event_Mine;
 };
