@@ -1,4 +1,4 @@
-import LoadingDot from "@/(route)/(bottom-nav)/signin/_components/LoadingDot";
+import LoadingDot from "@/(route)/signin/_components/LoadingDot";
 
 const PageLoading = () => {
   return (
