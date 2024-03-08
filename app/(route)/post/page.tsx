@@ -3,15 +3,11 @@
 import { useEffect, useState } from "react";
 import GenericFormProvider from "@/components/GenericFormProvider";
 import MetaTag from "@/components/MetaTag";
-import PinkLayout from "@/components/layout/PinkLayout";
 import { useFunnel } from "@/hooks/useFunnel";
 import { PostStepNameType } from "@/types/index";
 import { META_TAG } from "@/constants/metaTag";
 import LoadingDot from "../signin/_components/LoadingDot";
-import DetailInfo from "./_components/DetailInfo";
-import MainInfo from "./_components/MainInfo";
-import StarInfo from "./_components/StarInfo";
-import SubInfo from "./_components/SubInfo";
+import PostFunnel from "./_components/PostFunnel";
 
 const DEFAULT_INPUT_VALUES = {
   placeName: "",
@@ -54,40 +50,22 @@ const Post = () => {
     setIsInit(true);
   }, []);
 
-  const handlePrevClick = () => {
-    currentStep === POST_STEPS[0] ? window.history.back() : setStep(POST_STEPS[POST_STEPS.indexOf(currentStep) - 1]);
-  };
   return (
     <>
       <MetaTag title={META_TAG.post["title"]} description={META_TAG.post["description"]} />
-      <PinkLayout size="narrow">
-        <div className="flex h-full flex-col">
-          <div className="h-full p-20 pb-116 pt-36 text-16 pc:relative pc:min-h-[59.5vh] pc:px-0 pc:pb-0">
-            {isInit ? (
-              <GenericFormProvider formOptions={{ mode: "onBlur", defaultValues: defaultValue, shouldFocusError: true }}>
-                <Funnel>
-                  <Step name={POST_STEPS[0]}>
-                    <StarInfo onNextStep={() => setStep(POST_STEPS[1])} />
-                  </Step>
-                  <Step name={POST_STEPS[1]}>
-                    <MainInfo onNextStep={() => setStep(POST_STEPS[2])} onPrevStep={handlePrevClick} />
-                  </Step>
-                  <Step name={POST_STEPS[2]}>
-                    <SubInfo onNextStep={() => setStep(POST_STEPS[3])} onPrevStep={handlePrevClick} />
-                  </Step>
-                  <Step name={POST_STEPS[3]}>
-                    <DetailInfo onPrevStep={handlePrevClick} />
-                  </Step>
-                </Funnel>
-              </GenericFormProvider>
-            ) : (
-              <div className="flex h-[10vh] w-full items-center justify-center">
-                <LoadingDot />
-              </div>
-            )}
-          </div>
+      <div className="flex h-full flex-col">
+        <div className="h-full p-20 pb-116 pt-36 text-16 pc:relative pc:min-h-[59.5vh] pc:px-0 pc:pb-0">
+          {isInit ? (
+            <GenericFormProvider formOptions={{ mode: "onBlur", defaultValues: defaultValue, shouldFocusError: true }}>
+              <PostFunnel Funnel={Funnel} Step={Step} setStep={setStep} currentStep={currentStep} />
+            </GenericFormProvider>
+          ) : (
+            <div className="flex h-[10vh] w-full items-center justify-center">
+              <LoadingDot />
+            </div>
+          )}
         </div>
-      </PinkLayout>
+      </div>
     </>
   );
 };
