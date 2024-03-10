@@ -1,5 +1,5 @@
-import LoadingDot from "@/(route)/(bottom-nav)/signin/_components/LoadingDot";
 import { PostType } from "@/(route)/post/page";
+import LoadingDot from "@/(route)/signin/_components/LoadingDot";
 import { instance } from "app/_api/api";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
