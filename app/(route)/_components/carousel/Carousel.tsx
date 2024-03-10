@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import VerticalEventCard from "@/components/card/VerticalEventCard";
 import useGetWindowWidth from "@/hooks/useGetWindowWidth";
 import { Res_Get_Type } from "@/types/getResType";
-import PrevButtonIcon from "@/public/icon/arrow-left_sm.svg";
-import NextButtonIcon from "@/public/icon/arrow-right_sm.svg";
+import PrevButtonIcon from "@/public/icon/arrow-left_md.svg";
+import NextButtonIcon from "@/public/icon/arrow-right_md.svg";
 
 const SCROLLX = 20.8;
 
