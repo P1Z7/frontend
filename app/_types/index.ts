@@ -12,6 +12,11 @@ export interface BottomSheetBaseType {
   closeBottomSheet: () => void;
   refs: BottomSheetRefs;
 }
+
+export interface KebabBaseType {
+  closeKebab: () => void;
+}
+
 export interface MapType {
   name: string;
   address: string;

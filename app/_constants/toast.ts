@@ -26,4 +26,8 @@ export const TOAST_MESSAGE = {
     success: "접수가 완료되었습니다👍",
     error: "죄송합니다. 잠시 후 다시 시도해주세요😶",
   },
+  delete: {
+    success: "삭제되었습니다.",
+    error: "죄송합니다. 잠시 후 다시 시도해주세요😶",
+  },
 };

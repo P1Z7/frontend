@@ -189,7 +189,7 @@ type PostEndPoint =
   | `/reviews/${string}/claims`;
 
 type PutEndPoint = `/event/${string}` | `/users/${string}/profile` | `/users/${string}/password` | `/users/${string}/artists`;
-type DeleteEndPoint = `/users/${string}/artists` | `/reviews/${string}/images` | `/users/${string}` | "/auth";
+type DeleteEndPoint = `/users/${string}/artists` | `/reviews/${string}/images` | `/users/${string}` | "/auth" | `/event/${string}`;
 type PostQueryType<T> = T extends "/file/upload" ? { category: "event" | "artist" | "user" } : unknown;
 
 type PostBodyType<T> = T extends "/event"
@@ -271,4 +271,10 @@ type PutBodyType<T> = T extends `/event/${string}`
       : T extends `/users/${string}/artists`
         ? Req_Put_Type["artists"]
         : any;
-type DeleteBodyType<T> = T extends `/users/${string}/artists` ? Req_Delete_Type["myArtist"] : T extends `/users/${string}` ? Req_Delete_Type["user"] : any;
+type DeleteBodyType<T> = T extends `/users/${string}/artists`
+  ? Req_Delete_Type["myArtist"]
+  : T extends `/users/${string}`
+    ? Req_Delete_Type["user"]
+    : T extends `/event/${string}`
+      ? Req_Delete_Type["event"]
+      : any;
