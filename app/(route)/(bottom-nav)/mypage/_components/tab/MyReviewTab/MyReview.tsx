@@ -2,18 +2,23 @@ import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState } from "react";
 import Evaluation from "@/components/Evaluation";
+import ControlMyDataBottomSheet from "@/components/bottom-sheet/ControlMyDataBottomSheet";
+import KebabContents from "@/components/card/KebabContents";
 import Chip from "@/components/chip/Chip";
 import { instance } from "@/api/api";
+import { useBottomSheet } from "@/hooks/useBottomSheet";
 import { formatAddress, formatDate } from "@/utils/formatString";
 import { MyReviewType } from "@/types/index";
 import HeartIcon from "@/public/icon/heart.svg";
+import KebabIcon from "@/public/icon/kebab.svg";
 
 interface Props {
   data: MyReviewType;
   userId: string;
+  setDep: (dep: string) => void;
 }
 
-const MyReview = ({ data, userId }: Props) => {
+const MyReview = ({ data, userId, setDep }: Props) => {
   const formattedDate = formatDate(data.event.startDate, data.event.endDate);
   const formattedAddress = formatAddress(data.event.address);
 
@@ -28,12 +33,20 @@ const MyReview = ({ data, userId }: Props) => {
     },
   });
 
+  const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
+  const [openKebab, setOpenKebab] = useState(false);
+
   return (
     <div className="flex w-full flex-col gap-16 border-b border-gray-50 px-20 py-16">
       <section>
         <div className="flex items-center justify-between pb-8">
           <span className="text-16 font-600">{data.event.placeName}</span>
-          <span className="text-12 font-500 text-gray-400">{data.isPublic ? "공개" : "비공개"}</span>
+          <div className="relative flex items-center gap-8">
+            <span className="text-12 font-500 text-gray-400">{data.isPublic ? "공개" : "비공개"}</span>
+            <KebabIcon className="rotate-90 transform hover:cursor-pointer tablet:hidden" fill="#7E8695" onClick={() => openBottomSheet("myReview")} />
+            <KebabIcon className="hidden rotate-90 transform hover:cursor-pointer tablet:block" fill="#7E8695" onClick={() => setOpenKebab(!openKebab)} />
+            {openKebab && <KebabContents id={data.id} setDep={setDep} type="review" />}
+          </div>
         </div>
         <div className="flex items-center gap-8">
           <span className="text-16 font-600">{data.reviewArtists.map((artist) => artist.artistName).join(", ")}</span>
@@ -57,6 +70,7 @@ const MyReview = ({ data, userId }: Props) => {
           {likeCount}
         </button>
       </div>
+      {bottomSheet === "myReview" && <ControlMyDataBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} eventId={data.id} setDep={setDep} />}
     </div>
   );
 };

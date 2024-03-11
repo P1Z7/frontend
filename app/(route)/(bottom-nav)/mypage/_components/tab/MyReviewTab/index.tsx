@@ -1,6 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { instance } from "@/api/api";
 import { MyReviewType } from "@/types/index";
 import NoContent from "../../NoContent";
@@ -11,8 +12,9 @@ interface Props {
 }
 
 const MyReviewTab = ({ userId }: Props) => {
+  const [dep, setDep] = useState("");
   const { data: myReviewsData, isSuccess } = useQuery({
-    queryKey: [userId],
+    queryKey: [userId, dep],
     queryFn: async () => {
       return instance.get(`/reviews/user/${userId}`, { size: 12, cursorId: 500, userId: userId });
     },
@@ -24,7 +26,7 @@ const MyReviewTab = ({ userId }: Props) => {
       {myReviewsData.length > 0 ? (
         myReviewsData.map((review: MyReviewType) => (
           <li key={review.id} className="w-full">
-            <MyReview data={review} userId={userId} />
+            <MyReview data={review} userId={userId} setDep={setDep} />
           </li>
         ))
       ) : (

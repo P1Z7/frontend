@@ -1,19 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { SyntheticEvent, useState } from "react";
 import HeartButton from "@/components/button/HeartButton";
 import Chip from "@/components/chip/Chip";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
 import useLikeEvent from "@/hooks/useLikeEvent";
-import { useModal } from "@/hooks/useModal";
 import { formatAddress, formatDate } from "@/utils/formatString";
 import { EventCardType } from "@/types/index";
 import { TAG_ORDER } from "@/constants/data";
 import KebabIcon from "@/public/icon/kebab.svg";
 import NoImage from "@/public/image/no-profile.png";
-import MyPostsBottomSheet from "../bottom-sheet/MyPostsBottomSheet";
-import DeleteEventModal from "../modal/DeleteEventModal";
+import ControlMyDataBottomSheet from "../bottom-sheet/ControlMyDataBottomSheet";
 import KebabContents from "./KebabContents";
 
 interface Props {
@@ -60,7 +57,7 @@ const HorizontalEventCard = ({ data, onHeartClick, isGrow = false, isMypage = fa
           <div className="relative">
             <KebabIcon className="rotate-90 transform tablet:hidden" fill="#7E8695" onClick={() => openBottomSheet("myPost")} />
             <KebabIcon className="hidden rotate-90 transform tablet:block" fill="#7E8695" onClick={() => setOpenKebab(!openKebab)} />
-            {openKebab && <KebabContents eventId={data.id} setDep={setDep} />}
+            {openKebab && <KebabContents id={data.id} setDep={setDep} />}
           </div>
         )}
       </div>
@@ -96,7 +93,7 @@ const HorizontalEventCard = ({ data, onHeartClick, isGrow = false, isMypage = fa
           </ul>
         </div>
       </div>
-      {bottomSheet === "myPost" && <MyPostsBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} eventId={data.id} setDep={setDep} />}
+      {bottomSheet === "myPost" && <ControlMyDataBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} eventId={data.id} setDep={setDep} />}
     </Link>
   );
 };

@@ -14,7 +14,7 @@ const MyArtists = ({ data }: { data: ArtistType[] }) => {
         </button>
       </div>
       <div className="flex w-full flex-col items-center">
-        <div className="flex w-full flex-wrap justify-start gap-20 pc:gap-32">
+        <div className="flex w-full flex-wrap justify-center gap-20 tablet:justify-start pc:gap-32">
           {data.map((artist) => {
             if (!artist) {
               return null;
