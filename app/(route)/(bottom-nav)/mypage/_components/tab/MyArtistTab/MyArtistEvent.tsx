@@ -57,8 +57,8 @@ const MyArtistEvent = ({ userId }: Props) => {
   return (
     <>
       <div className="flex-center w-full flex-col pb-88 pc:pb-16">
-        <div className="flex w-full items-center justify-between">
-          <h1 className="text-16 font-600">내 아티스트 이벤트</h1>
+        <div className="flex w-full flex-col items-start gap-16">
+          <h1 className="text-20 font-700 text-gray-900">내 아티스트 이벤트</h1>
           <div className="flex w-fit items-center gap-8">
             <SortIcon />
             <SortButton onClick={() => setSort("최신순")} selected={sort === "최신순"}>

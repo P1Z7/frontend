@@ -27,7 +27,7 @@ const MyArtistTab = ({ userId }: Props) => {
           <FollowArtistHero />
         </div>
       ) : (
-        <div className="flex w-full flex-col items-start gap-80 px-20 py-24 pb-88 pc:gap-60 pc:p-32 pc:pb-16">
+        <div className="flex w-full flex-col items-start gap-60 px-20 py-24 pb-88 pc:p-32 pc:pb-16">
           <MyArtists data={myArtistsData} />
           <MyArtistEvent userId={userId} />
         </div>

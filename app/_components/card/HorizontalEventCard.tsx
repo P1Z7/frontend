@@ -53,7 +53,7 @@ const HorizontalEventCard = ({ data, onHeartClick, isGrow = false, isMypage = fa
       >
         {!isMypage ? (
           <>
-            <HeartButton isSmall isSelected={liked} onClick={handleClick} />
+            <HeartButton isSmall isSelected={liked} isLined onClick={handleClick} />
             <div className="relative bottom-4">{likeCount}</div>
           </>
         ) : (

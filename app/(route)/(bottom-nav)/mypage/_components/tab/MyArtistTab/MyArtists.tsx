@@ -8,7 +8,7 @@ const MyArtists = ({ data }: { data: ArtistType[] }) => {
   return (
     <div className="flex w-full flex-col gap-16">
       <div className="flex w-full items-center justify-between">
-        <h1 className="text-16 font-600">내 아티스트</h1>
+        <h1 className="text-20 font-700 text-gray-900">내 아티스트</h1>
         <button className="pl- text-14 font-500 text-blue" onClick={() => router.push("/setting/my-artist")}>
           팔로우 아티스트 수정하기
         </button>
