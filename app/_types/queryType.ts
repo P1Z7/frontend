@@ -1,9 +1,12 @@
+import { EventType } from ".";
+
 type Req_Query_Event = {
   keyword?: string;
   sido?: string;
   gungu?: string;
   startDate?: string;
   endDate?: string;
+  type?: EventType | "";
   tags?: string;
   sort?: "최신순" | "인기순";
   page?: number;

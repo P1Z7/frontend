@@ -1,9 +1,10 @@
 import dynamic from "next/dynamic";
 import { ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import EventBottomSheet, { EVENTS } from "@/components/bottom-sheet/EventBottomSheet";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
 import { createQueryString } from "@/utils/handleQueryString";
-import { GiftType } from "@/types/index";
+import { EventType, GiftType } from "@/types/index";
 import { BIG_REGIONS } from "@/constants/regions";
 
 const BigRegionBottomSheet = dynamic(() => import("@/components/bottom-sheet/BigRegionBottomSheet"), { ssr: false });
@@ -32,6 +33,7 @@ const useSearch = () => {
     smallRegion: initialValue.smallRegion,
     startDate: initialValue.startDate,
     endDate: initialValue.endDate,
+    event: initialValue.event,
     gifts: initialValue.gifts,
   });
 
@@ -53,6 +55,9 @@ const useSearch = () => {
   const setEndDateFilter = (endDate: string) => {
     setFilter((prev) => ({ ...prev, endDate }));
   };
+  const setEventFilter = (event: EventType) => {
+    setFilter((prev) => ({ ...prev, event }));
+  };
   const setGiftsFilter = (gift: GiftType) => {
     if (filter.gifts.includes(gift)) {
       setFilter((prev) => {
@@ -67,7 +72,7 @@ const useSearch = () => {
   const resetFilter = () => {
     setKeyword("");
     setSort("최신순");
-    setFilter({ bigRegion: "", smallRegion: "", startDate: null, endDate: null, gifts: [] });
+    setFilter({ bigRegion: "", smallRegion: "", startDate: null, endDate: null, event: "", gifts: [] });
   };
 
   const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
@@ -81,6 +86,9 @@ const useSearch = () => {
     },
     calender: () => {
       openBottomSheet(BOTTOM_SHEET.calender);
+    },
+    event: () => {
+      openBottomSheet(BOTTOM_SHEET.event);
     },
     gift: () => {
       openBottomSheet(BOTTOM_SHEET.gift);
@@ -102,6 +110,7 @@ const useSearch = () => {
         {bottomSheet === BOTTOM_SHEET.calender && (
           <CalenderBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} setStartDateFilter={setStartDateFilter} setEndDateFilter={setEndDateFilter} />
         )}
+        {bottomSheet === BOTTOM_SHEET.event && <EventBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} setEventFilter={setEventFilter} selected={filter.event} />}
         {bottomSheet === BOTTOM_SHEET.gift && <GiftBottomSheet refs={refs} closeBottomSheet={closeBottomSheet} setGiftsFilter={setGiftsFilter} selected={filter.gifts} />}
       </>
     );
@@ -119,6 +128,7 @@ const useSearch = () => {
       smallRegion: initialValue.smallRegion,
       startDate: initialValue.startDate,
       endDate: initialValue.endDate,
+      event: initialValue.event,
       gifts: initialValue.gifts,
     });
   }, [searchParams]);
@@ -140,6 +150,7 @@ export interface FilterType {
   smallRegion: string;
   startDate: string | null;
   endDate: string | null;
+  event: EventType | "";
   gifts: GiftType[];
 }
 
@@ -149,19 +160,28 @@ const BOTTOM_SHEET = {
   bigRegion: "big-region_bottom-sheet",
   smallRegion: "small-region_bottom-sheet",
   calender: "calender_bottom-sheet",
+  event: "event_bottom-sheet",
   gift: "gift_bottom-sheet",
 };
 
 const getInitialQuery = (searchParams: ReadonlyURLSearchParams) => {
   const keyword = searchParams.get("keyword") ?? "";
-  const sort = (SORT as ReadonlyArray<string>).includes(searchParams.get("sort") ?? "") ? (searchParams.get("sort") as SortType) : SORT[0];
-  const bigRegion = (BIG_REGIONS as ReadonlyArray<string>).includes(searchParams.get("bigRegion") ?? "")
-    ? (searchParams.get("bigRegion") as (typeof BIG_REGIONS)[number] | "")
-    : "";
+  const sort = (SORT as ReadonlyArray<string>).includes(searchParams.get("sort") ?? "") ? searchParams.get("sort") : SORT[0];
+  const bigRegion = (BIG_REGIONS as ReadonlyArray<string>).includes(searchParams.get("bigRegion") ?? "") ? searchParams.get("bigRegion") : "";
   const smallRegion = searchParams.get("smallRegion") ?? "";
   const startDate = searchParams.get("startDate");
   const endDate = searchParams.get("endDate");
-  const gifts = (searchParams.get("gifts")?.split("|") as GiftType[]) ?? [];
+  const event = (EVENTS as ReadonlyArray<string>).includes(searchParams.get("event") ?? "") ? searchParams.get("event") : "";
+  const gifts = searchParams.get("gifts")?.split("|") ?? [];
 
-  return { keyword, sort, bigRegion, smallRegion, startDate, endDate, gifts };
+  return { keyword, sort, bigRegion, smallRegion, startDate, endDate, event, gifts } as {
+    keyword: string;
+    sort: SortType;
+    bigRegion: (typeof BIG_REGIONS)[number] | "";
+    smallRegion: string;
+    startDate: string;
+    endDate: string;
+    event: EventType | "";
+    gifts: GiftType[];
+  };
 };

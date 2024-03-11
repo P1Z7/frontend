@@ -58,6 +58,9 @@ const SearchPage = () => {
                 <FilterButton onClick={openSearchBottomSheet.calender} selected={Boolean(filter.startDate)}>
                   {formattedDate ?? "기간"}
                 </FilterButton>
+                <FilterButton onClick={openSearchBottomSheet.event} selected={Boolean(filter.event)}>
+                  {filter.event || "행사유형"}
+                </FilterButton>
                 <FilterButton onClick={openSearchBottomSheet.gift} selected={Boolean(filter.gifts.length)}>
                   {formattedGift ?? "특전"}
                 </FilterButton>

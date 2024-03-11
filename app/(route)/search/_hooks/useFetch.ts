@@ -30,6 +30,7 @@ const useFetch = ({ keyword, sort, filter }: Props) => {
       ...{ startDate: filter.startDate || "" },
       ...{ endDate: filter.endDate || "" },
       tags: filter.gifts.map((gift) => TAG[gift]).join(","),
+      type: filter.event,
       userId: session?.user.userId ?? "",
     });
     return data;

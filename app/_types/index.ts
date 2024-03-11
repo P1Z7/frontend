@@ -61,37 +61,6 @@ export type EventType = "카페" | "꽃집" | "팬광고" | "포토부스" | "�
 export type GiftType = "컵/컵홀더" | "포스터" | "스티커" | "키링" | "포토카드" | "엽서" | "포토굿즈" | "기타";
 export type SnsType = "트위터" | "인스타그램" | "유튜브" | "기타";
 
-// 삭제 예정
-export interface EventInfoType {
-  placeName: string;
-  eventType: EventType;
-  groupId?: string;
-  artists: string[];
-  startDate: string;
-  endDate: string;
-  address: string;
-  addressDetail: string;
-  userId: string;
-  eventImages?: string[];
-  description?: string;
-  eventUrl?: string;
-  organizerSns?: string;
-  snsType?: SnsType;
-  tags?: GiftType[];
-}
-
-// 삭제 예정
-export interface ReviewType {
-  userId: string;
-  eventId: string;
-  isPublic?: boolean;
-  rating: boolean;
-  description: string;
-  reviewImages?: string[];
-  like: number;
-}
-
-// 삭제 예정
 export type ArtistType = {
   id: string;
   name: string;
