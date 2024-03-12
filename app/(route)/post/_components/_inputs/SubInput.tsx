@@ -65,7 +65,7 @@ const SubInput = () => {
                 />
               )}
             </label>
-            <div className="flex gap-16">
+            <div className="flex gap-16 text-16">
               {SNS_TYPE_LIST.map((type) => (
                 <label key={type} className={classNames("flex cursor-pointer items-center gap-4", { "!text-gray-400 hover:cursor-not-allowed": hasNotOrganizer })}>
                   <input

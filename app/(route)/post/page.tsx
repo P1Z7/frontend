@@ -3,11 +3,14 @@
 import { useEffect, useState } from "react";
 import GenericFormProvider from "@/components/GenericFormProvider";
 import MetaTag from "@/components/MetaTag";
+import DottedLayout from "@/components/layout/DottedLayout";
 import { useFunnel } from "@/hooks/useFunnel";
+import useGetWindowWidth from "@/hooks/useGetWindowWidth";
 import { PostStepNameType } from "@/types/index";
 import { META_TAG } from "@/constants/metaTag";
 import LoadingDot from "../signin/_components/LoadingDot";
 import PostFunnel from "./_components/PostFunnel";
+import PostPc from "./_components/PostPc";
 
 const DEFAULT_INPUT_VALUES = {
   placeName: "",
@@ -42,6 +45,12 @@ const Post = () => {
   const { Funnel, Step, setStep, currentStep } = useFunnel<PostStepNameType>(POST_STEPS);
   const [defaultValue, setDefaultValue] = useState(DEFAULT_INPUT_VALUES);
   const [isInit, setIsInit] = useState(false);
+  const [isPc, setIsPc] = useState(false);
+  const { isPc: isPcSize } = useGetWindowWidth();
+
+  useEffect(() => {
+    setIsPc(isPcSize);
+  }, [isPcSize]);
 
   useEffect(() => {
     if (sessionStorage.getItem("post")) {
@@ -53,19 +62,21 @@ const Post = () => {
   return (
     <>
       <MetaTag title={META_TAG.post["title"]} description={META_TAG.post["description"]} />
-      <div className="flex h-full flex-col">
-        <div className="h-full p-20 pb-116 pt-36 text-16 pc:relative pc:min-h-[59.5vh] pc:px-0 pc:pb-0">
-          {isInit ? (
-            <GenericFormProvider formOptions={{ mode: "onBlur", defaultValues: defaultValue, shouldFocusError: true }}>
-              <PostFunnel Funnel={Funnel} Step={Step} setStep={setStep} currentStep={currentStep} />
-            </GenericFormProvider>
-          ) : (
-            <div className="flex h-[10vh] w-full items-center justify-center">
-              <LoadingDot />
-            </div>
-          )}
+      <DottedLayout size="narrow">
+        <div className="flex h-full flex-col">
+          <div className="h-full p-20 pb-116 pt-36 text-16 pc:relative pc:min-h-[59.5vh] pc:px-0 pc:pb-0 pc:pt-56 pc:text-20 pc:font-500">
+            {isInit ? (
+              <GenericFormProvider formOptions={{ mode: "onBlur", defaultValues: defaultValue, shouldFocusError: true }}>
+                {isPc ? <PostPc /> : <PostFunnel Funnel={Funnel} Step={Step} setStep={setStep} currentStep={currentStep} />}
+              </GenericFormProvider>
+            ) : (
+              <div className="flex h-[10vh] w-full items-center justify-center">
+                <LoadingDot />
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      </DottedLayout>
     </>
   );
 };

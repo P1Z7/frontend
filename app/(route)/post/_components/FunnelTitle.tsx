@@ -12,9 +12,9 @@ interface Props {
 
 const FunnelTitle = ({ step, isRequired = false }: Props) => {
   return (
-    <div className="flex flex-col gap-8">
-      <div className="text-20 font-700">{POST_FUNNEL_TITLE[step]}</div>
-      {isRequired ? <div className="text-blue text-14 font-500">*필수 입력 사항입니다.</div> : <div className="text-14 font-500 text-gray-400">*선택 입력 사항입니다.</div>}
+    <div className="flex flex-col gap-8 pc:gap-12">
+      <div className="pc:text-24 text-20 font-700 text-gray-900">{POST_FUNNEL_TITLE[step]}</div>
+      {isRequired ? <div className="text-14 font-500 text-blue">*필수 입력 사항입니다.</div> : <div className="text-14 font-500 text-gray-400">*선택 입력 사항입니다.</div>}
     </div>
   );
 };
