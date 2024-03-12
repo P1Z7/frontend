@@ -72,7 +72,9 @@ type Req_Query_Artist_Event = {
   sort: "최신순" | "인기순";
   size?: number;
   page?: number;
-  userId: string;
+  status?: "" | "예정" | "종료" | "진행중";
+  userId?: string;
+  artistId: string;
 };
 
 type Req_Query_NickName = {

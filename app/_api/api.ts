@@ -240,7 +240,7 @@ type GetQueryType<T> = T extends "/event"
           ? Req_Query_Type["행사캐러셀"]
           : T extends `/event/update/application/${string}`
             ? Req_Query_Type["수정상세"]
-            : T extends `/event/${string}/artist`
+            : T extends `/event/artist/${string}`
               ? Req_Query_Type["아티스트행사"]
               : T extends `/event/${string}`
                 ? Req_Query_Type["행사상세"]

@@ -1,10 +1,7 @@
-import ArtistList from "@/(route)/_components/artist-list/ArtistList";
 import MetaTag from "@/components/MetaTag";
 import DottedLayout from "@/components/layout/DottedLayout";
-import Logo from "@/public/icon/logo.svg";
 import ArtistOfMonth from "./_components/ArtistOfMonth";
 import Footer from "./_components/Footer";
-import FavArtistEventsCarousel from "./_components/carousel/FavArtistEventsCarousel";
 import NewestEventsCarousel from "./_components/carousel/NewestEventsCarousel";
 import PopularEventsCarousel from "./_components/carousel/PopularEventsCarousel";
 
