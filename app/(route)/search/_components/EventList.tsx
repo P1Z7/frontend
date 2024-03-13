@@ -1,4 +1,5 @@
 import { InfiniteData } from "@tanstack/react-query";
+import Link from "next/link";
 import { MutableRefObject } from "react";
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
 import { Res_Get_Type } from "@/types/getResType";
@@ -14,7 +15,9 @@ const EventList = ({ events, containerRef }: Props) => {
   return (
     <section className="flex flex-wrap items-center gap-x-24 px-20 pc:px-0">
       {isEventEmpty ? (
-        <div className="flex-center w-full pt-48 text-14 font-500">행사 검색 결과가 없습니다.</div>
+        <Link href={"/post"} className="flex-center mx-auto mt-60 px-12 py-4 text-14 font-500 text-gray-700 underline underline-offset-2">
+          내 최애 행사 등록하러 가기
+        </Link>
       ) : (
         <>
           {events?.pages[0].totalCount && (
