@@ -5,16 +5,18 @@ import { instance } from "@/api/api";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { getSession } from "@/store/session/cookies";
 import { Res_Get_Type } from "@/types/getResType";
+import { StatusType } from "@/types/index";
 import { TAG } from "@/constants/post";
 import { FilterType, SortType } from "./useSearch";
 
 interface Props {
   keyword: string;
   sort: SortType;
+  status: StatusType;
   filter: FilterType;
 }
 
-const useFetch = ({ keyword, sort, filter }: Props) => {
+const useFetch = ({ keyword, sort, status, filter }: Props) => {
   const session = getSession();
   const searchParams = useSearchParams();
   const queryClient = useQueryClient();
@@ -32,6 +34,7 @@ const useFetch = ({ keyword, sort, filter }: Props) => {
       tags: filter.gifts.map((gift) => TAG[gift]).join(","),
       type: filter.event,
       userId: session?.user.userId ?? "",
+      status,
     });
     return data;
   };
@@ -48,10 +51,10 @@ const useFetch = ({ keyword, sort, filter }: Props) => {
     placeholderData: keepPreviousData,
   });
 
-  useEffect(() => {
-    queryClient.removeQueries({ queryKey: ["search"] });
-    refetch();
-  }, [searchParams]);
+  // useEffect(() => {
+  //   queryClient.removeQueries({ queryKey: ["search"] });
+  //   refetch();
+  // }, [searchParams]);
 
   const containerRef = useInfiniteScroll({
     handleScroll: fetchNextPage,

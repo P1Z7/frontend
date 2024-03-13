@@ -1,4 +1,4 @@
-import { EventType } from ".";
+import { EventType, StatusType } from ".";
 
 type Req_Query_Event = {
   keyword?: string;
@@ -12,6 +12,7 @@ type Req_Query_Event = {
   page?: number;
   size?: number;
   userId?: string;
+  status?: StatusType;
 };
 
 type Req_Query_Event_Detail = {

@@ -244,3 +244,5 @@ export type GroupAndSoloType = {
   name: string;
   type: string;
 };
+
+export type StatusType = "" | "예정" | "진행중" | "종료";

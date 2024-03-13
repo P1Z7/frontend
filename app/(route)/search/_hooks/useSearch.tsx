@@ -1,10 +1,11 @@
+import { useQueryClient } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
 import { ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import EventBottomSheet, { EVENTS } from "@/components/bottom-sheet/EventBottomSheet";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
 import { createQueryString } from "@/utils/handleQueryString";
-import { EventType, GiftType } from "@/types/index";
+import { EventType, GiftType, StatusType } from "@/types/index";
 import { BIG_REGIONS } from "@/constants/regions";
 
 const BigRegionBottomSheet = dynamic(() => import("@/components/bottom-sheet/BigRegionBottomSheet"), { ssr: false });
@@ -18,6 +19,7 @@ const useSearch = () => {
 
   const [keyword, setKeyword] = useState(initialValue.keyword);
   const [sort, setSort] = useState<SortType>(initialValue.sort);
+  const [status, setStatus] = useState<StatusType>(initialValue.status);
 
   const handleSort = {
     recent: () => {
@@ -25,6 +27,34 @@ const useSearch = () => {
     },
     popular: () => {
       setSort("인기순");
+    },
+  };
+
+  const handleStatus = {
+    upcoming: () => {
+      if (status === "") {
+        setStatus("진행중");
+        return;
+      }
+      if (status === "진행중") {
+        setStatus("");
+        return;
+      }
+      setStatus("예정");
+    },
+    current: () => {
+      if (status === "") {
+        setStatus("예정");
+        return;
+      }
+      if (status === "예정") {
+        setStatus("");
+        return;
+      }
+      setStatus("진행중");
+    },
+    passed: () => {
+      setStatus("종료");
     },
   };
 
@@ -118,27 +148,30 @@ const useSearch = () => {
 
   const router = useRouter();
   const pathname = usePathname();
+  const queryClient = useQueryClient();
+
+  // useEffect(() => {
+  //   const initialValue = getInitialQuery(searchParams);
+  //   setKeyword(initialValue.keyword);
+  //   setSort(initialValue.sort);
+  //   setStatus(initialValue.status);
+  //   setFilter({
+  //     bigRegion: initialValue.bigRegion,
+  //     smallRegion: initialValue.smallRegion,
+  //     startDate: initialValue.startDate,
+  //     endDate: initialValue.endDate,
+  //     gifts: initialValue.gifts,
+  //     event: initialValue.event,
+  //   });
+  //   queryClient.removeQueries({ queryKey: ["search"] });
+  // }, [searchParams]);
 
   useEffect(() => {
-    const initialValue = getInitialQuery(searchParams);
-    setKeyword(initialValue.keyword);
-    setSort(initialValue.sort);
-    setFilter({
-      bigRegion: initialValue.bigRegion,
-      smallRegion: initialValue.smallRegion,
-      startDate: initialValue.startDate,
-      endDate: initialValue.endDate,
-      event: initialValue.event,
-      gifts: initialValue.gifts,
-    });
-  }, [searchParams]);
-
-  useEffect(() => {
-    const newQuery = createQueryString({ keyword, sort, ...filter }, searchParams);
+    const newQuery = createQueryString({ keyword, sort, status, ...filter }, searchParams);
     router.push(pathname + "?" + newQuery);
-  }, [keyword, sort, filter]);
+  }, [keyword, sort, status, filter]);
 
-  return { keyword, setKeyword, sort, handleSort, filter, resetFilter, openSearchBottomSheet, SearchBottomSheet };
+  return { keyword, setKeyword, sort, handleSort, status, handleStatus, filter, resetFilter, openSearchBottomSheet, SearchBottomSheet };
 };
 
 export default useSearch;
@@ -156,6 +189,8 @@ export interface FilterType {
 
 const SORT = ["최신순", "인기순"] as const;
 
+const STATUS = ["", "예정", "진행중", "종료"] as const;
+
 const BOTTOM_SHEET = {
   bigRegion: "big-region_bottom-sheet",
   smallRegion: "small-region_bottom-sheet",
@@ -167,6 +202,7 @@ const BOTTOM_SHEET = {
 const getInitialQuery = (searchParams: ReadonlyURLSearchParams) => {
   const keyword = searchParams.get("keyword") ?? "";
   const sort = (SORT as ReadonlyArray<string>).includes(searchParams.get("sort") ?? "") ? searchParams.get("sort") : SORT[0];
+  const status = (STATUS as ReadonlyArray<string>).includes(searchParams.get("status") ?? "null") ? searchParams.get("status") : STATUS[0];
   const bigRegion = (BIG_REGIONS as ReadonlyArray<string>).includes(searchParams.get("bigRegion") ?? "") ? searchParams.get("bigRegion") : "";
   const smallRegion = searchParams.get("smallRegion") ?? "";
   const startDate = searchParams.get("startDate");
@@ -174,9 +210,10 @@ const getInitialQuery = (searchParams: ReadonlyURLSearchParams) => {
   const event = (EVENTS as ReadonlyArray<string>).includes(searchParams.get("event") ?? "") ? searchParams.get("event") : "";
   const gifts = searchParams.get("gifts")?.split("|") ?? [];
 
-  return { keyword, sort, bigRegion, smallRegion, startDate, endDate, event, gifts } as {
+  return { keyword, sort, status, bigRegion, smallRegion, startDate, endDate, event, gifts } as {
     keyword: string;
     sort: SortType;
+    status: StatusType;
     bigRegion: (typeof BIG_REGIONS)[number] | "";
     smallRegion: string;
     startDate: string;

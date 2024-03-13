@@ -10,13 +10,14 @@ import ResetIcon from "@/public/icon/reset.svg";
 import SortIcon from "@/public/icon/sort.svg";
 import FilterButton from "./_components/FilterButton";
 import SortButton from "./_components/SortButton";
+import StatusButton from "./_components/StatusButton";
 import useFetch from "./_hooks/useFetch";
 import useSearch from "./_hooks/useSearch";
 import useShowOnScroll from "./_hooks/useShowOnScroll";
 
 const SearchPage = () => {
-  const { keyword, setKeyword, sort, handleSort, filter, resetFilter, SearchBottomSheet, openSearchBottomSheet } = useSearch();
-  const { events, containerRef } = useFetch({ keyword, sort, filter });
+  const { keyword, setKeyword, sort, handleSort, status, handleStatus, filter, resetFilter, SearchBottomSheet, openSearchBottomSheet } = useSearch();
+  const { events, containerRef } = useFetch({ keyword, sort, status, filter });
   const visible = useShowOnScroll();
 
   const formatGift = (gifts: string[]) => {
@@ -40,7 +41,7 @@ const SearchPage = () => {
         description={keyword ? `${keyword}의 Opener 행사 검색 결과입니다.` : "Opener에 등록된 각종 오프라인 행사들을 구경해 보세요."}
       />
       <DottedLayout size="wide">
-        <main className={`relative w-full pb-84 [overflow-anchor:none] ${visible ? "" : "pt-72 pc:pt-0"}`}>
+        <main className={`relative w-full pb-84 [overflow-anchor:none] ${visible ? "" : "pt-112 pc:pt-0"}`}>
           <section className="sticky left-0 right-0 top-72 z-nav flex w-full flex-col bg-white-black text-14 text-gray-500 shadow-top pc:static pc:shadow-none">
             <div className="bg-white-black px-20 pb-8 pt-16 pc:px-0 pc:pb-20 pc:pt-[7rem]">
               <SearchInput keyword={keyword} setKeyword={setKeyword} initialKeyword={keyword} placeholder="최애의 이름으로 행사를 찾아보세요!" />
@@ -64,6 +65,17 @@ const SearchPage = () => {
                 <FilterButton onClick={openSearchBottomSheet.gift} selected={Boolean(filter.gifts.length)}>
                   {formattedGift ?? "특전"}
                 </FilterButton>
+              </div>
+              <div className="flex gap-12 pb-12">
+                <StatusButton selected={status === "" || status === "예정"} onClick={handleStatus.upcoming}>
+                  예정
+                </StatusButton>
+                <StatusButton selected={status === "" || status === "진행중"} onClick={handleStatus.current}>
+                  진행중
+                </StatusButton>
+                <StatusButton selected={status === "종료"} onClick={handleStatus.passed}>
+                  종료
+                </StatusButton>
               </div>
               <div className="flex items-center gap-8">
                 <SortIcon />
