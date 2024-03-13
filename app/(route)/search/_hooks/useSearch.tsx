@@ -84,7 +84,7 @@ const useSearch = () => {
   const setEndDateFilter = (endDate: string) => {
     setFilter((prev) => ({ ...prev, endDate }));
   };
-  const setEventFilter = (event: EventType) => {
+  const setEventFilter = (event: EventType | "") => {
     setFilter((prev) => ({ ...prev, event }));
   };
   const setGiftsFilter = (gift: GiftType) => {
@@ -101,6 +101,7 @@ const useSearch = () => {
   const resetFilter = () => {
     setKeyword("");
     setSort("최신순");
+    setStatus("");
     setFilter({ bigRegion: "", smallRegion: "", startDate: null, endDate: null, event: "", gifts: [] });
   };
 
