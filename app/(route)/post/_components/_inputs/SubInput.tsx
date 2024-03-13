@@ -7,10 +7,10 @@ import ChipButton from "@/components/chip/ChipButton";
 import InputText from "@/components/input/InputText";
 import { checkArrUpdate } from "@/utils/checkArrUpdate";
 import { validateEdit } from "@/utils/editValidate";
+import { GIFT_LIST, TAG } from "@/constants/post";
 import { PostType } from "../../page";
 
 const SNS_TYPE_LIST = ["트위터", "인스타그램", "유튜브", "기타"];
-const GIFT_LIST = ["컵/컵홀더", "포스터", "포토카드", "포토굿즈", "엽서", "스티커", "키링", "기타"];
 
 const SubInput = () => {
   const {
