@@ -35,7 +35,7 @@ const PcHeader = () => {
   }, [keyword]);
 
   return (
-    <header className="sticky top-0 z-floating hidden h-64 w-full border-b border-gray-50 bg-white-black px-24 py-12 pc:block">
+    <header className="sticky top-0 z-popup hidden h-64 w-full border-b border-gray-50 bg-white-black px-24 py-12 tablet:block">
       <div className="mx-auto flex h-full max-w-[104rem] items-center justify-between">
         <Link href="/" scroll={false} aria-label="홈페이지로 돌아갑니다.">
           <LogoIcon />

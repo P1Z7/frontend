@@ -40,7 +40,7 @@ const MobileHeader = () => {
     <>
       {isOpen && (
         <>
-          <div className="animate-slideDown fixed top-72 z-floating flex w-full flex-col items-start gap-20 bg-white-black px-20 pb-24 pt-12">
+          <div className="fixed top-72 z-floating flex w-full animate-slideDown flex-col items-start gap-20 bg-white-black px-20 pb-24 pt-12">
             <Link href="/post" onClick={() => setIsOpen(false)} className="flex h-24 w-full items-center gap-12 text-16 font-500 text-gray-700">
               <AddIcon />새 행사 등록
             </Link>
@@ -55,7 +55,7 @@ const MobileHeader = () => {
         </>
       )}
       <header
-        className={classNames("sticky top-0 z-popup flex h-72 w-full items-center justify-between bg-white-black px-20 pb-12 pt-32 pc:hidden", {
+        className={classNames("sticky top-0 z-popup flex h-72 w-full items-center justify-between bg-white-black px-20 pb-12 pt-32 tablet:hidden", {
           "border-b border-gray-50": !isOpen,
         })}
       >
