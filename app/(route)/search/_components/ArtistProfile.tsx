@@ -18,7 +18,7 @@ const ArtistProfile = ({ id, name, image }: Props) => {
   return (
     <button onClick={handleClick}>
       <div className="relative h-108 w-108 overflow-hidden rounded-full">
-        <Image src={image} alt="아티스트 이미지" fill className="object-cover" />
+        <Image src={image} alt="아티스트 이미지" fill className="object-cover" sizes="108px" />
       </div>
       <div className="pt-4 text-18 font-500">{name}</div>
     </button>

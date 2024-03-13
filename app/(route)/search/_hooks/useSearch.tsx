@@ -1,16 +1,17 @@
 import dynamic from "next/dynamic";
 import { ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import EventBottomSheet, { EVENTS } from "@/components/bottom-sheet/EventBottomSheet";
+import { EVENTS } from "@/components/bottom-sheet/EventBottomSheet";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
 import { createQueryString } from "@/utils/handleQueryString";
 import { EventType, GiftType, StatusType } from "@/types/index";
 import { BIG_REGIONS } from "@/constants/regions";
 
 const BigRegionBottomSheet = dynamic(() => import("@/components/bottom-sheet/BigRegionBottomSheet"), { ssr: false });
+const SmallRegionBottomSheet = dynamic(() => import("@/components/bottom-sheet/SmallRegionBottomSheet"), { ssr: false });
 const CalenderBottomSheet = dynamic(() => import("@/components/bottom-sheet/CalendarBottomSheet"), { ssr: false });
 const GiftBottomSheet = dynamic(() => import("@/components/bottom-sheet/GiftsBottomSheet"), { ssr: false });
-const SmallRegionBottomSheet = dynamic(() => import("@/components/bottom-sheet/SmallRegionBottomSheet"), { ssr: false });
+const EventBottomSheet = dynamic(() => import("@/components/bottom-sheet/EventBottomSheet"), { ssr: false });
 
 const useSearch = () => {
   const searchParams = useSearchParams();
@@ -87,15 +88,8 @@ const useSearch = () => {
   const setEventFilter = (event: EventType | "") => {
     setFilter((prev) => ({ ...prev, event }));
   };
-  const setGiftsFilter = (gift: GiftType) => {
-    if (filter.gifts.includes(gift)) {
-      setFilter((prev) => {
-        const newGift = prev.gifts.filter((currGift) => currGift !== gift);
-        return { ...prev, gifts: newGift };
-      });
-    } else {
-      setFilter((prev) => ({ ...prev, gifts: [...prev.gifts, gift] }));
-    }
+  const setGiftsFilter = (gifts: GiftType[]) => {
+    setFilter((prev) => ({ ...prev, gifts }));
   };
 
   const resetFilter = () => {
@@ -141,7 +135,7 @@ const useSearch = () => {
           <CalenderBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} setStartDateFilter={setStartDateFilter} setEndDateFilter={setEndDateFilter} />
         )}
         {bottomSheet === BOTTOM_SHEET.event && <EventBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} setEventFilter={setEventFilter} selected={filter.event} />}
-        {bottomSheet === BOTTOM_SHEET.gift && <GiftBottomSheet refs={refs} closeBottomSheet={closeBottomSheet} setGiftsFilter={setGiftsFilter} selected={filter.gifts} />}
+        {bottomSheet === BOTTOM_SHEET.gift && <GiftBottomSheet refs={refs} closeBottomSheet={closeBottomSheet} setGiftsFilter={setGiftsFilter} initialGift={filter.gifts} />}
       </>
     );
   };
