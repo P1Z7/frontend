@@ -2,16 +2,11 @@
 
 import { Suspense } from "react";
 import MetaTag from "@/components/MetaTag";
-import HorizontalEventCard from "@/components/card/HorizontalEventCard";
 import SearchInput from "@/components/input/SearchInput";
 import DottedLayout from "@/components/layout/DottedLayout";
-import { formatDate } from "@/utils/formatString";
-import ResetIcon from "@/public/icon/reset.svg";
-import SortIcon from "@/public/icon/sort.svg";
-import ArtistProfile from "./_components/ArtistProfile";
-import FilterButton from "./_components/FilterButton";
-import SortButton from "./_components/SortButton";
-import StatusButton from "./_components/StatusButton";
+import ArtistList from "./_components/ArtistList";
+import EventList from "./_components/EventList";
+import Filter from "./_components/Filter";
 import useFetch from "./_hooks/useFetch";
 import useSearch from "./_hooks/useSearch";
 import useShowOnScroll from "./_hooks/useShowOnScroll";
@@ -20,21 +15,6 @@ const SearchPage = () => {
   const { keyword, setKeyword, sort, handleSort, status, handleStatus, filter, resetFilter, SearchBottomSheet, openSearchBottomSheet } = useSearch();
   const { events, artists, containerRef } = useFetch({ keyword, sort, status, filter });
   const visible = useShowOnScroll();
-
-  const formatGift = (gifts: string[]) => {
-    if (gifts.length === 0) {
-      return;
-    }
-    if (gifts.length === 1) {
-      return gifts[0];
-    }
-    return gifts[0] + "...";
-  };
-  const formattedDate = formatDate(filter.startDate, filter.endDate);
-  const formattedGift = formatGift(filter.gifts);
-
-  const isEventEmpty = events?.pages[0].eventList.length === 0;
-  const isArtistEmpty = artists?.totalCount === 0;
 
   return (
     <>
@@ -48,69 +28,19 @@ const SearchPage = () => {
             <div className="bg-white-black px-20 pb-8 pt-16 pc:px-0 pc:pb-20 pc:pt-[7rem]">
               <SearchInput keyword={keyword} setKeyword={setKeyword} initialKeyword={keyword} placeholder="최애의 이름으로 행사를 찾아보세요!" />
             </div>
-            <div className={`animate-fadeIn flex-col gap-12 px-20 pb-8 pc:p-0 ${visible ? "flex" : "hidden pc:block"}`}>
-              <div className="flex gap-8">
-                <button onClick={resetFilter} type="button" className="flex-center h-32 w-32 rounded-full bg-gray-50">
-                  <ResetIcon />
-                </button>
-                <FilterButton onClick={openSearchBottomSheet.bigRegion} selected={Boolean(filter.bigRegion)}>
-                  {filter.bigRegion || "시/도"}
-                </FilterButton>
-                {filter.bigRegion && (
-                  <FilterButton onClick={openSearchBottomSheet.smallRegion} selected={Boolean(filter.smallRegion)}>
-                    {filter.smallRegion}
-                  </FilterButton>
-                )}
-                <FilterButton onClick={openSearchBottomSheet.calender} selected={Boolean(filter.startDate)}>
-                  {formattedDate ?? "기간"}
-                </FilterButton>
-                <FilterButton onClick={openSearchBottomSheet.event} selected={Boolean(filter.event)}>
-                  {filter.event || "행사유형"}
-                </FilterButton>
-                <FilterButton onClick={openSearchBottomSheet.gift} selected={Boolean(filter.gifts.length)}>
-                  {formattedGift ?? "특전"}
-                </FilterButton>
-              </div>
-              <div className="flex gap-12">
-                <StatusButton selected={status === "" || status === "예정"} onClick={handleStatus.upcoming}>
-                  예정
-                </StatusButton>
-                <StatusButton selected={status === "" || status === "진행중"} onClick={handleStatus.current}>
-                  진행중
-                </StatusButton>
-                <StatusButton selected={status === "종료"} onClick={handleStatus.passed}>
-                  종료
-                </StatusButton>
-              </div>
-              <div className="flex items-center gap-8">
-                <SortIcon />
-                <SortButton onClick={handleSort.recent} selected={sort === "최신순"}>
-                  최신순
-                </SortButton>
-                <SortButton onClick={handleSort.popular} selected={sort === "인기순"}>
-                  인기순
-                </SortButton>
-              </div>
-            </div>
+            <Filter
+              visible={visible}
+              filter={filter}
+              resetFilter={resetFilter}
+              sort={sort}
+              handleSort={handleSort}
+              status={status}
+              handleStatus={handleStatus}
+              openSearchBottomSheet={openSearchBottomSheet}
+            />
           </section>
-          {isArtistEmpty || (
-            <section className="flex min-h-184 w-fit flex-wrap justify-center gap-12 px-20 pb-12 pt-32 pc:justify-start pc:gap-24 pc:px-0">
-              {artists?.artistAndGroupList.map((artist) => <ArtistProfile key={artist.id} id={artist.id} name={artist.name} image={artist.image} />)}
-            </section>
-          )}
-          <section className="flex flex-wrap items-center gap-x-24 px-20 pc:px-0">
-            {isEventEmpty ? (
-              <div className="flex-center w-full pt-48 text-14 font-500">행사 검색 결과가 없습니다.</div>
-            ) : (
-              <>
-                {events?.pages[0].totalCount && (
-                  <div className="w-full pt-12 text-12 font-500 text-gray-800 pc:pt-24 pc:text-14">{events?.pages[0].totalCount}개의 검색결과가 있습니다.</div>
-                )}
-                {events?.pages.map((page) => page.eventList.map((event) => <HorizontalEventCard key={event.id} data={event} />))}
-              </>
-            )}
-            <div ref={containerRef} className="h-20 w-full" />
-          </section>
+          <ArtistList artists={artists} />
+          <EventList events={events} containerRef={containerRef} />
         </main>
       </DottedLayout>
       <SearchBottomSheet />
