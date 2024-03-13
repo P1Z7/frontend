@@ -51,10 +51,10 @@ const useFetch = ({ keyword, sort, status, filter }: Props) => {
     placeholderData: keepPreviousData,
   });
 
-  // useEffect(() => {
-  //   queryClient.removeQueries({ queryKey: ["search"] });
-  //   refetch();
-  // }, [searchParams]);
+  useEffect(() => {
+    queryClient.removeQueries({ queryKey: ["search"] });
+    refetch();
+  }, [keyword, sort, status, filter]);
 
   const containerRef = useInfiniteScroll({
     handleScroll: fetchNextPage,

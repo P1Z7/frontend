@@ -1,4 +1,3 @@
-import { useQueryClient } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
 import { ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -148,23 +147,21 @@ const useSearch = () => {
 
   const router = useRouter();
   const pathname = usePathname();
-  const queryClient = useQueryClient();
 
-  // useEffect(() => {
-  //   const initialValue = getInitialQuery(searchParams);
-  //   setKeyword(initialValue.keyword);
-  //   setSort(initialValue.sort);
-  //   setStatus(initialValue.status);
-  //   setFilter({
-  //     bigRegion: initialValue.bigRegion,
-  //     smallRegion: initialValue.smallRegion,
-  //     startDate: initialValue.startDate,
-  //     endDate: initialValue.endDate,
-  //     gifts: initialValue.gifts,
-  //     event: initialValue.event,
-  //   });
-  //   queryClient.removeQueries({ queryKey: ["search"] });
-  // }, [searchParams]);
+  useEffect(() => {
+    const initialValue = getInitialQuery(searchParams);
+    setKeyword(initialValue.keyword);
+    setSort(initialValue.sort);
+    setStatus(initialValue.status);
+    setFilter({
+      bigRegion: initialValue.bigRegion,
+      smallRegion: initialValue.smallRegion,
+      startDate: initialValue.startDate,
+      endDate: initialValue.endDate,
+      gifts: initialValue.gifts,
+      event: initialValue.event,
+    });
+  }, [searchParams]);
 
   useEffect(() => {
     const newQuery = createQueryString({ keyword, sort, status, ...filter }, searchParams);
