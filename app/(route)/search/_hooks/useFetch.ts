@@ -1,5 +1,4 @@
-import { keepPreviousData, useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
-import { useSearchParams } from "next/navigation";
+import { keepPreviousData, useInfiniteQuery, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { instance } from "@/api/api";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
@@ -18,12 +17,11 @@ interface Props {
 
 const useFetch = ({ keyword, sort, status, filter }: Props) => {
   const session = getSession();
-  const searchParams = useSearchParams();
   const queryClient = useQueryClient();
 
   const getEvents = async ({ pageParam = 1 }) => {
     const data: Res_Get_Type["eventSearch"] = await instance.get("/event", {
-      size: SIZE,
+      size: EVENT_SIZE,
       page: pageParam,
       sort,
       keyword,
@@ -42,28 +40,40 @@ const useFetch = ({ keyword, sort, status, filter }: Props) => {
   const {
     data: events,
     fetchNextPage,
-    refetch,
+    refetch: refetchEvents,
   } = useInfiniteQuery({
     initialPageParam: 1,
-    queryKey: ["search"],
+    queryKey: ["search-event"],
     queryFn: getEvents,
-    getNextPageParam: (lastPage) => (lastPage.page * SIZE < lastPage.totalCount ? lastPage.page + 1 : null),
+    getNextPageParam: (lastPage) => (lastPage.page * EVENT_SIZE < lastPage.totalCount ? lastPage.page + 1 : null),
     placeholderData: keepPreviousData,
   });
-
-  useEffect(() => {
-    queryClient.removeQueries({ queryKey: ["search"] });
-    refetch();
-  }, [keyword, sort, status, filter]);
 
   const containerRef = useInfiniteScroll({
     handleScroll: fetchNextPage,
     deps: [events],
   });
 
-  return { events, containerRef };
+  const { data: artists, refetch: refetchArtists } = useQuery<Res_Get_Type["artistGroup"]>({
+    queryKey: ["search-artist"],
+    queryFn: () => instance.get("/artist/group", { keyword: keyword ? keyword : "null", page: 1, size: ARTIST_SIZE }),
+    enabled: !!keyword,
+  });
+
+  useEffect(() => {
+    queryClient.removeQueries({ queryKey: ["search-event"] });
+    refetchEvents();
+  }, [keyword, sort, status, filter]);
+
+  useEffect(() => {
+    queryClient.removeQueries({ queryKey: ["search-artist"] });
+    refetchArtists();
+  }, [keyword]);
+
+  return { events, artists, containerRef };
 };
 
 export default useFetch;
 
-const SIZE = 20;
+const EVENT_SIZE = 20;
+const ARTIST_SIZE = 9999;

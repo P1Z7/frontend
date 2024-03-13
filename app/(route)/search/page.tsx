@@ -8,6 +8,7 @@ import DottedLayout from "@/components/layout/DottedLayout";
 import { formatDate } from "@/utils/formatString";
 import ResetIcon from "@/public/icon/reset.svg";
 import SortIcon from "@/public/icon/sort.svg";
+import ArtistProfile from "./_components/ArtistProfile";
 import FilterButton from "./_components/FilterButton";
 import SortButton from "./_components/SortButton";
 import StatusButton from "./_components/StatusButton";
@@ -17,7 +18,7 @@ import useShowOnScroll from "./_hooks/useShowOnScroll";
 
 const SearchPage = () => {
   const { keyword, setKeyword, sort, handleSort, status, handleStatus, filter, resetFilter, SearchBottomSheet, openSearchBottomSheet } = useSearch();
-  const { events, containerRef } = useFetch({ keyword, sort, status, filter });
+  const { events, artists, containerRef } = useFetch({ keyword, sort, status, filter });
   const visible = useShowOnScroll();
 
   const formatGift = (gifts: string[]) => {
@@ -32,7 +33,8 @@ const SearchPage = () => {
   const formattedDate = formatDate(filter.startDate, filter.endDate);
   const formattedGift = formatGift(filter.gifts);
 
-  const isEmpty = events?.pages[0].eventList.length === 0;
+  const isEventEmpty = events?.pages[0].eventList.length === 0;
+  const isArtistEmpty = artists?.totalCount === 0;
 
   return (
     <>
@@ -46,8 +48,11 @@ const SearchPage = () => {
             <div className="bg-white-black px-20 pb-8 pt-16 pc:px-0 pc:pb-20 pc:pt-[7rem]">
               <SearchInput keyword={keyword} setKeyword={setKeyword} initialKeyword={keyword} placeholder="최애의 이름으로 행사를 찾아보세요!" />
             </div>
-            <div className={`animate-fadeIn px-20 pb-8 pc:p-0 ${visible ? "block" : "hidden pc:block"}`}>
-              <div className="flex gap-4 pb-12 pc:pb-32">
+            <div className={`animate-fadeIn flex-col gap-12 px-20 pb-8 pc:p-0 ${visible ? "flex" : "hidden pc:block"}`}>
+              <div className="flex gap-8">
+                <button onClick={resetFilter} type="button" className="flex-center h-32 w-32 rounded-full bg-gray-50">
+                  <ResetIcon />
+                </button>
                 <FilterButton onClick={openSearchBottomSheet.bigRegion} selected={Boolean(filter.bigRegion)}>
                   {filter.bigRegion || "시/도"}
                 </FilterButton>
@@ -66,7 +71,7 @@ const SearchPage = () => {
                   {formattedGift ?? "특전"}
                 </FilterButton>
               </div>
-              <div className="flex gap-12 pb-12">
+              <div className="flex gap-12">
                 <StatusButton selected={status === "" || status === "예정"} onClick={handleStatus.upcoming}>
                   예정
                 </StatusButton>
@@ -85,20 +90,21 @@ const SearchPage = () => {
                 <SortButton onClick={handleSort.popular} selected={sort === "인기순"}>
                   인기순
                 </SortButton>
-                <button onClick={resetFilter} type="button" className="ml-auto flex gap-[0.3rem] text-14 text-gray-400">
-                  초기화
-                  <ResetIcon />
-                </button>
               </div>
             </div>
           </section>
+          {isArtistEmpty || (
+            <section className="flex min-h-184 w-fit flex-wrap justify-center gap-12 px-20 pb-12 pt-32 pc:justify-start pc:gap-24 pc:px-0">
+              {artists?.artistAndGroupList.map((artist) => <ArtistProfile key={artist.id} id={artist.id} name={artist.name} image={artist.image} />)}
+            </section>
+          )}
           <section className="flex flex-wrap items-center gap-x-24 px-20 pc:px-0">
-            {isEmpty ? (
-              <div className="flex-center w-full pt-36 text-14 font-500">검색 결과가 없습니다.</div>
+            {isEventEmpty ? (
+              <div className="flex-center w-full pt-48 text-14 font-500">행사 검색 결과가 없습니다.</div>
             ) : (
               <>
                 {events?.pages[0].totalCount && (
-                  <div className="w-full pt-12 text-12 font-500 text-gray-800 pc:pt-[2.2rem] pc:text-14">{events?.pages[0].totalCount}개의 검색결과가 있습니다.</div>
+                  <div className="w-full pt-12 text-12 font-500 text-gray-800 pc:pt-24 pc:text-14">{events?.pages[0].totalCount}개의 검색결과가 있습니다.</div>
                 )}
                 {events?.pages.map((page) => page.eventList.map((event) => <HorizontalEventCard key={event.id} data={event} />))}
               </>
