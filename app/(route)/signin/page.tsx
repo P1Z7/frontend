@@ -1,6 +1,6 @@
 "use client";
 
-import LoadingDot from "@/(route)/(bottom-nav)/signin/_components/LoadingDot";
+import LoadingDot from "@/(route)/signin/_components/LoadingDot";
 import { instance } from "app/_api/api";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -24,7 +24,7 @@ import Logo from "@/public/icon/logo.svg";
 import KakaoLogo from "@/public/icon/logo_kakao.svg";
 import NaverLogo from "@/public/icon/logo_naver.svg";
 
-const FeelMyRhythm = dynamic(() => import("@/(route)/(bottom-nav)/signin/_components/Confetti"), { ssr: false });
+const FeelMyRhythm = dynamic(() => import("@/(route)/signin/_components/Confetti"), { ssr: false });
 
 const SIGNIN_DEFAULT = {
   mode: "onBlur",
@@ -99,11 +99,6 @@ const SignInPage = () => {
     <>
       <MetaTag title={META_TAG.signin["title"]} description={META_TAG.signin["description"]} />
       <PinkLayout size="narrow">
-        <header className="flex h-72 w-full justify-between bg-white-white px-20 pb-12 pt-28">
-          <button onClick={() => router.back()}>
-            <ArrowLeft />
-          </button>
-        </header>
         <div className="flex-center h-[calc(100%-13.8rem)] grow flex-col px-20 pt-80 pc:pb-20">
           <Link href="/">
             <Logo />

@@ -1,14 +1,13 @@
 "use client";
 
-import LoadingDot from "@/(route)/(bottom-nav)/signin/_components/LoadingDot";
 import { PostType } from "@/(route)/post/page";
+import LoadingDot from "@/(route)/signin/_components/LoadingDot";
 import { instance } from "app/_api/api";
 import { format } from "date-fns";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import GenericFormProvider from "@/components/GenericFormProvider";
 import MetaTag from "@/components/MetaTag";
-import MobileHeader from "@/components/header/MobileHeader";
 import PinkLayout from "@/components/layout/PinkLayout";
 import { useStore } from "@/store/index";
 import { META_TAG } from "@/constants/metaTag";
@@ -59,7 +58,6 @@ const Edit = () => {
     <>
       <MetaTag title={META_TAG.edit["title"]} description={META_TAG.edit["description"]} />
       <PinkLayout size="narrow">
-        <MobileHeader />
         <div className="p-20 pb-120 text-16 pc:p-0">
           {init ? (
             <GenericFormProvider formOptions={{ mode: "onChange", defaultValues: INITIAL_DATA, shouldFocusError: true }}>

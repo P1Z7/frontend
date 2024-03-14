@@ -1,9 +1,9 @@
-import LoadingDot from "@/(route)/(bottom-nav)/signin/_components/LoadingDot";
 import DetailInput from "@/(route)/post/_components/_inputs/DetailInput";
 import MainInput from "@/(route)/post/_components/_inputs/MainInput";
 import StarInput from "@/(route)/post/_components/_inputs/StarInput";
 import SubInput from "@/(route)/post/_components/_inputs/SubInput";
 import { PostType } from "@/(route)/post/page";
+import LoadingDot from "@/(route)/signin/_components/LoadingDot";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import BottomButton from "@/components/button/BottomButton";
