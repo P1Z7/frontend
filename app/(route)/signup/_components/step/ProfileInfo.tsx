@@ -29,7 +29,7 @@ const ProfileInfo = ({ onNext, onPrev }: Props) => {
 
   return (
     <div className="flex h-full flex-col justify-between pt-36">
-      <div>
+      <div className="pc:pb-312">
         <InputText
           control={control}
           onKeyDown={(e) => handleEnterError(e, !isButtonDisabled, onNext)}

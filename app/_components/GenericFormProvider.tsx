@@ -90,7 +90,7 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} className="h-full bg-opacity-0 pc:flex pc:justify-center">
+      <form onSubmit={methods.handleSubmit(onSubmit)} className="h-full bg-opacity-0">
         {children}
       </form>
       {modal === "editApprove" && (

@@ -1,12 +1,14 @@
 import { instance } from "app/_api/api";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
+import CheckBox from "@/components/CheckBox";
 import Button from "@/components/button";
 import BottomButton from "@/components/button/BottomButton";
 import InputText from "@/components/input/InputText";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 import { SignUpFormType } from "@/types/index";
 import { checkEnterNextButton } from "../../../../_hooks/checkEnterNextButton";
+import Term, { TERMS_TYPE } from "../Term";
 
 interface Props {
   onNext: () => void;
@@ -14,13 +16,16 @@ interface Props {
 }
 
 const AccountInfo = ({ onNext, onPrev }: Props) => {
-  const { formState, control, getValues, watch, setError } = useFormContext<SignUpFormType>();
-  const { email, password, passwordCheck, code } = watch();
+  const { formState, control, getValues, watch, setError, setValue } = useFormContext<SignUpFormType>();
+  const { email, password, passwordCheck, code, termsAndConditions, privacyPolicy } = watch();
   const [canWrite, setCanWrite] = useState(false);
   const [isVerification, setIsVerification] = useState(false);
   const { isError, handleEnterError } = checkEnterNextButton();
 
   const isButtonDisabled = !!(formState.errors.password || formState.errors.passwordCheck) || !(password && passwordCheck) || !isVerification;
+
+  const isButtonDisabledInPC =
+    !!(formState.errors.password || formState.errors.passwordCheck) || !(password && passwordCheck) || !isVerification || !termsAndConditions || !privacyPolicy;
 
   const handleEmailClick = async () => {
     setIsVerification(false);
@@ -59,8 +64,27 @@ const AccountInfo = ({ onNext, onPrev }: Props) => {
   };
 
   return (
-    <div className="flex h-full flex-col justify-between pb-160 pt-36 pc:pb-0">
-      <div className="flex flex-col gap-20">
+    <div className="flex h-full flex-col justify-between pb-160 pt-36">
+      <div className="flex flex-col gap-20 pc:pb-80">
+        <div className="hidden flex-col gap-12 pc:flex">
+          <p className="text-20 font-500 text-gray-900">약관 동의</p>
+          <Term
+            title={TERMS_TYPE["이용약관"].title}
+            contents={TERMS_TYPE["이용약관"].contents}
+            setValue={setValue}
+            formTitle={TERMS_TYPE["이용약관"].formTitle}
+            value={termsAndConditions}
+            link={TERMS_TYPE["이용약관"].link}
+          />
+          <Term
+            title={TERMS_TYPE["개인정보처리방침"].title}
+            contents={TERMS_TYPE["개인정보처리방침"].contents}
+            setValue={setValue}
+            formTitle={TERMS_TYPE["개인정보처리방침"].formTitle}
+            value={termsAndConditions}
+            link={TERMS_TYPE["개인정보처리방침"].link}
+          />
+        </div>
         <div className="flex items-end gap-8">
           <InputText
             isSuccess={canWrite}
@@ -139,9 +163,15 @@ const AccountInfo = ({ onNext, onPrev }: Props) => {
           비밀번호 확인
         </InputText>
       </div>
-      <div className={`fixed bottom-0 left-0 w-full pc:sticky pc:mt-20 ${isError ? "animate-brrr" : ""}`}>
-        <BottomButton onClick={onNext} hasBack onBackClick={onPrev}>
-          {/* <BottomButton onClick={onNext} isDisabled={isButtonDisabled} hasBack onBackClick={onPrev}> */}
+      <div className={`fixed bottom-0 left-0 w-full pc:sticky pc:mt-20 ${isError ? "animate-brrr" : ""} pc:hidden`}>
+        {/* <BottomButton onClick={onNext} hasBack onBackClick={onPrev}> */}
+        <BottomButton onClick={onNext} isDisabled={isButtonDisabled} hasBack onBackClick={onPrev}>
+          다음으로
+        </BottomButton>
+      </div>
+      <div className={`fixed bottom-0 left-0 w-full pc:sticky pc:mt-20 ${isError ? "animate-brrr" : ""} hidden pc:inline`}>
+        {/* <BottomButton onClick={onNext}> */}
+        <BottomButton onClick={onNext} isDisabled={isButtonDisabled}>
           다음으로
         </BottomButton>
       </div>

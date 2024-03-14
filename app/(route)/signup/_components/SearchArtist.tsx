@@ -99,7 +99,7 @@ const SearchArtist = ({ onClick, myArtists, myArtistsInfo }: Props) => {
       <section className="pt-24">
         <SearchInput placeholder="입력해주세요." setKeyword={setKeyword} />
       </section>
-      <section className="sticky top-72 z-nav mb-16 mt-8 flex w-full gap-12 overflow-hidden bg-white-black">
+      <section className="sticky top-72 z-nav mb-16 mt-8 flex w-full gap-12 overflow-hidden bg-white-black pc:mb-0">
         {selected.map((item, idx) => (
           <div className="mb-8 mt-8 rounded-full bg-white-black" key={idx}>
             <ChipButton
@@ -112,11 +112,11 @@ const SearchArtist = ({ onClick, myArtists, myArtistsInfo }: Props) => {
         ))}
       </section>
       <div className="flex-center w-full px-8 pc:px-0">
-        <ul className="flex w-full max-w-[60rem] flex-wrap justify-center gap-x-16 gap-y-20 overflow-hidden tablet:max-w-[90rem] tablet:gap-x-32 pc:gap-x-20 pc:gap-y-24">
+        <ul className="flex w-full max-w-[60rem] flex-wrap justify-center gap-x-16 gap-y-20 overflow-hidden tablet:max-w-[90rem] tablet:gap-x-32 pc:max-h-[64rem] pc:gap-y-24 pc:overflow-scroll">
           {artistData?.pages.map((page) => page.artistAndGroupList.map((artist) => <Card data={artist} key={artist.id} onClick={handleArtistClick} myArtists={myArtists} />))}
         </ul>
       </div>
-      <div ref={containerRef} className="h-16 w-full" />
+      <div ref={containerRef} className="h-16 w-full pc:h-0" />
       {modal === "reqArtist" && (
         <InputModal
           title="아티스트 등록 요청"
