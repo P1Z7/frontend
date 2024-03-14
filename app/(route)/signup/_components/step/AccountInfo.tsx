@@ -78,7 +78,7 @@ const AccountInfo = ({ onNext, onPrev }: Props) => {
           >
             이메일
           </InputText>
-          <div className="w-88 shrink-0 pb-20">
+          <div className="w-88 shrink-0 pb-20 tablet:w-120">
             <Button type={canWrite ? "linedGray" : "lined"} size="free" style="h-48 text-14 rounded-sm" isDisabled={!!formState.errors.email || !email} onClick={handleEmailClick}>
               {canWrite ? "재인증" : "인증하기"}
             </Button>
@@ -101,7 +101,7 @@ const AccountInfo = ({ onNext, onPrev }: Props) => {
           >
             인증코드 입력
           </InputText>
-          <div className="w-88 shrink-0 pb-20">
+          <div className="w-88 shrink-0 pb-20 tablet:w-120">
             <Button type="lined" size="free" style="h-48 text-14 rounded-sm" isDisabled={!canWrite || !code || isVerification} onClick={handleCodeClick}>
               {isVerification ? "인증완료" : "확인"}
             </Button>
@@ -140,8 +140,8 @@ const AccountInfo = ({ onNext, onPrev }: Props) => {
         </InputText>
       </div>
       <div className={`fixed bottom-0 left-0 w-full pc:sticky pc:mt-20 ${isError ? "animate-brrr" : ""}`}>
-        {/* <BottomButton onClick={onNext} hasBack onBackClick={onPrev}> */}
-        <BottomButton onClick={onNext} isDisabled={isButtonDisabled} hasBack onBackClick={onPrev}>
+        <BottomButton onClick={onNext} hasBack onBackClick={onPrev}>
+          {/* <BottomButton onClick={onNext} isDisabled={isButtonDisabled} hasBack onBackClick={onPrev}> */}
           다음으로
         </BottomButton>
       </div>

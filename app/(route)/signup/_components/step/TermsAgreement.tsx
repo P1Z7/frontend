@@ -1,4 +1,3 @@
-import { watch } from "fs";
 import { ReactElement, useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import CheckBox from "@/components/CheckBox";
@@ -65,7 +64,7 @@ const Term = ({ title, contents, setValue, value, formTitle }: TermProps) => {
       <CheckBox isCheck={isCheck} setIsCheck={setIsCheck}>
         {title}
       </CheckBox>
-      <div className="flex h-172 w-full rounded-sm bg-gray-50 px-12 py-8 text-14">{contents}</div>
+      <div className="flex h-172 w-full rounded-sm bg-gray-50 px-12 py-8 text-14 tablet:h-320">{contents}</div>
     </div>
   );
 };
