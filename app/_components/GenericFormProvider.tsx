@@ -1,7 +1,7 @@
 import { instance } from "app/_api/api";
 import dynamic from "next/dynamic";
 import { useParams, usePathname, useRouter } from "next/navigation";
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { FieldValues, FormProvider, UseFormProps, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useModal } from "@/hooks/useModal";

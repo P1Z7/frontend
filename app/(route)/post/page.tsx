@@ -68,7 +68,7 @@ const Post = () => {
       <MetaTag title={META_TAG.post["title"]} description={META_TAG.post["description"]} />
       <DottedLayout size="narrow">
         <div className="flex h-full flex-col">
-          <div className="h-full p-20 pb-116 pt-36 text-16 pc:relative pc:min-h-[59.5vh] pc:px-0 pc:pb-0 pc:pt-56 pc:text-20 pc:font-500">
+          <div className="h-full p-20 pb-116 pt-36 text-16 tablet:px-40 pc:relative pc:min-h-[59.5vh] pc:px-0 pc:pb-0 pc:pt-56 pc:text-20 pc:font-500">
             {isInit ? (
               <GenericFormProvider formOptions={{ mode: "onBlur", defaultValues: defaultValue, shouldFocusError: true }}>
                 <PostContent />

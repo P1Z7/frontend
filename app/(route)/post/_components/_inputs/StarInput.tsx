@@ -1,7 +1,8 @@
 import InitButton from "@/(route)/event/[eventId]/edit/_components/InitButton";
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
+import EventTypeList from "@/components/bottom-sheet/content/EventTypeList";
 import InputText from "@/components/input/InputText";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
 import useGetWindowWidth from "@/hooks/useGetWindowWidth";
@@ -36,7 +37,7 @@ const StarInput = () => {
   };
 
   useEffect(() => {
-    if (isPc && bottomSheet && bottomSheet !== "event") {
+    if (isPc && bottomSheet) {
       openModal(bottomSheet);
       closeBottomSheet();
     }
@@ -75,19 +76,22 @@ const StarInput = () => {
           </div>
           {isNotMember && <div className="pt-4 text-12 font-500 text-red">그룹 선택 시, 멤버 선택이 필수입니다.</div>}
         </div>
-        <InputText
-          name="eventType"
-          readOnly
-          placeholder="행사 유형을 선택하세요."
-          tabIndex={0}
-          onClick={() => openBottomSheet("event")}
-          onKeyDown={(event) => handleEnterDown(event, () => openBottomSheet("event"))}
-          isEdit={validateEdit(defaultValues?.eventType !== eventType)}
-          onInit={() => setValue("eventType", defaultValues?.eventType || "카페")}
-          noButton
-        >
-          행사 유형
-        </InputText>
+        <div className="flex flex-col gap-[0.9rem]">
+          <InputText
+            name="eventType"
+            readOnly
+            placeholder="행사 유형을 선택하세요."
+            tabIndex={0}
+            onClick={() => (isPc ? openModal("event") : openBottomSheet("event"))}
+            onKeyDown={(event) => handleEnterDown(event, () => openBottomSheet("event"))}
+            isEdit={validateEdit(defaultValues?.eventType !== eventType)}
+            onInit={() => setValue("eventType", defaultValues?.eventType || "카페")}
+            noButton
+          >
+            행사 유형
+          </InputText>
+          {modal === "event" && <EventTypeList handleClickFunc={closeModal} />}
+        </div>
         <InputText name="groupId" hidden />
         <InputText name="artists" hidden />
       </div>
