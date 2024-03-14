@@ -93,6 +93,10 @@ const config: Config = {
           "0%": { opacity: "0", transform: "translateY(50%)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        slideDown: {
+          "0%": { opacity: "0", transform: "translateY(-50%)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
         fadeIn: {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
@@ -106,6 +110,7 @@ const config: Config = {
       },
       animation: {
         slideUp: "slideUp 0.1s ease-in-out",
+        slideDown: "slideDown 0.1s ease-in-out",
         fadeIn: "fadeIn 0.15s ease-in-out",
         brrr: "brrr 0.2s",
       },

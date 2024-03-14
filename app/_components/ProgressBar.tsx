@@ -13,7 +13,7 @@ const ProgressBar = ({ ratio }: Props) => {
   const style = STYLE[ratio] + " h-4 rounded-full bg-main-pink-500";
 
   return (
-    <div className="bg-main-pink-50 h-4 w-full rounded-full">
+    <div className="h-4 w-full rounded-full bg-main-pink-50">
       <div className={style} />
     </div>
   );

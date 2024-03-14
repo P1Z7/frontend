@@ -1,6 +1,6 @@
 "use client";
 
-import FadingDot from "@/(route)/(bottom-nav)/signin/_components/FadingDot";
+import FadingDot from "@/(route)/signin/_components/FadingDot";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import "react-calendar/dist/Calendar.css";

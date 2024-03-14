@@ -1,4 +1,4 @@
-import LoadingDot from "@/(route)/(bottom-nav)/signin/_components/LoadingDot";
+import LoadingDot from "@/(route)/signin/_components/LoadingDot";
 import { useFormContext } from "react-hook-form";
 import ProgressBar from "@/components/ProgressBar";
 import BottomButton from "@/components/button/BottomButton";
@@ -8,7 +8,11 @@ import FunnelTitle from "./FunnelTitle";
 import PostFrame from "./PostFrame";
 import DetailInput from "./_inputs/DetailInput";
 
-const DetailInfo = () => {
+interface Props {
+  onPrevStep?: () => void;
+}
+
+const DetailInfo = ({ onPrevStep }: Props) => {
   const { isCheck, postLoading } = useStore((state) => ({ isCheck: state.isWarningCheck, postLoading: state.postLoading }));
   const { watch } = useFormContext<PostType>();
   const { description, eventImages } = watch();
@@ -22,7 +26,7 @@ const DetailInfo = () => {
         </div>
         <DetailInput />
       </PostFrame>
-      <BottomButton isSubmit isDisabled={!isCheck || description.length > 300 || eventImages.length > 5 || postLoading}>
+      <BottomButton hasBack onBackClick={onPrevStep} isSubmit isDisabled={!isCheck || description.length > 300 || eventImages.length > 5 || postLoading}>
         {postLoading ? <LoadingDot /> : "작성 완료"}
       </BottomButton>
     </div>
