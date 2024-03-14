@@ -20,6 +20,7 @@ const config: Config = {
       pc: "1200px",
     },
     zIndex: {
+      zero: "0",
       base: "1",
       heart: "2",
       nav: "3",

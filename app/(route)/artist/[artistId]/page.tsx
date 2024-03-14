@@ -1,7 +1,8 @@
 "use client";
 
+import MyKakaoMap from "@/(route)/mypage/_components/tab/MyLocationTab/MyKaKaoMap";
 import SortButton from "@/(route)/search/_components/SortButton";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -51,6 +52,7 @@ const ArtistIdPage = () => {
   const {
     data: artistData,
     fetchNextPage,
+    isSuccess,
     refetch,
   } = useInfiniteQuery({
     initialPageParam: 1,
@@ -64,8 +66,6 @@ const ArtistIdPage = () => {
     deps: [artistData],
   });
 
-  const isEmpty = artistData?.pages[0].eventList.length === 0;
-
   useEffect(() => {
     refetch();
   }, [sort, status]);
@@ -76,17 +76,28 @@ const ArtistIdPage = () => {
     setToggleTab((prev) => !prev);
   };
 
+  const [mapBox, setMapBox] = useState(false);
+  const [locationInfo, setLocationInfo] = useState<EventCardType | undefined>();
+
+  if (!isSuccess) return;
+
+  const isEmpty = artistData.pages[0].eventList.length === 0;
+  const mapData = artistData.pages[0].eventList;
+
   return (
     <DottedLayout size="wide">
-      <div className="relative pc:mb-128 pc:mt-48 pc:h-[84rem] pc:w-full pc:rounded-lg pc:border pc:border-gray-100">
-        {/* 지도 영역 */}
-        <div className="absolute left-0 top-0 bg-gray-50 pc:h-[84rem] pc:w-full"></div>
-
-        <button onClick={handleButtonClick} className={`flex-center absolute top-24 z-nav rounded-r-sm bg-white-white pc:h-60 pc:w-24 ${toggleTab ? "left-400" : "left-0"}`}>
+      <div className="relative pc:mb-128 pc:mt-48 pc:h-[84rem] pc:w-full">
+        <div className="z-zero absolute left-0 top-0 pc:h-[84rem] pc:w-full pc:rounded-lg pc:border pc:border-gray-100">
+          <MyKakaoMap scheduleData={mapData} setLocationInfo={setLocationInfo} openMapBox={setMapBox} />
+        </div>
+        <button
+          onClick={handleButtonClick}
+          className={`flex-center absolute top-24 z-nav rounded-r-sm bg-white-white pc:h-60 pc:w-24 ${toggleTab ? "left-400" : "left-0 pc:border-l pc:border-gray-100"}`}
+        >
           <Image src="/icon/arrow-left.svg" width={20} height={20} alt="화살표" className={`${toggleTab || "scale-x-[-1]"}`} />
         </button>
         {toggleTab && (
-          <div className="flex flex-col gap-20 bg-white-black pc:h-[84rem] pc:w-400 pc:rounded-lg pc:py-20">
+          <div className="absolute flex flex-col gap-16 bg-white-black pc:h-[84rem] pc:w-400 pc:rounded-l-lg pc:border-y pc:border-l pc:border-gray-100 pc:py-20">
             <div className="pc:flex pc:w-full pc:flex-row pc:items-center pc:justify-start pc:gap-12 pc:px-20">
               <div className="relative h-64 w-64">
                 <Image src={image ? image : "/image/no-profile.png"} alt="아티스트 이미지" fill sizes="64px" className="rounded-full object-cover" />
@@ -105,7 +116,7 @@ const ArtistIdPage = () => {
                 인기순
               </SortButton>
             </div>
-            <div className="overflow-scroll scrollbar-none pc:h-[66.4rem]">
+            <div className="overflow-scroll scrollbar-none pc:h-[65rem]">
               {isEmpty ? (
                 <p className="flex-center w-full pt-20 text-14 font-500">행사가 없습니다.</p>
               ) : (
