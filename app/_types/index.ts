@@ -80,37 +80,6 @@ export type GiftType =
   | "홀더";
 export type SnsType = "트위터" | "인스타그램" | "유튜브" | "기타";
 
-// 삭제 예정
-export interface EventInfoType {
-  placeName: string;
-  eventType: EventType;
-  groupId?: string;
-  artists: string[];
-  startDate: string;
-  endDate: string;
-  address: string;
-  addressDetail: string;
-  userId: string;
-  eventImages?: string[];
-  description?: string;
-  eventUrl?: string;
-  organizerSns?: string;
-  snsType?: SnsType;
-  tags?: GiftType[];
-}
-
-// 삭제 예정
-export interface ReviewType {
-  userId: string;
-  eventId: string;
-  isPublic?: boolean;
-  rating: boolean;
-  description: string;
-  reviewImages?: string[];
-  like: number;
-}
-
-// 삭제 예정
 export type ArtistType = {
   id: string;
   name: string;
@@ -294,3 +263,5 @@ export type GroupAndSoloType = {
   name: string;
   type: string;
 };
+
+export type StatusType = "" | "예정" | "진행중" | "종료";
