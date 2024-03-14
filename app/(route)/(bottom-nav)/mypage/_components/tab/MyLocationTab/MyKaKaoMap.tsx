@@ -14,20 +14,20 @@ const MyKakaoMap = ({ scheduleData, setLocationInfo, openMapBox }: Props) => {
         const mapContainer = document.getElementById("map");
         const mapOption = {
           center: new window.kakao.maps.LatLng(37.566826, 126.9786567),
-          level: 9,
+          level: 7,
         };
         const map = new window.kakao.maps.Map(mapContainer, mapOption);
         const geocoder = new window.kakao.maps.services.Geocoder();
 
         const myMarker = (data: EventCardType) => {
-          const { address, placeName } = data;
+          const { address, placeName, eventType } = data;
 
           geocoder.addressSearch(address, (result: any, status: any) => {
             if (status === window.kakao.maps.services.Status.OK) {
               const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
 
-              const imageSrc = "/icon/marker.svg";
-              const imageSize = new window.kakao.maps.Size(20, 20);
+              const imageSrc = IMAGE_EVENT[eventType];
+              const imageSize = new window.kakao.maps.Size(48, 48);
               const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
 
               const marker = new window.kakao.maps.Marker({
@@ -48,7 +48,7 @@ const MyKakaoMap = ({ scheduleData, setLocationInfo, openMapBox }: Props) => {
               const customOverlay = new window.kakao.maps.CustomOverlay({
                 position: coords,
                 content: content,
-                yAnchor: 1.9,
+                yAnchor: 2.5,
               });
 
               window.kakao.maps.event.addListener(marker, "mouseover", () => {
@@ -72,21 +72,25 @@ const MyKakaoMap = ({ scheduleData, setLocationInfo, openMapBox }: Props) => {
 
         const clusterer = new window.kakao.maps.MarkerClusterer({
           map: map,
-          gridSize: 50,
+          gridSize: 60,
           averageCenter: true,
           minLevel: 4,
           minClusterSize: 3,
           styles: [
             {
-              width: "48px",
-              height: "48px",
+              width: "60px",
+              height: "60px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
               background: "url(cluster.png) no-repeat",
               color: "#fff",
               fontSize: "18px",
-              backgroundColor: "rgba(255,80,170, 0.85)",
+              backgroundColor: "#FF50AA",
+              border: "solid 4px #fff",
               borderRadius: "9999px",
-              textAlign: "center",
               lineHeight: "48px",
+              filter: "drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25))",
             },
           ],
         });
@@ -102,3 +106,12 @@ const MyKakaoMap = ({ scheduleData, setLocationInfo, openMapBox }: Props) => {
 };
 
 export default MyKakaoMap;
+
+const IMAGE_EVENT = {
+  카페: "/image/marker-cafe.png",
+  꽃집: "/image/marker-flower.png",
+  팬광고: "/image/marker-ads.png",
+  포토부스: "/image/marker-photo.png",
+  상영회: "/image/marker-screen.png",
+  기타: "/image/marker-etc.png",
+};
