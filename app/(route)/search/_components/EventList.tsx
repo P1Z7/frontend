@@ -16,7 +16,7 @@ const EventList = ({ events, containerRef }: Props) => {
     <section className="flex flex-wrap items-center gap-x-24 px-20 pc:px-0">
       {isEventEmpty ? (
         <Link href={"/post"} className="flex-center mx-auto mt-60 px-12 py-4 text-14 font-500 text-gray-700 underline underline-offset-2">
-          내 최애 행사 등록하러 가기
+          내 최애의 행사를 직접 등록해 보세요!
         </Link>
       ) : (
         <>
