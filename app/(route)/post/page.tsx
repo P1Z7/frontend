@@ -42,6 +42,7 @@ const Post = () => {
   const [defaultValue, setDefaultValue] = useState(DEFAULT_INPUT_VALUES);
   const [isInit, setIsInit] = useState(false);
   const { modal, openModal, closeModal } = useModal();
+  const _ = require("lodash");
 
   const importAutoSave = () => {
     toast("저장 내용을 불러옵니다.", { className: "text-16 font-500" });
@@ -57,7 +58,7 @@ const Post = () => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("post")) {
+    if (localStorage.getItem("post") && !_.isEqual(JSON.parse(localStorage.getItem("post") as string), DEFAULT_INPUT_VALUES)) {
       openModal("autoSave");
     } else setIsInit(true);
   }, []);
