@@ -34,6 +34,7 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
   };
 
   useEffect(() => {
+    if (path === "/signup") return;
     const intervalId = setInterval(savePostInput, 10000);
     return () => clearInterval(intervalId);
   }, []);
