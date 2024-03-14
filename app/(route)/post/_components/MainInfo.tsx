@@ -11,9 +11,10 @@ import MainInput from "./_inputs/MainInput";
 
 interface Props {
   onNextStep?: () => void;
+  onPrevStep?: () => void;
 }
 
-const MainInfo = ({ onNextStep }: Props) => {
+const MainInfo = ({ onNextStep, onPrevStep }: Props) => {
   const {
     watch,
     formState: { isValid },
@@ -31,7 +32,7 @@ const MainInfo = ({ onNextStep }: Props) => {
         </div>
         <MainInput />
       </PostFrame>
-      <BottomButton onClick={onNextStep} isDisabled={isDisabled}>
+      <BottomButton onClick={onNextStep} isDisabled={isDisabled} hasBack onBackClick={onPrevStep}>
         다음으로
       </BottomButton>
     </div>
