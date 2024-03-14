@@ -23,8 +23,8 @@ const PostFunnel = ({ Funnel, Step, setStep, currentStep }: Props) => {
   };
 
   const handleNextClick = () => {
-    const input = getValues();
-    sessionStorage.setItem("post", JSON.stringify(input));
+    const userInput = getValues();
+    localStorage.setItem("post", JSON.stringify(userInput));
     return setStep(POST_STEPS[POST_STEPS.indexOf(currentStep) + 1]);
   };
 
