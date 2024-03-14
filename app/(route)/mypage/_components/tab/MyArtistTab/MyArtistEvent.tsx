@@ -1,6 +1,5 @@
 "use client";
 
-import SortButton from "@/(route)/(bottom-nav)/search/_components/SortButton";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
@@ -11,6 +10,7 @@ import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { Res_Get_Type } from "@/types/getResType";
 import SortIcon from "@/public/icon/sort.svg";
 import NoContent from "../../NoContent";
+import SortButton from "@/(route)/search/_components/SortButton";
 
 const SIZE = 20;
 
