@@ -8,7 +8,12 @@ import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 import { SignUpFormType } from "@/types/index";
 import { checkEnterNextButton } from "../../../../_hooks/checkEnterNextButton";
 
-const AccountInfo = ({ onNext }: { onNext: () => void }) => {
+interface Props {
+  onNext: () => void;
+  onPrev: () => void;
+}
+
+const AccountInfo = ({ onNext, onPrev }: Props) => {
   const { formState, control, getValues, watch, setError } = useFormContext<SignUpFormType>();
   const { email, password, passwordCheck, code } = watch();
   const [canWrite, setCanWrite] = useState(false);
@@ -135,8 +140,8 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
         </InputText>
       </div>
       <div className={`fixed bottom-0 left-0 w-full pc:sticky pc:mt-20 ${isError ? "animate-brrr" : ""}`}>
-        {/* <BottomButton onClick={onNext}> */}
-        <BottomButton onClick={onNext} isDisabled={isButtonDisabled}>
+        {/* <BottomButton onClick={onNext} hasBack onBackClick={onPrev}> */}
+        <BottomButton onClick={onNext} isDisabled={isButtonDisabled} hasBack onBackClick={onPrev}>
           다음으로
         </BottomButton>
       </div>

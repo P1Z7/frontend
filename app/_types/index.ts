@@ -34,6 +34,7 @@ export interface FunnelType<T> {
 export interface ProfileSetupType<T> {
   steps: SignupStepNameType[];
   handleNextClick: (nextStep: SignupStepNameType) => void;
+  handlePrevClick: () => void;
   Funnel: React.ComponentType<FunnelType<T>>;
   Step: React.ComponentType<StepType<T>>;
 }

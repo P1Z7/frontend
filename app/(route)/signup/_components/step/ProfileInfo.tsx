@@ -8,7 +8,12 @@ import { checkEnterNextButton } from "@/hooks/checkEnterNextButton";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 import { SignUpFormType } from "@/types/index";
 
-const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
+interface Props {
+  onNext: () => void;
+  onPrev: () => void;
+}
+
+const ProfileInfo = ({ onNext, onPrev }: Props) => {
   const { isError, handleEnterError } = checkEnterNextButton();
   const { formState, control } = useFormContext<SignUpFormType>();
   const [current, setCurrent] = useState("");
@@ -45,7 +50,7 @@ const ProfileInfo = ({ onNext }: { onNext: () => void }) => {
         </InputText>
       </div>
       <div className={`fixed bottom-0 left-0 w-full pc:sticky ${isError ? "animate-brrr" : ""}`}>
-        <BottomButton onClick={onNext} isDisabled={isButtonDisabled}>
+        <BottomButton onClick={onNext} isDisabled={isButtonDisabled} hasBack onBackClick={onPrev}>
           다음으로
         </BottomButton>
       </div>

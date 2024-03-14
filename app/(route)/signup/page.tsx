@@ -51,10 +51,9 @@ const SignUp = () => {
     <>
       <MetaTag title={META_TAG.signup["title"]} description={META_TAG.signup["description"]} />
       <PinkLayout size={pcWidth}>
-        <Header onClick={handlePrevClick} />
         <div className="flex h-[calc(100%-13.8rem)] grow flex-col px-20">
           <GenericFormProvider<SignUpFormType> formOptions={{ mode: "onBlur", defaultValues: { ...DEFAULT_VALUES, email: emailFromSignin ?? "" } }}>
-            <ProfileSetup steps={STEPS} handleNextClick={handleNextClick} Funnel={Funnel} Step={Step} />
+            <ProfileSetup steps={STEPS} handleNextClick={handleNextClick} handlePrevClick={handlePrevClick} Funnel={Funnel} Step={Step} />
           </GenericFormProvider>
         </div>
       </PinkLayout>
@@ -63,14 +62,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-
-const Header = ({ onClick }: { onClick: () => void }) => {
-  return (
-    <header className="sticky left-0 top-0 z-nav flex h-72 w-full justify-between border-b border-gray-50 bg-white-white px-20 pb-12 pt-36">
-      <button onClick={onClick} className="z-nav">
-        <ArrowLeft />
-      </button>
-      <h1 className="absolute left-0 w-full text-center text-16 font-600 text-gray-900">회원가입</h1>
-    </header>
-  );
-};
