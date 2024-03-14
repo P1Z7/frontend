@@ -63,10 +63,6 @@ const Post = () => {
     } else setIsInit(true);
   }, []);
 
-  useEffect(() => {
-    if (isInit) toast("작성 내용이 자동 저장됩니다.", { className: "text-16 font-500" });
-  }, [isInit]);
-
   return (
     <>
       <MetaTag title={META_TAG.post["title"]} description={META_TAG.post["description"]} />
