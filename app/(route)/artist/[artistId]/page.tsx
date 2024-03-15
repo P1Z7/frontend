@@ -2,7 +2,7 @@
 
 import MyKakaoMap from "@/(route)/mypage/_components/tab/MyLocationTab/MyKaKaoMap";
 import SortButton from "@/(route)/search/_components/SortButton";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -16,6 +16,7 @@ import { Res_Get_Type } from "@/types/getResType";
 import { EventCardType } from "@/types/index";
 import SortIcon from "@/public/icon/sort.svg";
 import ChipButtons from "./_components/ChipButtons";
+import EventCard from "./_components/EventCard";
 
 const SIZE = 12;
 
@@ -56,7 +57,7 @@ const ArtistIdPage = () => {
     refetch,
   } = useInfiniteQuery({
     initialPageParam: 1,
-    queryKey: ["events"],
+    queryKey: ["events", artistId],
     queryFn: getArtistData,
     getNextPageParam: (lastPage) => (lastPage.page * SIZE < lastPage.totalCount ? lastPage.page + 1 : null),
   });
@@ -76,6 +77,12 @@ const ArtistIdPage = () => {
     setToggleTab((prev) => !prev);
   };
 
+  const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
+
+  const handleCardClick = (id: string) => {
+    setSelectedCardId(id === selectedCardId ? null : id);
+  };
+
   const [mapBox, setMapBox] = useState(false);
   const [locationInfo, setLocationInfo] = useState<EventCardType | undefined>();
 
@@ -86,23 +93,23 @@ const ArtistIdPage = () => {
 
   return (
     <DottedLayout size="wide">
-      <div className="relative pc:mb-128 pc:mt-48 pc:h-[84rem] pc:w-full">
-        <div className="z-zero absolute left-0 top-0 pc:h-[84rem] pc:w-full pc:rounded-lg pc:border pc:border-gray-100">
+      <div className="relative h-screen w-full tablet:h-[calc(100vh-7.2rem)] pc:mb-128 pc:mt-48 pc:h-[84rem]">
+        <div className="absolute left-0 top-0 z-zero h-full w-full pc:h-[84rem] pc:rounded-lg pc:border pc:border-gray-100">
           <MyKakaoMap scheduleData={mapData} setLocationInfo={setLocationInfo} openMapBox={setMapBox} />
         </div>
         <button
           onClick={handleButtonClick}
-          className={`flex-center absolute top-24 z-nav rounded-r-sm bg-white-white pc:h-60 pc:w-24 ${toggleTab ? "left-400" : "left-0 pc:border-l pc:border-gray-100"}`}
+          className={`tablet:flex-center absolute z-nav hidden h-60 w-24 rounded-r-sm border border-gray-100 bg-white-white tablet:top-44 pc:top-24 ${toggleTab ? "border-l-white-white tablet:left-360 pc:left-400" : "left-0"}`}
         >
           <Image src="/icon/arrow-left.svg" width={20} height={20} alt="화살표" className={`${toggleTab || "scale-x-[-1]"}`} />
         </button>
         {toggleTab && (
-          <div className="absolute flex flex-col gap-16 bg-white-black pc:h-[84rem] pc:w-400 pc:rounded-l-lg pc:border-y pc:border-l pc:border-gray-100 pc:py-20">
-            <div className="pc:flex pc:w-full pc:flex-row pc:items-center pc:justify-start pc:gap-12 pc:px-20">
-              <div className="relative h-64 w-64">
+          <div className="absolute bottom-0 flex w-full flex-col gap-16 bg-white-black tablet:h-full tablet:w-360 tablet:border tablet:border-gray-100 tablet:border-t-transparent tablet:pt-20 pc:top-0 pc:h-[84rem] pc:w-400 pc:rounded-l-lg pc:border-t-gray-100 pc:py-20">
+            <div className="flex flex-row items-center justify-start gap-12 px-20 pc:w-full">
+              <div className="relative h-36 w-36 pc:h-64 pc:w-64">
                 <Image src={image ? image : "/image/no-profile.png"} alt="아티스트 이미지" fill sizes="64px" className="rounded-full object-cover" />
               </div>
-              <p className="text-gray-700 pc:text-16 pc:leading-[2.4rem]">
+              <p className="text-16 leading-[2.4rem] text-gray-700">
                 <span className="font-600">{name}</span> 행사 보기
               </p>
             </div>
@@ -120,7 +127,11 @@ const ArtistIdPage = () => {
               {isEmpty ? (
                 <p className="flex-center w-full pt-20 text-14 font-500">행사가 없습니다.</p>
               ) : (
-                <div className="px-20">{artistData?.pages.map((page) => page.eventList.map((event) => <HorizontalEventCard key={event.id} data={event} />))}</div>
+                <div className="px-20">
+                  {artistData.pages.map((page) =>
+                    page.eventList.map((event) => <EventCard key={event.id} data={event} isSelected={selectedCardId === event.id} onCardClick={() => handleCardClick(event.id)} />),
+                  )}
+                </div>
               )}
               <div ref={containerRef} className="h-20 w-full" />
             </div>

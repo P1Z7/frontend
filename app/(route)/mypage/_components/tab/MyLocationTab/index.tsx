@@ -28,7 +28,7 @@ const MyLocationTab = ({ userId }: Props) => {
   return (
     <div className="relative h-full w-full pc:h-fit pc:px-40 pc:py-56">
       <FilteringButton setIsChecked={setIsChecked} isChecked={isChecked} />
-      <div className="pc:h-[72.4rem]">
+      <div className="h-full pc:h-[72.4rem]">
         <MyKakaoMap scheduleData={myEventsData} setLocationInfo={setLocationInfo} openMapBox={setMapBox} />
       </div>
       {mapBox && <MapInfoBox locationInfo={locationInfo} closeMapBox={setMapBox} />}
