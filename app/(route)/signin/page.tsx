@@ -142,7 +142,7 @@ const SignInPage = () => {
               회원가입
             </Link>
             <div className="h-16 border" />
-            <Link href="">비밀번호 찾기</Link>
+            <Link href="/reset-password">비밀번호 찾기</Link>
           </div>
           <div className="flex w-full flex-col gap-20 pb-100">
             <Link

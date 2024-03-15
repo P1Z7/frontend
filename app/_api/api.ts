@@ -181,13 +181,14 @@ type PostEndPoint =
   | `/reviews/${string}/like`
   | "/email"
   | "/email/verification"
+  | "/email/user"
   | "/event/update/application"
   | "/event/update/approval"
   | "/artist/request"
   | "/event/claim"
   | `/reviews/${string}/claims`;
 
-type PutEndPoint = `/event/${string}` | `/users/${string}/profile` | `/users/${string}/password` | `/users/${string}/artists`;
+type PutEndPoint = `/event/${string}` | `/users/${string}/profile` | `/users/${string}/password` | `/users/${string}/artists` | "/users/password";
 type DeleteEndPoint = `/users/${string}/artists` | `/reviews/${string}/images` | `/users/${string}` | "/auth";
 type PostQueryType<T> = T extends "/file/upload" ? { category: "event" | "artist" | "user" } : unknown;
 
@@ -215,17 +216,19 @@ type PostBodyType<T> = T extends "/event"
                       ? Req_Post_Type["email"]
                       : T extends `/email/verification`
                         ? Req_Post_Type["verification"]
-                        : T extends "/event/update/application"
-                          ? Req_Post_Type["edit"]
-                          : T extends "/event/update/approval"
-                            ? Req_Post_Type["approve"]
-                            : T extends "/artist/request"
-                              ? Req_Post_Type["request"]
-                              : T extends "/event/claim"
-                                ? Req_Post_Type["eventClaim"]
-                                : T extends `/reviews/${string}/claims`
-                                  ? Req_Post_Type["reviewClaim"]
-                                  : unknown;
+                        : T extends "/email/user"
+                          ? Req_Post_Type["resetPw"]
+                          : T extends "/event/update/application"
+                            ? Req_Post_Type["edit"]
+                            : T extends "/event/update/approval"
+                              ? Req_Post_Type["approve"]
+                              : T extends "/artist/request"
+                                ? Req_Post_Type["request"]
+                                : T extends "/event/claim"
+                                  ? Req_Post_Type["eventClaim"]
+                                  : T extends `/reviews/${string}/claims`
+                                    ? Req_Post_Type["reviewClaim"]
+                                    : unknown;
 
 type GetQueryType<T> = T extends "/event"
   ? Req_Query_Type["행사목록"]
@@ -267,5 +270,7 @@ type PutBodyType<T> = T extends `/event/${string}`
       ? Req_Put_Type["password"]
       : T extends `/users/${string}/artists`
         ? Req_Put_Type["artists"]
-        : any;
+        : T extends "/users/password"
+          ? Req_Put_Type["resetPw"]
+          : any;
 type DeleteBodyType<T> = T extends `/users/${string}/artists` ? Req_Delete_Type["myArtist"] : T extends `/users/${string}` ? Req_Delete_Type["user"] : any;

@@ -33,8 +33,6 @@ const SignUp = () => {
 
   const handleNextClick = (step: SignupStepNameType) => {
     setStep(step);
-    if (step === "아티스트 선택") {
-    }
   };
   const handlePrevClick = () => {
     const stepIndex = STEPS.indexOf(currentStep);

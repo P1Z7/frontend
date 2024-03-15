@@ -6,6 +6,7 @@ import { FieldValues, FormProvider, UseFormProps, useForm } from "react-hook-for
 import toast from "react-hot-toast";
 import { useModal } from "@/hooks/useModal";
 import { getSession } from "@/store/session/cookies";
+import { handleResetPwSubmit } from "@/utils/handleResetPwSubmit";
 import { handleSignupSubmit } from "@/utils/handleSignupSubmit";
 import { handlePostSubmit, submitEditApplication, submitEditWriter } from "@/utils/submitPost";
 import { EditErrMsgType, PostErrMsgType } from "@/types/errorMsgType";
@@ -34,7 +35,7 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
   };
 
   useEffect(() => {
-    if (path === "/signup") return;
+    if (path === "/signup" || path === "/reset-password") return;
     const intervalId = setInterval(savePostInput, 10000);
     return () => clearInterval(intervalId);
   }, []);
@@ -85,6 +86,12 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
       const res = await handleSignupSubmit(userInputValue, instance);
       if (!res.error) {
         router.refresh();
+      }
+    }
+    if (path === "/reset-password") {
+      const res = await handleResetPwSubmit(userInputValue, instance);
+      if (!res.error) {
+        router.push("/signin");
       }
     }
   };

@@ -50,4 +50,8 @@ export const META_TAG = {
     title: "수정 승인하기",
     description: "현재 신청된 수정 요청 정보를 확인하고, 승인 및 거절하세요.",
   },
+  resetPassword: {
+    title: "비밀번호 재설정",
+    description: "이메일 인증을 통해 비밀번호를 다시 설정하세요."
+  }
 };
