@@ -1,17 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import GenericFormProvider from "@/components/GenericFormProvider";
 import MetaTag from "@/components/MetaTag";
-import PinkLayout from "@/components/layout/PinkLayout";
-import { useFunnel } from "@/hooks/useFunnel";
-import { PostStepNameType } from "@/types/index";
+import DottedLayout from "@/components/layout/DottedLayout";
+import AlertModal from "@/components/modal/AlertModal";
+import { useModal } from "@/hooks/useModal";
 import { META_TAG } from "@/constants/metaTag";
 import LoadingDot from "../signin/_components/LoadingDot";
-import DetailInfo from "./_components/DetailInfo";
-import MainInfo from "./_components/MainInfo";
-import StarInfo from "./_components/StarInfo";
-import SubInfo from "./_components/SubInfo";
+import PostContent from "./_components/PostContent";
 
 const DEFAULT_INPUT_VALUES = {
   placeName: "",
@@ -33,8 +31,6 @@ const DEFAULT_INPUT_VALUES = {
   tags: [],
 };
 
-const POST_STEPS: PostStepNameType[] = ["행사 대상", "행사 정보", "특전 정보", "상세 설명"];
-
 export type PostType = Omit<typeof DEFAULT_INPUT_VALUES, "artists" | "artistNames" | "eventImages" | "tags"> & {
   artists: string[];
   artistNames: string[];
@@ -43,42 +39,39 @@ export type PostType = Omit<typeof DEFAULT_INPUT_VALUES, "artists" | "artistName
 };
 
 const Post = () => {
-  const { Funnel, Step, setStep, currentStep } = useFunnel<PostStepNameType>(POST_STEPS);
   const [defaultValue, setDefaultValue] = useState(DEFAULT_INPUT_VALUES);
   const [isInit, setIsInit] = useState(false);
+  const { modal, openModal, closeModal } = useModal();
+  const _ = require("lodash");
+
+  const importAutoSave = () => {
+    toast("저장 내용을 불러옵니다.", { className: "text-16 font-500" });
+    setDefaultValue(JSON.parse(localStorage.getItem("post") as string));
+    setIsInit(true);
+    closeModal();
+  };
+
+  const clearAutoSave = () => {
+    localStorage.clear();
+    setIsInit(true);
+    closeModal();
+  };
 
   useEffect(() => {
-    if (sessionStorage.getItem("post")) {
-      setDefaultValue(JSON.parse(sessionStorage.getItem("post") as string));
-    }
-    setIsInit(true);
+    if (localStorage.getItem("post") && !_.isEqual(JSON.parse(localStorage.getItem("post") as string), DEFAULT_INPUT_VALUES)) {
+      openModal("autoSave");
+    } else setIsInit(true);
   }, []);
 
-  const handlePrevClick = () => {
-    currentStep === POST_STEPS[0] ? window.history.back() : setStep(POST_STEPS[POST_STEPS.indexOf(currentStep) - 1]);
-  };
   return (
     <>
       <MetaTag title={META_TAG.post["title"]} description={META_TAG.post["description"]} />
-      <PinkLayout size="narrow">
+      <DottedLayout size="narrow">
         <div className="flex h-full flex-col">
-          <div className="h-full p-20 pb-116 pt-36 text-16 pc:relative pc:min-h-[59.5vh] pc:px-0 pc:pb-0">
+          <div className="h-full p-20 pb-116 pt-36 text-16 tablet:px-40 pc:relative pc:min-h-[59.5vh] pc:px-0 pc:pb-0 pc:pt-56 pc:text-20 pc:font-500">
             {isInit ? (
               <GenericFormProvider formOptions={{ mode: "onBlur", defaultValues: defaultValue, shouldFocusError: true }}>
-                <Funnel>
-                  <Step name={POST_STEPS[0]}>
-                    <StarInfo onNextStep={() => setStep(POST_STEPS[1])} />
-                  </Step>
-                  <Step name={POST_STEPS[1]}>
-                    <MainInfo onNextStep={() => setStep(POST_STEPS[2])} />
-                  </Step>
-                  <Step name={POST_STEPS[2]}>
-                    <SubInfo onNextStep={() => setStep(POST_STEPS[3])} />
-                  </Step>
-                  <Step name={POST_STEPS[3]}>
-                    <DetailInfo />
-                  </Step>
-                </Funnel>
+                <PostContent />
               </GenericFormProvider>
             ) : (
               <div className="flex h-[10vh] w-full items-center justify-center">
@@ -87,7 +80,14 @@ const Post = () => {
             )}
           </div>
         </div>
-      </PinkLayout>
+      </DottedLayout>
+      {modal === "autoSave" && (
+        <AlertModal closeModal={closeModal} hasCancelBtn handleBtnClick={importAutoSave} handleCancelClick={clearAutoSave}>
+          자동 저장된 내용이 있습니다.
+          <br />
+          이어서 작성할까요?
+        </AlertModal>
+      )}
     </>
   );
 };

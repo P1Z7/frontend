@@ -58,40 +58,28 @@ export interface UserType {
 
 export type LabelType = "아티스트" | "행사 유형" | "장소 이름" | "주소" | "기간" | "주최자" | "링크" | "특전" | "이미지" | "상세 내용";
 export type EventType = "카페" | "꽃집" | "팬광고" | "포토부스" | "상영회" | "기타";
-export type GiftType = "컵/컵홀더" | "포스터" | "스티커" | "키링" | "포토카드" | "엽서" | "포토굿즈" | "기타";
+export type GiftType =
+  | "포토매틱"
+  | "메뉴특전"
+  | "기타"
+  | "그립톡"
+  | "마스킹테이프"
+  | "키링"
+  | "엽서"
+  | "유리컵"
+  | "티켓"
+  | "달력"
+  | "해시태그"
+  | "럭키드로우"
+  | "컵/컵홀더"
+  | "포스터"
+  | "포토카드"
+  | "스티커"
+  | "ID카드"
+  | "선착특전"
+  | "홀더";
 export type SnsType = "트위터" | "인스타그램" | "유튜브" | "기타";
 
-// 삭제 예정
-export interface EventInfoType {
-  placeName: string;
-  eventType: EventType;
-  groupId?: string;
-  artists: string[];
-  startDate: string;
-  endDate: string;
-  address: string;
-  addressDetail: string;
-  userId: string;
-  eventImages?: string[];
-  description?: string;
-  eventUrl?: string;
-  organizerSns?: string;
-  snsType?: SnsType;
-  tags?: GiftType[];
-}
-
-// 삭제 예정
-export interface ReviewType {
-  userId: string;
-  eventId: string;
-  isPublic?: boolean;
-  rating: boolean;
-  description: string;
-  reviewImages?: string[];
-  like: number;
-}
-
-// 삭제 예정
 export type ArtistType = {
   id: string;
   name: string;
@@ -275,3 +263,5 @@ export type GroupAndSoloType = {
   name: string;
   type: string;
 };
+
+export type StatusType = "" | "예정" | "진행중" | "종료";
