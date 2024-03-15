@@ -188,7 +188,7 @@ type PostEndPoint =
   | `/reviews/${string}/claims`;
 
 type PutEndPoint = `/event/${string}` | `/users/${string}/profile` | `/users/${string}/password` | `/users/${string}/artists`;
-type DeleteEndPoint = `/users/${string}/artists` | `/reviews/${string}/images` | `/users/${string}` | "/auth";
+type DeleteEndPoint = `/users/${string}/artists` | `/reviews/${string}/images` | `/users/${string}` | "/auth" | `/event/${string}`;
 type PostQueryType<T> = T extends "/file/upload" ? { category: "event" | "artist" | "user" } : unknown;
 
 type PostBodyType<T> = T extends "/event"
@@ -258,7 +258,7 @@ type GetQueryType<T> = T extends "/event"
                             : T extends "/users/nickname"
                               ? Req_Query_Type["닉네임"]
                               : unknown;
-// 사용하실 때 직접 추가 부탁드립니다!
+
 type PutBodyType<T> = T extends `/event/${string}`
   ? Req_Post_Type["event"]
   : T extends `/users/${string}/profile`
