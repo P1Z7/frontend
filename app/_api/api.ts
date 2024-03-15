@@ -188,7 +188,7 @@ type PostEndPoint =
   | `/reviews/${string}/claims`;
 
 type PutEndPoint = `/event/${string}` | `/users/${string}/profile` | `/users/${string}/password` | `/users/${string}/artists`;
-type DeleteEndPoint = `/users/${string}/artists` | `/reviews/${string}/images` | `/users/${string}` | "/auth" | `/event/${string}`;
+type DeleteEndPoint = `/users/${string}/artists` | `/reviews/${string}/images` | `/users/${string}` | "/auth" | `/event/${string}` | `/reviews/${string}/users/${string}`;
 type PostQueryType<T> = T extends "/file/upload" ? { category: "event" | "artist" | "user" } : unknown;
 
 type PostBodyType<T> = T extends "/event"
