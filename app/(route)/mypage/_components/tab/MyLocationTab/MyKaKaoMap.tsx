@@ -1,3 +1,4 @@
+import { useState } from "react";
 import useKakaoMap from "@/hooks/useKakaoMap";
 import { EventCardType } from "@/types/index";
 
@@ -8,28 +9,34 @@ interface Props {
 }
 
 const MyKakaoMap = ({ scheduleData, setLocationInfo, openMapBox }: Props) => {
+  const [mapInstance, setMapInstance] = useState<any>(null);
+
   const onLoadKakaoMap = () => {
-    window.kakao.maps.load(() => {
+    const kakaoMap = window.kakao.maps;
+    kakaoMap.load(() => {
+      this;
       const mapContainer = document.getElementById("map");
       const mapOption = {
-        center: new window.kakao.maps.LatLng(37.566826, 126.9786567),
+        center: new kakaoMap.LatLng(37.566826, 126.9786567),
         level: 7,
       };
-      const map = new window.kakao.maps.Map(mapContainer, mapOption);
-      const geocoder = new window.kakao.maps.services.Geocoder();
+      const map = new kakaoMap.Map(mapContainer, mapOption);
+      setMapInstance(map);
+
+      const geocoder = new kakaoMap.services.Geocoder();
 
       const myMarker = (data: EventCardType) => {
         const { address, placeName, eventType } = data;
 
         geocoder.addressSearch(address, (result: any, status: any) => {
-          if (status === window.kakao.maps.services.Status.OK) {
-            const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
+          if (status === kakaoMap.services.Status.OK) {
+            const coords = new kakaoMap.LatLng(result[0].y, result[0].x);
 
             const imageSrc = IMAGE_EVENT[eventType];
-            const imageSize = new window.kakao.maps.Size(48, 48);
-            const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
+            const imageSize = new kakaoMap.Size(48, 48);
+            const markerImage = new kakaoMap.MarkerImage(imageSrc, imageSize);
 
-            const marker = new window.kakao.maps.Marker({
+            const marker = new kakaoMap.Marker({
               map: map,
               position: coords,
               image: markerImage,
@@ -44,20 +51,20 @@ const MyKakaoMap = ({ scheduleData, setLocationInfo, openMapBox }: Props) => {
               "</div>" +
               "</div>";
 
-            const customOverlay = new window.kakao.maps.CustomOverlay({
+            const customOverlay = new kakaoMap.CustomOverlay({
               position: coords,
               content: content,
               yAnchor: 2.5,
             });
 
-            window.kakao.maps.event.addListener(marker, "mouseover", () => {
+            kakaoMap.event.addListener(marker, "mouseover", () => {
               customOverlay.setMap(map);
             });
-            window.kakao.maps.event.addListener(marker, "mouseout", () => {
+            kakaoMap.event.addListener(marker, "mouseout", () => {
               customOverlay.setMap(null);
             });
 
-            window.kakao.maps.event.addListener(marker, "click", () => {
+            kakaoMap.event.addListener(marker, "click", () => {
               setLocationInfo(data);
               openMapBox(true);
             });
@@ -69,7 +76,7 @@ const MyKakaoMap = ({ scheduleData, setLocationInfo, openMapBox }: Props) => {
         });
       };
 
-      const clusterer = new window.kakao.maps.MarkerClusterer({
+      const clusterer = new kakaoMap.MarkerClusterer({
         map: map,
         gridSize: 60,
         averageCenter: true,
@@ -77,14 +84,14 @@ const MyKakaoMap = ({ scheduleData, setLocationInfo, openMapBox }: Props) => {
         minClusterSize: 3,
         styles: [
           {
-            width: "60px",
-            height: "60px",
+            width: "48px",
+            height: "48px",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             background: "url(cluster.png) no-repeat",
             color: "#fff",
-            fontSize: "18px",
+            fontSize: "24px",
             backgroundColor: "#FF50AA",
             border: "solid 4px #fff",
             borderRadius: "9999px",
@@ -100,9 +107,24 @@ const MyKakaoMap = ({ scheduleData, setLocationInfo, openMapBox }: Props) => {
     });
   };
 
-  useKakaoMap({ callbackFn: onLoadKakaoMap, deps: [] });
+  useKakaoMap({ callbackFn: onLoadKakaoMap, deps: [scheduleData] });
 
-  return <div id="map" className="h-full w-full pc:h-[72.4rem]" />;
+  const zoom = (scale: number) => () => {
+    const level = mapInstance.getLevel();
+    mapInstance.setLevel(level + scale);
+  };
+
+  return (
+    <div className="relative h-full">
+      <div id="map" className="h-full w-full pc:h-[72.4rem]" />
+      <button onClick={zoom(-1)} className="absolute bottom-88 right-20 z-floating h-48 w-48 rounded-full bg-gray-900/60 text-[24px] text-white-white">
+        +
+      </button>
+      <button onClick={zoom(+1)} className="absolute bottom-20 right-20 z-floating h-48 w-48 rounded-full bg-gray-900/60 text-[24px] text-white-white">
+        -
+      </button>
+    </div>
+  );
 };
 
 export default MyKakaoMap;
