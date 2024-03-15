@@ -65,17 +65,21 @@ const ReviewClaimList = () => {
   };
   return (
     <div className="flex w-full flex-col gap-12">
-      {claimList.map((claim) => (
-        <div key={claim.claims.id} className="flex justify-between">
-          <div>
-            <p>후기 id: {claim.id}</p>
-            <p>신고 내용: {claim.claims.description}</p>
+      {claimList.length > 0 ? (
+        claimList.map((claim) => (
+          <div key={claim.claims.id} className="flex justify-between">
+            <div>
+              <p>후기 id: {claim.id}</p>
+              <p>신고 내용: {claim.claims.description}</p>
+            </div>
+            <button onClick={() => deleteReview(claim.id)} className="w-72 rounded-sm bg-red p-4">
+              후기 삭제
+            </button>
           </div>
-          <button onClick={() => deleteReview(claim.id)} className="w-72 rounded-sm bg-red p-4">
-            후기 삭제
-          </button>
-        </div>
-      ))}
+        ))
+      ) : (
+        <p>신고 데이터가 없습니다.</p>
+      )}
       <div ref={containerRef} className="h-4" />
     </div>
   );
