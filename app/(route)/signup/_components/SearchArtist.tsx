@@ -112,7 +112,7 @@ const SearchArtist = ({ onClick, myArtists, myArtistsInfo }: Props) => {
         ))}
       </section>
       <div className="flex-center w-full px-8 pc:px-0">
-        <ul className="flex w-full max-w-[60rem] flex-wrap justify-center gap-x-16 gap-y-20 overflow-hidden tablet:max-w-[90rem] tablet:gap-x-32 pc:max-h-[64rem] pc:gap-y-24 pc:overflow-scroll">
+        <ul className="flex w-full max-w-[60rem] flex-wrap justify-center gap-x-16 gap-y-20 overflow-hidden tablet:max-w-[90rem] tablet:gap-x-32 pc:h-[64rem] pc:gap-y-24 pc:overflow-scroll">
           {artistData?.pages.map((page) => page.artistAndGroupList.map((artist) => <Card data={artist} key={artist.id} onClick={handleArtistClick} myArtists={myArtists} />))}
         </ul>
       </div>
