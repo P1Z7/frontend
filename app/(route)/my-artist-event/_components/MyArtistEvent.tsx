@@ -13,7 +13,7 @@ import { getSession } from "@/store/session/cookies";
 import { Res_Get_Type } from "@/types/getResType";
 import SortIcon from "@/public/icon/sort.svg";
 
-const SIZE = 20;
+const SIZE = 50;
 
 const SORT = ["최신순", "인기순"] as const;
 
