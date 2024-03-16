@@ -56,7 +56,6 @@ const EventCard = ({ data, isSelected, onCardClick }: Props) => {
             <h3 className="w-full truncate pr-[3rem] text-16 font-600">{data.placeName}</h3>
             <div className="flex w-full items-center gap-8 pr-32">
               <span className="truncate text-16 font-600">{data.targetArtists?.map((artist) => artist.artistName).join(", ")}</span>
-
               <Chip kind="event" label={data.eventType} />
             </div>
           </div>
@@ -65,7 +64,7 @@ const EventCard = ({ data, isSelected, onCardClick }: Props) => {
               <span className="mr-8 border-r border-gray-400 pr-8">{formattedDate}</span>
               <span>{formattedAddress}</span>
             </p>
-            <ul className="flex max-w-236 flex-wrap gap-4">
+            <ul className="flex max-w-[calc(100%-4.8rem)] flex-wrap gap-4 tablet:max-w-196 pc:max-w-236">
               {data.eventTags
                 .sort((a, b) => TAG_ORDER[a.tagId].order - TAG_ORDER[b.tagId].order)
                 .map((tag) => (

@@ -25,7 +25,7 @@ const NewestEventsCarousel = () => {
 
   return (
     <div className="flex h-328 flex-col gap-16 pc:h-400 pc:gap-24">
-      <h2 className="px-40 text-20 font-700 text-gray-900 pc:px-48">새로 올라온 행사</h2>
+      <h2 className="px-20 text-20 font-700 text-gray-900 tablet:px-40 pc:px-48">새로 올라온 행사</h2>
       {!isSuccess && <VerticalEventCardSkeleton />}
       {isSuccess &&
         (newestEvents.length ? (

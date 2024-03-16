@@ -83,6 +83,7 @@ const config: Config = {
       700: "700",
     },
     borderRadius: {
+      none: "0px",
       sm: "1.2rem",
       md: "1.6rem",
       lg: "2rem",

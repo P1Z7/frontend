@@ -6,10 +6,11 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import HorizontalEventCard from "@/components/card/HorizontalEventCard";
 import DottedLayout from "@/components/layout/DottedLayout";
 import { instance } from "@/api/api";
+import { useBottomSheet } from "@/hooks/useBottomSheet";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import { useScrollBottomSheet } from "@/hooks/useScrollBottomSheet";
 import { getSession } from "@/store/session/cookies";
 import { getArtist, getGroup } from "@/utils/getArtist";
 import { Res_Get_Type } from "@/types/getResType";
@@ -93,7 +94,7 @@ const ArtistIdPage = () => {
 
   return (
     <DottedLayout size="wide">
-      <div className="relative h-screen w-full tablet:h-[calc(100vh-7.2rem)] pc:mb-128 pc:mt-48 pc:h-[84rem]">
+      <div className="relative h-[calc(100vh-7.2rem)] w-full overflow-hidden pc:mb-128 pc:mt-48 pc:h-[84rem]">
         <div className="absolute left-0 top-0 z-zero h-full w-full pc:h-[84rem] pc:rounded-lg pc:border pc:border-gray-100">
           <MyKakaoMap scheduleData={mapData} setLocationInfo={setLocationInfo} openMapBox={setMapBox} />
         </div>
@@ -104,7 +105,8 @@ const ArtistIdPage = () => {
           <Image src="/icon/arrow-left.svg" width={20} height={20} alt="화살표" className={`${toggleTab || "scale-x-[-1]"}`} />
         </button>
         {toggleTab && (
-          <div className="absolute bottom-0 flex w-full flex-col gap-16 bg-white-black tablet:h-full tablet:w-360 tablet:border tablet:border-gray-100 tablet:border-t-transparent tablet:pt-20 pc:top-0 pc:h-[84rem] pc:w-400 pc:rounded-l-lg pc:border-t-gray-100 pc:py-20">
+          <div className="tablet:rounded-none absolute bottom-0 flex max-h-344 min-h-84 w-full flex-col gap-16 rounded-t-lg bg-white-black pt-28 shadow-2xl tablet:top-0 tablet:max-h-full tablet:w-360 tablet:border tablet:border-gray-100 tablet:border-t-transparent tablet:pt-20 tablet:shadow-none pc:top-0 pc:h-[84rem] pc:w-400 pc:rounded-l-lg pc:border-t-gray-100 pc:py-20">
+            <div className="absolute left-[calc((100%-64px)/2)] top-12 h-4 w-64 rounded-sm bg-gray-700 tablet:hidden" />
             <div className="flex flex-row items-center justify-start gap-12 px-20 pc:w-full">
               <div className="relative h-36 w-36 pc:h-64 pc:w-64">
                 <Image src={image ? image : "/image/no-profile.png"} alt="아티스트 이미지" fill sizes="64px" className="rounded-full object-cover" />
