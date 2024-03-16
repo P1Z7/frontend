@@ -93,7 +93,7 @@ const HorizontalEventCard = ({ data, onHeartClick, isGrow = false, isMypage = fa
           </ul>
         </div>
       </div>
-      {bottomSheet === "myPost" && <ControlMyDataBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} eventId={data.id} setDep={setDep} />}
+      {bottomSheet === "myPost" && <ControlMyDataBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} eventId={data.id} setDep={setDep} type="event" />}
     </Link>
   );
 };

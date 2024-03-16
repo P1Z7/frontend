@@ -70,7 +70,7 @@ const MyReview = ({ data, userId, setDep }: Props) => {
           {likeCount}
         </button>
       </div>
-      {bottomSheet === "myReview" && <ControlMyDataBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} eventId={data.id} setDep={setDep} />}
+      {bottomSheet === "myReview" && <ControlMyDataBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} eventId={data.id} setDep={setDep} type="review" />}
     </div>
   );
 };

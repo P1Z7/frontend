@@ -11,12 +11,14 @@ interface Props {
   userId: string;
 }
 
+const SIZE = 9999;
+
 const MyReviewTab = ({ userId }: Props) => {
   const [dep, setDep] = useState("");
   const { data: myReviewsData, isSuccess } = useQuery({
     queryKey: [userId, dep],
     queryFn: async () => {
-      return instance.get(`/reviews/user/${userId}`, { size: 12, cursorId: 500, userId: userId });
+      return instance.get(`/reviews/user/${userId}`, { size: SIZE, cursorId: 500, userId: userId });
     },
   });
 
