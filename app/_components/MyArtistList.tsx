@@ -15,7 +15,7 @@ import ArtistCard from "./ArtistCard";
 import ChipButton from "./chip/ChipButton";
 import SearchInput from "./input/SearchInput";
 
-const SIZE = 24;
+const SIZE = 50;
 
 const MyArtistList = () => {
   const router = useRouter();

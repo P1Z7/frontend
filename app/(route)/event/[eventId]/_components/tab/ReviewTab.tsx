@@ -10,7 +10,7 @@ import { Res_Get_Type } from "@/types/getResType";
 import BottomButton from "../BottomButton";
 import EventReview from "../EventReview";
 
-const SIZE = 10;
+const SIZE = 50;
 const INITIAL_CURSOR_ID = 100000;
 
 interface Props {

@@ -71,7 +71,7 @@ const Banner = ({ data, eventId }: Props) => {
   return (
     <>
       <section className="w-full pc:flex pc:gap-24 pc:pb-32 pc:pt-[7rem]">
-        <div className="relative h-[48rem] w-full tablet:inline-block tablet:h-[72.8rem] pc:h-[55rem] pc:w-[40.5rem]">
+        <div className="relative h-[48rem] w-full shrink-0 tablet:inline-block tablet:h-[72.8rem] pc:h-[55rem] pc:w-[40.5rem]">
           <Image
             src={bannerImage?.imageUrl ?? DefaultImage}
             alt={"행사 포스터 썸네일"}
