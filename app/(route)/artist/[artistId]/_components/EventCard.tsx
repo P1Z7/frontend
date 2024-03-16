@@ -1,13 +1,12 @@
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent } from "react";
 import HeartButton from "@/components/button/HeartButton";
 import Chip from "@/components/chip/Chip";
 import useLikeEvent from "@/hooks/useLikeEvent";
 import { formatAddress, formatDate } from "@/utils/formatString";
 import { EventCardType } from "@/types/index";
-import { TAG_ORDER } from "@/constants/data";
+import { TAG_ORDER } from "@/constants/post";
 import ArrowIcon from "@/public/icon/arrow-right.svg";
 import NoImage from "@/public/image/no-profile.png";
 
@@ -28,6 +27,9 @@ const EventCard = ({ data, isSelected, onCardClick }: Props) => {
   };
 
   const router = useRouter();
+
+  const chipCount = data.eventTags.length;
+  const isChipMany = chipCount > 5;
 
   return (
     <>
@@ -64,12 +66,12 @@ const EventCard = ({ data, isSelected, onCardClick }: Props) => {
               <span className="mr-8 border-r border-gray-400 pr-8">{formattedDate}</span>
               <span>{formattedAddress}</span>
             </p>
-            <ul className="flex max-w-[calc(100%-4.8rem)] flex-wrap gap-4 tablet:max-w-196 pc:max-w-236">
+            <ul className="flex max-w-[calc(100%-3rem)] flex-wrap gap-4 tablet:max-w-196 pc:max-w-236">
               {data.eventTags
-                .sort((a, b) => TAG_ORDER[a.tagId].order - TAG_ORDER[b.tagId].order)
-                .map((tag) => (
-                  <Chip key={tag.tagId} kind="goods" label={tag.tagName} />
-                ))}
+                .sort((a, b) => TAG_ORDER[a.tagName] - TAG_ORDER[b.tagName])
+                .map((tag) => <Chip key={tag.tagId} kind="goods" label={tag.tagName} />)
+                .slice(0, 5)}
+              <p className="text-center text-12 font-600 leading-10 text-gray-700">{isChipMany && `외 ${chipCount - 5}개`}</p>
             </ul>
           </div>
         </div>

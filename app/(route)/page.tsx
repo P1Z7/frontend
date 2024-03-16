@@ -11,7 +11,7 @@ const Home = () => {
     <>
       <MetaTag />
       <DottedLayout size="wide">
-        <div className="flex flex-col pb-72 pt-16 pc:items-center pc:pb-0 pc:pt-56">
+        <div className="flex flex-col pb-72 pt-16 tablet:pt-36 pc:items-center pc:pb-0 pc:pt-56">
           <main className="flex flex-col gap-40 overflow-hidden pc:w-[112rem]">
             <SearchBar />
             <ArtistOfMonth />

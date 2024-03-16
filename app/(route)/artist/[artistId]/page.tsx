@@ -16,10 +16,11 @@ import { getArtist, getGroup } from "@/utils/getArtist";
 import { Res_Get_Type } from "@/types/getResType";
 import { EventCardType } from "@/types/index";
 import SortIcon from "@/public/icon/sort.svg";
+import ArtistMap from "./_components/ArtistMap";
 import ChipButtons from "./_components/ChipButtons";
 import EventCard from "./_components/EventCard";
 
-const SIZE = 12;
+const SIZE = 9999;
 
 const SORT = ["최신순", "인기순"] as const;
 
@@ -80,12 +81,11 @@ const ArtistIdPage = () => {
 
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
 
+  const [locationInfo, setLocationInfo] = useState<EventCardType | undefined>();
+
   const handleCardClick = (id: string) => {
     setSelectedCardId(id === selectedCardId ? null : id);
   };
-
-  const [mapBox, setMapBox] = useState(false);
-  const [locationInfo, setLocationInfo] = useState<EventCardType | undefined>();
 
   if (!isSuccess) return;
 
@@ -96,7 +96,7 @@ const ArtistIdPage = () => {
     <DottedLayout size="wide">
       <div className="relative h-[calc(100vh-7.2rem)] w-full overflow-hidden pc:mb-128 pc:mt-48 pc:h-[84rem]">
         <div className="absolute left-0 top-0 z-zero h-full w-full pc:h-[84rem] pc:rounded-lg pc:border pc:border-gray-100">
-          <MyKakaoMap scheduleData={mapData} setLocationInfo={setLocationInfo} openMapBox={setMapBox} />
+          <ArtistMap scheduleData={mapData} setLocationInfo={setLocationInfo} setSelectedCardId={setSelectedCardId} />
         </div>
         <button
           onClick={handleButtonClick}
@@ -105,7 +105,7 @@ const ArtistIdPage = () => {
           <Image src="/icon/arrow-left.svg" width={20} height={20} alt="화살표" className={`${toggleTab || "scale-x-[-1]"}`} />
         </button>
         {toggleTab && (
-          <div className="tablet:rounded-none absolute bottom-0 flex max-h-344 min-h-84 w-full flex-col gap-16 rounded-t-lg bg-white-black pt-28 shadow-2xl tablet:top-0 tablet:max-h-full tablet:w-360 tablet:border tablet:border-gray-100 tablet:border-t-transparent tablet:pt-20 tablet:shadow-none pc:top-0 pc:h-[84rem] pc:w-400 pc:rounded-l-lg pc:border-t-gray-100 pc:py-20">
+          <div className="absolute bottom-0 flex max-h-344 min-h-84 w-full flex-col gap-16 rounded-t-lg bg-white-black pt-28 shadow-2xl tablet:top-0 tablet:max-h-full tablet:w-360 tablet:rounded-none tablet:border tablet:border-gray-100 tablet:border-t-transparent tablet:pt-20 tablet:shadow-none pc:top-0 pc:h-[84rem] pc:w-400 pc:rounded-l-lg pc:border-t-gray-100 pc:py-20">
             <div className="absolute left-[calc((100%-64px)/2)] top-12 h-4 w-64 rounded-sm bg-gray-700 tablet:hidden" />
             <div className="flex flex-row items-center justify-start gap-12 px-20 pc:w-full">
               <div className="relative h-36 w-36 pc:h-64 pc:w-64">
