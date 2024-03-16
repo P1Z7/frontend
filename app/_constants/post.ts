@@ -1,5 +1,14 @@
 import { LabelType } from "../_types";
 
+export const EVENT_EMOJI = {
+  카페: "☕",
+  꽃집: "🌷",
+  팬광고: "📢",
+  상영회: "🎬",
+  포토부스: "📸",
+  기타: "🎉",
+};
+
 export const TAG_EMOJI = {
   엽서: "📨",
   스티커: "✌",
@@ -44,7 +53,49 @@ export const TAG = {
   해시태그: "9417f83b-af9b-41b2-9723-b9db643b5f08",
 };
 
-export const GIFT_LIST = Object.keys(TAG);
+export const TAG_ORDER = {
+  "컵/컵홀더": 0,
+  포토매틱: 1,
+  그립톡: 2,
+  마스킹테이프: 3,
+  키링: 4,
+  엽서: 5,
+  유리컵: 6,
+  티켓: 7,
+  달력: 8,
+  포스터: 9,
+  포토카드: 10,
+  스티커: 11,
+  ID카드: 12,
+  홀더: 13,
+  기타: 14,
+  메뉴특전: 15,
+  선착특전: 16,
+  럭키드로우: 17,
+  해시태그: 18,
+};
+
+export const GIFT_LIST = [
+  "컵/컵홀더",
+  "포토매틱",
+  "그립톡",
+  "마스킹테이프",
+  "키링",
+  "엽서",
+  "유리컵",
+  "티켓",
+  "달력",
+  "포스터",
+  "포토카드",
+  "스티커",
+  "ID카드",
+  "홀더",
+  "기타",
+  "메뉴특전",
+  "선착특전",
+  "럭키드로우",
+  "해시태그",
+] as const;
 
 export const EDIT_CATEGORY = {
   placeName: "placeName",
