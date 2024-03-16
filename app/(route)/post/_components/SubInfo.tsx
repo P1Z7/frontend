@@ -8,9 +8,10 @@ import SubInput from "./_inputs/SubInput";
 
 interface Props {
   onNextStep?: () => void;
+  onPrevStep?: () => void;
 }
 
-const SubInfo = ({ onNextStep }: Props) => {
+const SubInfo = ({ onNextStep, onPrevStep }: Props) => {
   return (
     <div className="flex h-full flex-col justify-between">
       <PostFrame>
@@ -20,7 +21,9 @@ const SubInfo = ({ onNextStep }: Props) => {
         </div>
         <SubInput />
       </PostFrame>
-      <BottomButton onClick={onNextStep}>다음으로</BottomButton>
+      <BottomButton onClick={onNextStep} hasBack onBackClick={onPrevStep}>
+        다음으로
+      </BottomButton>
     </div>
   );
 };
