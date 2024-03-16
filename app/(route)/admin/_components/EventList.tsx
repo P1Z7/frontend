@@ -4,15 +4,20 @@ import HorizontalEventCard from "@/components/card/HorizontalEventCard";
 import { instance } from "@/api/api";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { getSession } from "@/store/session/cookies";
+import { openToast } from "@/utils/toast";
 
 const SIZE = 12;
 
-const EventList = () => {
+interface Props {
+  type: "" | "종료";
+}
+
+const EventList = ({ type }: Props) => {
   const [eventList, setEventList] = useState<any[]>([]);
   const { data, fetchNextPage, isSuccess, isLoading } = useInfiniteQuery({
     queryKey: ["admin_event"],
     queryFn: async ({ pageParam }) => {
-      const res = await instance.get("/event", { sort: "최신순", status: "종료", size: SIZE, page: pageParam });
+      const res = await instance.get("/event", { sort: "최신순", status: type, size: SIZE, page: pageParam });
       pageParam === 1 ? setEventList(res.eventList) : setEventList((prev) => [...prev, ...res.eventList]);
       return res;
     },
@@ -34,8 +39,9 @@ const EventList = () => {
 
   const submitDelList = async () => {
     for (const id of delList) {
-      await instance.delete(`/event/${id}`, { userId: session?.user.userId, eventId: id });
+      await instance.delete(`/event/${id}`, { userId: session?.user.userId });
     }
+    openToast.success("삭제 완료!");
     setDelList([]);
   };
 

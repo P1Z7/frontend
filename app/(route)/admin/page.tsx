@@ -14,7 +14,8 @@ const RENDER_ADMIN = {
   "아티스트 요청 목록": <ArtistReqList />,
   "리뷰 신고 목록": <ReviewClaimList />,
   "이벤트 신고 목록": <div />,
-  "행사 삭제": <EventList />,
+  "행사 삭제 - 종료": <EventList type="종료" />,
+  "행사 삭제 - 예정&진행중": <EventList type="" />,
 };
 
 const Admin = () => {

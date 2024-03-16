@@ -125,10 +125,14 @@ export class Api {
     return res;
   }
 
-  async delete<T extends DeleteEndPoint>(endPoint: T, body?: DeleteBodyType<T>) {
+  async delete<T extends DeleteEndPoint>(endPoint: T, queryObj?: any, body?: DeleteBodyType<T>) {
     this.baseUrl = "/api" + endPoint;
+    if (queryObj) {
+      this.makeQueryString<T>(queryObj);
+    }
 
-    const newEndPoint = this.baseUrl;
+    const newEndPoint = queryObj ? this.baseUrl + this.queryString : this.baseUrl;
+
     const config = {
       method: "DELETE",
       body: JSON.stringify(body),

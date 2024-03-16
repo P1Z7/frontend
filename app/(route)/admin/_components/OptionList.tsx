@@ -1,7 +1,7 @@
 import { useStore } from "@/store/index";
 import { AdminOptionType } from "@/store/slice/adminSlice";
 
-const ADMIN_LIST = ["아티스트 요청 목록", "리뷰 신고 목록", "이벤트 신고 목록", "행사 삭제"] as AdminOptionType[];
+const ADMIN_LIST = ["아티스트 요청 목록", "리뷰 신고 목록", "이벤트 신고 목록", "행사 삭제 - 종료", "행사 삭제 - 예정&진행중"] as AdminOptionType[];
 
 const OptionList = () => {
   const { setOption } = useStore((state) => ({ setOption: state.setAdminOption }));
