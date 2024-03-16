@@ -3,11 +3,16 @@
 import classNames from "classnames";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Session, getSession } from "@/store/session/cookies";
+import { instance } from "@/api/api";
+import { Session, getSession, outSession } from "@/store/session/cookies";
+import { openToast } from "@/utils/toast";
+import { TOAST_MESSAGE } from "@/constants/toast";
 import AddIcon from "@/public/icon/add-outline.svg";
 import HamburgerIcon from "@/public/icon/hamburger.svg";
 import LogoIcon from "@/public/icon/logo.svg";
+import LogoutIcon from "@/public/icon/logout.svg";
 import SearchIcon from "@/public/icon/search.svg";
 
 const DEFAULT_PROFILE_SRC = "/icon/no-profile.svg";
@@ -36,6 +41,19 @@ const MobileHeader = () => {
     setSession(newSession);
   }, [newSession?.user.profileImage]);
 
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    const res = await instance.delete("/auth");
+    if (res.ok) {
+      outSession();
+      router.push("/");
+      router.refresh();
+      openToast.success(TOAST_MESSAGE.auth.logout);
+      return;
+    }
+  };
+
   return (
     <>
       {isOpen && (
@@ -50,6 +68,12 @@ const MobileHeader = () => {
               </div>
               {session ? "마이페이지" : "로그인"}
             </Link>
+            {session && (
+              <button onClick={handleLogout} className="flex h-24 w-full items-center gap-12 text-16 font-500 text-gray-700">
+                <LogoutIcon width={24} height={24} />
+                로그아웃
+              </button>
+            )}
           </div>
           <div onClick={() => setIsOpen(false)} className="fixed bottom-0 left-0 z-popup flex h-screen w-full items-end justify-center bg-gray-900 bg-opacity-70" />
         </>
