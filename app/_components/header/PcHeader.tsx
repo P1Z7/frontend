@@ -2,62 +2,55 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { ReactElement, cloneElement, useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import SearchInput from "@/components/input/SearchInput";
 import { Session, getSession } from "@/store/session/cookies";
-import PostIcon from "@/public/icon/add-outline.svg";
-import HomeIcon from "@/public/icon/home.svg";
+import AddIcon from "@/public/icon/add.svg";
 import LogoIcon from "@/public/icon/logo.svg";
-import SearchIcon from "@/public/icon/search_black.svg";
+
+const DEFAULT_PROFILE_SRC = "/icon/no-profile.svg";
 
 const PcHeader = () => {
-  const pathname = usePathname();
+  const router = useRouter();
   const newSession = getSession();
   const [session, setSession] = useState<Session>();
-
-  const navButtons = useMemo(
-    () => [
-      { href: "/", icon: <HomeIcon />, label: "홈" },
-      { href: "/search", icon: <SearchIcon />, label: "둘러보기" },
-      { href: "/post", icon: <PostIcon />, label: "등록하기" },
-    ],
-    [],
-  );
+  const profileHref = session ? "/mypage" : "/signin";
+  const profileSrc = session?.user.profileImage ?? DEFAULT_PROFILE_SRC;
+  const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
-    if (newSession) {
-      setSession(newSession);
+    if (!newSession) {
+      setSession(undefined);
       return;
     }
-    setSession(undefined);
+    setSession(newSession);
   }, [newSession?.user.profileImage]);
 
+  useEffect(() => {
+    if (!keyword) {
+      return;
+    }
+    router.push(`/search?sort=최신순&keyword=${keyword}`);
+  }, [keyword]);
+
   return (
-    <header className="sticky top-0 z-nav hidden h-72 w-full bg-white-black px-24 pc:block">
+    <header className="sticky top-0 z-popup hidden h-64 w-full border-b border-gray-50 bg-white-black px-24 py-12 tablet:block">
       <div className="mx-auto flex h-full max-w-[104rem] items-center justify-between">
         <Link href="/" scroll={false} aria-label="홈페이지로 돌아갑니다.">
           <LogoIcon />
         </Link>
-        <div className="flex gap-16">
-          {navButtons.map((item, index) => (
-            <NavButton key={index} href={item.href} icon={item.icon} label={item.label} isActive={pathname === item.href} />
-          ))}
-          {session ? (
-            <NavButton
-              href="/mypage"
-              icon={<Image src={session.user.profileImage || "/icon/no-profile.svg"} alt="프로필 이미지" width={24} height={24} className="h-24 w-24 rounded-full object-cover" />}
-              label="마이페이지"
-              isActive={pathname === "/mypage"}
-            />
-          ) : (
-            <Link
-              href="/signin"
-              scroll={false}
-              className="flex-center h-full w-[12.2rem] rounded-sm border border-main-pink-300 bg-main-pink-50 p-8 text-16 font-600 text-main-pink-white"
-            >
-              로그인
-            </Link>
-          )}
+        <div className="flex items-center">
+          <div className="w-320">
+            <SearchInput setKeyword={setKeyword} placeholder="최애의 행사를 찾아보세요!" size="sm" href="/search?sort=최신순" />
+          </div>
+          <Link href={"/post"} className="flex-center ml-20 mr-16 h-40 w-100 rounded-full bg-main-pink-500 text-14 font-600 text-white-black">
+            <AddIcon stroke="#FFF" width={20} height={20} viewBox="0 0 24 24" />
+            행사 등록
+          </Link>
+          <Link href={profileHref} className="relative h-28 w-28 overflow-hidden rounded-full">
+            <Image src={profileSrc} fill className="object-cover" alt="프로필 이미지" />
+          </Link>
         </div>
       </div>
     </header>
@@ -65,23 +58,3 @@ const PcHeader = () => {
 };
 
 export default PcHeader;
-
-interface NavButtonProps {
-  href: string;
-  icon: ReactElement;
-  label: string;
-  isActive: boolean;
-}
-
-const NavButton = ({ href, icon, label, isActive }: NavButtonProps) => {
-  const clonedIcon = cloneElement(icon, {
-    stroke: isActive ? "#FF50AA" : "#494F5A",
-  });
-
-  return (
-    <Link href={href} scroll={false} className="flex h-full w-[12.2rem] items-center gap-8 p-8">
-      {clonedIcon}
-      <span className={`text-16 font-500 ${isActive ? "text-main-pink-500" : "text-gray-700"}`}>{label}</span>
-    </Link>
-  );
-};

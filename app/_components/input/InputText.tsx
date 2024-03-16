@@ -55,7 +55,7 @@ const InputText: Function = ({
   const Label = useCallback(() => {
     if (children) {
       return (
-        <label htmlFor={field.name} className={`flex items-center text-16 ${horizontal && "mt-20"}`}>
+        <label htmlFor={field.name} className={`flex items-center text-16 ${horizontal && "mt-20"} pc:text-20 pc:font-500`}>
           {children}
           {required && <span className="ml-4 text-sub-red">*</span>}
           {isEdit && (
@@ -117,7 +117,7 @@ const InputText: Function = ({
               onKeyDown={onKeyDown}
               {...field}
               className={classNames(
-                "mt-8 h-48 w-full rounded-sm bg-gray-50 px-16 py-12 pr-36 text-16 text-gray-900 outline-none placeholder:text-gray-400 focus:border focus:border-blue",
+                "mt-8 h-48 w-full rounded-sm bg-gray-50 px-16 py-12 pr-36 text-16 text-gray-900 outline-none placeholder:text-16 placeholder:font-400 placeholder:text-gray-400 focus:border focus:border-blue",
                 {
                   "border border-red": fieldState.error,
                 },

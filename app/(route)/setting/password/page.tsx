@@ -1,12 +1,11 @@
 "use client";
 
-import FadingDot from "@/(route)/(bottom-nav)/signin/_components/FadingDot";
+import FadingDot from "@/(route)/signin/_components/FadingDot";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import MetaTag from "@/components/MetaTag";
 import BottomButton from "@/components/button/BottomButton";
-import MobileHeader from "@/components/header/MobileHeader";
 import InputText from "@/components/input/InputText";
 import PinkLayout from "@/components/layout/PinkLayout";
 import { instance } from "@/api/api";
@@ -61,7 +60,6 @@ const PasswordPage = () => {
     <>
       <MetaTag title={META_TAG.password["title"]} description={META_TAG.password["description"]} />
       <PinkLayout size="narrow">
-        <MobileHeader />
         <form ref={formSection} onSubmit={handleSubmit(handlePwChange)} className="flex flex-col gap-20 px-20 py-36">
           <InputText
             name="newPw"
