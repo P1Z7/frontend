@@ -7,7 +7,7 @@ import { useBottomSheet } from "@/hooks/useBottomSheet";
 import useLikeEvent from "@/hooks/useLikeEvent";
 import { formatAddress, formatDate } from "@/utils/formatString";
 import { EventCardType } from "@/types/index";
-import { TAG_ORDER } from "@/constants/data";
+import { TAG_ORDER } from "@/constants/post";
 import KebabIcon from "@/public/icon/kebab.svg";
 import NoImage from "@/public/image/no-profile.png";
 import ControlMyDataBottomSheet from "../bottom-sheet/ControlMyDataBottomSheet";
@@ -86,7 +86,7 @@ const HorizontalEventCard = ({ data, onHeartClick, isGrow = false, isMypage = fa
           </p>
           <ul className="flex flex-wrap gap-4">
             {data.eventTags
-              .sort((a, b) => TAG_ORDER[a.tagId].order - TAG_ORDER[b.tagId].order)
+              .sort((a, b) => TAG_ORDER[a.tagName] - TAG_ORDER[b.tagName])
               .map((tag) => (
                 <Chip key={tag.tagId} kind="goods" label={tag.tagName} />
               ))}
