@@ -27,9 +27,9 @@ const SearchBar = () => {
       <button className="absolute right-48 top-1/2 hidden h-40 w-40 -translate-y-1/2 items-center justify-center rounded-full bg-main-pink-500 pc:flex">
         <SearchIcon width={24} height={24} viewBox="0 0 24 24" stroke="#ffffff" />
       </button>
-      <div className="flex-center absolute right-24 top-1/2 h-36 w-36 -translate-y-1/2 rounded-full bg-main-pink-500 tablet:right-48 pc:hidden">
+      <button className="flex-center absolute right-24 top-1/2 h-36 w-36 -translate-y-1/2 rounded-full bg-main-pink-500 tablet:right-48 pc:hidden">
         <SearchIcon width={20} height={20} viewBox="0 0 24 24" stroke="#ffffff" />
-      </div>
+      </button>
       <input
         onChange={handleChange}
         placeholder="최애의 행사를 찾아보세요!"
