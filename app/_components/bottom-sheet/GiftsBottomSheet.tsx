@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { BottomSheetBaseType, GiftType } from "@/types/index";
+import { GIFT_LIST } from "@/constants/post";
 import ChipButton from "../chip/ChipButton";
 import BottomSheet from "./BottomSheetMaterial";
 
@@ -34,7 +35,7 @@ const GiftsBottomSheet = ({ closeBottomSheet, refs, setGiftsFilter, initialGift 
       <BottomSheet.Title>특전 선택</BottomSheet.Title>
       <div ref={refs.content}>
         <div className="flex flex-wrap gap-x-8 gap-y-12 px-24 py-20">
-          {GIFTS.map((gift) => (
+          {GIFT_LIST.map((gift) => (
             <ChipButton key={gift} label={gift} onClick={() => handleGiftClick(gift)} selected={gifts.includes(gift)} />
           ))}
         </div>
@@ -45,5 +46,3 @@ const GiftsBottomSheet = ({ closeBottomSheet, refs, setGiftsFilter, initialGift 
 };
 
 export default GiftsBottomSheet;
-
-const GIFTS = ["컵/컵홀더", "포스터", "포토카드", "포토굿즈", "엽서", "스티커", "키링", "기타"] as const;
