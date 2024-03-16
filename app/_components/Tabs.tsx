@@ -16,7 +16,7 @@ const Tabs = ({ children, names, page = "mypage", eventId, isNarrow: narrow = fa
 
   return (
     <section className="h-full w-full">
-      <div className={`sticky top-72 z-popup flex h-44 w-full items-center border-b border-gray-50 bg-white-black px-20 pc:h-56 ${narrow && "pc:static"}`}>
+      <div className={`sticky top-72 z-popup flex h-44 w-full items-center border-b border-gray-50 bg-white-black px-20 pc:top-64 pc:h-56 ${narrow && "pc:static"}`}>
         {names.map((name, index) => (
           <TabButton key={name} tab={{ name, index }} selected={name === tab.name} narrow={narrow}>
             {name}
