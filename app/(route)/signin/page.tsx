@@ -3,6 +3,7 @@
 import LoadingDot from "@/(route)/signin/_components/LoadingDot";
 import { instance } from "app/_api/api";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -11,7 +12,7 @@ import toast from "react-hot-toast";
 import MetaTag from "@/components/MetaTag";
 import Button from "@/components/button";
 import InputText from "@/components/input/InputText";
-import PinkLayout from "@/components/layout/PinkLayout";
+import DottedLayout from "@/components/layout/DottedLayout";
 import useEnterNext from "@/hooks/useEnterNext";
 import { setCookies, setSession } from "@/store/session/cookies";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
@@ -19,8 +20,6 @@ import { openToast } from "@/utils/toast";
 import { SHOT_SIGNIN } from "@/constants/confetti";
 import { META_TAG } from "@/constants/metaTag";
 import { OAUTH } from "@/constants/oauth";
-import ArrowLeft from "@/public/icon/arrow-left_lg.svg";
-import Logo from "@/public/icon/logo.svg";
 import KakaoLogo from "@/public/icon/logo_kakao.svg";
 import NaverLogo from "@/public/icon/logo_naver.svg";
 
@@ -98,15 +97,15 @@ const SignInPage = () => {
   return (
     <>
       <MetaTag title={META_TAG.signin["title"]} description={META_TAG.signin["description"]} />
-      <PinkLayout size="narrow">
-        <div className="flex-center h-[calc(100%-13.8rem)] grow flex-col px-20 pt-80 pc:pb-20">
+      <DottedLayout size="narrow">
+        <div className="flex-center m-auto mt-100 w-[408px] grow flex-col rounded-lg px-32 py-64 shadow-postBox">
           <Link href="/">
-            <Logo />
+            <Image src="/icon/logo-underline.svg" alt="로고 이미지" width={127} height={38} />
           </Link>
           <form ref={formSection} onSubmit={handleSubmit(handleSignin)} className="flex-center mt-40 w-full flex-col pb-16">
             <InputText
               name="email"
-              placeholder="example@opener.com"
+              placeholder="이메일ID"
               control={control}
               autoComplete="email"
               onKeyDown={handleEnterNext}
@@ -116,7 +115,7 @@ const SignInPage = () => {
             <InputText
               name="password"
               type="password"
-              placeholder="8자 이상 입력해주세요."
+              placeholder="비밀번호"
               control={control}
               rules={{ required: ERROR_MESSAGES.password.passwordField, pattern: { value: REG_EXP.CHECK_PASSWORD, message: ERROR_MESSAGES.password.passwordPattern } }}
               onKeyDown={handleEnterNext}
@@ -165,7 +164,7 @@ const SignInPage = () => {
             </Link>
           </div>
         </div>
-      </PinkLayout>
+      </DottedLayout>
     </>
   );
 };
