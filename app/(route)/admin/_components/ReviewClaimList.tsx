@@ -3,45 +3,7 @@ import { useState } from "react";
 import { instance } from "@/api/api";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { getSession } from "@/store/session/cookies";
-
-const mockup = [
-  {
-    cursorId: 0,
-    id: "9b8b2f7d-d3b5-44f0-948b-c512139a29c2",
-    claims: {
-      id: "1",
-      description: "내용이 너무 부실해요",
-      user: {
-        id: "string",
-        nickName: "string",
-      },
-    },
-  },
-  {
-    cursorId: 1,
-    id: "9b8b2f7d-d3b5-44f0-948b-c512139a29c2",
-    claims: {
-      id: "2",
-      description: "맘에 안들어요",
-      user: {
-        id: "string",
-        nickName: "string",
-      },
-    },
-  },
-  {
-    cursorId: 2,
-    id: "string",
-    claims: {
-      id: "3",
-      description: "모르겠어요",
-      user: {
-        id: "string",
-        nickName: "string",
-      },
-    },
-  },
-];
+import { openToast } from "@/utils/toast";
 
 const SIZE = 12;
 
@@ -54,32 +16,48 @@ const ReviewClaimList = () => {
       pageParam === 1 ? setClaimList(res) : setClaimList((prev) => [...prev, ...res]);
       return res;
     },
-    initialPageParam: 1,
+    initialPageParam: 500,
     getNextPageParam: (lastPage) => (lastPage.length < SIZE ? null : lastPage.at(-1)?.cursorId),
   });
   const containerRef = useInfiniteScroll({ handleScroll: fetchNextPage, deps: [data] });
 
   const session = getSession();
   const deleteReview = async (id: string) => {
-    await instance.delete(`/reviews/${id}/users/${session?.user.userId}`);
+    try {
+      await instance.delete(`/reviews/${id}/users/${session?.user.userId}`);
+      openToast.success("후기 삭제 완료!");
+    } catch (error) {
+      openToast.error("후기 삭제 실패!");
+    }
   };
+
   return (
-    <div className="flex w-full flex-col gap-12">
-      {claimList.length > 0 ? (
-        claimList.map((claim) => (
-          <div key={claim.claims.id} className="flex justify-between">
-            <div>
-              <p>후기 id: {claim.id}</p>
-              <p>신고 내용: {claim.claims.description}</p>
+    <div className="flex h-full w-full flex-col overflow-y-scroll pr-4">
+      {isSuccess &&
+        (data.pages[0].length > 0 ? (
+          claimList.map(({ id, claims }) => (
+            <div key={claims.id} className="flex justify-between gap-4 border-b border-white-white px-4 py-12">
+              <div className="flex flex-col gap-12">
+                <div>
+                  <p>후기 id: {id}</p>
+                  <p>신고 개수: {claims.length}</p>
+                </div>
+                {claims.map(({ description, user }: { description: string; user: { id: string; nickName: string } }) => (
+                  <div className="border border-white-white p-8">
+                    <p>신고 내용: {description}</p>
+                    <p>신고자: {user.nickName}</p>
+                  </div>
+                ))}
+              </div>
+              <button onClick={() => deleteReview(id)} className="rounded-sm bg-red p-4">
+                후기 삭제
+              </button>
             </div>
-            <button onClick={() => deleteReview(claim.id)} className="w-72 rounded-sm bg-red p-4">
-              후기 삭제
-            </button>
-          </div>
-        ))
-      ) : (
-        <p>신고 데이터가 없습니다.</p>
-      )}
+          ))
+        ) : (
+          <p>신고 데이터가 없습니다.</p>
+        ))}
+      {isLoading && <p>로딩중...</p>}
       <div ref={containerRef} className="h-4" />
     </div>
   );

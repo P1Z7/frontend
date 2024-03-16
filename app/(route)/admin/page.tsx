@@ -44,7 +44,7 @@ const Admin = () => {
   return (
     <>
       {isAdminLogin && (
-        <div className="relative flex h-[calc(100vh-7.2rem)] items-center justify-center bg-black-white px-20 pt-56 text-14 text-white-white pc:h-[calc(100vh-6.4rem)]">
+        <div className="relative flex h-[calc(100vh-7.2rem)] items-center justify-center bg-black-white px-20 pb-12 pt-56 text-14 text-white-white pc:h-[calc(100vh-6.4rem)]">
           {isAuth ? (
             <>
               {option !== "선택 화면" && (
