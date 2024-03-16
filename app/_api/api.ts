@@ -145,7 +145,8 @@ export class Api {
       const refetchResult = await this.refetch(newEndPoint, config);
       return refetchResult;
     }
-
+    const result = await res.json();
+    this.makeError(result);
     return res;
   }
 }

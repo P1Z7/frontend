@@ -1,73 +1,33 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { useState } from "react";
-import HorizontalEventCard from "@/components/card/HorizontalEventCard";
+import { FormEvent } from "react";
+import { useForm } from "react-hook-form";
 import { instance } from "@/api/api";
-import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { getSession } from "@/store/session/cookies";
 import { openToast } from "@/utils/toast";
 
-const SIZE = 12;
-
-interface Props {
-  type: "" | "종료";
-}
-
-const EventList = ({ type }: Props) => {
-  const [eventList, setEventList] = useState<any[]>([]);
-  const { data, fetchNextPage, isSuccess, isLoading } = useInfiniteQuery({
-    queryKey: ["admin_event"],
-    queryFn: async ({ pageParam }) => {
-      const res = await instance.get("/event", { sort: "최신순", status: type, size: SIZE, page: pageParam });
-      pageParam === 1 ? setEventList(res.eventList) : setEventList((prev) => [...prev, ...res.eventList]);
-      return res;
-    },
-    initialPageParam: 1,
-    getNextPageParam: (lastPage) => (lastPage.page * SIZE < lastPage.totalCount ? lastPage.page + 1 : null),
-  });
-  const containerRef = useInfiniteScroll({ handleScroll: fetchNextPage, deps: [data] });
-
-  const [delList, setDelList] = useState<string[]>([]);
+const EventList = () => {
+  const { register, getValues, setValue } = useForm();
   const session = getSession();
 
-  const handlePushDel = (id: string) => {
-    setDelList([...delList, id]);
-  };
-
-  const handlePopDel = (id: string) => {
-    setDelList(delList.filter((item) => item !== id));
-  };
-
-  const submitDelList = async () => {
-    for (const id of delList) {
+  const submitDelete = async (event: FormEvent) => {
+    event.preventDefault();
+    const id = getValues("eventId");
+    try {
       await instance.delete(`/event/${id}`, { userId: session?.user.userId });
+      openToast.success("삭제 완료!");
+    } catch (error) {
+      openToast.error("존재하지 않는 이벤트입니다.");
+    } finally {
+      setValue("eventId", "");
     }
-    openToast.success("삭제 완료!");
-    setDelList([]);
   };
 
   return (
-    <div className="h-full w-full overflow-y-scroll">
-      <button onClick={submitDelList} className="absolute right-20 top-12 rounded-sm bg-red px-12 py-8">
-        삭제하기
+    <form className="flex w-full flex-col gap-8" onSubmit={submitDelete}>
+      <input {...register("eventId")} className="rounded-sm p-12 text-gray-900" placeholder="이벤트 id 입력" />
+      <button type="submit" className="rounded-sm bg-red px-12 py-8">
+        삭제
       </button>
-      {isSuccess &&
-        eventList.map((data) => (
-          <div key={data.id} className="flex justify-between gap-12 text-gray-900">
-            <HorizontalEventCard data={data} />
-            {delList.includes(data.id) ? (
-              <button onClick={() => handlePopDel(data.id)} className="w-48 text-red">
-                선택됨
-              </button>
-            ) : (
-              <button onClick={() => handlePushDel(data.id)} className="w-48 text-white-white">
-                선택
-              </button>
-            )}
-          </div>
-        ))}
-      {isLoading && <p>로딩중</p>}
-      <div ref={containerRef} className="h-8" />
-    </div>
+    </form>
   );
 };
 

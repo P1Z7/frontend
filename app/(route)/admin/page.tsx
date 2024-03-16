@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useStore } from "@/store/index";
 import { getSession } from "@/store/session/cookies";
 import ArtistReqList from "./_components/ArtistReqList";
@@ -14,8 +15,7 @@ const RENDER_ADMIN = {
   "아티스트 요청 목록": <ArtistReqList />,
   "리뷰 신고 목록": <ReviewClaimList />,
   "이벤트 신고 목록": <div />,
-  "행사 삭제 - 종료": <EventList type="종료" />,
-  "행사 삭제 - 예정&진행중": <EventList type="" />,
+  "행사 삭제": <EventList />,
 };
 
 const Admin = () => {
@@ -28,11 +28,11 @@ const Admin = () => {
     option: state.adminOption,
     setOption: state.setAdminOption,
   }));
-  const [inputValue, setInputValue] = useState("");
+  const { register, getValues } = useForm();
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    if (process.env.NEXT_PUBLIC_ADMIN_PW === inputValue) setIsAuth(true);
+    if (process.env.NEXT_PUBLIC_ADMIN_PW === getValues("adminPw")) setIsAuth(true);
   };
 
   useEffect(() => {
@@ -60,8 +60,10 @@ const Admin = () => {
                 <span className="text-20 font-600 text-red">WARNING!</span>
                 인증이 필요한 페이지입니다.
               </p>
-              <input name="admin_pw" type="text" value={inputValue} onChange={(event) => setInputValue(event.target.value)} className="rounded-sm bg-gray-50 p-12 text-gray-800" />
-              <button className="hover:text-red">확인</button>
+              <input {...register("adminPw")} type="text" className="rounded-sm bg-gray-50 p-12 text-gray-800" />
+              <button type="submit" className="hover:text-red">
+                확인
+              </button>
             </form>
           )}
         </div>
