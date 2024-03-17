@@ -43,6 +43,7 @@ const SignUp = () => {
         <div className="flex h-[calc(100%-13.8rem)] grow flex-col px-20 tablet:px-40 pc:px-0">
           <GenericFormProvider<SignUpFormType> formOptions={{ mode: "onBlur", defaultValues: { ...DEFAULT_VALUES, email: emailFromSignin ?? "" } }}>
             <ProfileSetup steps={STEPS} handleNextClick={handleNextClick} handlePrevClick={handlePrevClick} Funnel={Funnel} Step={Step} />
+            <ProfileSetup steps={STEPS} handleNextClick={handleNextClick} handlePrevClick={handlePrevClick} Funnel={Funnel} Step={Step} />
           </GenericFormProvider>
         </div>
       </DottedLayout>
