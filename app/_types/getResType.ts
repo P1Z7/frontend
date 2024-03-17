@@ -1,4 +1,4 @@
-import { ArtistAndGroupListType, EditApplicationType, EventCardType, EventReviewType } from ".";
+import { ArtistAndGroupListType, ArtistGroupMonthType, EditApplicationType, EventCardType, EventReviewType } from ".";
 
 type Res_Get_Event = EventCardType;
 
@@ -34,6 +34,8 @@ type Res_Get_Artist_Event = {
   totalCount: number;
 };
 
+type Res_Get_Artist_Group_Month = ArtistGroupMonthType[];
+
 type Req_Get_Event_Mine = {
   eventList: EventCardType[];
   size: number;
@@ -53,4 +55,5 @@ export type Res_Get_Type = {
   myArtist: Res_Get_myArtist;
   editApplication: Res_Get_Edit_Application;
   artistEvent: Res_Get_Artist_Event;
+  artistMonth: Res_Get_Artist_Group_Month;
 };
