@@ -10,7 +10,7 @@ interface Props {
 }
 
 const DescriptionTab = ({ images, description }: Props) => {
-  const [sizes, setSizes] = useState("300px");
+  const [sizes, setSizes] = useState("150px");
 
   useEffect(() => {
     const viewportWidth = window.innerWidth;
