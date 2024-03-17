@@ -1,22 +1,19 @@
 "use client";
 
-import MyKakaoMap from "@/(route)/mypage/_components/tab/MyLocationTab/MyKaKaoMap";
 import SortButton from "@/(route)/search/_components/SortButton";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import KakaoMap from "@/components/KakaoMap";
 import DottedLayout from "@/components/layout/DottedLayout";
 import { instance } from "@/api/api";
-import { useBottomSheet } from "@/hooks/useBottomSheet";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
-import { useScrollBottomSheet } from "@/hooks/useScrollBottomSheet";
 import { getSession } from "@/store/session/cookies";
 import { getArtist, getGroup } from "@/utils/getArtist";
 import { Res_Get_Type } from "@/types/getResType";
 import { EventCardType } from "@/types/index";
 import SortIcon from "@/public/icon/sort.svg";
-import ArtistMap from "./_components/ArtistMap";
 import ChipButtons from "./_components/ChipButtons";
 import EventCard from "./_components/EventCard";
 
@@ -79,12 +76,19 @@ const ArtistIdPage = () => {
     setToggleTab((prev) => !prev);
   };
 
-  const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
+  const [selectedCard, setSelectedCard] = useState<EventCardType | null>(null);
+  const scrollRef = useRef<HTMLDivElement>();
 
-  const [locationInfo, setLocationInfo] = useState<EventCardType | undefined>();
+  const scrollRefCallback = (el: HTMLDivElement) => {
+    scrollRef.current = el;
+  };
 
-  const handleCardClick = (id: string) => {
-    setSelectedCardId(id === selectedCardId ? null : id);
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }, [selectedCard?.id]);
+
+  const handleCardClick = (select: EventCardType) => {
+    setSelectedCard(select.id === selectedCard?.id ? null : select);
   };
 
   if (!isSuccess) return;
@@ -95,8 +99,8 @@ const ArtistIdPage = () => {
   return (
     <DottedLayout size="wide">
       <div className="relative h-[calc(100vh-7.2rem)] w-full overflow-hidden pc:mb-128 pc:mt-48 pc:h-[84rem]">
-        <div className="absolute left-0 top-0 z-zero h-full w-full pc:h-[84rem] pc:rounded-lg pc:border pc:border-gray-100">
-          <ArtistMap scheduleData={mapData} setLocationInfo={setLocationInfo} setSelectedCardId={setSelectedCardId} />
+        <div className={`absolute left-0 top-0 z-zero h-full w-full ${toggleTab ? "tablet:pl-360 pc:pl-400" : ""} pc:h-[84rem] pc:rounded-lg pc:border pc:border-gray-100`}>
+          <KakaoMap scheduleData={mapData} selectedCard={selectedCard} setSelectedCard={setSelectedCard} />
         </div>
         <button
           onClick={handleButtonClick}
@@ -131,7 +135,15 @@ const ArtistIdPage = () => {
               ) : (
                 <div className="px-20">
                   {artistData.pages.map((page) =>
-                    page.eventList.map((event) => <EventCard key={event.id} data={event} isSelected={selectedCardId === event.id} onCardClick={() => handleCardClick(event.id)} />),
+                    page.eventList.map((event) => (
+                      <EventCard
+                        key={event.id}
+                        data={event}
+                        isSelected={selectedCard?.id === event.id}
+                        onCardClick={() => handleCardClick(event)}
+                        scrollRef={selectedCard?.id === event.id ? scrollRefCallback : null}
+                      />
+                    )),
                   )}
                 </div>
               )}

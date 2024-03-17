@@ -4,9 +4,9 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { instance } from "@/api/api";
 import { EventCardType } from "@/types/index";
+import KakaoMap from "../../../../../_components/KakaoMap";
 import FilteringButton from "./FilteringButton";
 import MapInfoBox from "./MapInfoBox";
-import MyKakaoMap from "./MyKaKaoMap";
 
 interface Props {
   userId: string;
@@ -29,7 +29,7 @@ const MyLocationTab = ({ userId }: Props) => {
     <div className="relative h-full w-full pc:h-fit pc:px-40 pc:py-56">
       <FilteringButton setIsChecked={setIsChecked} isChecked={isChecked} />
       <div className="h-full pc:h-[72.4rem]">
-        <MyKakaoMap scheduleData={myEventsData} setLocationInfo={setLocationInfo} openMapBox={setMapBox} />
+        <KakaoMap scheduleData={myEventsData} setLocationInfo={setLocationInfo} openMapBox={setMapBox} />
       </div>
       {mapBox && <MapInfoBox locationInfo={locationInfo} closeMapBox={setMapBox} />}
     </div>
