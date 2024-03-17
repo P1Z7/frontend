@@ -68,22 +68,9 @@ const AccountInfo = ({ onNext, onPrev }: Props) => {
       <div className="flex flex-col gap-20 pc:pb-80">
         <div className="hidden flex-col gap-12 pc:flex">
           <p className="text-20 font-500 text-gray-900">약관 동의</p>
-          <Term
-            title={TERMS_TYPE["이용약관"].title}
-            contents={TERMS_TYPE["이용약관"].contents}
-            setValue={setValue}
-            formTitle={TERMS_TYPE["이용약관"].formTitle}
-            value={termsAndConditions}
-            link={TERMS_TYPE["이용약관"].link}
-          />
-          <Term
-            title={TERMS_TYPE["개인정보처리방침"].title}
-            contents={TERMS_TYPE["개인정보처리방침"].contents}
-            setValue={setValue}
-            formTitle={TERMS_TYPE["개인정보처리방침"].formTitle}
-            value={termsAndConditions}
-            link={TERMS_TYPE["개인정보처리방침"].link}
-          />
+          {["이용약관", "개인정보처리방침"].map((item) => (
+            <Term {...TERMS_TYPE[item]} setValue={setValue} value={termsAndConditions} />
+          ))}
         </div>
         <div className="flex items-end gap-8">
           <InputText
