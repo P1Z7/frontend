@@ -31,6 +31,10 @@ const MyLocationTab = ({ userId }: Props) => {
 
   const handleButtonClick = () => {
     setToggleTab((prev) => !prev);
+
+    if (toggleTab) {
+      setSelectedCard(null);
+    }
   };
 
   const [selectedCard, setSelectedCard] = useState<EventCardType | null>(null);
@@ -42,7 +46,7 @@ const MyLocationTab = ({ userId }: Props) => {
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  }, [selectedCard?.id]);
+  }, [selectedCard?.id, toggleTab]);
 
   const handleCardClick = (select: EventCardType) => {
     setSelectedCard(select.id === selectedCard?.id ? null : select);
@@ -57,7 +61,7 @@ const MyLocationTab = ({ userId }: Props) => {
           <div
             className={`absolute left-0 top-0 z-zero h-full w-full ${toggleTab ? "tablet:pl-360 pc:pl-400" : ""} pb-344 tablet:pb-0 pc:h-[84rem] pc:rounded-lg pc:border pc:border-gray-100`}
           >
-            <KakaoMap scheduleData={myEventsData ?? []} selectedCard={selectedCard} setSelectedCard={setSelectedCard} />
+            <KakaoMap scheduleData={myEventsData ?? []} toggleTab={toggleTab} setToggleTab={setToggleTab} selectedCard={selectedCard} setSelectedCard={setSelectedCard} />
           </div>
           <button
             onClick={handleButtonClick}

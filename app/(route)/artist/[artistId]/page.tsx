@@ -71,6 +71,10 @@ const ArtistIdPage = () => {
 
   const handleButtonClick = () => {
     setToggleTab((prev) => !prev);
+
+    if (toggleTab) {
+      setSelectedCard(null);
+    }
   };
 
   const [selectedCard, setSelectedCard] = useState<EventCardType | null>(null);
@@ -82,7 +86,7 @@ const ArtistIdPage = () => {
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  }, [selectedCard?.id]);
+  }, [selectedCard?.id, toggleTab]);
 
   const handleCardClick = (select: EventCardType) => {
     setSelectedCard(select.id === selectedCard?.id ? null : select);
@@ -99,7 +103,7 @@ const ArtistIdPage = () => {
         <div
           className={`absolute left-0 top-0 z-zero h-full w-full ${toggleTab ? "tablet:pl-360 pc:pl-400" : ""} pb-344 tablet:pb-0 pc:h-[84rem] pc:rounded-lg pc:border pc:border-gray-100`}
         >
-          <KakaoMap scheduleData={mapData} selectedCard={selectedCard} setSelectedCard={setSelectedCard} />
+          <KakaoMap scheduleData={mapData} toggleTab={toggleTab} setToggleTab={setToggleTab} selectedCard={selectedCard} setSelectedCard={setSelectedCard} />
         </div>
         <button
           onClick={handleButtonClick}
