@@ -18,7 +18,7 @@ const BottomButton = ({ onClick, children, isDisabled, isSkip = false, isSubmit 
 
   return (
     <div
-      className={classNames("fixed bottom-0 left-0 z-nav flex w-full items-center gap-12 border-t border-gray-50 bg-white-black px-20 pb-24 pt-12 pc:sticky pc:mt-20", {
+      className={classNames("fixed bottom-0 left-0 z-nav flex w-full items-center gap-12 border-t border-gray-50 bg-white-black px-20 pb-24 pt-12 tablet:px-80 pc:sticky pc:px-0", {
         "flex-col": isSkip,
       })}
     >
