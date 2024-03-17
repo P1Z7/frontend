@@ -78,7 +78,7 @@ const SignInPage = () => {
             message: (
               <>
                 가입 이력이 없는 이메일입니다.
-                <Link href={`/signup?email=${watch("email")}`} scroll={false} className="ml-4 underline">
+                <Link href={"/signup"} scroll={false} className="ml-4 underline">
                   회원가입하기
                 </Link>
               </>
@@ -137,7 +137,7 @@ const SignInPage = () => {
             </div>
           </form>
           <div className="flex-center mb-56 gap-20 text-14 font-500 text-gray-500">
-            <Link href={`/signup?email=${watch("email")}`} scroll={false}>
+            <Link href={"/signup"} scroll={false}>
               회원가입
             </Link>
             <div className="h-16 border" />
