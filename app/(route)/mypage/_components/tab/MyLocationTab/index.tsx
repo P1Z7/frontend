@@ -7,6 +7,7 @@ import { EventCardType } from "@/types/index";
 import KakaoMap from "../../../../../_components/KakaoMap";
 import FilteringButton from "./FilteringButton";
 import MapInfoBox from "./MapInfoBox";
+import ArtistIdPage from "@/(route)/artist/[artistId]/page";
 
 interface Props {
   userId: string;
@@ -29,7 +30,7 @@ const MyLocationTab = ({ userId }: Props) => {
     <div className="relative h-full w-full pc:h-fit pc:px-40 pc:py-56">
       <FilteringButton setIsChecked={setIsChecked} isChecked={isChecked} />
       <div className="h-full pc:h-[72.4rem]">
-        <KakaoMap scheduleData={myEventsData} setLocationInfo={setLocationInfo} openMapBox={setMapBox} />
+        <ArtistIdPage/>
       </div>
       {mapBox && <MapInfoBox locationInfo={locationInfo} closeMapBox={setMapBox} />}
     </div>

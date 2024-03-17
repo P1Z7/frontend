@@ -164,7 +164,7 @@ const KakaoMap = ({ scheduleData, setLocationInfo, openMapBox, selectedCard, set
 
   return (
     <div className="relative h-full">
-      <div id="map" className="h-full w-full pc:rounded-lg" />
+      <div id="map" className="h-full w-full pc:rounded-r-lg" />
       <button onClick={zoom(-1)} className="absolute bottom-88 right-20 z-floating h-48 w-48 rounded-full bg-gray-900/60 text-[24px] text-white-white">
         +
       </button>
