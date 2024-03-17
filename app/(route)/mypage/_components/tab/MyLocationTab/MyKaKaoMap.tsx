@@ -125,6 +125,7 @@ const MyKakaoMap = ({ scheduleData, setLocationInfo, openMapBox }: Props) => {
       </button>
     </div>
   );
+};
 
 export default MyKakaoMap;
 

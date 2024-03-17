@@ -1,35 +1,17 @@
 import ChipButton from "@/components/chip/ChipButton";
-
-type StatusType = "" | "예정" | "종료" | "진행중";
+import { STATUS } from "@/constants/eventStatus";
 
 interface Props {
-  status: string;
-  setStatus: (status: StatusType) => void;
+  status: number;
+  setStatus: (status: number) => void;
 }
 
 const ChipButtons = ({ status, setStatus }: Props) => {
-  const handleChipClick = (label: StatusType) => {
-    switch (label) {
-      case status:
-        setStatus("");
-        break;
-      case "예정":
-        setStatus(label);
-        break;
-      case "종료":
-        setStatus(label);
-        break;
-      case "진행중":
-        setStatus(label);
-        break;
-    }
-  };
-
   return (
     <div className="flex w-full gap-12 px-20">
-      <ChipButton label="예정" onClick={() => handleChipClick("예정")} selected={status === "예정"} />
-      <ChipButton label="진행중" onClick={() => handleChipClick("진행중")} selected={status === "진행중"} />
-      <ChipButton label="종료" onClick={() => handleChipClick("종료")} selected={status === "종료"} />
+      <ChipButton label={STATUS[1]} onClick={() => setStatus(status === 1 ? 1 : status === 3 ? status - 1 : (status % 4) + 1)} selected={status === 1 || status === 3} />
+      <ChipButton label={STATUS[2]} onClick={() => setStatus(status === 2 ? 2 : status === 3 ? status - 2 : (status % 4) + 2)} selected={status === 2 || status === 3} />
+      <ChipButton label={STATUS[4]} onClick={() => setStatus(status === 4 ? 3 : 4)} selected={status === 4} />
     </div>
   );
 };

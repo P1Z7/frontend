@@ -36,12 +36,21 @@ type Res_Get_Artist_Event = {
 
 type Res_Get_Artist_Group_Month = ArtistGroupMonthType[];
 
+type Req_Get_Event_Mine = {
+  eventList: EventCardType[];
+  size: number;
+  page: number;
+  userId: string;
+  totalCount: number;
+};
+
 export type Res_Get_Type = {
   event: Res_Get_Event;
   eventList: Res_Get_Event_List;
   eventLike: Res_Get_Event_Like;
   eventSearch: Res_Get_Event_Search;
   eventReviews: Res_Get_EventReviews;
+  postedEvent: Req_Get_Event_Mine;
   artistGroup: Res_Get_Artist_Group;
   myArtist: Res_Get_myArtist;
   editApplication: Res_Get_Edit_Application;

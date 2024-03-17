@@ -72,17 +72,31 @@ type Req_Query_Approve = {
   eventUpdateApplicationId: string;
 };
 
+type Req_Query_My_Artist_Event = {
+  sort: "최신순" | "인기순";
+  size?: number;
+  page?: number;
+  status?: StatusType;
+  userId?: string;
+};
+
 type Req_Query_Artist_Event = {
   sort: "최신순" | "인기순";
   size?: number;
   page?: number;
-  status?: "" | "예정" | "종료" | "진행중";
+  status?: StatusType;
   userId?: string;
   artistId: string;
 };
 
 type Req_Query_NickName = {
   search: string;
+};
+
+type Req_Query_Event_Mine = {
+  size?: number;
+  page?: number;
+  userId: string;
 };
 
 type Req_Query_Artist_Month = {
@@ -104,6 +118,8 @@ export type Req_Query_Type = {
   멤버조회: Req_Query_Artist;
   수정상세: Req_Query_Approve;
   아티스트행사: Req_Query_Artist_Event;
+  내아티스트행사: Req_Query_My_Artist_Event;
   닉네임: Req_Query_NickName;
+  내게시글: Req_Query_Event_Mine;
   이번달생일: Req_Query_Artist_Month;
 };

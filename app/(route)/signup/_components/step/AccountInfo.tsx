@@ -1,21 +1,31 @@
 import { instance } from "app/_api/api";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
+import CheckBox from "@/components/CheckBox";
 import Button from "@/components/button";
 import BottomButton from "@/components/button/BottomButton";
 import InputText from "@/components/input/InputText";
 import { ERROR_MESSAGES, REG_EXP } from "@/utils/signupValidation";
 import { SignUpFormType } from "@/types/index";
 import { checkEnterNextButton } from "../../../../_hooks/checkEnterNextButton";
+import Term, { TERMS_TYPE } from "../Term";
 
-const AccountInfo = ({ onNext }: { onNext: () => void }) => {
-  const { formState, control, getValues, watch, setError } = useFormContext<SignUpFormType>();
-  const { email, password, passwordCheck, code } = watch();
+interface Props {
+  onNext: () => void;
+  onPrev: () => void;
+}
+
+const AccountInfo = ({ onNext, onPrev }: Props) => {
+  const { formState, control, getValues, watch, setError, setValue } = useFormContext<SignUpFormType>();
+  const { email, password, passwordCheck, code, termsAndConditions, privacyPolicy } = watch();
   const [canWrite, setCanWrite] = useState(false);
   const [isVerification, setIsVerification] = useState(false);
   const { isError, handleEnterError } = checkEnterNextButton();
 
   const isButtonDisabled = !!(formState.errors.password || formState.errors.passwordCheck) || !(password && passwordCheck) || !isVerification;
+
+  const isButtonDisabledInPC =
+    !!(formState.errors.password || formState.errors.passwordCheck) || !(password && passwordCheck) || !isVerification || !termsAndConditions || !privacyPolicy;
 
   const handleEmailClick = async () => {
     setIsVerification(false);
@@ -54,8 +64,14 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
   };
 
   return (
-    <div className="flex h-full flex-col justify-between pb-160 pt-36 pc:pb-0">
-      <div className="flex flex-col gap-20">
+    <div className="flex h-full flex-col justify-between pb-160 pt-36">
+      <div className="flex flex-col gap-20 pc:pb-80">
+        <div className="hidden flex-col gap-12 pc:flex">
+          <p className="text-20 font-500 text-gray-900">약관 동의</p>
+          {["이용약관", "개인정보처리방침"].map((item) => (
+            <Term {...TERMS_TYPE[item]} setValue={setValue} value={termsAndConditions} />
+          ))}
+        </div>
         <div className="flex items-end gap-8">
           <InputText
             isSuccess={canWrite}
@@ -73,7 +89,7 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
           >
             이메일
           </InputText>
-          <div className="w-88 shrink-0 pb-20">
+          <div className="w-88 shrink-0 pb-20 tablet:w-120">
             <Button type={canWrite ? "linedGray" : "lined"} size="free" style="h-48 text-14 rounded-sm" isDisabled={!!formState.errors.email || !email} onClick={handleEmailClick}>
               {canWrite ? "재인증" : "인증하기"}
             </Button>
@@ -96,7 +112,7 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
           >
             인증코드 입력
           </InputText>
-          <div className="w-88 shrink-0 pb-20">
+          <div className="w-88 shrink-0 pb-20 tablet:w-120">
             <Button type="lined" size="free" style="h-48 text-14 rounded-sm" isDisabled={!canWrite || !code || isVerification} onClick={handleCodeClick}>
               {isVerification ? "인증완료" : "확인"}
             </Button>
@@ -134,7 +150,13 @@ const AccountInfo = ({ onNext }: { onNext: () => void }) => {
           비밀번호 확인
         </InputText>
       </div>
-      <div className={`fixed bottom-0 left-0 w-full pc:sticky pc:mt-20 ${isError ? "animate-brrr" : ""}`}>
+      <div className={`fixed bottom-0 left-0 w-full pc:sticky pc:mt-20 ${isError ? "animate-brrr" : ""} pc:hidden`}>
+        {/* <BottomButton onClick={onNext} hasBack onBackClick={onPrev}> */}
+        <BottomButton onClick={onNext} isDisabled={isButtonDisabled} hasBack onBackClick={onPrev}>
+          다음으로
+        </BottomButton>
+      </div>
+      <div className={`fixed bottom-0 left-0 w-full pc:sticky pc:mt-20 ${isError ? "animate-brrr" : ""} hidden pc:inline`}>
         {/* <BottomButton onClick={onNext}> */}
         <BottomButton onClick={onNext} isDisabled={isButtonDisabled}>
           다음으로

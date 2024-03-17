@@ -166,6 +166,9 @@ type GetEndPoint =
   | `/event/${string}/artist`
   | "/event/popularity"
   | "/event/new"
+  | "artist/group/month"
+  | `/event/user/${string}`
+  | "/event/new"
   | "artist/group/month";
 type PostEndPoint =
   | "/event"
@@ -182,14 +185,15 @@ type PostEndPoint =
   | `/reviews/${string}/like`
   | "/email"
   | "/email/verification"
+  | "/email/user"
   | "/event/update/application"
   | "/event/update/approval"
   | "/artist/request"
   | "/event/claim"
   | `/reviews/${string}/claims`;
 
-type PutEndPoint = `/event/${string}` | `/users/${string}/profile` | `/users/${string}/password` | `/users/${string}/artists`;
-type DeleteEndPoint = `/users/${string}/artists` | `/reviews/${string}/images` | `/users/${string}` | "/auth";
+type DeleteEndPoint = `/users/${string}/artists` | `/reviews/${string}/images` | `/users/${string}` | "/auth" | `/event/${string}` | `/reviews/${string}/users/${string}`;
+type PutEndPoint = `/event/${string}` | `/users/${string}/profile` | `/users/${string}/password` | `/users/${string}/artists` | "/users/password";
 type PostQueryType<T> = T extends "/file/upload" ? { category: "event" | "artist" | "user" } : unknown;
 
 type PostBodyType<T> = T extends "/event"
@@ -216,51 +220,58 @@ type PostBodyType<T> = T extends "/event"
                       ? Req_Post_Type["email"]
                       : T extends `/email/verification`
                         ? Req_Post_Type["verification"]
-                        : T extends "/event/update/application"
-                          ? Req_Post_Type["edit"]
-                          : T extends "/event/update/approval"
-                            ? Req_Post_Type["approve"]
-                            : T extends "/artist/request"
-                              ? Req_Post_Type["request"]
-                              : T extends "/event/claim"
-                                ? Req_Post_Type["eventClaim"]
-                                : T extends `/reviews/${string}/claims`
-                                  ? Req_Post_Type["reviewClaim"]
-                                  : unknown;
+                        : T extends "/email/user"
+                          ? Req_Post_Type["resetPw"]
+                          : T extends "/event/update/application"
+                            ? Req_Post_Type["edit"]
+                            : T extends "/event/update/approval"
+                              ? Req_Post_Type["approve"]
+                              : T extends "/artist/request"
+                                ? Req_Post_Type["request"]
+                                : T extends "/event/claim"
+                                  ? Req_Post_Type["eventClaim"]
+                                  : T extends `/reviews/${string}/claims`
+                                    ? Req_Post_Type["reviewClaim"]
+                                    : unknown;
 
 type GetQueryType<T> = T extends "/event"
   ? Req_Query_Type["행사목록"]
   : T extends "/event/like"
     ? Req_Query_Type["행사좋아요"]
-    : T extends `/event/${string}/like`
-      ? Req_Query_Type["유저좋아요"]
-      : T extends "/artist/group/month"
-        ? Req_Query_Type["이번달생일"]
-        : T extends "/event/popularity" | "/event/new"
-          ? Req_Query_Type["행사캐러셀"]
-          : T extends `/event/update/application/${string}`
-            ? Req_Query_Type["수정상세"]
-            : T extends `/event/artist/${string}`
-              ? Req_Query_Type["아티스트행사"]
-              : T extends `/event/${string}`
-                ? Req_Query_Type["행사상세"]
-                : T extends "/artist/group"
-                  ? Req_Query_Type["아티스트"]
-                  : T extends `/artist/${string}`
-                    ? Req_Query_Type["멤버"]
-                    : T extends "/group/solo"
-                      ? Req_Query_Type["그룹솔로"]
-                      : T extends `/reviews/user/${string}`
-                        ? Req_Query_Type["유저리뷰"]
-                        : T extends `/reviews/${string}`
-                          ? Req_Query_Type["리뷰"]
-                          : T extends "/group"
-                            ? Req_Query_Type["그룹조회"]
-                            : T extends "/artist"
-                              ? Req_Query_Type["멤버조회"]
-                              : T extends "/users/nickname"
-                                ? Req_Query_Type["닉네임"]
-                                : unknown;
+    : T extends "/artist/group/month"
+      ? Req_Query_Type["이번달생일"]
+      : T extends `/event/user/${string}`
+        ? Req_Query_Type["내게시글"]
+        : T extends `/event/${string}/like`
+          ? Req_Query_Type["유저좋아요"]
+          : T extends "/event/popularity" | "/event/new"
+            ? Req_Query_Type["행사캐러셀"]
+            : T extends `/event/update/application/${string}`
+              ? Req_Query_Type["수정상세"]
+              : T extends `/event/${string}/artist`
+                ? Req_Query_Type["내아티스트행사"]
+                : T extends `/event/artist/${string}`
+                  ? Req_Query_Type["아티스트행사"]
+                  : T extends `/event/${string}`
+                    ? Req_Query_Type["행사상세"]
+                    : T extends "/artist/group"
+                      ? Req_Query_Type["아티스트"]
+                      : T extends `/artist/${string}`
+                        ? Req_Query_Type["멤버"]
+                        : T extends "/group/solo"
+                          ? Req_Query_Type["그룹솔로"]
+                          : T extends `/reviews/user/${string}`
+                            ? Req_Query_Type["유저리뷰"]
+                            : T extends `/reviews/${string}`
+                              ? Req_Query_Type["리뷰"]
+                              : T extends "/group"
+                                ? Req_Query_Type["그룹조회"]
+                                : T extends "/artist"
+                                  ? Req_Query_Type["멤버조회"]
+                                  : T extends "/users/nickname"
+                                    ? Req_Query_Type["닉네임"]
+                                    : unknown;
+
 // 사용하실 때 직접 추가 부탁드립니다!
 type PutBodyType<T> = T extends `/event/${string}`
   ? Req_Post_Type["event"]
@@ -271,4 +282,12 @@ type PutBodyType<T> = T extends `/event/${string}`
       : T extends `/users/${string}/artists`
         ? Req_Put_Type["artists"]
         : any;
-type DeleteBodyType<T> = T extends `/users/${string}/artists` ? Req_Delete_Type["myArtist"] : T extends `/users/${string}` ? Req_Delete_Type["user"] : any;
+type DeleteBodyType<T> = T extends `/users/${string}/artists`
+  ? Req_Delete_Type["myArtist"]
+  : T extends `/users/${string}`
+    ? Req_Delete_Type["user"]
+    : T extends `/event/${string}`
+      ? Req_Delete_Type["event"]
+      : T extends "/users/password"
+        ? Req_Put_Type["resetPw"]
+        : any;
