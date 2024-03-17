@@ -83,7 +83,7 @@ const StarInput = () => {
             placeholder="행사 유형을 선택하세요."
             tabIndex={0}
             onClick={() => (isPc ? openModal("event") : openBottomSheet("event"))}
-            onKeyDown={(event) => handleEnterDown(event, () => openBottomSheet("event"))}
+            onKeyDown={(event) => handleEnterDown(event, () => (isPc ? openModal("event") : openBottomSheet("event")))}
             isEdit={validateEdit(defaultValues?.eventType !== eventType)}
             onInit={() => setValue("eventType", defaultValues?.eventType || "카페")}
             noButton

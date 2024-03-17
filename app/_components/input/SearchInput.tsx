@@ -1,4 +1,4 @@
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { KeyboardEvent } from "react";
 import { useForm } from "react-hook-form";
@@ -54,9 +54,12 @@ const SearchInput = ({ keyword, setKeyword, initialKeyword, href, placeholder = 
     setValue("search", keyword);
   }, [keyword]);
 
+  const curPath = usePathname();
+
   return (
     <div className="relative">
       <input
+        autoFocus={curPath === "/post" || curPath === "/edit"}
         className={`h-44 w-full rounded-full bg-gray-50 px-16 py-12 pr-68 text-16 text-black-white placeholder:text-gray-400 focus:outline-none ${size === "lg" ? "pc:h-52 pc:border pc:border-gray-100 pc:bg-white-black" : ""} pc:px-20 pc:pr-76`}
         placeholder={placeholder}
         {...register("search")}
