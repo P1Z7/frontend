@@ -170,7 +170,8 @@ type GetEndPoint =
   | `/event/update/application/${string}`
   | `/event/${string}/artist`
   | "/event/popularity"
-  | "/event/new";
+  | "/event/new"
+  | "/users/new-artists";
 type PostEndPoint =
   | "/event"
   | "/event/like"
