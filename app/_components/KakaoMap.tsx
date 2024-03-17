@@ -1,20 +1,21 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
 import useKakaoMap from "@/hooks/useKakaoMap";
 import { EventCardType } from "@/types/index";
 
 interface Props {
   scheduleData: EventCardType[];
-  setLocationInfo: (data: EventCardType) => void;
-  openMapBox: (open: true) => void;
+  setLocationInfo?: (data: EventCardType) => void;
+  openMapBox?: (open: true) => void;
+  selectedCard: EventCardType | null;
+  setSelectedCard: Dispatch<SetStateAction<EventCardType | null>>;
 }
 
-const MyKakaoMap = ({ scheduleData, setLocationInfo, openMapBox }: Props) => {
+const KakaoMap = ({ scheduleData, setLocationInfo, openMapBox, selectedCard, setSelectedCard }: Props) => {
   const [mapInstance, setMapInstance] = useState<any>(null);
 
-  const onLoadKakaoMap = () => {
+  const onLoadKakaoMap = useCallback(() => {
     const kakaoMap = window.kakao.maps;
     kakaoMap.load(() => {
-      this;
       const mapContainer = document.getElementById("map");
       const mapOption = {
         center: new kakaoMap.LatLng(37.566826, 126.9786567),
@@ -25,7 +26,7 @@ const MyKakaoMap = ({ scheduleData, setLocationInfo, openMapBox }: Props) => {
 
       const geocoder = new kakaoMap.services.Geocoder();
 
-      const myMarker = (data: EventCardType) => {
+      const myMarker = (data: EventCardType, index: number) => {
         const { address, placeName, eventType } = data;
 
         geocoder.addressSearch(address, (result: any, status: any) => {
@@ -65,13 +66,16 @@ const MyKakaoMap = ({ scheduleData, setLocationInfo, openMapBox }: Props) => {
             });
 
             kakaoMap.event.addListener(marker, "click", () => {
-              setLocationInfo(data);
-              openMapBox(true);
+              setLocationInfo?.(data);
+              openMapBox?.(true);
+              setSelectedCard?.(data);
             });
 
-            map.setCenter(coords);
-
             clusterer.addMarker(marker);
+
+            if (index === 0) {
+              map.setCenter(coords);
+            }
           }
         });
       };
@@ -80,7 +84,7 @@ const MyKakaoMap = ({ scheduleData, setLocationInfo, openMapBox }: Props) => {
         map: map,
         gridSize: 60,
         averageCenter: true,
-        minLevel: 3,
+        minLevel: 4,
         minClusterSize: 3,
         styles: [
           {
@@ -89,7 +93,6 @@ const MyKakaoMap = ({ scheduleData, setLocationInfo, openMapBox }: Props) => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            background: "url(cluster.png) no-repeat",
             color: "#fff",
             fontSize: "24px",
             backgroundColor: "#FF50AA",
@@ -102,21 +105,65 @@ const MyKakaoMap = ({ scheduleData, setLocationInfo, openMapBox }: Props) => {
       });
 
       for (let i = 0; i < scheduleData.length; i++) {
-        myMarker(scheduleData[i]);
+        myMarker(scheduleData[i], i);
       }
     });
-  };
+  }, [scheduleData]);
 
   useKakaoMap({ callbackFn: onLoadKakaoMap, deps: [scheduleData] });
 
-  const zoom = (scale: number) => () => {
-    const level = mapInstance.getLevel();
-    mapInstance.setLevel(level + scale);
-  };
+  const zoom = useCallback(
+    (scale: number) => () => {
+      const level = mapInstance.getLevel();
+      mapInstance.setLevel(level + scale);
+    },
+    [mapInstance],
+  );
+
+  const focusToData = useCallback(
+    (data: EventCardType) => {
+      const { address, placeName } = data;
+
+      const kakaoMap = window.kakao.maps;
+      const geocoder = new kakaoMap.services.Geocoder();
+      geocoder.addressSearch(address, (result: any, status: any) => {
+        if (status === kakaoMap.services.Status.OK) {
+          const newLocation = new kakaoMap.LatLng(result[0].y, result[0].x);
+
+          mapInstance.setLevel(3);
+          mapInstance.panTo(newLocation);
+
+          const content =
+            '<div class="relative w-fit rounded-full bg-gray-900 px-12 py-8 text-center text-14 font-600 text-white-black">' +
+            placeName +
+            '<div class="absolute -bottom-12 right-1/2 translate-x-1/2">' +
+            '<img src="/icon/marker-bottom.svg" />' +
+            "</div>" +
+            "</div>";
+
+          const customOverlay = new kakaoMap.CustomOverlay({
+            position: newLocation,
+            content: content,
+            yAnchor: 2.5,
+          });
+
+          customOverlay.setMap(mapInstance);
+          setTimeout(() => customOverlay.setMap(null), 2000);
+        }
+      });
+    },
+    [mapInstance],
+  );
+
+  useEffect(() => {
+    if (mapInstance && selectedCard?.id) {
+      focusToData(selectedCard);
+    }
+  }, [selectedCard?.id]);
 
   return (
     <div className="relative h-full">
-      <div id="map" className="h-full w-full pc:h-[72.4rem]" />
+      <div id="map" className="h-full w-full pc:rounded-r-lg" />
       <button onClick={zoom(-1)} className="absolute bottom-88 right-20 z-floating h-48 w-48 rounded-full bg-gray-900/60 text-[24px] text-white-white">
         +
       </button>
@@ -125,8 +172,9 @@ const MyKakaoMap = ({ scheduleData, setLocationInfo, openMapBox }: Props) => {
       </button>
     </div>
   );
+};
 
-export default MyKakaoMap;
+export default KakaoMap;
 
 const IMAGE_EVENT = {
   카페: "/image/marker-cafe.png",
