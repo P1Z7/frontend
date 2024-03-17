@@ -1,6 +1,5 @@
 "use client";
 
-import ChipButtons from "@/(route)/artist/[artistId]/_components/ChipButtons";
 import FadingDot from "@/(route)/signin/_components/FadingDot";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
@@ -10,26 +9,28 @@ import { instance } from "@/api/api";
 import { getCalendarTime } from "@/utils/getCalendarTime";
 import { EventCardType } from "@/types/index";
 import { MYPAGE_CALENDAR_STYLE } from "@/constants/calendarStyle";
-import { STATUS } from "@/constants/eventStatus";
+import NoContent from "../../NoContent";
+import ChipButtons from "./ChipButtons";
 import FoldButton from "./FoldButton";
 import MyCalendar from "./MyCalendar";
-import NoContentsInCalendar from "./NoContentsInCalendar";
 
 interface Props {
   userId: string;
 }
 
+type StatusType = "" | "예정" | "종료" | "진행중" | "종료제외";
+
 const MyCalendarTab = ({ userId }: Props) => {
   const [data, setData] = useState<EventCardType[] | []>([]);
   const [isFold, setIsFold] = useState(true);
-  const [status, setStatus] = useState(3);
+  const [status, setStatus] = useState<StatusType>("");
   const [calendarStyle, setCalendarStyle] = useState("");
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const { data: myEventsData, isSuccess } = useQuery({
-    queryKey: ["events", STATUS[status]],
+    queryKey: ["events", status],
     queryFn: async () => {
-      return instance.get(`/event/${userId}/like`, { status: STATUS[status] });
+      return instance.get(`/event/${userId}/like`, { status });
     },
   });
 
@@ -61,7 +62,7 @@ const MyCalendarTab = ({ userId }: Props) => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-stretch gap-16 px-20 pb-88 pt-72 tablet:pb-88 pc:pb-16">
+    <div className="flex flex-col items-center justify-stretch gap-16 px-20 pb-16 pt-72">
       <div className="flex-center flex-col gap-8 rounded-sm border border-gray-50 pb-8 pt-16">
         <style>{calendarStyle}</style>
         {calendarStyle === "" ? (
@@ -87,7 +88,7 @@ const MyCalendarTab = ({ userId }: Props) => {
               <HorizontalEventCard key={event.id} data={event} onHeartClick={() => handleHeartClick(event.id)} isGrow />
             ))}
         </section>
-        {!data.length && <NoContentsInCalendar />}
+        {!data.length && <NoContent type="MyCalendar" />}
       </div>
     </div>
   );

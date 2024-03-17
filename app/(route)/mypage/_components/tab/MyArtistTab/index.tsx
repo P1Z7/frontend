@@ -2,17 +2,16 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import ArtistCard from "@/components/ArtistCard";
 import { instance } from "@/api/api";
 import { ArtistType } from "@/types/index";
+import MyArtistEvent from "./MyArtistEvent";
+import MyArtists from "./MyArtists";
 
 interface Props {
   userId: string;
 }
 
 const MyArtistTab = ({ userId }: Props) => {
-  const router = useRouter();
-
   const { data: myArtistsData, isSuccess } = useQuery<ArtistType[]>({
     queryKey: ["myArtist"],
     queryFn: async () => {
@@ -22,39 +21,22 @@ const MyArtistTab = ({ userId }: Props) => {
 
   if (!isSuccess) return;
   return (
-    <div className="flex flex-col items-start gap-16 px-20 py-24 pb-88 pc:gap-24 pc:p-32 pc:pb-16">
-      {!!myArtistsData?.length && (
-        <button className="pl- text-14 font-500 text-blue" onClick={() => router.push("/setting/my-artist")}>
-          팔로우 아티스트 수정하기
-        </button>
-      )}
-      <div className="flex w-full flex-col items-center">
-        <div className="flex w-full flex-wrap justify-center gap-20 pc:justify-start pc:gap-32">
-          {myArtistsData?.length ? (
-            myArtistsData.map((artist) => {
-              if (!artist) {
-                return null;
-              }
-              return (
-                <ArtistCard
-                  key={artist.id}
-                  profileImage={artist.image}
-                  onClick={() => {
-                    router.push(`/search?keyword=${artist.name}`);
-                  }}
-                >
-                  {artist.name}
-                </ArtistCard>
-              );
-            })
-          ) : (
-            <FollowArtistHero />
-          )}
+    <>
+      {!myArtistsData?.length ? (
+        <div className="px-20 py-24 pb-16 pc:gap-24 pc:p-32">
+          <FollowArtistHero />
         </div>
-      </div>
-    </div>
+      ) : (
+        <div className="flex w-full flex-col items-start gap-60 px-20 py-24 pb-16 pc:p-32">
+          <MyArtists data={myArtistsData} />
+          <MyArtistEvent userId={userId} />
+        </div>
+      )}
+    </>
   );
 };
+
+export default MyArtistTab;
 
 const FollowArtistHero = () => {
   const router = useRouter();
@@ -80,5 +62,3 @@ const FollowArtistHero = () => {
     </div>
   );
 };
-
-export default MyArtistTab;

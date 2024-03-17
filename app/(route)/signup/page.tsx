@@ -1,14 +1,11 @@
 "use client";
 
-import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import MetaTag from "@/components/MetaTag";
 import DottedLayout from "@/components/layout/DottedLayout";
-import PinkLayout from "@/components/layout/PinkLayout";
 import { useFunnel } from "@/hooks/useFunnel";
 import { SignUpFormType, SignupStepNameType } from "@/types/index";
 import { META_TAG } from "@/constants/metaTag";
-import ArrowLeft from "@/public/icon/arrow-left_lg.svg";
 import GenericFormProvider from "../../_components/GenericFormProvider";
 import ProfileSetup from "./_components/ProfileSetup";
 
@@ -45,6 +42,7 @@ const SignUp = () => {
       <DottedLayout size="extraNarrow">
         <div className="flex h-[calc(100%-13.8rem)] grow flex-col px-20 tablet:px-40 pc:px-0">
           <GenericFormProvider<SignUpFormType> formOptions={{ mode: "onBlur", defaultValues: { ...DEFAULT_VALUES, email: emailFromSignin ?? "" } }}>
+            <ProfileSetup steps={STEPS} handleNextClick={handleNextClick} handlePrevClick={handlePrevClick} Funnel={Funnel} Step={Step} />
             <ProfileSetup steps={STEPS} handleNextClick={handleNextClick} handlePrevClick={handlePrevClick} Funnel={Funnel} Step={Step} />
           </GenericFormProvider>
         </div>
