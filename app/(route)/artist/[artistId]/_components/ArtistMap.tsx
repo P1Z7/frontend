@@ -4,10 +4,10 @@ import { EventCardType } from "@/types/index";
 interface Props {
   scheduleData: EventCardType[];
   setLocationInfo: (data: EventCardType) => void;
-  openMapBox: (open: true) => void;
+  setSelectedCardId: (id: string | null) => void;
 }
 
-const MyKakaoMap = ({ scheduleData, setLocationInfo, openMapBox }: Props) => {
+const ArtistMap = ({ scheduleData, setLocationInfo, setSelectedCardId }: Props) => {
   useEffect(() => {
     if (window.kakao) {
       window.kakao.maps.load(() => {
@@ -60,13 +60,14 @@ const MyKakaoMap = ({ scheduleData, setLocationInfo, openMapBox }: Props) => {
 
               window.kakao.maps.event.addListener(marker, "click", () => {
                 setLocationInfo(data);
-                openMapBox(true);
+                setSelectedCardId(data.id);
               });
 
               map.setCenter(coords);
             }
           });
         };
+
         for (let i = 0; i < scheduleData.length; i++) {
           myMarker(scheduleData[i]);
         }
@@ -77,4 +78,4 @@ const MyKakaoMap = ({ scheduleData, setLocationInfo, openMapBox }: Props) => {
   return <div id="map" className="h-full w-full pc:rounded-lg" />;
 };
 
-export default MyKakaoMap;
+export default ArtistMap;

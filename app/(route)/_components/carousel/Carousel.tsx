@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import VerticalEventCard from "@/components/card/VerticalEventCard";
 import useGetWindowWidth from "@/hooks/useGetWindowWidth";
 import { Res_Get_Type } from "@/types/getResType";
-import PrevButtonIcon from "@/public/icon/arrow-left_xl.svg";
-import NextButtonIcon from "@/public/icon/arrow-right_xl.svg";
+import PrevButtonIcon from "@/public/icon/arrow-left_md.svg";
+import NextButtonIcon from "@/public/icon/arrow-right_md.svg";
 
 const SCROLLX = 20.8;
 
@@ -49,11 +49,14 @@ const Carousel = ({ cards }: Props) => {
   }, [cards]);
 
   return (
-    <div className="pc:flex pc:w-[112rem]">
-      <div onClick={handlePrevClick} className={`relative top-76 hidden h-100 w-[5rem] cursor-pointer pc:block ${isPrevDisabled ? "pointer-events-none opacity-30" : ""}`}>
-        <PrevButtonIcon />
+    <div className="pc:flex pc:w-[112rem] pc:gap-[1rem]">
+      <div
+        onClick={handlePrevClick}
+        className={`pc:flex-center hidden h-40 w-40 cursor-pointer rounded-full bg-gray-50 pc:relative pc:top-108 pc:flex-shrink-0 ${isPrevDisabled && "pointer-events-none"}`}
+      >
+        <PrevButtonIcon className={`${isPrevDisabled && "opacity-30"}`} />
       </div>
-      <div className="flex w-full gap-16 overflow-auto px-20 scrollbar-hide pc:gap-20 pc:overflow-hidden pc:p-0">
+      <div className="flex w-full gap-16 overflow-auto px-20 scrollbar-hide tablet:px-40 pc:gap-20 pc:overflow-hidden pc:p-0">
         {cards?.map((event) => (
           <div key={event.id} className="pc:transition-transform pc:duration-500 pc:ease-in-out" style={{ transform: `translateX(-${slideIndex * SCROLLX}rem)` }}>
             <VerticalEventCard data={event} />
@@ -62,9 +65,9 @@ const Carousel = ({ cards }: Props) => {
       </div>
       <div
         onClick={handleNextClick}
-        className={`relative top-76 hidden h-100 w-[5rem] cursor-pointer pc:flex pc:justify-end ${isNextDisabled ? "pointer-events-none opacity-50" : ""}`}
+        className={`pc:flex-center hidden h-40 w-40 cursor-pointer rounded-full bg-gray-50 pc:relative pc:top-108 pc:flex-shrink-0 ${isNextDisabled && "pointer-events-none opacity-30"}`}
       >
-        <NextButtonIcon />
+        <NextButtonIcon className={`${isNextDisabled ? "pointer-events-none opacity-30" : ""}`} />
       </div>
     </div>
   );
