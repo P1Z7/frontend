@@ -22,20 +22,9 @@ const TermsAgreement = ({ onNext }: { onNext: () => void }) => {
   return (
     <>
       <div className="flex flex-col gap-20 pb-160 pt-36 pc:pb-0">
-        <Term
-          title={TERMS_TYPE["이용약관"].title}
-          contents={TERMS_TYPE["이용약관"].contents}
-          setValue={setValue}
-          formTitle={TERMS_TYPE["이용약관"].formTitle}
-          value={termsAndConditions}
-        />
-        <Term
-          title={TERMS_TYPE["개인정보처리방침"].title}
-          contents={TERMS_TYPE["개인정보처리방침"].contents}
-          setValue={setValue}
-          formTitle={TERMS_TYPE["개인정보처리방침"].formTitle}
-          value={privacyPolicy}
-        />
+        {["이용약관", "개인정보처리방침"].map((item) => (
+          <Term {...TERMS_TYPE[item]} setValue={setValue} value={termsAndConditions} />
+        ))}
       </div>
       <BottomButton onClick={onNext} isDisabled={!termsAndConditions || !privacyPolicy}>
         다음으로
