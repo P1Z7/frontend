@@ -4,15 +4,13 @@ import { EventCardType } from "@/types/index";
 
 interface Props {
   scheduleData: EventCardType[];
-  setLocationInfo?: (data: EventCardType) => void;
-  openMapBox?: (open: true) => void;
   toggleTab?: boolean;
   setToggleTab?: (toggle: boolean) => void;
   selectedCard: EventCardType | null;
   setSelectedCard: (data: EventCardType) => void;
 }
 
-const KakaoMap = ({ scheduleData, setLocationInfo, openMapBox, toggleTab, setToggleTab, selectedCard, setSelectedCard }: Props) => {
+const KakaoMap = ({ scheduleData, toggleTab, setToggleTab, selectedCard, setSelectedCard }: Props) => {
   const [mapInstance, setMapInstance] = useState<any>(null);
 
   const onLoadKakaoMap = useCallback(() => {
@@ -68,8 +66,6 @@ const KakaoMap = ({ scheduleData, setLocationInfo, openMapBox, toggleTab, setTog
             });
 
             kakaoMap.event.addListener(marker, "click", () => {
-              setLocationInfo?.(data);
-              openMapBox?.(true);
               setSelectedCard?.(data);
             });
 
