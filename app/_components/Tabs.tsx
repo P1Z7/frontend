@@ -4,7 +4,7 @@ import TabButton from "@/components/TabButton";
 import { Tab } from "@/store/tab/cookies";
 
 const TOP_OFFSET = {
-  mypage: "top-0",
+  mypage: "top-72 tablet:top-64",
   event: "top-60",
 };
 
