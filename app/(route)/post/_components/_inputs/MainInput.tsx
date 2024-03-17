@@ -48,7 +48,7 @@ const MainInput = () => {
         <InputText name="addressDetail" placeholder="상세 주소 입력" />
       </div>
       <div className="flex flex-col">
-        <div className="relative flex items-center gap-4">
+        <div className="relative flex items-center gap-4 pc:text-20 pc:font-500">
           기간
           {validateEdit(defaultValues?.startDate !== startDate || defaultValues?.endDate !== endDate) && (
             <InitButton

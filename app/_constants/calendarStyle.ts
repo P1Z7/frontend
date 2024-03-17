@@ -30,6 +30,10 @@ export const MYPAGE_CALENDAR_STYLE = `
   font-family: Pretendard; 
   border: 0;
 
+  @media (min-width: 768px) {
+    width: 688px;
+  }
+
   @media (min-width: 1200px) {
     width: 756px;
   }
@@ -38,12 +42,16 @@ export const MYPAGE_CALENDAR_STYLE = `
 .react-calendar__navigation {
   height: 24px;
 
-  @media (min-width: 1200px) {
+  @media (min-width: 768px) {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px 200px;
+    padding: 10px 150px;
     margin-bottom: 16px;
+  }
+
+  @media (min-width: 1200px) {
+    padding: 10px 200px;
   }
 }
 
@@ -68,7 +76,7 @@ export const MYPAGE_CALENDAR_STYLE = `
   font-weight: 500;
   padding-bottom: 0.4rem;
 
-  @media (min-width: 1200px) {
+  @media (min-width: 768px) {
     font-size: 1.2rem;
     font-weight: 400;
   }
@@ -91,14 +99,19 @@ export const MYPAGE_CALENDAR_STYLE = `
   align-items: center;
   gap: 4px;
 
-  @media (min-width: 1200px) {
+  @media (min-width: 768px) {
     display: flex;
-    width: 108px;
-    min-height: 60px;
+    min-height: 52px;
+    width: 96px;
     padding-top: 4px;
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
+  }
+
+  @media (min-width: 1200px) {
+    width: 108px;
+    min-height: 60px;
   }
 }
 
@@ -118,7 +131,7 @@ export const MYPAGE_CALENDAR_STYLE = `
   border-right: 1px solid #F1F2F4 ;
   border-bottom: 1px solid #F1F2F4 ;
 
-  @media (min-width: 1200px) {
+  @media (min-width: 768px) {
     font-size: 1.2rem;
     font-weight: 400;
   }
@@ -146,7 +159,7 @@ export const MYPAGE_CALENDAR_STYLE = `
   height: 1.2rem;
   border-radius: 0.4rem;
 
-  @media (min-width: 1200px) {
+  @media (min-width: 768px) {
     border-radius: 0.8rem;
     width: 2.4rem;
     height: 1.6rem;
@@ -178,7 +191,7 @@ export const MYPAGE_CALENDAR_STYLE = `
   color: #1C1E22;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 768px) {
   .react-calendar__month-view__weekdays__weekday {
     border-top: 1px solid #F1F2F4;
     border-right: 1px solid #F1F2F4;

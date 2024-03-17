@@ -5,7 +5,19 @@ import ArrowIcon from "@/public/icon/arrow-right_sm.svg";
 import PrivacyPolicy from "./PrivacyPolicy";
 import TermsAndConditions from "./TermsAndConditions";
 
-export const TERMS_TYPE = {
+interface TermType {
+  formTitle: keyof SignUpFormType;
+  title: string;
+  contents: ReactElement;
+  link?: string;
+}
+
+interface TermProps extends TermType {
+  setValue: (formTitle: keyof SignUpFormType, isCheck: boolean) => void;
+  value: boolean;
+}
+
+export const TERMS_TYPE: Record<string, TermType> = {
   이용약관: {
     formTitle: "termsAndConditions" as keyof SignUpFormType,
     title: "이용약관 동의 (필수)",
@@ -19,15 +31,6 @@ export const TERMS_TYPE = {
     link: "https://myopener.notion.site/2-7c91f8ae420b4849b872b45edc40d76d",
   },
 };
-
-interface TermProps {
-  title: string;
-  contents: ReactElement;
-  setValue: (formTitle: keyof SignUpFormType, isCheck: boolean) => void;
-  formTitle: keyof SignUpFormType;
-  value: boolean;
-  link?: string;
-}
 
 const Term = ({ title, contents, setValue, value, formTitle, link }: TermProps) => {
   const [isCheck, setIsCheck] = useState(value);

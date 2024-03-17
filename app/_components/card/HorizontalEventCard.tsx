@@ -1,21 +1,27 @@
 import Image from "next/image";
 import Link from "next/link";
-import { SyntheticEvent } from "react";
+import { SyntheticEvent, useState } from "react";
 import HeartButton from "@/components/button/HeartButton";
 import Chip from "@/components/chip/Chip";
+import { useBottomSheet } from "@/hooks/useBottomSheet";
 import useLikeEvent from "@/hooks/useLikeEvent";
 import { formatAddress, formatDate } from "@/utils/formatString";
 import { EventCardType } from "@/types/index";
 import { TAG_ORDER } from "@/constants/post";
+import KebabIcon from "@/public/icon/kebab.svg";
 import NoImage from "@/public/image/no-profile.png";
+import ControlMyDataBottomSheet from "../bottom-sheet/ControlMyDataBottomSheet";
+import KebabContents from "./KebabContents";
 
 interface Props {
   data: EventCardType;
   onHeartClick?: () => void; //기본 동작 말고 다른 기능이 필요한 경우
   isGrow?: boolean;
+  isMypage?: boolean;
+  setDep?: (dep: string) => void;
 }
 
-const HorizontalEventCard = ({ data, onHeartClick, isGrow = false }: Props) => {
+const HorizontalEventCard = ({ data, onHeartClick, isGrow = false, isMypage = false, setDep }: Props) => {
   const formattedDate = formatDate(data.startDate, data.endDate);
   const formattedAddress = formatAddress(data.address);
 
@@ -30,6 +36,9 @@ const HorizontalEventCard = ({ data, onHeartClick, isGrow = false }: Props) => {
     handleLikeEvent();
   };
 
+  const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
+  const [openKebab, setOpenKebab] = useState(false);
+
   return (
     <Link
       href={`/event/${data.id}`}
@@ -39,8 +48,18 @@ const HorizontalEventCard = ({ data, onHeartClick, isGrow = false }: Props) => {
         className="flex-center absolute right-0 top-[1.3rem] z-heart flex-col text-12 font-500 text-gray-500 pc:top-[2.75rem]"
         onClick={(e: SyntheticEvent) => e.preventDefault()}
       >
-        <HeartButton isSmall isSelected={liked} onClick={handleClick} />
-        <div className="relative bottom-4">{likeCount}</div>
+        {!isMypage ? (
+          <>
+            <HeartButton isSmall isSelected={liked} isLined onClick={handleClick} />
+            <div className="relative bottom-4">{likeCount}</div>
+          </>
+        ) : (
+          <div className="relative">
+            <KebabIcon className="rotate-90 transform tablet:hidden" fill="#7E8695" onClick={() => openBottomSheet("myPost")} />
+            <KebabIcon className="hidden rotate-90 transform tablet:block" fill="#7E8695" onClick={() => setOpenKebab(!openKebab)} />
+            {openKebab && <KebabContents id={data.id} setDep={setDep} />}
+          </div>
+        )}
       </div>
       <div className="relative h-112 w-84 shrink-0 overflow-hidden pc:h-152 pc:w-116">
         <Image
@@ -74,6 +93,7 @@ const HorizontalEventCard = ({ data, onHeartClick, isGrow = false }: Props) => {
           </ul>
         </div>
       </div>
+      {bottomSheet === "myPost" && <ControlMyDataBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} eventId={data.id} setDep={setDep} type="event" />}
     </Link>
   );
 };

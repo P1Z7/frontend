@@ -28,13 +28,17 @@ const EventTypeList = ({ handleClickFunc, contentRef }: Props) => {
 
   return (
     <ul className="pb-40 pt-16 pc:overflow-hidden pc:rounded-md pc:pb-0 pc:pt-0 pc:shadow-postBox" ref={contentRef}>
-      {EVENT_TYPE_LIST.map((event) => (
+      {EVENT_TYPE_LIST.map((eventType) => (
         <li
-          key={event}
-          onClick={() => handleEventClick(event)}
+          tabIndex={0}
+          key={eventType}
+          onClick={() => handleEventClick(eventType)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") handleEventClick(eventType);
+          }}
           className="cursor-pointer border-b border-gray-50 px-24 py-20 text-16 font-500 text-gray-900 hover:bg-main-pink-50 pc:px-20 pc:py-16"
         >
-          {`${EVENT_TYPE_EMOJI[event as EventType]} ${event}`}
+          {`${EVENT_TYPE_EMOJI[eventType as EventType]} ${eventType}`}
         </li>
       ))}
     </ul>

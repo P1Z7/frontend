@@ -35,7 +35,7 @@ const EventCard = ({ data, isSelected, onCardClick, scrollRef }: Props) => {
   return (
     <div ref={scrollRef} onClick={onCardClick} className={`relative flex w-full cursor-pointer items-center gap-12 border-b border-gray-50 bg-white-black py-12`}>
       <div className="flex-center absolute right-0 top-[1.3rem] z-heart flex-col text-12 font-500 text-gray-500" onClick={(e: SyntheticEvent) => e.stopPropagation()}>
-        <HeartButton isSmall isSelected={liked} onClick={handleClick} />
+        <HeartButton isSmall isSelected={liked} onClick={handleClick} isLined />
         <div className="relative bottom-4">{likeCount}</div>
       </div>
       {isSelected && (
