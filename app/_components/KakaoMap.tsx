@@ -84,7 +84,7 @@ const KakaoMap = ({ scheduleData, setLocationInfo, openMapBox, selectedCard, set
         map: map,
         gridSize: 60,
         averageCenter: true,
-        minLevel: 3,
+        minLevel: 4,
         minClusterSize: 3,
         styles: [
           {
@@ -93,7 +93,6 @@ const KakaoMap = ({ scheduleData, setLocationInfo, openMapBox, selectedCard, set
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            background: "url(cluster.png) no-repeat",
             color: "#fff",
             fontSize: "24px",
             backgroundColor: "#FF50AA",
@@ -131,7 +130,7 @@ const KakaoMap = ({ scheduleData, setLocationInfo, openMapBox, selectedCard, set
         if (status === kakaoMap.services.Status.OK) {
           const newLocation = new kakaoMap.LatLng(result[0].y, result[0].x);
 
-          mapInstance.setLevel(2);
+          mapInstance.setLevel(3);
           mapInstance.panTo(newLocation);
 
           const content =

@@ -51,9 +51,7 @@ const MyLocationTab = ({ userId }: Props) => {
     setSelectedCard(select.id === selectedCard?.id ? null : select);
   };
 
-  if (!isSuccess) return;
-
-  const isEmpty = myEventsData.length === 0;
+  const isEmpty = myEventsData?.length === 0;
 
   return (
     <div className="relative h-full w-full pc:h-fit pc:px-40 pc:py-56">
@@ -62,7 +60,7 @@ const MyLocationTab = ({ userId }: Props) => {
           <div
             className={`absolute left-0 top-0 z-zero h-full w-full ${toggleTab ? "tablet:pl-360 pc:pl-400" : ""} pb-344 tablet:pb-0 pc:h-[84rem] pc:rounded-lg pc:border pc:border-gray-100`}
           >
-            <KakaoMap scheduleData={myEventsData} selectedCard={selectedCard} setSelectedCard={setSelectedCard} />
+            <KakaoMap scheduleData={myEventsData ?? []} selectedCard={selectedCard} setSelectedCard={setSelectedCard} />
           </div>
           <button
             onClick={handleButtonClick}
@@ -83,12 +81,12 @@ const MyLocationTab = ({ userId }: Props) => {
                   인기순
                 </SortButton>
               </div>
-              <div className="overflow-scroll scrollbar-none pc:h-[65rem]">
+              <div className="overflow-scroll scrollbar-none pc:h-[72rem]">
                 {isEmpty ? (
                   <p className="flex-center w-full pt-20 text-14 font-500">행사가 없습니다.</p>
                 ) : (
                   <div className="px-20">
-                    {myEventsData.map((event) => (
+                    {myEventsData?.map((event) => (
                       <EventCard
                         key={event.id}
                         data={event}
