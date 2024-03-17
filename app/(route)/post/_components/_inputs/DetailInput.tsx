@@ -33,7 +33,7 @@ const DetailInput = () => {
   return (
     <>
       <section className="flex flex-col gap-8">
-        <div className="relative flex items-center gap-4">
+        <div className="relative flex items-center gap-4 pc:text-20 pc:font-500">
           이미지
           {validateEdit(typeof defaultValues?.eventImages !== "undefined" && checkArrUpdate(defaultValues?.eventImages, imgList)) && (
             <InitButton onClick={() => setImgList(defaultValues?.eventImages as (string | File)[])} />

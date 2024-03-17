@@ -12,6 +12,7 @@ import PinkLayout from "@/components/layout/PinkLayout";
 import { useStore } from "@/store/index";
 import { META_TAG } from "@/constants/metaTag";
 import EditContent from "./_components/EditContent";
+import DottedLayout from "@/components/layout/DottedLayout";
 
 let INITIAL_DATA: PostType;
 
@@ -57,19 +58,19 @@ const Edit = () => {
   return (
     <>
       <MetaTag title={META_TAG.edit["title"]} description={META_TAG.edit["description"]} />
-      <PinkLayout size="narrow">
-        <div className="p-20 pb-120 text-16 pc:p-0">
-          {init ? (
-            <GenericFormProvider formOptions={{ mode: "onChange", defaultValues: INITIAL_DATA, shouldFocusError: true }}>
-              <EditContent />
-            </GenericFormProvider>
-          ) : (
-            <div className="flex h-[10vh] w-full items-center justify-center">
-              <LoadingDot />
-            </div>
-          )}
-        </div>
-      </PinkLayout>
+      <DottedLayout size="narrow">
+      <div className="p-20 pb-120 text-16 pc:p-0">
+        {init ? (
+          <GenericFormProvider formOptions={{ mode: "onChange", defaultValues: INITIAL_DATA, shouldFocusError: true }}>
+            <EditContent />
+          </GenericFormProvider>
+        ) : (
+          <div className="flex h-[10vh] w-full items-center justify-center">
+            <LoadingDot />
+          </div>
+        )}
+      </div>
+      </DottedLayout>
     </>
   );
 };
