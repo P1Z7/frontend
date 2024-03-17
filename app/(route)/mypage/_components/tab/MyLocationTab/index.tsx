@@ -13,7 +13,17 @@ import SortIcon from "@/public/icon/sort.svg";
 
 const SORT = ["최신순", "인기순"] as const;
 
-type StatusType = "" | "예정" | "종료" | "진행중";
+type StatusType = "" | "예정" | "진행중" | "종료제외" | "종료";
+
+const STATUS: Record<number, StatusType> = {
+  0: "",
+  1: "예정",
+  2: "진행중",
+  3: "종료제외",
+  4: "종료",
+};
+
+type StatusKey = keyof typeof STATUS;
 
 interface Props {
   userId: string;
@@ -21,12 +31,12 @@ interface Props {
 
 const MyLocationTab = ({ userId }: Props) => {
   const [sort, setSort] = useState<(typeof SORT)[number]>(SORT[0]);
-  const [status, setStatus] = useState<StatusType>("");
+  const [status, setStatus] = useState(3);
 
-  const { data: myEventsData, isSuccess } = useQuery<EventCardType[]>({
-    queryKey: ["events", status],
+  const { data: myEventsData } = useQuery<EventCardType[]>({
+    queryKey: ["events", STATUS[status]],
     queryFn: async () => {
-      return instance.get(`/event/${userId}/like`, { status });
+      return instance.get(`/event/${userId}/like`, { status: STATUS[status] });
     },
   });
 
