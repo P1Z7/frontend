@@ -13,15 +13,12 @@ import { getSession } from "@/store/session/cookies";
 import { getArtist, getGroup } from "@/utils/getArtist";
 import { Res_Get_Type } from "@/types/getResType";
 import { EventCardType } from "@/types/index";
+import { SORT, STATUS, SortItem } from "@/constants/eventStatus";
 import SortIcon from "@/public/icon/sort.svg";
 import ChipButtons from "./_components/ChipButtons";
 import EventCard from "./_components/EventCard";
 
 const SIZE = 9999;
-
-const SORT = ["최신순", "인기순"] as const;
-
-type StatusType = "" | "예정" | "종료" | "진행중";
 
 const ArtistIdPage = () => {
   const { artistId } = useParams() as { artistId: string }; // artists -> 멤버, 솔로 // groupId -> 그룹명
@@ -32,8 +29,8 @@ const ArtistIdPage = () => {
   const name = group.groupName || artist.artistName;
   const image = group.groupImage || artist.artistImage;
 
-  const [sort, setSort] = useState<(typeof SORT)[number]>(SORT[0]);
-  const [status, setStatus] = useState<StatusType>("진행중");
+  const [sort, setSort] = useState<SortItem>(SORT[0]);
+  const [status, setStatus] = useState(3);
 
   const session = getSession();
 
@@ -42,7 +39,7 @@ const ArtistIdPage = () => {
       sort,
       size: SIZE,
       page: pageParam,
-      status,
+      status: STATUS[status],
       userId: session?.user.userId ?? "",
       artistId,
     });
@@ -99,7 +96,9 @@ const ArtistIdPage = () => {
   return (
     <DottedLayout size="wide">
       <div className="relative h-[calc(100vh-7.2rem)] w-full overflow-hidden pc:mb-128 pc:mt-48 pc:h-[84rem]">
-        <div className={`absolute left-0 top-0 z-zero h-full w-full ${toggleTab ? "tablet:pl-360 pc:pl-400" : ""} pc:h-[84rem] pc:rounded-lg pc:border pc:border-gray-100`}>
+        <div
+          className={`absolute left-0 top-0 z-zero h-full w-full ${toggleTab ? "tablet:pl-360 pc:pl-400" : ""} pb-344 tablet:pb-0 pc:h-[84rem] pc:rounded-lg pc:border pc:border-gray-100`}
+        >
           <KakaoMap scheduleData={mapData} selectedCard={selectedCard} setSelectedCard={setSelectedCard} />
         </div>
         <button
@@ -131,7 +130,7 @@ const ArtistIdPage = () => {
             </div>
             <div className="overflow-scroll scrollbar-none pc:h-[65rem]">
               {isEmpty ? (
-                <p className="flex-center w-full pt-20 text-14 font-500">행사가 없습니다.</p>
+                <p className="flex-center h-[20rem] w-full pt-20 text-14 font-500">행사가 없습니다.</p>
               ) : (
                 <div className="px-20">
                   {artistData.pages.map((page) =>

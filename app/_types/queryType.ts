@@ -76,7 +76,7 @@ type Req_Query_Artist_Event = {
   sort: "최신순" | "인기순";
   size?: number;
   page?: number;
-  status?: "" | "예정" | "종료" | "진행중";
+  status?: StatusType;
   userId?: string;
   artistId: string;
 };

@@ -264,7 +264,7 @@ export type GroupAndSoloType = {
   type: string;
 };
 
-export type StatusType = "" | "예정" | "진행중" | "종료";
+export type StatusType = "" | "예정" | "진행중" | "종료" | "종료제외";
 
 export type ArtistGroupMonthType = {
   id: string;

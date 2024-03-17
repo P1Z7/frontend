@@ -9,28 +9,15 @@ import { useEffect, useRef, useState } from "react";
 import KakaoMap from "@/components/KakaoMap";
 import { instance } from "@/api/api";
 import { EventCardType } from "@/types/index";
+import { SORT, STATUS, SortItem } from "@/constants/eventStatus";
 import SortIcon from "@/public/icon/sort.svg";
-
-const SORT = ["최신순", "인기순"] as const;
-
-type StatusType = "" | "예정" | "진행중" | "종료제외" | "종료";
-
-const STATUS: Record<number, StatusType> = {
-  0: "",
-  1: "예정",
-  2: "진행중",
-  3: "종료제외",
-  4: "종료",
-};
-
-type StatusKey = keyof typeof STATUS;
 
 interface Props {
   userId: string;
 }
 
 const MyLocationTab = ({ userId }: Props) => {
-  const [sort, setSort] = useState<(typeof SORT)[number]>(SORT[0]);
+  const [sort, setSort] = useState<SortItem>(SORT[0]);
   const [status, setStatus] = useState(3);
 
   const { data: myEventsData } = useQuery<EventCardType[]>({
@@ -93,7 +80,7 @@ const MyLocationTab = ({ userId }: Props) => {
               </div>
               <div className="overflow-scroll scrollbar-none pc:h-[72rem]">
                 {isEmpty ? (
-                  <p className="flex-center w-full pt-20 text-14 font-500">행사가 없습니다.</p>
+                  <p className="flex-center h-[50rem] w-full pt-20 text-14 font-500">행사가 없습니다.</p>
                 ) : (
                   <div className="px-20">
                     {myEventsData?.map((event) => (
