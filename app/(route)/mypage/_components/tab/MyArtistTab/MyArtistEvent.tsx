@@ -1,5 +1,6 @@
 "use client";
 
+import SortButton from "@/(route)/search/_components/SortButton";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
@@ -10,7 +11,6 @@ import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { Res_Get_Type } from "@/types/getResType";
 import SortIcon from "@/public/icon/sort.svg";
 import NoContent from "../../NoContent";
-import SortButton from "@/(route)/search/_components/SortButton";
 
 const SIZE = 20;
 
@@ -56,7 +56,7 @@ const MyArtistEvent = ({ userId }: Props) => {
 
   return (
     <>
-      <div className="flex-center w-full flex-col pb-88 pc:pb-16">
+      <div className="flex-center w-full flex-col">
         <div className="flex w-full flex-col items-start gap-16">
           <h1 className="text-20 font-700 text-gray-900">내 아티스트 이벤트</h1>
           <div className="flex w-fit items-center gap-8">

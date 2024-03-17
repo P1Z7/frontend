@@ -19,7 +19,7 @@ const MyPage = () => {
     <>
       <MetaTag title={META_TAG.mypage["title"]} description={META_TAG.mypage["description"]} />
       <DottedLayout size="extrawide">
-        <div className="flex min-h-screen w-full flex-col gap-24 pb-72 pc:relative  pc:flex-row pc:items-start pc:pb-0 pc:pt-48">
+        <div className="flex min-h-screen w-full flex-col gap-24 pb-8  pc:relative pc:flex-row pc:items-start pc:pb-0 pc:pt-48">
           <UserProfile />
           <div className="h-full pc:w-[83.4rem]">
             <Tabs names={MYPAGE_TABLIST} isNarrow>

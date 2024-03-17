@@ -40,7 +40,7 @@ const MyPostTab = ({ userId }: Props) => {
   });
 
   return (
-    <ul className="flex-center w-full flex-col px-20 pb-88 pt-8 pc:pb-16">
+    <ul className="flex-center w-full flex-col px-20 pb-16 pt-8">
       {myEventsData?.pages[0].totalCount ? (
         <>
           {myEventsData?.pages.map((page) => page.eventList.map((event) => <HorizontalEventCard key={event.id} data={event} isGrow isMypage setDep={setDep} />))}

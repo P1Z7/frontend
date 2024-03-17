@@ -26,7 +26,7 @@ const MyArtistsInfo = () => {
   };
 
   return (
-    <div className="flex h-full flex-col justify-between pb-160 pc:pb-0">
+    <div className="flex h-full flex-col justify-between pb-160">
       <SearchArtist onClick={handleClick} myArtists={myArtists} myArtistsInfo={myArtistsInfo} />
       <BottomButton isDisabled={isButtonDisabled} isSkip isSubmit>
         오프너 시작하기

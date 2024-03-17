@@ -24,7 +24,7 @@ const MyReviewTab = ({ userId }: Props) => {
 
   if (!isSuccess) return;
   return (
-    <ul className="flex-center w-full flex-col pb-88 pt-8 pc:pb-16">
+    <ul className="flex-center w-full flex-col pb-16 pt-8">
       {myReviewsData.length > 0 ? (
         myReviewsData.map((review: MyReviewType) => (
           <li key={review.id} className="w-full">

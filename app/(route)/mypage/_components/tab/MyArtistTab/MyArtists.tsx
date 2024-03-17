@@ -24,7 +24,7 @@ const MyArtists = ({ data }: { data: ArtistType[] }) => {
                 key={artist.id}
                 profileImage={artist.image}
                 onClick={() => {
-                  router.push(`/search?keyword=${artist.name}`);
+                  router.push(`/artist/${artist.id}`);
                 }}
               >
                 {artist.name}
