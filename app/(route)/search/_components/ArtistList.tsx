@@ -11,7 +11,7 @@ const ArtistList = ({ artists }: Props) => {
   return (
     <>
       {isArtistEmpty || (
-        <section className="grid min-h-184 grid-cols-[repeat(auto-fill,_72px)] justify-center gap-12 px-20 pb-12 pt-32 pc:grid-cols-[repeat(auto-fill,_108px)] pc:gap-24 pc:px-0">
+        <section className="grid min-h-132 grid-cols-[repeat(auto-fill,_72px)] justify-center gap-12 px-20 pb-12 pt-32 pc:min-h-184 pc:grid-cols-[repeat(auto-fill,_108px)] pc:gap-24 pc:px-0">
           {artists?.artistAndGroupList.map((artist) => <ArtistProfile key={artist.id} id={artist.id} name={artist.name} image={artist.image} />)}
         </section>
       )}
