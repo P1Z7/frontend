@@ -109,7 +109,7 @@ const KakaoMap = ({ scheduleData, setLocationInfo, openMapBox, selectedCard, set
         myMarker(scheduleData[i], i);
       }
     });
-  }, []);
+  }, [scheduleData]);
 
   useKakaoMap({ callbackFn: onLoadKakaoMap, deps: [scheduleData] });
 
@@ -131,7 +131,7 @@ const KakaoMap = ({ scheduleData, setLocationInfo, openMapBox, selectedCard, set
         if (status === kakaoMap.services.Status.OK) {
           const newLocation = new kakaoMap.LatLng(result[0].y, result[0].x);
 
-          mapInstance.setLevel(4);
+          mapInstance.setLevel(2);
           mapInstance.panTo(newLocation);
 
           const content =

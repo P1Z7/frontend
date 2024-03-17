@@ -33,7 +33,7 @@ const ArtistIdPage = () => {
   const image = group.groupImage || artist.artistImage;
 
   const [sort, setSort] = useState<(typeof SORT)[number]>(SORT[0]);
-  const [status, setStatus] = useState<StatusType>("");
+  const [status, setStatus] = useState<StatusType>("진행중");
 
   const session = getSession();
 
