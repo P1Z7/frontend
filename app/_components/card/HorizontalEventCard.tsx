@@ -6,7 +6,7 @@ import Chip from "@/components/chip/Chip";
 import useLikeEvent from "@/hooks/useLikeEvent";
 import { formatAddress, formatDate } from "@/utils/formatString";
 import { EventCardType } from "@/types/index";
-import { TAG_ORDER } from "@/constants/data";
+import { TAG_ORDER } from "@/constants/post";
 import NoImage from "@/public/image/no-profile.png";
 
 interface Props {
@@ -67,7 +67,7 @@ const HorizontalEventCard = ({ data, onHeartClick, isGrow = false }: Props) => {
           </p>
           <ul className="flex flex-wrap gap-4">
             {data.eventTags
-              .sort((a, b) => TAG_ORDER[a.tagId].order - TAG_ORDER[b.tagId].order)
+              .sort((a, b) => TAG_ORDER[a.tagName] - TAG_ORDER[b.tagName])
               .map((tag) => (
                 <Chip key={tag.tagId} kind="goods" label={tag.tagName} />
               ))}

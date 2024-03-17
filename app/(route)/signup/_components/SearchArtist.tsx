@@ -21,7 +21,7 @@ interface Props {
   myArtistsInfo: { name: string; id: string }[];
 }
 
-const SIZE = 12;
+const SIZE = 50;
 
 const SearchArtist = ({ onClick, myArtists, myArtistsInfo }: Props) => {
   const [keyword, setKeyword] = useState("");

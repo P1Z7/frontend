@@ -37,6 +37,7 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
   useEffect(() => {
     if (path === "/signup" || path === "/reset-password") return;
     const intervalId = setInterval(savePostInput, 10000);
+    if (path !== "/post") clearInterval(intervalId);
     return () => clearInterval(intervalId);
   }, []);
 
