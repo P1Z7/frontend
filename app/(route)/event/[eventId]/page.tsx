@@ -32,7 +32,7 @@ const EventInfoPage = async ({ params }: Props) => {
       />
       <DottedLayout size="narrow">
         <Banner data={eventInfo} eventId={params.eventId} />
-        <Tabs names={["행사정보", "위치", "후기"]} topOffset="event" eventId={params.eventId}>
+        <Tabs names={["행사정보", "위치", "후기"]} page="event" eventId={params.eventId}>
           <DescriptionTab images={eventInfo.eventImages} description={eventInfo.description} />
           <LocationTab name={eventInfo.placeName} address={eventInfo.address} />
           <ReviewTab eventId={params.eventId} />

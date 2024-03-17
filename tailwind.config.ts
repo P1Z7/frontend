@@ -20,6 +20,7 @@ const config: Config = {
       pc: "1200px",
     },
     zIndex: {
+      zero: "0",
       base: "1",
       heart: "2",
       nav: "3",
@@ -73,6 +74,7 @@ const config: Config = {
       16: "1.6rem",
       18: "1.8rem",
       20: "2.0rem",
+      24: "2.4rem",
     },
     fontWeight: {
       400: "400",
@@ -81,6 +83,7 @@ const config: Config = {
       700: "700",
     },
     borderRadius: {
+      none: "0px",
       sm: "1.2rem",
       md: "1.6rem",
       lg: "2rem",
