@@ -1,16 +1,16 @@
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useKakaoMap from "@/hooks/useKakaoMap";
 import { EventCardType } from "@/types/index";
 
 interface Props {
   scheduleData: EventCardType[];
-  setLocationInfo?: (data: EventCardType) => void;
-  openMapBox?: (open: true) => void;
+  toggleTab?: boolean;
+  setToggleTab?: (toggle: boolean) => void;
   selectedCard: EventCardType | null;
-  setSelectedCard: Dispatch<SetStateAction<EventCardType | null>>;
+  setSelectedCard: (data: EventCardType) => void;
 }
 
-const KakaoMap = ({ scheduleData, setLocationInfo, openMapBox, selectedCard, setSelectedCard }: Props) => {
+const KakaoMap = ({ scheduleData, toggleTab, setToggleTab, selectedCard, setSelectedCard }: Props) => {
   const [mapInstance, setMapInstance] = useState<any>(null);
 
   const onLoadKakaoMap = useCallback(() => {
@@ -66,8 +66,6 @@ const KakaoMap = ({ scheduleData, setLocationInfo, openMapBox, selectedCard, set
             });
 
             kakaoMap.event.addListener(marker, "click", () => {
-              setLocationInfo?.(data);
-              openMapBox?.(true);
               setSelectedCard?.(data);
             });
 
@@ -156,8 +154,18 @@ const KakaoMap = ({ scheduleData, setLocationInfo, openMapBox, selectedCard, set
   );
 
   useEffect(() => {
+    if (mapInstance) {
+      mapInstance.relayout();
+    }
+  }, [toggleTab]);
+
+  useEffect(() => {
+    if (!toggleTab && selectedCard?.id) {
+      setToggleTab?.(true);
+    }
+
     if (mapInstance && selectedCard?.id) {
-      focusToData(selectedCard);
+      setTimeout(() => focusToData(selectedCard), 150);
     }
   }, [selectedCard?.id]);
 
