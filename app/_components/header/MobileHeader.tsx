@@ -50,6 +50,7 @@ const MobileHeader = () => {
       router.push("/");
       router.refresh();
       openToast.success(TOAST_MESSAGE.auth.logout);
+      setIsOpen(false);
       return;
     }
   };

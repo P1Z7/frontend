@@ -12,7 +12,12 @@ interface Props {
 }
 
 const SignupFunnelTitle = ({ name }: Props) => {
-  return <div className="pt-36 text-20 font-700 text-gray-900">{SIGNUP_FUNNEL_TITLE[name]}</div>;
+  return (
+    <>
+      <h2 className="hidden pt-36 text-14 font-600 text-gray-500 pc:block">회원가입</h2>
+      <h1 className="pt-36 text-20 font-700 text-gray-900 pc:pt-32">{SIGNUP_FUNNEL_TITLE[name]}</h1>
+    </>
+  );
 };
 
 export default SignupFunnelTitle;

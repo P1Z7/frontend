@@ -92,6 +92,10 @@ type Req_Post_Verification = {
   verificationNumber: number | string;
 };
 
+type Req_Post_Reset_Pw = {
+  email: string;
+};
+
 type Req_Post_Edit_Application = EditContentType & {
   eventId: string;
   updateCategory: CategoryType[];
@@ -134,6 +138,7 @@ export type Req_Post_Type = {
   reviewLike: Req_Post_Review_Like;
   email: Req_Post_Email;
   verification: Req_Post_Verification;
+  resetPw: Req_Post_Reset_Pw;
   edit: Req_Post_Edit_Application;
   approve: Req_Post_Approval;
   request: Req_Post_Request;

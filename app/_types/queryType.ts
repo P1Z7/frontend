@@ -76,11 +76,17 @@ type Req_Query_Artist_Event = {
   sort: "최신순" | "인기순";
   size?: number;
   page?: number;
-  userId: string;
+  status?: StatusType;
+  userId?: string;
+  artistId: string;
 };
 
 type Req_Query_NickName = {
   search: string;
+};
+
+type Req_Query_Artist_Month = {
+  month: string;
 };
 
 export type Req_Query_Type = {
@@ -99,4 +105,5 @@ export type Req_Query_Type = {
   수정상세: Req_Query_Approve;
   아티스트행사: Req_Query_Artist_Event;
   닉네임: Req_Query_NickName;
+  이번달생일: Req_Query_Artist_Month;
 };

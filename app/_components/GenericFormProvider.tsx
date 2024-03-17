@@ -6,6 +6,7 @@ import { FieldValues, FormProvider, UseFormProps, useForm } from "react-hook-for
 import toast from "react-hot-toast";
 import { useModal } from "@/hooks/useModal";
 import { getSession } from "@/store/session/cookies";
+import { handleResetPwSubmit } from "@/utils/handleResetPwSubmit";
 import { handleSignupSubmit } from "@/utils/handleSignupSubmit";
 import { handlePostSubmit, submitEditApplication, submitEditWriter } from "@/utils/submitPost";
 import { EditErrMsgType, PostErrMsgType } from "@/types/errorMsgType";
@@ -34,6 +35,7 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
   };
 
   useEffect(() => {
+    if (path === "/signup" || path === "/reset-password") return;
     const intervalId = setInterval(savePostInput, 10000);
     if (path !== "/post") clearInterval(intervalId);
     return () => clearInterval(intervalId);
@@ -87,11 +89,17 @@ const GenericFormProvider = <T extends FieldValues>({ children, formOptions }: G
         router.refresh();
       }
     }
+    if (path === "/reset-password") {
+      const res = await handleResetPwSubmit(userInputValue, instance);
+      if (!res.error) {
+        router.push("/signin");
+      }
+    }
   };
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} className="h-full bg-opacity-0 pc:flex pc:justify-center">
+      <form onSubmit={methods.handleSubmit(onSubmit)} className="h-full bg-opacity-0">
         {children}
       </form>
       {modal === "editApprove" && (

@@ -10,6 +10,7 @@ export const ERROR_MESSAGES = {
     emailPattern: "이메일 형식으로 입력하여 주세요.",
     emailToVerify: "이메일을 확인해주세요.",
     emailDuplication: "이미 존재하는 이메일입니다",
+    nonexistentEmail: "해당 이메일로 가입된 회원 정보가 없습니다.",
   },
   code: {
     codeField: "인증번호를 입력해주세요",

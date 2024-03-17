@@ -3,7 +3,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="mb-72 w-full bg-white-black pc:mb-0 pc:py-32">
+    <footer className="w-full bg-white-black pc:mb-0 pc:py-32">
       <p className="p-20 text-12 leading-9 text-gray-400 pc:mx-auto pc:w-[104rem] pc:p-0">
         <Link href="https://myopener.notion.site/Opener-eb86265c64e841e09ad8f5a56b0961da?pvs=4" target="_blank" rel="noreferrer noopener">
           오프너 소개 &nbsp; | &nbsp;{" "}
