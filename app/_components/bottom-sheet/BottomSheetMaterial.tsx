@@ -19,7 +19,7 @@ const BottomSheetFrame = forwardRef<HTMLDivElement, BottomSheetFrameProps>(({ ch
           onClick={(e: SyntheticEvent) => e.stopPropagation()}
           className="relative flex max-h-[55.6rem] w-full transform animate-slideUp flex-col overflow-hidden rounded-t-md bg-white-black pt-16 transition duration-150 ease-out pc:w-[50rem] pc:animate-none pc:rounded-md"
         >
-          <button onClick={closeBottomSheet} className="fixed right-20 top-16 z-nav">
+          <button tabIndex={0} onClick={closeBottomSheet} className="fixed right-20 top-16 z-nav">
             <CloseIcon stroke="#C1C5CC" width="24" height="24" />
           </button>
           <div className="overflow-y-auto">{children}</div>

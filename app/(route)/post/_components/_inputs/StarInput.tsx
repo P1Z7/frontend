@@ -51,7 +51,7 @@ const StarInput = () => {
     <>
       <div className="flex-item flex flex-col gap-20 pc:gap-32">
         <div className="relative flex flex-col">
-          <label className="flex items-center gap-4">
+          <label className="flex items-center gap-4 pc:text-20 pc:font-500">
             아티스트
             {validateEdit(typeof defaultValues?.artists !== "undefined" && (checkArrUpdate(defaultValues?.artists, artists) || defaultValues?.groupId !== groupId)) && (
               <InitButton onClick={() => handleArtistInit()} />
@@ -83,7 +83,7 @@ const StarInput = () => {
             placeholder="행사 유형을 선택하세요."
             tabIndex={0}
             onClick={() => (isPc ? openModal("event") : openBottomSheet("event"))}
-            onKeyDown={(event) => handleEnterDown(event, () => openBottomSheet("event"))}
+            onKeyDown={(event) => handleEnterDown(event, () => (isPc ? openModal("event") : openBottomSheet("event")))}
             isEdit={validateEdit(defaultValues?.eventType !== eventType)}
             onInit={() => setValue("eventType", defaultValues?.eventType || "카페")}
             noButton

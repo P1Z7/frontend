@@ -22,7 +22,7 @@ const InputArea: Function = ({ children, placeholder, onKeyDown, isEdit, hasLimi
 
   return (
     <div className="flex flex-col">
-      <label htmlFor={field.name} className="relative pb-8 text-16 text-gray-900">
+      <label htmlFor={field.name} className="relative pb-8 text-16 text-gray-900 pc:text-20 pc:font-500">
         {children}
         {isEdit && <InitButton onClick={onInit} />}
       </label>
@@ -31,7 +31,7 @@ const InputArea: Function = ({ children, placeholder, onKeyDown, isEdit, hasLimi
         placeholder={placeholder ?? "입력해주세요."}
         {...field}
         onKeyDown={onKeyDown}
-        className={classNames("h-120 resize-none rounded-sm bg-gray-50 px-16 py-12 text-16 placeholder:text-gray-400 focus:outline focus:outline-1 focus:outline-blue", {
+        className={classNames("h-120 resize-none rounded-sm bg-gray-50 px-16 py-12 text-16 font-400 placeholder:text-gray-400 focus:outline focus:outline-1 focus:outline-blue", {
           "outline outline-1 outline-blue": isEdit,
         })}
       />
