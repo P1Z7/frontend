@@ -171,7 +171,7 @@ const KakaoMap = ({ scheduleData, toggleTab, setToggleTab, selectedCard, setSele
 
   return (
     <div className="relative h-full">
-      <div id="map" className="h-full w-full pc:rounded-r-lg" />
+      <div id="map" className={`h-full w-full pc:rounded-r-lg ${toggleTab ? "" : "pc:rounded-l-lg"}`} />
       <button onClick={zoom(-1)} className="absolute bottom-88 right-20 z-floating h-48 w-48 rounded-full bg-gray-900/60 text-[24px] text-white-white">
         +
       </button>
