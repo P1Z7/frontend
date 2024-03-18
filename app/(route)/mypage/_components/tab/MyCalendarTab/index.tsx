@@ -4,13 +4,14 @@ import FadingDot from "@/(route)/signin/_components/FadingDot";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import "react-calendar/dist/Calendar.css";
+import TimeFilter from "@/components/TimeFilter";
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
 import { instance } from "@/api/api";
 import { getCalendarTime } from "@/utils/getCalendarTime";
 import { EventCardType } from "@/types/index";
 import { MYPAGE_CALENDAR_STYLE } from "@/constants/calendarStyle";
+import { STATUS } from "@/constants/eventStatus";
 import NoContent from "../../NoContent";
-import ChipButtons from "./ChipButtons";
 import FoldButton from "./FoldButton";
 import MyCalendar from "./MyCalendar";
 
@@ -18,19 +19,17 @@ interface Props {
   userId: string;
 }
 
-type StatusType = "" | "예정" | "종료" | "진행중" | "종료제외";
-
 const MyCalendarTab = ({ userId }: Props) => {
   const [data, setData] = useState<EventCardType[] | []>([]);
   const [isFold, setIsFold] = useState(true);
-  const [status, setStatus] = useState<StatusType>("");
+  const [status, setStatus] = useState(3);
   const [calendarStyle, setCalendarStyle] = useState("");
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const { data: myEventsData, isSuccess } = useQuery({
-    queryKey: ["events", status],
+    queryKey: ["events", STATUS[status]],
     queryFn: async () => {
-      return instance.get(`/event/${userId}/like`, { status });
+      return instance.get(`/event/${userId}/like`, { status: STATUS[status] });
     },
   });
 
@@ -77,7 +76,7 @@ const MyCalendarTab = ({ userId }: Props) => {
         )}
       </div>
       <div className="w-full">
-        <ChipButtons setStatus={setStatus} status={status} />
+        <TimeFilter setStatus={setStatus} status={status} />
         <section>
           {data
             .filter(

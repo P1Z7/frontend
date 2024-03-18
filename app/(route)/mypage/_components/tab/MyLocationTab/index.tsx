@@ -1,11 +1,11 @@
 "use client";
 
-import ChipButtons from "@/(route)/artist/[artistId]/_components/ChipButtons";
 import EventCard from "@/(route)/artist/[artistId]/_components/EventCard";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import KakaoMap from "@/components/KakaoMap";
+import TimeFilter from "@/components/TimeFilter";
 import { instance } from "@/api/api";
 import { EventCardType } from "@/types/index";
 import { STATUS } from "@/constants/eventStatus";
@@ -63,7 +63,7 @@ const MyLocationTab = ({ userId }: Props) => {
           {toggleTab && (
             <div className="absolute bottom-0 flex max-h-344 min-h-84 w-full flex-col gap-16 rounded-t-lg bg-white-black pt-28 shadow-2xl tablet:w-full pc:top-0 pc:h-[84rem] pc:max-h-full pc:w-400 pc:rounded-none pc:rounded-l-lg pc:border pc:border-gray-100 pc:border-t-gray-100 pc:border-t-transparent pc:py-20 pc:shadow-none">
               <div className="absolute left-[calc((100%-64px)/2)] top-12 h-4 w-64 rounded-sm bg-gray-700 pc:hidden" />
-              <ChipButtons setStatus={setStatus} status={status} />
+              <TimeFilter setStatus={setStatus} status={status} />
               <div className="overflow-scroll scrollbar-none pc:h-[72rem]">
                 {isEmpty ? (
                   <p className="flex-center h-[50rem] w-full pt-20 text-14 font-500">행사가 없습니다.</p>

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import KakaoMap from "@/components/KakaoMap";
+import TimeFilter from "@/components/TimeFilter";
 import DottedLayout from "@/components/layout/DottedLayout";
 import { instance } from "@/api/api";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
@@ -15,7 +16,6 @@ import { Res_Get_Type } from "@/types/getResType";
 import { EventCardType } from "@/types/index";
 import { SORT, STATUS, SortItem } from "@/constants/eventStatus";
 import SortIcon from "@/public/icon/sort.svg";
-import ChipButtons from "./_components/ChipButtons";
 import EventCard from "./_components/EventCard";
 
 const SIZE = 9999;
@@ -71,6 +71,10 @@ const ArtistIdPage = () => {
 
   const handleButtonClick = () => {
     setToggleTab((prev) => !prev);
+
+    if (toggleTab) {
+      setSelectedCard(null);
+    }
   };
 
   const [selectedCard, setSelectedCard] = useState<EventCardType | null>(null);
@@ -82,7 +86,7 @@ const ArtistIdPage = () => {
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  }, [selectedCard?.id]);
+  }, [selectedCard?.id, toggleTab]);
 
   const handleCardClick = (select: EventCardType) => {
     setSelectedCard(select.id === selectedCard?.id ? null : select);
@@ -118,7 +122,7 @@ const ArtistIdPage = () => {
                 <span className="font-600">{name}</span> 행사 보기
               </p>
             </div>
-            <ChipButtons setStatus={setStatus} status={status} />
+            <TimeFilter setStatus={setStatus} status={status} />
             <div className="flex items-center gap-8 px-20">
               <SortIcon />
               <SortButton onClick={() => setSort("최신순")} selected={sort === "최신순"}>

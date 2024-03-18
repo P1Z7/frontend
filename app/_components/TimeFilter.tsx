@@ -6,7 +6,7 @@ interface Props {
   setStatus: (status: number) => void;
 }
 
-const ChipButtons = ({ status, setStatus }: Props) => {
+const TimeFilter = ({ status, setStatus }: Props) => {
   return (
     <div className="flex w-full gap-12 px-20">
       <ChipButton label={STATUS[1]} onClick={() => setStatus(status === 1 ? 1 : status === 3 ? status - 1 : (status % 4) + 1)} selected={status === 1 || status === 3} />
@@ -16,4 +16,4 @@ const ChipButtons = ({ status, setStatus }: Props) => {
   );
 };
 
-export default ChipButtons;
+export default TimeFilter;
