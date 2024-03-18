@@ -176,7 +176,7 @@ const MainDescription = ({ placeName, artists, eventType }: MainDescriptionProps
 
   return (
     <div className="flex flex-col gap-8 border-b border-gray-100 pb-16 pc:gap-12 pc:pb-32">
-      <h1 className="pr-20 text-20 font-600 pc:text-[2.8rem] pc:leading-[2.4rem]">{placeName}</h1>
+      <h1 className="pr-32 text-20 font-600 pc:text-[2.8rem] pc:leading-[2.8rem]">{placeName}</h1>
       <div className="flex items-center gap-8">
         <span className="text-16 font-600 pc:max-w-308 pc:text-20">{formattedArtist}</span>
         <Chip kind="event" label={eventType} />

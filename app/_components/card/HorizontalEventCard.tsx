@@ -24,6 +24,10 @@ interface Props {
 const HorizontalEventCard = ({ data, onHeartClick, isGrow = false, isMypage = false, setDep }: Props) => {
   const formattedDate = formatDate(data.startDate, data.endDate);
   const formattedAddress = formatAddress(data.address);
+  const formattedTagsMobile = data.eventTags.sort((a, b) => TAG_ORDER[a.tagName] - TAG_ORDER[b.tagName]).slice(0, 5);
+  const extraTagNumberMobile = data.eventTags.length - 5 > 0 ? data.eventTags.length - 5 : 0;
+  const formattedTagsPc = data.eventTags.sort((a, b) => TAG_ORDER[a.tagName] - TAG_ORDER[b.tagName]).slice(0, 8);
+  const extraTagNumberPc = data.eventTags.length - 8 > 0 ? data.eventTags.length - 8 : 0;
 
   const { liked, likeCount, handleLikeEvent } = useLikeEvent({ eventId: data.id, initialLike: data.isLike, initialLikeCount: data.likeCount });
 
@@ -84,12 +88,17 @@ const HorizontalEventCard = ({ data, onHeartClick, isGrow = false, isMypage = fa
             <span className="mr-8 border-r border-gray-400 pr-8">{formattedDate}</span>
             <span>{formattedAddress}</span>
           </p>
-          <ul className="flex flex-wrap gap-4">
-            {data.eventTags
-              .sort((a, b) => TAG_ORDER[a.tagName] - TAG_ORDER[b.tagName])
-              .map((tag) => (
-                <Chip key={tag.tagId} kind="goods" label={tag.tagName} />
-              ))}
+          <ul className="flex flex-wrap items-center gap-4 pc:hidden">
+            {formattedTagsMobile.map((tag) => (
+              <Chip key={tag.tagId} kind="goods" label={tag.tagName} />
+            ))}
+            {!!extraTagNumberMobile && <span className="text-center text-12 font-600 text-gray-700">{`외 ${extraTagNumberMobile}개`}</span>}
+          </ul>
+          <ul className="hidden flex-wrap items-center gap-4 pc:flex">
+            {formattedTagsPc.map((tag) => (
+              <Chip key={tag.tagId} kind="goods" label={tag.tagName} />
+            ))}
+            {!!extraTagNumberPc && <span className="text-center text-12 font-600 text-gray-700">{`외 ${extraTagNumberPc}개`}</span>}
           </ul>
         </div>
       </div>
