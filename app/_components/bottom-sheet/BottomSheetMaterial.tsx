@@ -13,7 +13,7 @@ interface BottomSheetFrameProps {
 const BottomSheetFrame = forwardRef<HTMLDivElement, BottomSheetFrameProps>(({ children, closeBottomSheet }, ref) => {
   return (
     <BottomSheetPortal>
-      <div onClick={closeBottomSheet} className="fixed bottom-0 left-0 z-popup flex h-screen w-full items-end justify-center bg-gray-900 bg-opacity-70 pc:items-center">
+      <div onClick={closeBottomSheet} className="fixed bottom-0 left-0 z-[1002] flex h-screen w-full items-end justify-center bg-gray-900 bg-opacity-70 pc:items-center">
         <div
           ref={ref}
           onClick={(e: SyntheticEvent) => e.stopPropagation()}
