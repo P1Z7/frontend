@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import Calendar from "react-calendar";
 import { getCalendarTime } from "@/utils/getCalendarTime";
 import { sortEvents } from "@/utils/sortEventList";
