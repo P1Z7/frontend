@@ -4,16 +4,16 @@ import SortButton from "@/(route)/search/_components/SortButton";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import KakaoMap from "@/components/KakaoMap";
 import TimeFilter from "@/components/TimeFilter";
 import DottedLayout from "@/components/layout/DottedLayout";
 import { instance } from "@/api/api";
+import useCustomMap from "@/hooks/useCustomMap";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { getSession } from "@/store/session/cookies";
 import { getArtist, getGroup } from "@/utils/getArtist";
 import { Res_Get_Type } from "@/types/getResType";
-import { EventCardType } from "@/types/index";
 import { SORT, STATUS, SortItem } from "@/constants/eventStatus";
 import SortIcon from "@/public/icon/sort.svg";
 import EventCard from "./_components/EventCard";
@@ -67,30 +67,7 @@ const ArtistIdPage = () => {
     refetch();
   }, [sort, status]);
 
-  const [toggleTab, setToggleTab] = useState(true);
-
-  const handleButtonClick = () => {
-    setToggleTab((prev) => !prev);
-
-    if (toggleTab) {
-      setSelectedCard(null);
-    }
-  };
-
-  const [selectedCard, setSelectedCard] = useState<EventCardType | null>(null);
-  const scrollRef = useRef<HTMLDivElement>();
-
-  const scrollRefCallback = (el: HTMLDivElement) => {
-    scrollRef.current = el;
-  };
-
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  }, [selectedCard?.id, toggleTab]);
-
-  const handleCardClick = (select: EventCardType) => {
-    setSelectedCard(select.id === selectedCard?.id ? null : select);
-  };
+  const { mapVar, mapCallback } = useCustomMap();
 
   if (!isSuccess) return;
 
@@ -101,17 +78,17 @@ const ArtistIdPage = () => {
     <DottedLayout size="wide">
       <div className="relative h-[calc(100vh-7.2rem)] w-full overflow-hidden pc:mb-128 pc:mt-48 pc:h-[84rem]">
         <div
-          className={`absolute left-0 top-0 z-zero h-full w-full ${toggleTab ? "tablet:pl-360 pc:pl-400" : ""} pb-344 tablet:pb-0 pc:h-[84rem] pc:rounded-lg pc:border pc:border-gray-100`}
+          className={`absolute left-0 top-0 z-zero h-full w-full ${mapVar.toggleTab ? "tablet:pl-360 pc:pl-400" : ""} pb-344 tablet:pb-0 pc:h-[84rem] pc:rounded-lg pc:border pc:border-gray-100`}
         >
-          <KakaoMap scheduleData={mapData} selectedCard={selectedCard} setSelectedCard={setSelectedCard} />
+          <KakaoMap scheduleData={mapData} {...mapVar} />
         </div>
         <button
-          onClick={handleButtonClick}
-          className={`tablet:flex-center absolute z-nav hidden h-60 w-24 rounded-r-sm border border-gray-100 bg-white-white tablet:top-44 pc:top-24 ${toggleTab ? "border-l-white-white tablet:left-360 pc:left-400" : "left-0"}`}
+          onClick={mapCallback.handleButtonClick}
+          className={`tablet:flex-center absolute z-nav hidden h-60 w-24 rounded-r-sm border border-gray-100 bg-white-white tablet:top-44 pc:top-24 ${mapVar.toggleTab ? "border-l-white-white tablet:left-360 pc:left-400" : "left-0"}`}
         >
-          <Image src="/icon/arrow-left.svg" width={20} height={20} alt="화살표" className={`${toggleTab || "scale-x-[-1]"}`} />
+          <Image src="/icon/arrow-left.svg" width={20} height={20} alt="화살표" className={`${mapVar.toggleTab || "scale-x-[-1]"}`} />
         </button>
-        {toggleTab && (
+        {mapVar.toggleTab && (
           <div className="absolute bottom-0 flex max-h-344 min-h-84 w-full flex-col gap-16 rounded-t-lg bg-white-black pt-28 shadow-2xl tablet:top-0 tablet:max-h-full tablet:w-360 tablet:rounded-none tablet:border tablet:border-gray-100 tablet:border-t-transparent tablet:pt-20 tablet:shadow-none pc:top-0 pc:h-[84rem] pc:w-400 pc:rounded-l-lg pc:border-t-gray-100 pc:py-20">
             <div className="absolute left-[calc((100%-64px)/2)] top-12 h-4 w-64 rounded-sm bg-gray-700 tablet:hidden" />
             <div className="flex flex-row items-center justify-start gap-12 px-20 pc:w-full">
@@ -142,9 +119,9 @@ const ArtistIdPage = () => {
                       <EventCard
                         key={event.id}
                         data={event}
-                        isSelected={selectedCard?.id === event.id}
-                        onCardClick={() => handleCardClick(event)}
-                        scrollRef={selectedCard?.id === event.id ? scrollRefCallback : null}
+                        isSelected={mapVar.selectedCard?.id === event.id}
+                        onCardClick={() => mapCallback.handleCardClick(event)}
+                        scrollRef={mapVar.selectedCard?.id === event.id ? mapCallback.scrollRefCallback : null}
                       />
                     )),
                   )}
