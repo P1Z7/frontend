@@ -57,7 +57,7 @@ const ArtistIdPage = () => {
     <DottedLayout size="wide">
       <div className="relative h-[calc(100vh-7.2rem)] w-full overflow-hidden pc:mb-128 pc:mt-48 pc:h-[84rem]">
         <div
-          className={`z-zero absolute left-0 top-0 h-full w-full ${mapVar.toggleTab ? "tablet:pl-360 pc:pl-400" : ""} pb-344 tablet:pb-0 pc:h-[84rem] pc:rounded-lg pc:border pc:border-gray-100`}
+          className={`z-zero absolute left-0 top-0 h-full w-full ${mapVar.toggleTab ? "tablet:pl-360 pc:pl-400" : ""} tablet:pb-0 pc:h-[84rem] pc:rounded-lg pc:border pc:border-gray-100`}
         >
           <KakaoMap scheduleData={eventData} {...mapVar} />
         </div>
