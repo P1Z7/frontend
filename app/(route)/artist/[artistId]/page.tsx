@@ -89,7 +89,7 @@ const ArtistIdPage = () => {
           <Image src="/icon/arrow-left.svg" width={20} height={20} alt="화살표" className={`${mapVar.toggleTab || "scale-x-[-1]"}`} />
         </button>
         {mapVar.toggleTab && (
-          <div className="absolute bottom-0 flex max-h-344 min-h-84 w-full flex-col gap-16 rounded-t-lg bg-white-black pt-28 shadow-2xl tablet:top-0 tablet:max-h-full tablet:w-360 tablet:rounded-none tablet:border tablet:border-gray-100 tablet:border-t-transparent tablet:pt-20 tablet:shadow-none pc:top-0 pc:h-[84rem] pc:w-400 pc:rounded-l-lg pc:border-t-gray-100 pc:py-20">
+          <div className="absolute bottom-0 flex max-h-352 min-h-84 w-full flex-col gap-16 rounded-t-lg bg-white-black pt-28 shadow-2xl tablet:top-0 tablet:max-h-full tablet:w-360 tablet:rounded-none tablet:border tablet:border-gray-100 tablet:border-t-transparent tablet:pt-20 tablet:shadow-none pc:top-0 pc:h-[84rem] pc:w-400 pc:rounded-l-lg pc:border-t-gray-100 pc:py-20">
             <div className="absolute left-[calc((100%-64px)/2)] top-12 h-4 w-64 rounded-sm bg-gray-700 tablet:hidden" />
             <div className="flex flex-row items-center justify-start gap-12 px-20 pc:w-full">
               <div className="relative h-36 w-36 pc:h-64 pc:w-64">
@@ -109,9 +109,9 @@ const ArtistIdPage = () => {
                 인기순
               </SortButton>
             </div>
-            <div className="overflow-scroll scrollbar-none pc:h-[65rem]">
+            <div className="min-h-200 overflow-scroll scrollbar-none pc:h-[65rem]">
               {isEmpty ? (
-                <p className="flex-center h-[20rem] w-full pt-20 text-14 font-500">행사가 없습니다.</p>
+                <p className="flex-center w-full pt-20 text-14 font-500">행사가 없습니다.</p>
               ) : (
                 <div className="px-20">
                   {artistData.pages.map((page) =>
