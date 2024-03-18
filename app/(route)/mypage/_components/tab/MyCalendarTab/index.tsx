@@ -1,16 +1,15 @@
 "use client";
 
+import CalendarTimeFilter from "@/(route)/mypage/_components/tab/MyCalendarTab/CalendarTimeFilter";
 import FadingDot from "@/(route)/signin/_components/FadingDot";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import "react-calendar/dist/Calendar.css";
-import TimeFilter from "@/components/TimeFilter";
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
 import { instance } from "@/api/api";
 import { getCalendarTime } from "@/utils/getCalendarTime";
-import { EventCardType } from "@/types/index";
+import { EventCardType, StatusType } from "@/types/index";
 import { MYPAGE_CALENDAR_STYLE } from "@/constants/calendarStyle";
-import { STATUS } from "@/constants/eventStatus";
 import NoContent from "../../NoContent";
 import FoldButton from "./FoldButton";
 import MyCalendar from "./MyCalendar";
@@ -22,14 +21,14 @@ interface Props {
 const MyCalendarTab = ({ userId }: Props) => {
   const [data, setData] = useState<EventCardType[] | []>([]);
   const [isFold, setIsFold] = useState(true);
-  const [status, setStatus] = useState(3);
+  const [status, setStatus] = useState<StatusType>("");
   const [calendarStyle, setCalendarStyle] = useState("");
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const { data: myEventsData, isSuccess } = useQuery({
-    queryKey: ["events", STATUS[status]],
+    queryKey: ["events", status],
     queryFn: async () => {
-      return instance.get(`/event/${userId}/like`, { status: STATUS[status] });
+      return instance.get(`/event/${userId}/like`, { status });
     },
   });
 
@@ -76,7 +75,7 @@ const MyCalendarTab = ({ userId }: Props) => {
         )}
       </div>
       <div className="w-full">
-        <TimeFilter setStatus={setStatus} status={status} />
+        <CalendarTimeFilter setStatus={setStatus} status={status} />
         <section>
           {data
             .filter(
