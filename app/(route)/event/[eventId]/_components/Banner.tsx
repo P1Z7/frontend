@@ -145,7 +145,7 @@ const Banner = ({ data, eventId }: Props) => {
             </SubDescription>
             {hasEditApplication && <Alert href={pathname + "/approve"} message="수정요청 정보가 있습니다." />}
           </div>
-          <div className="absolute bottom-0 right-0 hidden text-14 font-400 pc:block">
+          <div className="bottom-0 right-0 pt-12 text-12 font-400 pc:absolute pc:block pc:text-14">
             <Link href={pathname + "/edit"} className="mr-16 text-blue">
               수정하기
             </Link>
