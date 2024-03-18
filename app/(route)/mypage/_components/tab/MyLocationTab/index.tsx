@@ -34,7 +34,7 @@ const MyLocationTab = ({ userId }: Props) => {
       <div className="h-full">
         <div className="relative h-[calc(100vh-7.2rem)] w-full overflow-hidden pc:h-[84rem]">
           <div
-            className={`absolute left-0 top-0 z-zero h-full w-full ${mapVar.toggleTab ? "pc:pl-400" : ""} pb-344 pc:h-[84rem] pc:rounded-lg pc:border pc:border-gray-100 pc:pb-0`}
+            className={`absolute left-0 top-0 z-zero h-full w-full ${mapVar.toggleTab ? "pc:pl-396" : ""} pb-344 pc:h-[84rem] pc:rounded-lg pc:border pc:border-gray-100 pc:pb-0`}
           >
             <KakaoMap scheduleData={myEventsData ?? []} {...mapVar} />
           </div>
@@ -45,7 +45,7 @@ const MyLocationTab = ({ userId }: Props) => {
             <Image src="/icon/arrow-left.svg" width={20} height={20} alt="화살표" className={`${mapVar.toggleTab || "scale-x-[-1]"}`} />
           </button>
           {mapVar.toggleTab && (
-            <div className="absolute bottom-0 flex max-h-352 min-h-84 w-full flex-col gap-16 rounded-t-lg bg-white-black pt-28 shadow-2xl tablet:w-full pc:top-0 pc:h-[84rem] pc:max-h-full pc:w-400 pc:rounded-none pc:rounded-l-lg pc:border pc:border-gray-100 pc:border-t-gray-100 pc:border-t-transparent pc:py-20 pc:shadow-none">
+            <div className="absolute bottom-0 flex max-h-352 min-h-84 w-full flex-col gap-16 rounded-t-lg bg-white-black pt-28 shadow-2xl tablet:w-full pc:top-0 pc:h-[84rem] pc:max-h-full pc:w-400 pc:rounded-none pc:rounded-l-lg pc:border pc:border-gray-100 pc:border-t-gray-100 pc:py-20 pc:shadow-none">
               <div className="absolute left-[calc((100%-64px)/2)] top-12 h-4 w-64 rounded-sm bg-gray-700 pc:hidden" />
               <TimeFilter setStatus={setStatus} status={status} />
               <div className="min-h-320 overflow-scroll scrollbar-none pc:h-[72rem]">
