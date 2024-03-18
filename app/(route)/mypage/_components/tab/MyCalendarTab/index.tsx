@@ -1,5 +1,6 @@
 "use client";
 
+import CalendarTimeFilter from "@/(route)/mypage/_components/tab/MyCalendarTab/CalendarTimeFilter";
 import FadingDot from "@/(route)/signin/_components/FadingDot";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
@@ -7,18 +8,15 @@ import "react-calendar/dist/Calendar.css";
 import HorizontalEventCard from "@/components/card/HorizontalEventCard";
 import { instance } from "@/api/api";
 import { getCalendarTime } from "@/utils/getCalendarTime";
-import { EventCardType } from "@/types/index";
+import { EventCardType, StatusType } from "@/types/index";
 import { MYPAGE_CALENDAR_STYLE } from "@/constants/calendarStyle";
 import NoContent from "../../NoContent";
-import ChipButtons from "./ChipButtons";
 import FoldButton from "./FoldButton";
 import MyCalendar from "./MyCalendar";
 
 interface Props {
   userId: string;
 }
-
-type StatusType = "" | "예정" | "종료" | "진행중" | "종료제외";
 
 const MyCalendarTab = ({ userId }: Props) => {
   const [data, setData] = useState<EventCardType[] | []>([]);
@@ -77,7 +75,7 @@ const MyCalendarTab = ({ userId }: Props) => {
         )}
       </div>
       <div className="w-full">
-        <ChipButtons setStatus={setStatus} status={status} />
+        <CalendarTimeFilter setStatus={setStatus} status={status} />
         <section>
           {data
             .filter(

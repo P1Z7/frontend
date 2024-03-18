@@ -1,13 +1,12 @@
 import ChipButton from "@/components/chip/ChipButton";
-
-type StatusType = "" | "예정" | "종료" | "진행중" | "종료제외";
+import { StatusType } from "@/types/index";
 
 interface Props {
   status: string;
   setStatus: (status: StatusType) => void;
 }
 
-const ChipButtons = ({ status, setStatus }: Props) => {
+const CalendarTimeFilter = ({ status, setStatus }: Props) => {
   const handleChipClick = (label: StatusType) => {
     switch (label) {
       case status:
@@ -34,4 +33,4 @@ const ChipButtons = ({ status, setStatus }: Props) => {
   );
 };
 
-export default ChipButtons;
+export default CalendarTimeFilter;

@@ -14,8 +14,8 @@ const KakaoMap = ({ scheduleData, toggleTab, setToggleTab, selectedCard, setSele
   const [mapInstance, setMapInstance] = useState<any>(null);
 
   const onLoadKakaoMap = useCallback(() => {
-    const kakaoMap = window.kakao.maps;
-    kakaoMap.load(() => {
+    const kakaoMap = window.kakao?.maps;
+    kakaoMap?.load(() => {
       const mapContainer = document.getElementById("map");
       const mapOption = {
         center: new kakaoMap.LatLng(37.566826, 126.9786567),
