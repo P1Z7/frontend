@@ -2,9 +2,10 @@ interface Props {
   title?: string;
   description?: string;
   imgUrl?: string;
+  noFollow?: boolean;
 }
 
-const MetaTag = ({ title, description, imgUrl }: Props) => {
+const MetaTag = ({ title, description, imgUrl, noFollow = false }: Props) => {
   return (
     <>
       <title>{title ? `${title} | Opener` : "Opener"}</title>
@@ -29,6 +30,7 @@ const MetaTag = ({ title, description, imgUrl }: Props) => {
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content="Opener" />
       <meta property="og:locale" content="ko" />
+      <meta name="robots" content={noFollow ? "index, nofollow" : "index, follow"} />
       <meta name="twitter:title" content={title ? `${title} | Opener` : "Opener"} />
       <meta
         name="twitter:description"
