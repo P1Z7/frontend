@@ -27,8 +27,13 @@ const ArtistIdPage = () => {
   const group = getGroup(instance, artistId);
   const artist = getArtist(instance, artistId);
 
-  const name = group.groupName || artist.artistName;
-  const image = group.groupImage || artist.artistImage;
+  const [name, setName] = useState("");
+  const [image, setImage] = useState("");
+
+  useEffect(() => {
+    setName(group.groupName || artist.artistName);
+    setImage(group.groupImage || artist.artistImage);
+  }, [group, artist]);
 
   const [sort, setSort] = useState<SortItem>(SORT[0]);
   const [status, setStatus] = useState(3);
