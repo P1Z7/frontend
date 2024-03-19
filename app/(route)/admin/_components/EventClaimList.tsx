@@ -1,4 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
+import Link from "next/link";
 import { useState } from "react";
 import { instance } from "@/api/api";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
@@ -7,12 +8,12 @@ import { openToast } from "@/utils/toast";
 
 const SIZE = 12;
 
-const ReviewClaimList = () => {
+const EventClaimList = () => {
   const [claimList, setClaimList] = useState<any[]>([]);
   const { data, fetchNextPage, isSuccess, isLoading } = useInfiniteQuery({
     queryKey: ["admin_review_claim"],
     queryFn: async ({ pageParam }) => {
-      const res = await instance.get("/reviews/claims/all", { size: SIZE, cursorId: pageParam });
+      const res = await instance.get("/users/events/all", { size: SIZE, cursorId: pageParam });
       pageParam === 1 ? setClaimList(res) : setClaimList((prev) => [...prev, ...res]);
       return res;
     },
@@ -22,12 +23,12 @@ const ReviewClaimList = () => {
   const containerRef = useInfiniteScroll({ handleScroll: fetchNextPage, deps: [data] });
 
   const session = getSession();
-  const deleteReview = async (id: string) => {
+  const deleteEvent = async (id: string) => {
     try {
-      await instance.delete(`/reviews/${id}/users/${session?.user.userId}`);
-      openToast.success("후기 삭제 완료!");
+      await instance.delete(`/event/${id}`, { userId: session?.user.userId });
+      openToast.success("이벤트 삭제 완료!");
     } catch (error) {
-      openToast.error("후기 삭제 실패!");
+      openToast.error("이벤트 삭제 실패!");
     }
   };
 
@@ -39,8 +40,11 @@ const ReviewClaimList = () => {
             <div key={claims.id} className="flex justify-between gap-4 border-b border-white-white px-4 py-12">
               <div className="flex flex-col gap-12">
                 <div>
-                  <p>후기 id: {id}</p>
+                  <p>이벤트 id: {id}</p>
                   <p>신고 개수: {claims.length}</p>
+                  <Link href={`/event/${id}`} className="underline">
+                    보러 가기
+                  </Link>
                 </div>
                 {claims.map(({ content, user }: { content: string; user: { id: string; nickName: string } }) => (
                   <div className="border border-white-white p-8">
@@ -49,8 +53,8 @@ const ReviewClaimList = () => {
                   </div>
                 ))}
               </div>
-              <button onClick={() => deleteReview(id)} className="rounded-sm bg-red p-4">
-                후기 삭제
+              <button onClick={() => deleteEvent(id)} className="rounded-sm bg-red p-4">
+                이벤트 삭제
               </button>
             </div>
           ))
@@ -63,4 +67,4 @@ const ReviewClaimList = () => {
   );
 };
 
-export default ReviewClaimList;
+export default EventClaimList;

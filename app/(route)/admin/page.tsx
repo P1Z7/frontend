@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { useStore } from "@/store/index";
 import { getSession } from "@/store/session/cookies";
 import ArtistReqList from "./_components/ArtistReqList";
+import EventClaimList from "./_components/EventClaimList";
 import EventList from "./_components/EventList";
 import OptionList from "./_components/OptionList";
 import ReviewClaimList from "./_components/ReviewClaimList";
@@ -14,7 +15,7 @@ const RENDER_ADMIN = {
   "선택 화면": <OptionList />,
   "아티스트 요청 목록": <ArtistReqList />,
   "리뷰 신고 목록": <ReviewClaimList />,
-  "이벤트 신고 목록": <div />,
+  "이벤트 신고 목록": <EventClaimList />,
   "행사 삭제": <EventList />,
 };
 

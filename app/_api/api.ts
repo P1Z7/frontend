@@ -175,7 +175,8 @@ type GetEndPoint =
   | `/event/user/${string}`
   | "/event/new"
   | "artist/group/month"
-  | "/users/new-artists";
+  | "/users/new-artists"
+  | "/users/events/all";
 type PostEndPoint =
   | "/event"
   | "/event/like"
