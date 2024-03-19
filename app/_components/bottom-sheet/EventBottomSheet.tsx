@@ -23,7 +23,7 @@ const EventBottomSheet = ({ closeBottomSheet, refs, setEventFilter, selected }: 
       <BottomSheet.Title>행사유형</BottomSheet.Title>
       <div ref={refs.content} className="w-full pb-12 pt-8">
         {EVENTS.map((event) => (
-          <EventButton onClick={() => handleClick(event)} selected={selected === event}>
+          <EventButton onClick={() => handleClick(event)} selected={selected === event} key={event}>
             {event}
           </EventButton>
         ))}

@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useAuth } from "@/hooks/useAuth";
-import { useBottomSheet } from "@/hooks/useBottomSheet";
+import useBottomSheet from "@/hooks/useBottomSheet";
 import SettingList from "./SettingList";
 
 const MyPageBottomSheet = dynamic(() => import("@/components/bottom-sheet/MyPageBottomSheet"), { ssr: false });

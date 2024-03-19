@@ -6,7 +6,7 @@ import ControlMyDataBottomSheet from "@/components/bottom-sheet/ControlMyDataBot
 import KebabContents from "@/components/card/KebabContents";
 import Chip from "@/components/chip/Chip";
 import { instance } from "@/api/api";
-import { useBottomSheet } from "@/hooks/useBottomSheet";
+import useBottomSheet from "@/hooks/useBottomSheet";
 import { formatAddress, formatDate } from "@/utils/formatString";
 import { MyReviewType } from "@/types/index";
 import HeartIcon from "@/public/icon/heart.svg";
