@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import Alert from "@/components/Alert";
 import Chip from "@/components/chip/Chip";
 import ReportModal from "@/components/modal/ReportModal";
@@ -78,7 +78,7 @@ const Banner = ({ data, eventId }: Props) => {
             priority
             width={460}
             height={644}
-            sizes="(max-width: 1200px) 250px, 500px"
+            sizes={`(max-width: 1200px) 250px, 150px`}
             className="absolute-center z-base hidden object-cover tablet:block tablet:max-h-[65rem] pc:hidden"
           />
           <Image src={bannerImage?.imageUrl ?? DefaultImage} alt={"행사 포스터 썸네일"} priority fill sizes="250px" className="object-cover tablet:blur-xl pc:blur-0" />

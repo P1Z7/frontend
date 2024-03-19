@@ -37,8 +37,10 @@ const MyCalendar = ({ setSelectedDate, selectedDate, data, isFold }: Props) => {
           type = COUNT_CHIP_TYPE.regular;
         }
         return (
-          <span className="pc:flex pc:w-full pc:items-center pc:justify-end pc:self-stretch pc:px-8">
-            <div className={`flex-center h-20 w-20 rounded-full text-12 font-600 pc:h-28 pc:w-28 pc:text-16 ${type}`}>{eventsForDate.length}</div>
+          <span className="tablet:flex tablet:w-full tablet:items-center tablet:justify-end tablet:self-stretch tablet:px-8">
+            <div className={`flex-center h-20 w-20 rounded-full text-12 font-600 tablet:h-24 tablet:w-24 tablet:text-14 pc:h-28 pc:w-28 pc:text-16 ${type}`}>
+              {eventsForDate.length}
+            </div>
           </span>
         );
 
@@ -75,7 +77,7 @@ const MyCalendar = ({ setSelectedDate, selectedDate, data, isFold }: Props) => {
 
           return (
             <span
-              className={`flex flex-col items-center justify-center gap-4 self-stretch pc:pt-4 ${selectedDate?.getTime() === date.getTime() ? "pc:opacity-100" : "pc:opacity-50"}`}
+              className={`flex flex-col items-center justify-center gap-4 self-stretch pc:pt-4 ${selectedDate?.getTime() === date.getTime() ? "pc:opacity-100" : "pc:opacity-70"}`}
             >
               {today.map((event, idx) => {
                 if (event === "blank") {
@@ -145,10 +147,10 @@ const COLOR_TYPE: Record<number, string> = {
 };
 
 const SHAPE_TYPE = {
-  oneDay: "w-36 pc:w-100",
-  firstDay: "ml-8 w-44 pc:w-108",
-  lastDay: "mr-8 w-44 pc:w-108",
-  middleDay: "w-52 pc:w-120",
+  oneDay: "w-36 tablet:w-88 pc:w-100",
+  firstDay: "ml-8 w-44 tablet:w-96 pc:w-108",
+  lastDay: "mr-8 w-44 tablet:w-96 pc:w-108",
+  middleDay: "w-52 tablet:w-108 pc:w-120",
 };
 
 const COUNT_CHIP_TYPE = {

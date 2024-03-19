@@ -1,20 +1,19 @@
+import Image from "next/image";
 import Link from "next/link";
-import Logo from "@/public/icon/logo-underline.svg";
 
 const NotFound = () => {
   return (
-    <div className="flex min-h-[100vh] min-w-[100vw] flex-col items-center justify-center gap-20 bg-sub-pink-bg">
+    <div className="flex-center min-h-[100vh] min-w-[100vw] flex-col gap-20">
       <Link href="/">
-        <Logo />
+        <Image src="/image/notfound.png" alt="에러페이지 이미지" width={280} height={280} sizes="150px" />
       </Link>
-      <p className="text-20 font-600">페이지를 찾을 수 없습니다!</p>
-      <p className="text-center text-12 text-gray-600">
-        존재하지 않는 주소를 입력하셨거나
-        <br /> 주소가 변경, 삭제되어 찾을 수 없습니다.
-      </p>
-      <div className="flex gap-4 text-12">
-        <Link href="/">홈으로</Link>✧<Link href="/search">행사 둘러보기</Link>✧<Link href="/signin">로그인하기</Link>
-      </div>
+      <p className="text-20 font-500 text-main-pink-500">페이지를 찾을 수 없습니다.</p>
+      <Link
+        href="/"
+        className="flex-center h-48 w-128 shrink-0 gap-4 rounded-md border border-main-pink-300 bg-main-pink-50 px-16 text-16 font-600 text-main-pink-white disabled:border-gray-200 disabled:bg-gray-200 disabled:text-white-white"
+      >
+        돌아가기
+      </Link>
     </div>
   );
 };

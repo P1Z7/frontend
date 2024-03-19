@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 
 const MAX_W = {
+  extraNarrow: "pc:max-w-[68.8rem]",
   narrow: "pc:max-w-[83.4rem]",
   wide: "pc:max-w-[104rem]",
   extrawide: "pc:max-w-[112rem]",
@@ -8,7 +9,7 @@ const MAX_W = {
 
 interface Props {
   children: ReactNode;
-  size: "narrow" | "wide" | "extrawide";
+  size: "narrow" | "wide" | "extrawide" | "extraNarrow";
 }
 
 const DottedLayout = ({ children, size }: Props) => {

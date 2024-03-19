@@ -12,6 +12,11 @@ export interface BottomSheetBaseType {
   closeBottomSheet: () => void;
   refs: BottomSheetRefs;
 }
+
+export interface KebabBaseType {
+  closeKebab: () => void;
+}
+
 export interface MapType {
   name: string;
   address: string;
@@ -19,6 +24,8 @@ export interface MapType {
 }
 
 export type SignupStepNameType = "약관 동의" | "계정 정보" | "프로필 정보" | "아티스트 선택";
+
+export type ResetPasswordNameType = "인증" | "재설정";
 
 export type PostStepNameType = "행사 대상" | "행사 정보" | "특전 정보" | "상세 설명";
 
@@ -34,6 +41,7 @@ export interface FunnelType<T> {
 export interface ProfileSetupType<T> {
   steps: SignupStepNameType[];
   handleNextClick: (nextStep: SignupStepNameType) => void;
+  handlePrevClick: () => void;
   Funnel: React.ComponentType<FunnelType<T>>;
   Step: React.ComponentType<StepType<T>>;
 }
@@ -48,6 +56,21 @@ export interface SignUpFormType {
   myArtists: string[] | [];
   myArtistsInfo: { name: string; id: string }[];
   code: number | string;
+}
+
+export interface ResetPwSetupType<T> {
+  steps: ResetPasswordNameType[];
+  handleNextClick: (nextStep: ResetPasswordNameType) => void;
+  handlePrevClick: () => void;
+  Funnel: React.ComponentType<FunnelType<T>>;
+  Step: React.ComponentType<StepType<T>>;
+}
+
+export interface ResetPwFormType {
+  email: string;
+  password: string;
+  passwordCheck: string;
+  verificationNumber: number | string;
 }
 
 export interface UserType {
@@ -264,7 +287,7 @@ export type GroupAndSoloType = {
   type: string;
 };
 
-export type StatusType = "" | "예정" | "진행중" | "종료";
+export type StatusType = "" | "예정" | "진행중" | "종료" | "종료제외";
 
 export type ArtistGroupMonthType = {
   id: string;

@@ -53,7 +53,7 @@ const SubInput = () => {
       <div className="flex flex-col gap-20 pc:gap-32">
         <div className="flex flex-col gap-12">
           <div className="relative flex flex-col gap-16 ">
-            <label className="flex items-center">
+            <label className="flex items-center pc:text-20 pc:font-500">
               주최자 SNS
               {validateEdit(defaultValues?.organizerSns !== organizerSns || defaultValues.snsType !== snsType) && (
                 <InitButton
@@ -99,7 +99,7 @@ const SubInput = () => {
           링크
         </InputText>
         <div className="flex flex-col gap-8">
-          <div className="relative flex items-center gap-4">
+          <div className="relative flex items-center gap-4 pc:text-20 pc:font-500">
             특전
             {validateEdit(typeof defaultValues?.tags !== "undefined" && checkArrUpdate(defaultValues?.tags, giftList)) && (
               <InitButton onClick={() => setGiftList(defaultValues?.tags as string[])} />
