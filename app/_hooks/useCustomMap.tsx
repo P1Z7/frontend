@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { EventCardType } from "@/types/index";
 
 const useCustomMap = () => {
@@ -44,3 +44,16 @@ const useCustomMap = () => {
 };
 
 export default useCustomMap;
+
+export interface MapVarType {
+  toggleTab: boolean;
+  setToggleTab: Dispatch<SetStateAction<boolean>>;
+  selectedCard: EventCardType | null;
+  setSelectedCard: Dispatch<SetStateAction<EventCardType | null>>;
+}
+
+export interface MapCallbackType {
+  handleCardClick: (select: EventCardType) => void;
+  handleButtonClick: () => void;
+  scrollRefCallback: (el: HTMLDivElement) => void;
+}

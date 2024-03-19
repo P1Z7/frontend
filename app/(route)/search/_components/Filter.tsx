@@ -37,7 +37,7 @@ const Filter = ({ visible, filter, resetFilter, sort, handleSort, status, handle
   return (
     <div className={`animate-fadeIn flex-col gap-12 px-20 pb-8 pc:p-0 ${visible ? "flex" : "hidden pc:block"}`}>
       <div className="flex w-full gap-8 overflow-auto scrollbar-hide">
-        <button onClick={resetFilter} type="button" className="flex-center h-32 w-32 rounded-full bg-gray-50">
+        <button onClick={resetFilter} type="button" className="flex-center h-32 w-32 shrink-0 rounded-full bg-gray-50">
           <ResetIcon />
         </button>
         <FilterButton onClick={openSearchBottomSheet.bigRegion} selected={Boolean(filter.bigRegion)}>

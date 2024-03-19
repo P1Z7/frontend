@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import { ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { EVENTS } from "@/components/bottom-sheet/EventBottomSheet";
-import { useBottomSheet } from "@/hooks/useBottomSheet";
+import useBottomSheet from "@/hooks/useBottomSheet";
 import { createQueryString } from "@/utils/handleQueryString";
 import { EventType, GiftType, StatusType } from "@/types/index";
 import { BIG_REGIONS } from "@/constants/regions";
