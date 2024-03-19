@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { EventCardType } from "@/types/index";
+import useGetWindowWidth from "./useGetWindowWidth";
 
 const useCustomMap = () => {
   const [toggleTab, setToggleTab] = useState(true);
@@ -23,8 +24,13 @@ const useCustomMap = () => {
     scrollRef.current = el;
   };
 
+  const { isPc } = useGetWindowWidth();
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    if (isPc) {
+      scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      return;
+    }
+    scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, [selectedCard?.id, toggleTab]);
 
   const mapVar = {
