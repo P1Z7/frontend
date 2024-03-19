@@ -125,10 +125,14 @@ export class Api {
     return res;
   }
 
-  async delete<T extends DeleteEndPoint>(endPoint: T, body?: DeleteBodyType<T>) {
+  async delete<T extends DeleteEndPoint>(endPoint: T, queryObj?: any, body?: DeleteBodyType<T>) {
     this.baseUrl = "/api" + endPoint;
+    if (queryObj) {
+      this.makeQueryString<T>(queryObj);
+    }
 
-    const newEndPoint = this.baseUrl;
+    const newEndPoint = queryObj ? this.baseUrl + this.queryString : this.baseUrl;
+
     const config = {
       method: "DELETE",
       body: JSON.stringify(body),
@@ -141,7 +145,8 @@ export class Api {
       const refetchResult = await this.refetch(newEndPoint, config);
       return refetchResult;
     }
-
+    const result = await res.json();
+    this.makeError(result);
     return res;
   }
 }
@@ -169,7 +174,9 @@ type GetEndPoint =
   | "artist/group/month"
   | `/event/user/${string}`
   | "/event/new"
-  | "artist/group/month";
+  | "artist/group/month"
+  | "/users/new-artists"
+  | "/users/events/all";
 type PostEndPoint =
   | "/event"
   | "/event/like"
@@ -193,7 +200,14 @@ type PostEndPoint =
   | `/reviews/${string}/claims`;
 
 type DeleteEndPoint = `/users/${string}/artists` | `/reviews/${string}/images` | `/users/${string}` | "/auth" | `/event/${string}` | `/reviews/${string}/users/${string}`;
-type PutEndPoint = `/event/${string}` | `/users/${string}/profile` | `/users/${string}/password` | `/users/${string}/artists` | "/users/password";
+type PutEndPoint =
+  | `/event/${string}`
+  | `/users/${string}/profile`
+  | `/users/${string}/password`
+  | `/users/${string}/artists`
+  | "/users/password"
+  | `/event/${string}`
+  | `/reviews/${string}/users/${string}`;
 type PostQueryType<T> = T extends "/file/upload" ? { category: "event" | "artist" | "user" } : unknown;
 
 type PostBodyType<T> = T extends "/event"
@@ -272,7 +286,6 @@ type GetQueryType<T> = T extends "/event"
                                     ? Req_Query_Type["닉네임"]
                                     : unknown;
 
-// 사용하실 때 직접 추가 부탁드립니다!
 type PutBodyType<T> = T extends `/event/${string}`
   ? Req_Post_Type["event"]
   : T extends `/users/${string}/profile`

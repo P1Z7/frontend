@@ -52,6 +52,10 @@ export const META_TAG = {
   },
   resetPassword: {
     title: "비밀번호 재설정",
-    description: "이메일 인증을 통해 비밀번호를 다시 설정하세요."
-  }
+    description: "이메일 인증을 통해 비밀번호를 다시 설정하세요.",
+  },
+  admin: {
+    title: "관리자 페이지",
+    description: "관리자 기능 페이지입니다.",
+  },
 };

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import KakaoMap from "@/components/KakaoMap";
+import MetaTag from "@/components/MetaTag";
 import DottedLayout from "@/components/layout/DottedLayout";
 import { instance } from "@/api/api";
 import useCustomMap from "@/hooks/useCustomMap";
@@ -54,23 +55,36 @@ const ArtistIdPage = () => {
   const eventData = artistData.eventList;
 
   return (
-    <DottedLayout size="wide">
-      <div className="relative h-[calc(100vh-7.2rem)] w-full overflow-hidden pc:mb-128 pc:mt-48 pc:h-[84rem]">
-        <div
-          className={`z-zero absolute left-0 top-0 h-full w-full ${mapVar.toggleTab ? "tablet:pl-360 pc:pl-400" : ""} tablet:pb-0 pc:h-[84rem] pc:rounded-lg pc:border pc:border-gray-100`}
-        >
-          <KakaoMap scheduleData={eventData} {...mapVar} />
+    <>
+      <MetaTag title={`${name}`} imgUrl={image} description={`${name}의 행사 정보들을 지도를 통해 쉽게 확인해 보세요.`} />
+      <DottedLayout size="wide">
+        <div className="relative h-[calc(100vh-7.2rem)] w-full overflow-hidden pc:mb-128 pc:mt-48 pc:h-[84rem]">
+          <div
+            className={`absolute left-0 top-0 z-zero h-full w-full ${mapVar.toggleTab ? "tablet:pl-360 pc:pl-400" : ""} tablet:pb-0 pc:h-[84rem] pc:rounded-lg pc:border pc:border-gray-100`}
+          >
+            <KakaoMap scheduleData={eventData} {...mapVar} />
+          </div>
+          <button
+            onClick={mapCallback.handleButtonClick}
+            className={`tablet:flex-center absolute z-nav hidden h-60 w-24 rounded-r-sm border border-gray-100 bg-white-white tablet:top-44 pc:top-24 ${mapVar.toggleTab ? "border-l-white-white tablet:left-360 pc:left-400" : "left-0"}`}
+          >
+            <Image src="/icon/arrow-left.svg" width={20} height={20} alt="화살표" className={`${mapVar.toggleTab || "scale-x-[-1]"}`} />
+          </button>
+          <PcTab mapVar={mapVar} mapCallback={mapCallback} eventData={eventData} name={name} image={image} sort={sort} setSort={setSort} status={status} setStatus={setStatus} />
+          <MobileTab
+            mapVar={mapVar}
+            mapCallback={mapCallback}
+            eventData={eventData}
+            name={name}
+            image={image}
+            sort={sort}
+            setSort={setSort}
+            status={status}
+            setStatus={setStatus}
+          />
         </div>
-        <button
-          onClick={mapCallback.handleButtonClick}
-          className={`tablet:flex-center absolute z-nav hidden h-60 w-24 rounded-r-sm border border-gray-100 bg-white-white tablet:top-44 pc:top-24 ${mapVar.toggleTab ? "border-l-white-white tablet:left-360 pc:left-400" : "left-0"}`}
-        >
-          <Image src="/icon/arrow-left.svg" width={20} height={20} alt="화살표" className={`${mapVar.toggleTab || "scale-x-[-1]"}`} />
-        </button>
-        <PcTab mapVar={mapVar} mapCallback={mapCallback} eventData={eventData} name={name} image={image} sort={sort} setSort={setSort} status={status} setStatus={setStatus} />
-        <MobileTab mapVar={mapVar} mapCallback={mapCallback} eventData={eventData} name={name} image={image} sort={sort} setSort={setSort} status={status} setStatus={setStatus} />
-      </div>
-    </DottedLayout>
+      </DottedLayout>
+    </>
   );
 };
 
