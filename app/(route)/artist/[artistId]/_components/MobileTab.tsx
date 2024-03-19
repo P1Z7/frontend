@@ -28,7 +28,7 @@ const MobileTab = ({ mapVar, mapCallback, image, name, status, setStatus, sort, 
   return (
     <div
       ref={sheet}
-      className="absolute top-[calc(100vh-384px)] flex min-h-84 w-full flex-col gap-16 rounded-t-lg bg-white-black pt-28 shadow-2xl transition duration-150 ease-out tablet:hidden"
+      className="fixed top-[calc(100vh-384px)] flex min-h-84 w-full flex-col gap-16 overscroll-contain rounded-t-lg bg-white-black pt-28 shadow-2xl transition duration-150 ease-out tablet:hidden"
     >
       <div className="absolute left-[calc((100%-64px)/2)] top-12 h-4 w-64 rounded-sm bg-gray-700 tablet:hidden" />
       <div className="flex flex-row items-center justify-start gap-12 px-20 pc:w-full">
@@ -49,7 +49,7 @@ const MobileTab = ({ mapVar, mapCallback, image, name, status, setStatus, sort, 
           인기순
         </SortButton>
       </div>
-      <div ref={content} className="max-h-[80rem] min-h-200 overflow-scroll pb-[70rem] scrollbar-none">
+      <div ref={content} className="max-h-[80rem] min-h-200 overflow-scroll overscroll-contain pb-[70rem] scrollbar-none">
         {isEmpty ? (
           <p className="flex-center w-full pt-20 text-14 font-500">행사가 없습니다.</p>
         ) : (
