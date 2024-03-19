@@ -8,7 +8,7 @@ interface BottomSheetMetrics {
 
 const SNAP = {
   top: 260,
-  bottom: 650,
+  bottom: 630,
 };
 
 const useArtistSheet = () => {
@@ -45,8 +45,8 @@ const useArtistSheet = () => {
           node.style.setProperty("transform", "translateY(0px)");
           metrics.current.position = 0;
         } else if (currentY < SNAP.top) {
-          node.style.setProperty("transform", `translateY(-320px)`);
-          metrics.current.position = -320;
+          node.style.setProperty("transform", `translateY(${500 - window.innerHeight}px)`);
+          metrics.current.position = 500 - window.innerHeight;
         }
 
         metrics.current.isContentAreaTouched = false;
