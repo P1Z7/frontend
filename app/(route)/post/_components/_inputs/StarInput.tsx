@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import EventTypeList from "@/components/bottom-sheet/content/EventTypeList";
 import InputText from "@/components/input/InputText";
-import { useBottomSheet } from "@/hooks/useBottomSheet";
+import useBottomSheet from "@/hooks/useBottomSheet";
 import useGetWindowWidth from "@/hooks/useGetWindowWidth";
 import { useModal } from "@/hooks/useModal";
 import { checkArrUpdate } from "@/utils/checkArrUpdate";

@@ -2,7 +2,7 @@ import InitButton from "@/(route)/event/[eventId]/edit/_components/InitButton";
 import dynamic from "next/dynamic";
 import { useFormContext } from "react-hook-form";
 import InputText from "@/components/input/InputText";
-import { useBottomSheet } from "@/hooks/useBottomSheet";
+import useBottomSheet from "@/hooks/useBottomSheet";
 import { validateEdit } from "@/utils/editValidate";
 import { handleEnterDown } from "@/utils/handleEnterDown";
 import { PostType } from "../../page";

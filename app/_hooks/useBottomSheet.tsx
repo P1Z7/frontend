@@ -9,7 +9,7 @@ interface BottomSheetMetrics {
   isContentAreaTouched: boolean;
 }
 
-export function useBottomSheet() {
+const useBottomSheet = () => {
   const [bottomSheet, setBottomSheet] = useState("");
 
   const openBottomSheet = (type: string) => {
@@ -99,4 +99,6 @@ export function useBottomSheet() {
   }, [bottomSheet]);
 
   return { bottomSheet, openBottomSheet, closeBottomSheet, refs };
-}
+};
+
+export default useBottomSheet;
