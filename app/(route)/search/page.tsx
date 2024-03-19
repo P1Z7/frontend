@@ -21,6 +21,7 @@ const SearchPage = () => {
       <MetaTag
         title={keyword ? `${keyword}: 검색 결과` : "행사 둘러보기"}
         description={keyword ? `${keyword}의 Opener 행사 검색 결과입니다.` : "Opener에 등록된 각종 오프라인 행사들을 구경해 보세요."}
+        imgUrl="/image/meta-thumbnail.png"
       />
       <DottedLayout size="wide">
         <main className={`relative w-full pb-84 [overflow-anchor:none] ${visible ? "" : "pt-112 pc:pt-0"}`}>
