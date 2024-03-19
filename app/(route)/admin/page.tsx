@@ -3,8 +3,10 @@
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import MetaTag from "@/components/MetaTag";
 import { useStore } from "@/store/index";
 import { getSession } from "@/store/session/cookies";
+import { META_TAG } from "@/constants/metaTag";
 import ArtistReqList from "./_components/ArtistReqList";
 import EventClaimList from "./_components/EventClaimList";
 import EventList from "./_components/EventList";
@@ -44,6 +46,7 @@ const Admin = () => {
 
   return (
     <>
+      <MetaTag title={META_TAG.admin.title} description={META_TAG.admin.description} />
       {isAdminLogin && (
         <div className="relative flex h-[calc(100vh-7.2rem)] items-center justify-center bg-black-white px-20 pb-12 pt-56 text-14 text-white-white pc:h-[calc(100vh-6.4rem)]">
           {isAuth ? (
