@@ -2,14 +2,17 @@
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import WithdrawModal from "@/components/modal/WithdrawModal";
 import { useAuth } from "@/hooks/useAuth";
 import useBottomSheet from "@/hooks/useBottomSheet";
+import { useModal } from "@/hooks/useModal";
 import SettingList from "./SettingList";
 
 const MyPageBottomSheet = dynamic(() => import("@/components/bottom-sheet/MyPageBottomSheet"), { ssr: false });
 
 const UserProfile = () => {
   const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
+  const { modal, openModal, closeModal } = useModal();
   const { session } = useAuth();
 
   return (
@@ -31,12 +34,13 @@ const UserProfile = () => {
         </div>
       </div>
       <section className="mx-20 hidden w-full rounded-lg border border-gray-50 pc:block">
-        <SettingList isOpener={session?.user.signupMethod === "opener"} />
+        <SettingList isOpener={session?.user.signupMethod === "opener"} openModal={openModal} />
       </section>
       <button onClick={() => openBottomSheet("mypage")} className="pc:hidden">
         <Image src="/icon/kebab-black.svg" width={24} height={25} alt="계정 정보 수정하기" />
       </button>
-      {bottomSheet === "mypage" && <MyPageBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} isOpener={session?.user.signupMethod === "opener"} />}
+      {bottomSheet === "mypage" && <MyPageBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} isOpener={session?.user.signupMethod === "opener"} openModal={openModal} />}
+      {modal === "withdraw" && <WithdrawModal closeModal={closeModal} />}
     </div>
   );
 };

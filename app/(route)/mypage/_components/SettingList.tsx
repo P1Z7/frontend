@@ -17,9 +17,14 @@ const EditUserInfo = {
 
 const ButtonStyle = "w-full cursor-pointer border-b border-gray-50 px-24 py-20 pc:px-20 pc:py-16 hover:pc:bg-main-pink-50";
 
-const SettingList = ({ isOpener }: { isOpener: boolean }) => {
+interface Props {
+  closeBottomSheet?: () => void;
+  isOpener: boolean;
+  openModal: (modal: string) => void;
+}
+
+const SettingList = ({ isOpener, closeBottomSheet, openModal }: Props) => {
   const router = useRouter();
-  const { modal, openModal, closeModal } = useModal();
 
   const handleLogout = async () => {
     const res = await instance.delete("/auth");
@@ -30,6 +35,11 @@ const SettingList = ({ isOpener }: { isOpener: boolean }) => {
       openToast.success(TOAST_MESSAGE.auth.logout);
       return;
     }
+  };
+
+  const handleWithdraw = () => {
+    openModal("withdraw");
+    closeBottomSheet?.();
   };
 
   return (
@@ -46,12 +56,11 @@ const SettingList = ({ isOpener }: { isOpener: boolean }) => {
         <li onClick={handleLogout} className={ButtonStyle}>
           {EditUserInfo.logOut}
         </li>
-        <li onClick={() => openModal("withdraw")} className={`rounded-b-lg ${ButtonStyle}`}>
+        <li onClick={handleWithdraw} className={`rounded-b-lg ${ButtonStyle}`}>
           {EditUserInfo.withdrawal}
         </li>
         <li className={`pc:hidden ${ButtonStyle}`} />
       </ul>
-      {modal === "withdraw" && <WithdrawModal closeModal={closeModal} />}
     </>
   );
 };
