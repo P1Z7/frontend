@@ -1,3 +1,4 @@
+import { usePathname } from "next/navigation";
 import { getSession } from "@/store/session/cookies";
 import { Req_Delete_Type } from "@/types/deleteBodyType";
 import { Req_Post_Type } from "@/types/postBodyType";
@@ -145,8 +146,10 @@ export class Api {
       const refetchResult = await this.refetch(newEndPoint, config);
       return refetchResult;
     }
-    const result = await res.json();
-    this.makeError(result);
+    if (endPoint !== "/auth") {
+      const result = await res.json();
+      this.makeError(result);
+    }
     return res;
   }
 }
