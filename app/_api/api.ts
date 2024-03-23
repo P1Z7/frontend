@@ -146,7 +146,7 @@ export class Api {
       const refetchResult = await this.refetch(newEndPoint, config);
       return refetchResult;
     }
-    if (endPoint !== "/auth") {
+    if (endPoint !== "/auth" && !endPoint.includes("/users")) {
       const result = await res.json();
       this.makeError(result);
     }
