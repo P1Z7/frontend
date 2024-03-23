@@ -5,12 +5,14 @@ import HeartButton from "@/components/button/HeartButton";
 import Chip from "@/components/chip/Chip";
 import useBottomSheet from "@/hooks/useBottomSheet";
 import useLikeEvent from "@/hooks/useLikeEvent";
+import { useModal } from "@/hooks/useModal";
 import { formatAddress, formatDate } from "@/utils/formatString";
 import { EventCardType } from "@/types/index";
 import { TAG_ORDER } from "@/constants/post";
 import KebabIcon from "@/public/icon/kebab.svg";
 import NoImage from "@/public/image/no-profile.png";
 import ControlMyDataBottomSheet from "../bottom-sheet/ControlMyDataBottomSheet";
+import DeleteEventModal from "../modal/DeleteEventModal";
 import KebabContents from "./KebabContents";
 
 interface Props {
@@ -42,6 +44,7 @@ const HorizontalEventCard = ({ data, onHeartClick, isGrow = false, isMypage = fa
 
   const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
   const [openKebab, setOpenKebab] = useState(false);
+  const { openModal, closeModal, modal } = useModal();
 
   return (
     <Link
@@ -61,7 +64,7 @@ const HorizontalEventCard = ({ data, onHeartClick, isGrow = false, isMypage = fa
           <div className="relative">
             <KebabIcon className="rotate-90 transform tablet:hidden" fill="#7E8695" onClick={() => openBottomSheet("myPost")} />
             <KebabIcon className="hidden rotate-90 transform tablet:block" fill="#7E8695" onClick={() => setOpenKebab(!openKebab)} />
-            {openKebab && <KebabContents id={data.id} setDep={setDep} />}
+            {openKebab && <KebabContents id={data.id} setDep={setDep} openModal={openModal} />}
           </div>
         )}
       </div>
@@ -102,7 +105,10 @@ const HorizontalEventCard = ({ data, onHeartClick, isGrow = false, isMypage = fa
           </ul>
         </div>
       </div>
-      {bottomSheet === "myPost" && <ControlMyDataBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} eventId={data.id} setDep={setDep} type="event" />}
+      {bottomSheet === "myPost" && (
+        <ControlMyDataBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} eventId={data.id} setDep={setDep} type="event" openModal={openModal} />
+      )}
+      {modal === "delete_data" && <DeleteEventModal closeModal={closeModal} id={data.id} setDep={setDep} type={"review"} />}
     </Link>
   );
 };
