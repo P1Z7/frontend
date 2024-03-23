@@ -5,8 +5,10 @@ import Evaluation from "@/components/Evaluation";
 import ControlMyDataBottomSheet from "@/components/bottom-sheet/ControlMyDataBottomSheet";
 import KebabContents from "@/components/card/KebabContents";
 import Chip from "@/components/chip/Chip";
+import DeleteEventModal from "@/components/modal/DeleteEventModal";
 import { instance } from "@/api/api";
 import useBottomSheet from "@/hooks/useBottomSheet";
+import { useModal } from "@/hooks/useModal";
 import { formatAddress, formatDate } from "@/utils/formatString";
 import { MyReviewType } from "@/types/index";
 import HeartIcon from "@/public/icon/heart.svg";
@@ -35,6 +37,7 @@ const MyReview = ({ data, userId, setDep }: Props) => {
 
   const { bottomSheet, openBottomSheet, closeBottomSheet, refs } = useBottomSheet();
   const [openKebab, setOpenKebab] = useState(false);
+  const { openModal, closeModal, modal } = useModal();
 
   return (
     <div className="flex w-full flex-col gap-16 border-b border-gray-50 px-20 py-16">
@@ -45,7 +48,7 @@ const MyReview = ({ data, userId, setDep }: Props) => {
             <span className="text-12 font-500 text-gray-400">{data.isPublic ? "공개" : "비공개"}</span>
             <KebabIcon className="rotate-90 transform hover:cursor-pointer tablet:hidden" fill="#7E8695" onClick={() => openBottomSheet("myReview")} />
             <KebabIcon className="hidden rotate-90 transform hover:cursor-pointer tablet:block" fill="#7E8695" onClick={() => setOpenKebab(!openKebab)} />
-            {openKebab && <KebabContents id={data.id} setDep={setDep} type="review" />}
+            {openKebab && <KebabContents id={data.id} setDep={setDep} type="review" openModal={openModal} />}
           </div>
         </div>
         <div className="flex items-center gap-8">
@@ -70,7 +73,10 @@ const MyReview = ({ data, userId, setDep }: Props) => {
           {likeCount}
         </button>
       </div>
-      {bottomSheet === "myReview" && <ControlMyDataBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} eventId={data.id} setDep={setDep} type="review" />}
+      {bottomSheet === "myReview" && (
+        <ControlMyDataBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} eventId={data.id} setDep={setDep} type="review" openModal={openModal} />
+      )}
+      {modal === "delete_data" && <DeleteEventModal closeModal={closeModal} id={data.id} setDep={setDep} type={"review"} />}
     </div>
   );
 };
