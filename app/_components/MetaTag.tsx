@@ -1,5 +1,3 @@
-import Head from "next/head";
-
 interface Props {
   title?: string;
   description?: string;
@@ -9,7 +7,7 @@ interface Props {
 
 const MetaTag = ({ title, description, imgUrl, noFollow = false }: Props) => {
   return (
-    <Head>
+    <>
       <title>{title ? `${title} | Opener` : "Opener"}</title>
       <meta
         name="description"
@@ -42,7 +40,7 @@ const MetaTag = ({ title, description, imgUrl, noFollow = false }: Props) => {
         }
       />
       <meta name="twitter:image" content={imgUrl || "/image/meta-thumbnail.png"} />
-    </Head>
+    </>
   );
 };
 

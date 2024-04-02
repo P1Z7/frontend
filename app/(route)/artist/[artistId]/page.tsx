@@ -6,7 +6,6 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import KakaoMap from "@/components/KakaoMap";
-import MetaTag from "@/components/MetaTag";
 import TimeFilter from "@/components/TimeFilter";
 import DottedLayout from "@/components/layout/DottedLayout";
 import { instance } from "@/api/api";
@@ -67,7 +66,6 @@ const ArtistIdPage = () => {
 
   return (
     <>
-      <MetaTag title={`${name}`} imgUrl={image} description={`${name}의 행사 정보들을 지도를 통해 쉽게 확인해 보세요.`} />
       <DottedLayout size="wide">
         <div className="relative h-[calc(100vh-7.2rem)] w-full overflow-hidden pc:mb-128 pc:mt-48 pc:h-[84rem]">
           <div
