@@ -8,13 +8,14 @@ interface Props {
     content: (node: HTMLElement | null) => void;
   };
   isOpener: boolean;
+  openModal: (modal: string) => void;
 }
 
-const MyPageBottomSheet = ({ closeBottomSheet, refs, isOpener }: Props) => {
+const MyPageBottomSheet = ({ closeBottomSheet, refs, isOpener, openModal }: Props) => {
   return (
     <>
       <BottomSheet.Frame closeBottomSheet={closeBottomSheet} ref={refs.sheet}>
-        <SettingList isOpener={isOpener} />
+        <SettingList isOpener={isOpener} closeBottomSheet={closeBottomSheet} openModal={openModal} />
       </BottomSheet.Frame>
     </>
   );

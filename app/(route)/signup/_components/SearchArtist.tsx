@@ -150,12 +150,12 @@ const Card = ({ data, onClick, myArtists }: CardProps) => {
   return (
     <li>
       <label htmlFor={id}>
-        <ArtistCard isChecked={isChecked} profileImage={image === "http://image.co.kr" ? undefined : image} isSmall>
+        <ArtistCard isChecked={isChecked} profileImage={image === "http://image.co.kr" ? undefined : image} isSmall onClick={() => onClick(name, !isChecked, id)}>
           {name}
         </ArtistCard>
       </label>
 
-      <input name="myArtists" type="checkbox" id={id} onChange={() => onClick(name, !isChecked, id)} checked={isChecked} hidden />
+      <input name="myArtists" type="checkbox" id={id} checked={isChecked} hidden />
     </li>
   );
 };

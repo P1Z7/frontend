@@ -1,21 +1,28 @@
 import { useRouter } from "next/navigation";
 import { useModal } from "@/hooks/useModal";
+import { BottomSheetBaseType } from "@/types/index";
 import DeleteEventModal from "../modal/DeleteEventModal";
 
 interface KebabProps {
   id: string;
   setDep?: (dep: string) => void;
   type?: "event" | "review";
+  openModal: (modal: string) => void;
+  closeBottomSheet?: () => void;
 }
 
-const KebabContents = ({ id, setDep, type = "event" }: KebabProps) => {
+const KebabContents = ({ id, setDep, type = "event", openModal, closeBottomSheet }: KebabProps) => {
   const route = useRouter();
-  const { openModal, closeModal, modal } = useModal();
 
   const TYPE = {
     event: {
       editPath: `/event/${id}/edit`,
     },
+  };
+
+  const handleDelete = () => {
+    openModal("delete_data");
+    closeBottomSheet?.();
   };
 
   return (
@@ -25,10 +32,9 @@ const KebabContents = ({ id, setDep, type = "event" }: KebabProps) => {
           수정하기
         </li>
       )}
-      <li className="w-full cursor-pointer border-b border-gray-50 px-24 py-20 hover:font-700 tablet:border-0 tablet:px-20 tablet:py-16" onClick={() => openModal("delete_data")}>
+      <li className="w-full cursor-pointer border-b border-gray-50 px-24 py-20 hover:font-700 tablet:border-0 tablet:px-20 tablet:py-16" onClick={handleDelete}>
         삭제하기
       </li>
-      {modal === "delete_data" && <DeleteEventModal closeModal={closeModal} id={id} setDep={setDep} type={type} />}
     </ul>
   );
 };

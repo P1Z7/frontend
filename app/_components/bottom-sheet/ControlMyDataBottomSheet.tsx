@@ -10,12 +10,13 @@ interface Props extends BottomSheetBaseType {
   eventId: string;
   setDep?: (dep: string) => void;
   type: "event" | "review";
+  openModal: (modal: string) => void;
 }
 
-const ControlMyDataBottomSheet = ({ closeBottomSheet, refs, eventId, setDep, type }: Props) => {
+const ControlMyDataBottomSheet = ({ closeBottomSheet, refs, eventId, setDep, type, openModal }: Props) => {
   return (
     <BottomSheet.Frame closeBottomSheet={closeBottomSheet} ref={refs.sheet}>
-      <KebabContents id={eventId} setDep={setDep} type={type} />
+      <KebabContents id={eventId} setDep={setDep} type={type} openModal={openModal} closeBottomSheet={closeBottomSheet} />
     </BottomSheet.Frame>
   );
 };
