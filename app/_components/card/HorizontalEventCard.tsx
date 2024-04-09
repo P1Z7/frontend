@@ -108,7 +108,7 @@ const HorizontalEventCard = ({ data, onHeartClick, isGrow = false, isMypage = fa
       {bottomSheet === "myPost" && (
         <ControlMyDataBottomSheet closeBottomSheet={closeBottomSheet} refs={refs} eventId={data.id} setDep={setDep} type="event" openModal={openModal} />
       )}
-      {modal === "delete_data" && <DeleteEventModal closeModal={closeModal} id={data.id} setDep={setDep} type={"review"} />}
+      {modal === "delete_data" && <DeleteEventModal closeModal={closeModal} id={data.id} setDep={setDep} type={"event"} />}
     </Link>
   );
 };
