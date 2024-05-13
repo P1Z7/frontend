@@ -1,5 +1,4 @@
 import confetti, { Options } from "canvas-confetti";
-import { usePathname } from "next/navigation";
 import { RefObject } from "react";
 
 export const SHOT_SIGNIN: Options[] = [

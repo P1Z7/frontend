@@ -13,7 +13,7 @@ const PostPc = () => {
   const { watch } = useFormContext();
   const { isCheck } = useStore((state) => ({ isCheck: state.isWarningCheck }));
   const { address, artists, groupId, eventType, placeName, startDate, endDate } = watch();
-  const isDisabled = !(artists.length > 0 && address && artists && groupId && eventType && placeName && startDate && endDate) || !isCheck;
+  const isDisabled = !(((groupId && artists.length === 0) || artists.length > 0) && address && eventType && placeName && startDate && endDate) || !isCheck;
 
   return (
     <div className="flex max-w-[68.8rem] flex-col gap-32 pb-120">
